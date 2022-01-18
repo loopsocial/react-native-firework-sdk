@@ -1,0 +1,41 @@
+{
+  "name": "react-native-firework-sdk-example",
+  "description": "Example app for react-native-firework-sdk",
+  "version": "1.0.0",
+  "private": true,
+  "scripts": {
+    "android": "react-native run-android",
+    "ios": "react-native run-ios",
+    "start": "react-native start",
+    "bundle-ios": "react-native bundle --entry-file index.js --platform ios --dev false --bundle-output ios/main.jsbundle --assets-dest ios"
+  },
+  "dependencies": {
+  "react-native-bogano-module": "^v1.0.0-beta",
+    "@expo/react-native-action-sheet": "^3.12.0",
+    "@react-navigation/bottom-tabs": "^6.0.9",
+    "@react-navigation/native": "^6.0.6",
+    "@react-navigation/native-stack": "^6.2.5",
+    "@reduxjs/toolkit": "^1.7.1",
+    "react": "17.0.2",
+    "react-hook-form": "^7.22.2",
+    "react-native": "0.66.4",
+    "react-native-base64": "^0.2.1",
+    "react-native-elements": "^3.4.2",
+    "react-native-root-toast": "^3.3.0",
+    "react-native-safe-area-context": "^3.3.2",
+    "react-native-screens": "^3.10.1",
+    "react-native-vector-icons": "^9.0.0",
+    "react-redux": "^7.2.6",
+    "redux-logger": "^3.0.6",
+    "shopify-buy": "^2.13.0"
+  },
+  "devDependencies": {
+    "@babel/core": "^7.12.10",
+    "@babel/runtime": "^7.12.5",
+    "@types/react-native-base64": "^0.2.0",
+    "@types/redux-logger": "^3.0.9",
+    "@types/shopify-buy": "^2.10.9",
+    "babel-plugin-module-resolver": "^4.0.0",
+    "metro-react-native-babel-preset": "^0.66.2"
+  }
+}
