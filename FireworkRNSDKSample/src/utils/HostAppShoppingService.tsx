@@ -2,13 +2,16 @@ import React from 'react';
 
 import type {
   AddToCartCallback,
+  AddToCartEvent,
   ClickCartIconCallback,
   Product,
   UpdateProductDetailsCallback,
+  UpdateProductDetailsEvent,
   WillDisplayProductCallback,
+  WillDisplayProductEvent,
 } from 'react-native-firework-sdk';
-import CartApp from '../CartApp';
 
+import CartApp from '../CartApp';
 import type CartItem from '../models/CartItem';
 import { addCartItem } from '../slice/cartSlice';
 import { store } from '../store';
@@ -17,7 +20,7 @@ import ShopifyClient from './ShopifyClient';
 export default class HostAppShoppingService {
   private static _instance?: HostAppShoppingService;
 
-  public onAddToCart?: AddToCartCallback = async (event) => {
+  public onAddToCart?: AddToCartCallback = async (event: AddToCartEvent) => {
     console.log('[example] onAddToCart', event);
 
     try {
@@ -49,6 +52,8 @@ export default class HostAppShoppingService {
         imageURL: variant.image.src,
       };
       store.dispatch(addCartItem(cartItem));
+      const cartItemCount = store.getState().cart.cartItems.length;
+      console.log('cartItemCount', cartItemCount, 'type', typeof cartItemCount);
       return {
         res: 'success',
         tips: 'Add to cart successfully',
@@ -68,7 +73,7 @@ export default class HostAppShoppingService {
   };
 
   public onUpdateProductDetails: UpdateProductDetailsCallback = async (
-    event
+    event: UpdateProductDetailsEvent
   ) => {
     console.log('[example] onUpdateProductDetails', event);
 
@@ -101,11 +106,13 @@ export default class HostAppShoppingService {
     return null;
   };
 
-  public onWillDisplayProduct?: WillDisplayProductCallback = async (event) => {
+  public onWillDisplayProduct?: WillDisplayProductCallback = async (
+    event: WillDisplayProductEvent
+  ) => {
     console.log('[example] onWillDisplayProduct', event);
-
+    const addToCartButtonStyle = store.getState().cart.addToCartButtonStyle;
     return {
-      cartIcon: { isHidden: false },
+      addToCartButton: addToCartButtonStyle,
     };
   };
 
@@ -118,4 +125,5 @@ export default class HostAppShoppingService {
   }
 
   private constructor() {}
+
 }

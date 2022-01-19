@@ -56,6 +56,9 @@ const Tab = () => {
       <TabNavigator.Screen
         name="FeedLayouts"
         component={FeedLayouts}
+        options={{
+          title: 'Feed Layouts',
+        }}
       />
       <TabNavigator.Screen name="More" component={More} />
     </TabNavigator.Navigator>

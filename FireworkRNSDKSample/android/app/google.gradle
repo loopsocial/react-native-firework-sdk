@@ -1,0 +1,8 @@
+// google firebase
+apply plugin: 'com.google.gms.google-services'
+
+dependencies {
+
+  implementation platform('com.google.firebase:firebase-bom:29.0.3')
+  implementation 'com.google.firebase:firebase-analytics-ktx'
+}

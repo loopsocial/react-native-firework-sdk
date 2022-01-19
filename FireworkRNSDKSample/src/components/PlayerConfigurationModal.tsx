@@ -147,10 +147,10 @@ const PlayerConfigurationModal = ({
               ...styles.formContainerExtra,
             }}
           >
-            <Text style={styles.sectionTitle}>VideoPlayerConfiguration</Text>
+            <Text style={styles.sectionTitle}>Video Player Configuration</Text>
             <View style={styles.formItemRow}>
               <View style={{ ...styles.formItem }}>
-                <Text style={styles.formItemLabel}>PlayerStyle</Text>
+                <Text style={styles.formItemLabel}>Player style</Text>
                 <Controller
                   control={control}
                   render={({ field: { onChange, value } }) => (
@@ -168,7 +168,7 @@ const PlayerConfigurationModal = ({
             </View>
             <View style={styles.formItemRow}>
               <View style={styles.formItem}>
-                <Text style={styles.formItemLabel}>VideoCompleteAction</Text>
+                <Text style={styles.formItemLabel}>Video complete action</Text>
                 <Controller
                   control={control}
                   render={({ field: { onChange, value } }) => (
@@ -192,7 +192,7 @@ const PlayerConfigurationModal = ({
                     return (
                       <CheckBox
                         center
-                        title="Show Share Button"
+                        title="Show share button"
                         checked={value}
                         onPress={() => onChange(!value)}
                       />
@@ -208,7 +208,7 @@ const PlayerConfigurationModal = ({
                   control={control}
                   render={({ field: { onChange, onBlur, value } }) => (
                     <Input
-                      label="CTA BackgroundColor"
+                      label="CTA background color"
                       placeholder="e.g. #c0c0c0"
                       onBlur={onBlur}
                       onChangeText={(value) => onChange(value)}
@@ -241,7 +241,7 @@ const PlayerConfigurationModal = ({
                   control={control}
                   render={({ field: { onChange, onBlur, value } }) => (
                     <Input
-                      label="CTA TextColor"
+                      label="CTA text color"
                       placeholder="e.g. #000000"
                       onBlur={onBlur}
                       onChangeText={(value) => onChange(value)}
@@ -276,7 +276,7 @@ const PlayerConfigurationModal = ({
                   control={control}
                   render={({ field: { onChange, onBlur, value } }) => (
                     <Input
-                      label="CTA FontSize"
+                      label="CTA font size"
                       placeholder="e.g. 14"
                       onBlur={onBlur}
                       onChangeText={(value) => onChange(value)}

@@ -66,12 +66,12 @@ const ChannelInputModal = ({
             }}
           >
             <View style={CommonStyles.formItem}>
-              <Text style={CommonStyles.formItemTitle}>ChannelId</Text>
+              <Text style={CommonStyles.formItemTitle}>Channel id</Text>
               <Controller
                 control={control}
                 render={({ field: { onChange, onBlur, value } }) => (
                   <Input
-                    placeholder="Enter channelId"
+                    placeholder="Enter channel id"
                     onBlur={onBlur}
                     onChangeText={(value) => onChange(value)}
                     value={value}
@@ -85,7 +85,7 @@ const ChannelInputModal = ({
                       </TouchableOpacity>
                     }
                     errorMessage={
-                      errors.channelId ? 'Please enter channelId' : undefined
+                      errors.channelId ? 'Please enter channel id' : undefined
                     }
                     autoCompleteType={undefined}
                   />
