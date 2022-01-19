@@ -7,7 +7,7 @@ import {
   TouchableOpacity,
   View,
 } from 'react-native';
-import { ListItem, Button } from 'react-native-elements';
+import { Button, ListItem } from 'react-native-elements';
 import { FWError, VideoFeed } from 'react-native-firework-sdk';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 
@@ -17,10 +17,11 @@ import { useNavigation } from '@react-navigation/native';
 import type { NativeStackNavigationProp } from '@react-navigation/native-stack';
 
 import PlaylistInputModal from '../components/PlaylistInputModal';
+import { defaultShoppingPlaylist } from '../config/Feed.json';
 import { shopifyDomain } from '../config/Shopify.json';
 import type { RootStackParamList } from './paramList/RootStackParamList';
 import type { TabParamsList } from './paramList/TabParamsList';
-import { defaultShoppingPlaylist } from '../config/Feed.json';
+import CartConfigurationModal from '../components/CartConfigurationModal';
 
 type ShoppingScreenNavigationProp = CompositeNavigationProp<
   BottomTabNavigationProp<TabParamsList, 'Shopping'>,
@@ -29,6 +30,19 @@ type ShoppingScreenNavigationProp = CompositeNavigationProp<
 
 function Shopping() {
   const navigation = useNavigation<ShoppingScreenNavigationProp>();
+  const [playlistInputModalVisible, setPlaylistInputModalVisible] =
+    useState<boolean>(false);
+  const [cartModalVisible, setCartModalVisibleModalVisible] =
+    useState<boolean>(false);
+  const [channelId, setChannelId] = useState<string>(
+    defaultShoppingPlaylist.channelId
+  );
+  const [playlistId, setPlaylistId] = useState<string>(
+    defaultShoppingPlaylist.playlistId
+  );
+  const [feedError, setFeedError] = useState<FWError | undefined>(undefined);
+  const feedRef = useRef<VideoFeed>(null);
+
   useEffect(() => {
     navigation.setOptions({
       headerRight: ({ tintColor }) => (
@@ -44,17 +58,6 @@ function Shopping() {
       ),
     });
   }, []);
-  const [playlistInputModalVisible, setPlaylistInputModalVisible] =
-    useState(false);
-  const [channelId, setChannelId] = useState<string>(
-    defaultShoppingPlaylist.channelId
-  );
-  const [playlistId, setPlaylistId] = useState<string>(
-    defaultShoppingPlaylist.playlistId
-  );
-  const [feedError, setFeedError] = useState<FWError | undefined>(undefined);
-
-  const feedRef = useRef<VideoFeed>(null);
 
   return (
     <View style={styles.container}>
@@ -74,7 +77,7 @@ function Shopping() {
               videoCompleteAction: 'advanceToNext',
               showShareButton: true,
             }}
-            onVideoFeedLoadFinished={(error) => {
+            onVideoFeedLoadFinished={(error?: FWError) => {
               console.log('onVideoFeedLoadFinished error', error);
               setFeedError(error);
             }}
@@ -114,7 +117,7 @@ function Shopping() {
           </ListItem.Subtitle>
         </ListItem>
         <ListItem
-          containerStyle={{ ...styles.listItemContainer, marginTop: 20 }}
+          containerStyle={{ ...styles.listItemContainer, marginTop: 15 }}
           topDivider
           hasTVPreferredFocus={undefined}
           tvParallaxProperties={undefined}
@@ -139,6 +142,24 @@ function Shopping() {
             {shopifyDomain}
           </ListItem.Subtitle>
         </ListItem>
+        <ListItem
+          containerStyle={{
+            ...styles.listItemContainer,
+            marginTop: 15,
+          }}
+          topDivider
+          hasTVPreferredFocus={undefined}
+          tvParallaxProperties={undefined}
+        >
+          <View style={styles.cartConfigButtonWrapper}>
+            <Button
+              title="Cart Configuration"
+              onPress={() => {
+                setCartModalVisibleModalVisible(true);
+              }}
+            />
+          </View>
+        </ListItem>
       </ScrollView>
       <PlaylistInputModal
         visible={playlistInputModalVisible}
@@ -151,6 +172,12 @@ function Shopping() {
           setPlaylistId(playlistId);
         }}
       />
+      <CartConfigurationModal
+        visible={cartModalVisible}
+        onRequestClose={() => {
+          setCartModalVisibleModalVisible(false);
+        }}
+      />
     </View>
   );
 }
@@ -161,11 +188,11 @@ const styles = StyleSheet.create({
     backgroundColor: 'white',
   },
   scrollView: {
-    paddingVertical: 30,
+    paddingVertical: 0,
   },
   videoFeedWrapper: {
     height: 220,
-    marginBottom: 30,
+    marginBottom: 20,
   },
   videoFeed: {
     height: '100%',
@@ -191,6 +218,13 @@ const styles = StyleSheet.create({
     bottom: 0,
     justifyContent: 'center',
     alignItems: 'center',
+  },
+  cartConfigButtonWrapper: {
+    marginTop: 20,
+    marginBottom: 10,
+    justifyContent: 'center',
+    alignContent: 'center',
+    width: '100%',
   },
 });
 

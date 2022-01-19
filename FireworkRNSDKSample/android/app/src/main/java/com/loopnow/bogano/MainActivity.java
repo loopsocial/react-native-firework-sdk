@@ -1,4 +1,4 @@
-package com.example.reactnativefireworksdk;
+package com.loopnow.bogano;
 
 import android.os.Bundle;
 

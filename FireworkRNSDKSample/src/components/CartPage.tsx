@@ -1,5 +1,5 @@
 import React from 'react';
-import { View, ScrollView, StyleSheet } from 'react-native';
+import { View, ScrollView, StyleSheet, Platform } from 'react-native';
 import { ListItem, Image, Button } from 'react-native-elements';
 import { useAppSelector } from '../hooks/reduxHooks';
 import CommonStyles from './CommonStyles';
@@ -37,17 +37,17 @@ const CartPage = ({ onCheckout }: ICartPageProps) => {
         ))}
       </ScrollView>
       <SafeAreaView style={styles.checkoutButtonWrapper}>
-      <Button
-        titleStyle={CommonStyles.mainButtonText}
-        containerStyle={CommonStyles.mainButtonContainer}
-        disabled={cartItems.length === 0}
-        title="CHECKOUT"
-        onPress={() => {
-          if (onCheckout) {
-            onCheckout();
-          }
-        }}
-      />
+        <Button
+          titleStyle={CommonStyles.mainButtonText}
+          containerStyle={CommonStyles.mainButtonContainer}
+          disabled={cartItems.length === 0}
+          title="CHECKOUT"
+          onPress={() => {
+            if (onCheckout) {
+              onCheckout();
+            }
+          }}
+        />
       </SafeAreaView>
     </View>
   );
@@ -73,6 +73,14 @@ const styles = StyleSheet.create({
   },
   checkoutButtonWrapper: {
     paddingHorizontal: 20,
+    ...Platform.select({
+      android: {
+        marginBottom: 20,
+      },
+      default: {
+        marginBottom: 0,
+      },
+    }),
   },
 });
 

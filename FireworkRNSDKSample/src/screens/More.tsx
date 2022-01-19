@@ -32,13 +32,13 @@ function More() {
 
   const dataList: MoreListItemData[] = [
     {
-      title: 'Open VideoURL',
+      title: 'Open Video URL',
       pressCallback: (_) => {
         navigation.push('OpenVideo');
       },
     },
     {
-      title: 'Set ShareBaseURL',
+      title: 'Set Share Base URL',
       pressCallback: (_) => {
         navigation.push('SetShareBaseURL');
       },

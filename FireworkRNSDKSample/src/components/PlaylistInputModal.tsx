@@ -67,12 +67,12 @@ const PlaylistInputModal = ({
             }}
           >
             <View style={CommonStyles.formItem}>
-              <Text style={CommonStyles.formItemTitle}>ChannelId</Text>
+              <Text style={CommonStyles.formItemTitle}>Channel id</Text>
               <Controller
                 control={control}
                 render={({ field: { onChange, onBlur, value } }) => (
                   <Input
-                    placeholder="Enter channelId"
+                    placeholder="Enter channel id"
                     onBlur={onBlur}
                     onChangeText={(value) => onChange(value)}
                     value={value}
@@ -86,7 +86,7 @@ const PlaylistInputModal = ({
                       </TouchableOpacity>
                     }
                     errorMessage={
-                      errors.channelId ? 'Please enter channelId' : undefined
+                      errors.channelId ? 'Please enter channel id' : undefined
                     }
                     autoCompleteType={undefined}
                   />
@@ -99,12 +99,12 @@ const PlaylistInputModal = ({
               />
             </View>
             <View style={CommonStyles.formItem}>
-              <Text style={CommonStyles.formItemTitle}>PlaylistId</Text>
+              <Text style={CommonStyles.formItemTitle}>Playlist id</Text>
               <Controller
                 control={control}
                 render={({ field: { onChange, onBlur, value } }) => (
                   <Input
-                    placeholder="Enter playlistId"
+                    placeholder="Enter playlist id"
                     onBlur={onBlur}
                     onChangeText={(value) => onChange(value)}
                     value={value}
@@ -118,7 +118,7 @@ const PlaylistInputModal = ({
                       </TouchableOpacity>
                     }
                     errorMessage={
-                      errors.playlistId ? 'Please enter playlistId' : undefined
+                      errors.playlistId ? 'Please enter playlist id' : undefined
                     }
                     autoCompleteType={undefined}
                   />

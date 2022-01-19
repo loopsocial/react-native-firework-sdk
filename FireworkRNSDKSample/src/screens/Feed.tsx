@@ -1,6 +1,7 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { View, StyleSheet, TouchableOpacity } from 'react-native';
 import {
+  FWError,
   VideoFeed,
   VideoFeedConfiguration,
   VideoFeedMode,
@@ -87,7 +88,7 @@ const Feed = () => {
         mode={mode}
         videoFeedConfiguration={feedConfiguration}
         videoPlayerConfiguration={playerConfiguration}
-        onVideoFeedLoadFinished={(error) => {
+        onVideoFeedLoadFinished={(error?: FWError) => {
           console.log('[example] onVideoFeedLoadFinished error', error);
         }}
         ref={feedRef}

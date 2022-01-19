@@ -43,7 +43,7 @@ export function OpenVideoForm() {
   return (
     <View style={CommonStyles.formContainer}>
       <View style={CommonStyles.formItem}>
-        <Text style={CommonStyles.formItemTitle}>VideoURL</Text>
+        <Text style={CommonStyles.formItemTitle}>Video URL</Text>
         <Controller
           control={control}
           render={({ field: { onChange, onBlur, value } }) => (
@@ -63,8 +63,8 @@ export function OpenVideoForm() {
               errorMessage={
                 errors.videoURL
                   ? errors.videoURL!.type === 'required'
-                    ? 'Please enter VideoURL'
-                    : 'Please enter correct VideoURL'
+                    ? 'Please enter Video URL'
+                    : 'Please enter correct Video URL'
                   : undefined
               }
               autoCompleteType={undefined}
@@ -94,7 +94,7 @@ export function OpenVideoForm() {
           titleStyle={CommonStyles.mainButtonText}
           containerStyle={CommonStyles.mainButtonContainer}
           onPress={handleSubmit(onOpenVideoPlayer)}
-          title="Open VideoURL"
+          title="Open"
         />
       </View>
       <PlayerConfigurationModal

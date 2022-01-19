@@ -36,7 +36,7 @@ export default function SetShareBaseURLForm() {
   return (
     <View style={CommonStyles.formContainer}>
       <View style={CommonStyles.formItem}>
-        <Text style={CommonStyles.formItemTitle}>ShareBaseURL</Text>
+        <Text style={CommonStyles.formItemTitle}>Share Base URL</Text>
         <Text style={styles.currentText}>{`Current: ${currentLink}`}</Text>
         <Controller
           control={control}
@@ -56,7 +56,7 @@ export default function SetShareBaseURLForm() {
               }
               errorMessage={
                 errors.shareBaseURL
-                  ? 'Please enter correct ShareBaseURL'
+                  ? 'Please enter correct Share base URL'
                   : undefined
               }
               autoCompleteType={undefined}
@@ -73,7 +73,7 @@ export default function SetShareBaseURLForm() {
           containerStyle={CommonStyles.mainButtonContainer}
           titleStyle={CommonStyles.mainButtonText}
           onPress={handleSubmit(onSetShareURLHandler)}
-          title="Set ShareBaseURL"
+          title="Save"
         />
       </View>
     </View>

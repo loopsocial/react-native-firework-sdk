@@ -10,17 +10,57 @@ import { createNativeStackNavigator } from '@react-navigation/native-stack';
 
 import AppTheme from './AppTheme';
 import BackButton from './components/BackButton';
+import {
+  useCartIconVisibilityEffect,
+  useCartItemCountEffect,
+} from './hooks/cartHooks';
 import Checkout from './screens/Checkout';
 import Feed from './screens/Feed';
 import OpenVideo from './screens/OpenVideo';
-import type {
-  RootStackParamList,
-} from './screens/paramList/RootStackParamList';
+import type { RootStackParamList } from './screens/paramList/RootStackParamList';
 import SetShareBaseURL from './screens/SetShareBaseURL';
 import Tab from './screens/Tab';
 import { store } from './store';
 
 const StackNavigator = createNativeStackNavigator<RootStackParamList>();
+
+const FWNavigationContainer = () => {
+  useCartIconVisibilityEffect();
+  useCartItemCountEffect();
+
+  return (
+    <NavigationContainer>
+      <StackNavigator.Navigator
+        screenOptions={{
+          headerTitleAlign: 'center',
+          headerBackTitleVisible: false,
+          headerBackButtonMenuEnabled: false,
+          headerLeft: ({ tintColor }) => {
+            return <BackButton tintColor={tintColor} size={30} />;
+          },
+        }}
+      >
+        <StackNavigator.Screen
+          name="Tab"
+          component={Tab}
+          options={{ headerShown: false }}
+        />
+        <StackNavigator.Screen
+          name="OpenVideo"
+          component={OpenVideo}
+          options={{ title: 'Open Video URL' }}
+        />
+        <StackNavigator.Screen
+          name="SetShareBaseURL"
+          component={SetShareBaseURL}
+          options={{ title: 'Set Share Base URL' }}
+        />
+        <StackNavigator.Screen name="Feed" component={Feed} />
+        <StackNavigator.Screen name="Checkout" component={Checkout} />
+      </StackNavigator.Navigator>
+    </NavigationContainer>
+  );
+};
 
 export default function App() {
   return (
@@ -28,36 +68,7 @@ export default function App() {
       <ThemeProvider theme={AppTheme}>
         <ActionSheetProvider>
           <RootSiblingParent>
-            <NavigationContainer>
-              <StackNavigator.Navigator
-                screenOptions={{
-                  headerTitleAlign: 'center',
-                  headerBackTitleVisible: false,
-                  headerBackButtonMenuEnabled: false,
-                  headerLeft: ({ tintColor }) => {
-                    return <BackButton tintColor={tintColor} size={30} />;
-                  },
-                }}
-              >
-                <StackNavigator.Screen
-                  name="Tab"
-                  component={Tab}
-                  options={{ headerShown: false }}
-                />
-                <StackNavigator.Screen
-                  name="OpenVideo"
-                  component={OpenVideo}
-                  options={{ title: 'Open VideoURL' }}
-                />
-                <StackNavigator.Screen
-                  name="SetShareBaseURL"
-                  component={SetShareBaseURL}
-                  options={{ title: 'Set ShareBaseURL' }}
-                />
-                <StackNavigator.Screen name="Feed" component={Feed} />
-                <StackNavigator.Screen name="Checkout" component={Checkout} />
-              </StackNavigator.Navigator>
-            </NavigationContainer>
+            <FWNavigationContainer />
           </RootSiblingParent>
         </ActionSheetProvider>
       </ThemeProvider>

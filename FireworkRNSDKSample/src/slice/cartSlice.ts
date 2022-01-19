@@ -1,13 +1,19 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
+import type { AddToCartButtonConfiguration } from 'react-native-firework-sdk';
 import type CartItem from '../models/CartItem';
 
 export interface CartState {
   cartItems: CartItem[];
+  cartIconVisible: boolean;
+  addToCartButtonStyle: AddToCartButtonConfiguration;
 }
 
 const initialState: CartState = {
   cartItems: [],
+  cartIconVisible: true,
+  addToCartButtonStyle: {},
 };
+
 
 export const cartSlice = createSlice({
   name: 'cart',
@@ -31,10 +37,24 @@ export const cartSlice = createSlice({
     },
     removeAllCartItems: (state) => {
       state.cartItems = [];
-    }
+    },
+    changeCartIconVisibility: (state, action: PayloadAction<boolean>) => {
+      state.cartIconVisible = action.payload;
+    },
+    setAddToCartButtonStyle: (
+      state,
+      action: PayloadAction<AddToCartButtonConfiguration>
+    ) => {
+      state.addToCartButtonStyle = action.payload;
+    },
   },
 });
 
-export const { addCartItem, removeAllCartItems } = cartSlice.actions;
+export const {
+  addCartItem,
+  removeAllCartItems,
+  changeCartIconVisibility,
+  setAddToCartButtonStyle,
+} = cartSlice.actions;
 
 export default cartSlice.reducer;

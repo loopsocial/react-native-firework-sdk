@@ -118,7 +118,7 @@ const FeedConfigurationModal = ({
           control={control}
           render={({ field: { onChange, onBlur, value } }) => (
             <Input
-              label="BackgroundColor"
+              label="Background color"
               placeholder="e.g. #c0c0c0"
               onBlur={onBlur}
               onChangeText={(value) => onChange(value)}
@@ -151,13 +151,13 @@ const FeedConfigurationModal = ({
           control={control}
           render={({ field: { onChange, onBlur, value } }) => (
             <Input
-              label="CornerRadius"
+              label="Corner radius"
               placeholder="e.g. 30"
               onBlur={onBlur}
               onChangeText={(value) => onChange(value)}
               errorMessage={
                 errors.cornerRadius
-                  ? 'Please enter correct CornerRadius'
+                  ? 'Please enter correct corner radius'
                   : undefined
               }
               value={value}
@@ -192,7 +192,7 @@ const FeedConfigurationModal = ({
               return (
                 <CheckBox
                   center
-                  title="Hide Title"
+                  title="Hide title"
                   checked={value}
                   onPress={() => onChange(!value)}
                 />
@@ -206,7 +206,7 @@ const FeedConfigurationModal = ({
             control={control}
             render={({ field: { onChange, onBlur, value } }) => (
               <Input
-                label="TitleColor"
+                label="Title color"
                 placeholder="e.g. #000000"
                 onBlur={onBlur}
                 onChangeText={(value) => onChange(value)}
@@ -239,7 +239,7 @@ const FeedConfigurationModal = ({
             control={control}
             render={({ field: { onChange, onBlur, value } }) => (
               <Input
-                label="TitleFontSize"
+                label="Title font size"
                 placeholder="e.g. 14"
                 onBlur={onBlur}
                 onChangeText={(value) => onChange(value)}
@@ -268,7 +268,7 @@ const FeedConfigurationModal = ({
           />
         </View>
         <View style={styles.formItem}>
-          <Text style={styles.formItemLabel}>Title Position</Text>
+          <Text style={styles.formItemLabel}>Title position</Text>
           <Controller
             control={control}
             render={({ field: { onChange, value } }) => (
@@ -296,7 +296,7 @@ const FeedConfigurationModal = ({
             return (
               <CheckBox
                 center
-                title="Hide PlayIcon"
+                title="Hide play icon"
                 checked={value}
                 onPress={() => onChange(!value)}
               />
@@ -310,7 +310,7 @@ const FeedConfigurationModal = ({
           control={control}
           render={({ field: { onChange, onBlur, value } }) => (
             <Input
-              label="PlayIconWidth"
+              label="Play icon width"
               placeholder="e.g. 36"
               onBlur={onBlur}
               onChangeText={(value) => onChange(value)}
@@ -364,7 +364,7 @@ const FeedConfigurationModal = ({
               ...styles.formContainerExtra,
             }}
           >
-            <Text style={styles.sectionTitle}>VideoFeedConfiguration</Text>
+            <Text style={styles.sectionTitle}>Video Feed Configuration</Text>
             {backgroundColorAndCornerRadius}
             {titleConfiguration}
             {playIconConfiguration}
