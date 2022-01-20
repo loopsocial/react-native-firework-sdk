@@ -210,7 +210,7 @@ PODS:
   - React-jsinspector (0.66.4)
   - React-logger (0.66.4):
     - glog
-  - react-native-firework-sdk (1.0.0-beta):
+  - react-native-firework-sdk (1.0.0-beta.1):
     - FireworkVideo (~> 0.12.0)
     - React-Core
   - react-native-safe-area-context (3.3.2):
@@ -307,7 +307,7 @@ DEPENDENCIES:
   - React-jsiexecutor (from `../node_modules/react-native/ReactCommon/jsiexecutor`)
   - React-jsinspector (from `../node_modules/react-native/ReactCommon/jsinspector`)
   - React-logger (from `../node_modules/react-native/ReactCommon/logger`)
-  - react-native-firework-sdk (from `../..`)
+  - react-native-firework-sdk (from `../node_modules/react-native-firework-sdk`)
   - react-native-safe-area-context (from `../node_modules/react-native-safe-area-context`)
   - React-perflogger (from `../node_modules/react-native/ReactCommon/reactperflogger`)
   - React-RCTActionSheet (from `../node_modules/react-native/Libraries/ActionSheetIOS`)
@@ -366,7 +366,7 @@ EXTERNAL SOURCES:
   React-logger:
     :path: "../node_modules/react-native/ReactCommon/logger"
   react-native-firework-sdk:
-    :path: "../.."
+    :path: "../node_modules/react-native-firework-sdk"
   react-native-safe-area-context:
     :path: "../node_modules/react-native-safe-area-context"
   React-perflogger:
@@ -420,7 +420,7 @@ SPEC CHECKSUMS:
   React-jsiexecutor: 94ce921e1d8ce7023366873ec371f3441383b396
   React-jsinspector: d0374f7509d407d2264168b6d0fad0b54e300b85
   React-logger: 933f80c97c633ee8965d609876848148e3fef438
-  react-native-firework-sdk: 9e35a574c94402b88ad412cb3a046508c8b35372
+  react-native-firework-sdk: 58ec08426729c1b997014ee225992298dbe4ebe3
   react-native-safe-area-context: 584dc04881deb49474363f3be89e4ca0e854c057
   React-perflogger: 93075d8931c32cd1fce8a98c15d2d5ccc4d891bd
   React-RCTActionSheet: 7d3041e6761b4f3044a37079ddcb156575fb6d89
@@ -438,6 +438,6 @@ SPEC CHECKSUMS:
   RNVectorIcons: 4143ba35feebab8fdbe6bc43d1e776b393d47ac8
   Yoga: e7dc4e71caba6472ff48ad7d234389b91dadc280
 
-PODFILE CHECKSUM: 894ad74bde7c2b460e0eb857aa526e37086e49f3
+PODFILE CHECKSUM: 4b35a52ec24414814f275c0d25c7da646c1fbf65
 
 COCOAPODS: 1.11.2
