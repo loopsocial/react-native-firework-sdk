@@ -20,8 +20,9 @@ import type {
 
 export interface IPlayerConfigurationModalProps {
   visible: boolean;
-  onRequestClose?: () => void;
   playerConfiguration?: VideoPlayerConfiguration;
+  defaultPlayerConfiguration?: VideoPlayerConfiguration;
+  onRequestClose?: () => void;
   onSubmit?: (configuration: VideoPlayerConfiguration) => void;
 }
 
@@ -43,6 +44,7 @@ const VideoCompleteActionList: VideoPlayerCompleteAction[] = [
 const PlayerConfigurationModal = ({
   visible,
   playerConfiguration,
+  defaultPlayerConfiguration,
   onRequestClose,
   onSubmit,
 }: IPlayerConfigurationModalProps) => {
@@ -54,11 +56,24 @@ const PlayerConfigurationModal = ({
     formState: { errors },
   } = useForm<PlayerConfigurationFormData>();
 
-  useEffect(() => {
-    if (playerConfiguration) {
-      if (playerConfiguration.playerStyle) {
+  let ctaFontSizeErrorMessage: string | undefined = undefined;
+  if (errors.ctaFontSize) {
+    if (
+      errors.ctaFontSize.type === 'max' ||
+      errors.ctaFontSize.type === 'min'
+    ) {
+      ctaFontSizeErrorMessage = 'Please enter font size in [8, 30]';
+    } else {
+      ctaFontSizeErrorMessage = 'Please enter correct font size';
+    }
+  }
+  const syncFormValuesFromConfiguration = (
+    configuration?: VideoPlayerConfiguration
+  ) => {
+    if (configuration) {
+      if (configuration.playerStyle) {
         const playerStyleIndex = PlayStyleList.indexOf(
-          playerConfiguration.playerStyle
+          configuration.playerStyle
         );
         if (playerStyleIndex >= 0) {
           setValue('playerStyle', playerStyleIndex);
@@ -69,9 +84,9 @@ const PlayerConfigurationModal = ({
         setValue('playerStyle', undefined);
       }
 
-      if (playerConfiguration.videoCompleteAction) {
+      if (configuration.videoCompleteAction) {
         const videoCompleteActionIndex = VideoCompleteActionList.indexOf(
-          playerConfiguration.videoCompleteAction
+          configuration.videoCompleteAction
         );
         if (videoCompleteActionIndex >= 0) {
           setValue('videoCompleteAction', videoCompleteActionIndex);
@@ -81,19 +96,22 @@ const PlayerConfigurationModal = ({
       } else {
         setValue('videoCompleteAction', undefined);
       }
-      setValue('showShareButton', playerConfiguration.showShareButton);
+      setValue('showShareButton', configuration.showShareButton);
       setValue(
         'ctaBackgroundColor',
-        playerConfiguration.ctaButtonStyle?.backgroundColor
+        configuration.ctaButtonStyle?.backgroundColor
       );
-      setValue('ctaTextColor', playerConfiguration.ctaButtonStyle?.textColor);
+      setValue('ctaTextColor', configuration.ctaButtonStyle?.textColor);
       setValue(
         'ctaFontSize',
-        playerConfiguration.ctaButtonStyle?.fontSize?.toString()
+        configuration.ctaButtonStyle?.fontSize?.toString()
       );
     } else {
       reset();
     }
+  };
+  useEffect(() => {
+    syncFormValuesFromConfiguration(playerConfiguration);
   }, [playerConfiguration]);
 
   const onSave = (data: PlayerConfigurationFormData) => {
@@ -128,18 +146,13 @@ const PlayerConfigurationModal = ({
       transparent={true}
       visible={visible}
       onRequestClose={() => {
+        syncFormValuesFromConfiguration(playerConfiguration);
         if (onRequestClose) {
           onRequestClose();
         }
       }}
     >
-      <TouchableWithoutFeedback
-        onPress={() => {
-          if (onRequestClose) {
-            onRequestClose();
-          }
-        }}
-      >
+      <TouchableWithoutFeedback onPress={() => {}}>
         <View style={styles.content}>
           <View
             style={{
@@ -281,11 +294,7 @@ const PlayerConfigurationModal = ({
                       onBlur={onBlur}
                       onChangeText={(value) => onChange(value)}
                       value={value}
-                      errorMessage={
-                        errors.ctaFontSize
-                          ? 'Please enter correct font size'
-                          : undefined
-                      }
+                      errorMessage={ctaFontSizeErrorMessage}
                       rightIcon={
                         <TouchableOpacity
                           onPress={() => {
@@ -301,6 +310,8 @@ const PlayerConfigurationModal = ({
                   name="ctaFontSize"
                   rules={{
                     pattern: Patterns.number,
+                    max: 30,
+                    min: 8,
                   }}
                 />
               </View>
@@ -315,6 +326,7 @@ const PlayerConfigurationModal = ({
                   marginRight: 20,
                 }}
                 onPress={() => {
+                  syncFormValuesFromConfiguration(playerConfiguration);
                   if (onRequestClose) {
                     onRequestClose();
                   }
@@ -330,7 +342,7 @@ const PlayerConfigurationModal = ({
                   marginRight: 20,
                 }}
                 onPress={() => {
-                  reset();
+                  syncFormValuesFromConfiguration(defaultPlayerConfiguration);
                 }}
                 title="Reset"
               />

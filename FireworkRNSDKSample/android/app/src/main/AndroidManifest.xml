@@ -32,9 +32,10 @@
       android:name="Firework:Appid"
       android:value="${fw_appid}" />
 
-    <meta-data
-      android:name="com.google.android.gms.ads.AD_MANAGER_APP"
-      android:value="true" />
+<!--    <meta-data-->
+<!--      android:name="com.google.android.gms.ads.AD_MANAGER_APP"-->
+<!--      android:value="true"-->
+<!--      tools:replace="android:value" />-->
 
   </application>
 

@@ -1,5 +1,7 @@
 import React, { useEffect, useRef, useState } from 'react';
-import { View, StyleSheet, TouchableOpacity } from 'react-native';
+
+import { StyleSheet, Text, TouchableOpacity, View } from 'react-native';
+import { Button } from 'react-native-elements';
 import {
   FWError,
   VideoFeed,
@@ -7,14 +9,16 @@ import {
   VideoFeedMode,
   VideoPlayerConfiguration,
 } from 'react-native-firework-sdk';
-import type { RouteProp } from '@react-navigation/native';
-import { useRoute, useNavigation } from '@react-navigation/native';
-import type { RootStackParamList } from './paramList/RootStackParamList';
-import type { NativeStackNavigationProp } from '@react-navigation/native-stack';
-import VideoFeedForm from '../components/VideoFeedForm';
-import FeedConfigurationModal from '../components/FeedConfigurationModal';
 import Ionicons from 'react-native-vector-icons/Ionicons';
+
+import type { RouteProp } from '@react-navigation/native';
+import { useNavigation, useRoute } from '@react-navigation/native';
+import type { NativeStackNavigationProp } from '@react-navigation/native-stack';
+
+import FeedConfigurationModal from '../components/FeedConfigurationModal';
 import PlayerConfigurationModal from '../components/PlayerConfigurationModal';
+import VideoFeedForm from '../components/VideoFeedForm';
+import type { RootStackParamList } from './paramList/RootStackParamList';
 
 type FeedScreenRouteProp = RouteProp<RootStackParamList, 'Feed'>;
 type FeedScreenNavigationProp = NativeStackNavigationProp<
@@ -25,20 +29,30 @@ type FeedScreenNavigationProp = NativeStackNavigationProp<
 const Feed = () => {
   const route = useRoute<FeedScreenRouteProp>();
   const navigation = useNavigation<FeedScreenNavigationProp>();
+
   const source = route.params?.source || 'discover';
   const channel = route.params?.channel;
   const playlist = route.params?.playlist;
+
   const feedRef = useRef<VideoFeed>(null);
+  const [feedError, setFeedError] = useState<FWError | undefined>(undefined);
+
+  const defaultFeedConfiguration: VideoFeedConfiguration = {
+    title: { hidden: false },
+    titlePosition: 'nested',
+  };
   const [feedConfiguration, setFeedConfiguration] = useState<
     VideoFeedConfiguration | undefined
-  >({ title: { hidden: false }, titlePosition: 'nested', });
-  const [playerConfiguration, setPlayerConfiguration] = useState<
-    VideoPlayerConfiguration | undefined
-  >({
+  >(defaultFeedConfiguration);
+
+  const defaultPlayerConfiguration: VideoPlayerConfiguration = {
     playerStyle: 'full',
     videoCompleteAction: 'advanceToNext',
     showShareButton: true,
-  });
+  };
+  const [playerConfiguration, setPlayerConfiguration] = useState<
+    VideoPlayerConfiguration | undefined
+  >(defaultPlayerConfiguration);
   const [mode, setMode] = useState<VideoFeedMode>('row');
   const [showFeedConfiguration, setShowFeedConfiguration] =
     useState<boolean>(false);
@@ -80,22 +94,40 @@ const Feed = () => {
           }}
         />
       </View>
-      <VideoFeed
-        style={mode === 'row' ? { height: 200 } : { flex: 1 }}
-        source={source}
-        channel={channel}
-        playlist={playlist}
-        mode={mode}
-        videoFeedConfiguration={feedConfiguration}
-        videoPlayerConfiguration={playerConfiguration}
-        onVideoFeedLoadFinished={(error?: FWError) => {
-          console.log('[example] onVideoFeedLoadFinished error', error);
-        }}
-        ref={feedRef}
-      />
+      <View style={mode === 'row' ? { height: 200 } : { flex: 1 }}>
+        <VideoFeed
+          style={{ height: '100%', width: '100%' }}
+          source={source}
+          channel={channel}
+          playlist={playlist}
+          mode={mode}
+          videoFeedConfiguration={feedConfiguration}
+          videoPlayerConfiguration={playerConfiguration}
+          onVideoFeedLoadFinished={(error?: FWError) => {
+            console.log('[example] onVideoFeedLoadFinished error', error);
+            setFeedError(error);
+          }}
+          ref={feedRef}
+        />
+        {feedError && (
+          <View style={styles.errorView}>
+            <Button
+              title="Refresh"
+              onPress={() => {
+                setFeedError(undefined);
+                feedRef.current?.refresh();
+              }}
+            />
+            <Text style={styles.errorText}>
+              {feedError.reason ?? 'Fail to load video feed'}
+            </Text>
+          </View>
+        )}
+      </View>
       <FeedConfigurationModal
         visible={showFeedConfiguration}
         feedConfiguration={feedConfiguration}
+        defaultFeedConfiguration={defaultFeedConfiguration}
         onRequestClose={() => {
           setShowFeedConfiguration(false);
         }}
@@ -107,8 +139,9 @@ const Feed = () => {
         }}
       />
       <PlayerConfigurationModal
-        playerConfiguration={playerConfiguration}
         visible={showPlayerConfiguration}
+        playerConfiguration={playerConfiguration}
+        defaultPlayerConfiguration={defaultPlayerConfiguration}
         onRequestClose={() => {
           setShowPlayerConfiguration(false);
         }}
@@ -133,6 +166,25 @@ const styles = StyleSheet.create({
   videoFormWrapper: {
     paddingHorizontal: 10,
     paddingVertical: 20,
+  },
+  videoFeed: {
+    height: '100%',
+  },
+  errorView: {
+    position: 'absolute',
+    top: 0,
+    left: 0,
+    right: 0,
+    bottom: 0,
+    justifyContent: 'center',
+    alignItems: 'center',
+    backgroundColor: '#ffffff',
+  },
+  errorText: {
+    padding: 20,
+    marginTop: 10,
+    fontSize: 14,
+    color: 'red',
   },
 });
 

@@ -11,6 +11,7 @@ import {
   View,
   TouchableWithoutFeedback,
 } from 'react-native';
+import Patterns from '../constants/Patterns';
 
 export interface IChannelInputModalProps {
   visible: boolean;
@@ -32,13 +33,24 @@ const ChannelInputModal = ({
     handleSubmit,
     setValue,
     formState: { errors },
+    reset,
   } = useForm<ChannelInputFormData>();
 
   const onUse = (data: ChannelInputFormData) => {
     if (onSubmit) {
       onSubmit(data.channelId);
     }
+    reset();
   };
+
+  let channelIdErrorMessage: string | undefined = undefined;
+  if (errors.channelId) {
+    if (errors.channelId.type === 'pattern') {
+      channelIdErrorMessage = 'Please enter correct channel id';
+    } else {
+      channelIdErrorMessage = 'Please enter channel id';
+    }
+  }
 
   return (
     <Modal
@@ -49,15 +61,10 @@ const ChannelInputModal = ({
         if (onRequestClose) {
           onRequestClose();
         }
+        reset();
       }}
     >
-      <TouchableWithoutFeedback
-        onPress={() => {
-          if (onRequestClose) {
-            onRequestClose();
-          }
-        }}
-      >
+      <TouchableWithoutFeedback onPress={() => {}}>
         <View style={styles.content}>
           <View
             style={{
@@ -84,15 +91,14 @@ const ChannelInputModal = ({
                         <Ionicons name="close" size={24} />
                       </TouchableOpacity>
                     }
-                    errorMessage={
-                      errors.channelId ? 'Please enter channel id' : undefined
-                    }
+                    errorMessage={channelIdErrorMessage}
                     autoCompleteType={undefined}
                   />
                 )}
                 name="channelId"
                 rules={{
                   required: true,
+                  pattern: Patterns.channelId,
                 }}
                 defaultValue=""
               />
@@ -110,6 +116,7 @@ const ChannelInputModal = ({
                   if (onRequestClose) {
                     onRequestClose();
                   }
+                  reset();
                 }}
                 title="Cancel"
               />

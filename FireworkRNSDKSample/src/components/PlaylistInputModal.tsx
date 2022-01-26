@@ -11,6 +11,7 @@ import {
   View,
   TouchableWithoutFeedback,
 } from 'react-native';
+import Patterns from '../constants/Patterns';
 
 export interface IPlaylistInputModalProps {
   visible: boolean;
@@ -33,13 +34,33 @@ const PlaylistInputModal = ({
     handleSubmit,
     setValue,
     formState: { errors },
+    reset,
   } = useForm<PlaylistInputFormData>();
 
   const onUse = (data: PlaylistInputFormData) => {
     if (onSubmit) {
       onSubmit(data.channelId, data.playlistId);
     }
+    reset();
   };
+
+  let channelIdErrorMessage: string | undefined = undefined;
+  if (errors.channelId) {
+    if (errors.channelId.type === 'pattern') {
+      channelIdErrorMessage = 'Please enter correct channel id';
+    } else {
+      channelIdErrorMessage = 'Please enter channel id';
+    }
+  }
+
+  let playlistIdErrorMessage: string | undefined = undefined;
+  if (errors.playlistId) {
+    if (errors.playlistId.type === 'pattern') {
+      playlistIdErrorMessage = 'Please enter correct playlist id';
+    } else {
+      playlistIdErrorMessage = 'Please enter playlist id';
+    }
+  }
 
   return (
     <Modal
@@ -50,15 +71,10 @@ const PlaylistInputModal = ({
         if (onRequestClose) {
           onRequestClose();
         }
+        reset();
       }}
     >
-      <TouchableWithoutFeedback
-        onPress={() => {
-          if (onRequestClose) {
-            onRequestClose();
-          }
-        }}
-      >
+      <TouchableWithoutFeedback onPress={() => {}}>
         <View style={styles.content}>
           <View
             style={{
@@ -85,15 +101,14 @@ const PlaylistInputModal = ({
                         <Ionicons name="close" size={24} />
                       </TouchableOpacity>
                     }
-                    errorMessage={
-                      errors.channelId ? 'Please enter channel id' : undefined
-                    }
+                    errorMessage={channelIdErrorMessage}
                     autoCompleteType={undefined}
                   />
                 )}
                 name="channelId"
                 rules={{
                   required: true,
+                  pattern: Patterns.channelId,
                 }}
                 defaultValue=""
               />
@@ -117,15 +132,14 @@ const PlaylistInputModal = ({
                         <Ionicons name="close" size={24} />
                       </TouchableOpacity>
                     }
-                    errorMessage={
-                      errors.playlistId ? 'Please enter playlist id' : undefined
-                    }
+                    errorMessage={playlistIdErrorMessage}
                     autoCompleteType={undefined}
                   />
                 )}
                 name="playlistId"
                 rules={{
                   required: true,
+                  pattern: Patterns.playListId,
                 }}
                 defaultValue=""
               />
@@ -143,6 +157,7 @@ const PlaylistInputModal = ({
                   if (onRequestClose) {
                     onRequestClose();
                   }
+                  reset();
                 }}
                 title="Cancel"
               />

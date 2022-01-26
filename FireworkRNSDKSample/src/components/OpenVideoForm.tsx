@@ -21,13 +21,14 @@ export function OpenVideoForm() {
     setValue,
     formState: { errors },
   } = useForm<OpenVideoFormData>();
-  const [playerConfiguration, setPlayerConfiguration] = useState<
-    VideoPlayerConfiguration | undefined
-  >({
+  const defaultPlayerConfiguration: VideoPlayerConfiguration = {
     playerStyle: 'full',
     videoCompleteAction: 'advanceToNext',
     showShareButton: true,
-  });
+  };
+  const [playerConfiguration, setPlayerConfiguration] = useState<
+    VideoPlayerConfiguration | undefined
+  >(defaultPlayerConfiguration);
   const [showPlayerConfiguration, setShowPlayerConfiguration] =
     useState<boolean>(false);
   console.log('OpenVideoForm errors', errors);
@@ -98,8 +99,9 @@ export function OpenVideoForm() {
         />
       </View>
       <PlayerConfigurationModal
-        playerConfiguration={playerConfiguration}
         visible={showPlayerConfiguration}
+        playerConfiguration={playerConfiguration}
+        defaultPlayerConfiguration={defaultPlayerConfiguration}
         onRequestClose={() => {
           setShowPlayerConfiguration(false);
         }}
