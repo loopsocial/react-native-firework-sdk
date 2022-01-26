@@ -5,13 +5,17 @@ import type CartItem from '../models/CartItem';
 export interface CartState {
   cartItems: CartItem[];
   cartIconVisible: boolean;
+  defaultCartIconVisible: boolean;
   addToCartButtonStyle: AddToCartButtonConfiguration;
+  defaultAddToCartButtonStyle: AddToCartButtonConfiguration;
 }
 
 const initialState: CartState = {
   cartItems: [],
   cartIconVisible: true,
+  defaultCartIconVisible: true,
   addToCartButtonStyle: {},
+  defaultAddToCartButtonStyle: {},
 };
 
 

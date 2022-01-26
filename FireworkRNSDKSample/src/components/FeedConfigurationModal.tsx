@@ -19,8 +19,9 @@ import type {
 
 export interface IFeedConfigurationModalProps {
   visible: boolean;
-  onRequestClose?: () => void;
   feedConfiguration?: VideoFeedConfiguration;
+  defaultFeedConfiguration?: VideoFeedConfiguration;
+  onRequestClose?: () => void;
   onSubmit?: (configuration: VideoFeedConfiguration) => void;
 }
 
@@ -40,6 +41,7 @@ const TitlePositionList: VideoFeedTitlePosition[] = ['stacked', 'nested'];
 const FeedConfigurationModal = ({
   visible,
   feedConfiguration,
+  defaultFeedConfiguration,
   onRequestClose,
   onSubmit,
 }: IFeedConfigurationModalProps) => {
@@ -51,16 +53,52 @@ const FeedConfigurationModal = ({
     formState: { errors },
   } = useForm<FeedConfigurationFormData>();
 
-  useEffect(() => {
-    if (feedConfiguration) {
-      setValue('backgroundColor', feedConfiguration.backgroundColor);
-      setValue('cornerRadius', feedConfiguration.cornerRadius?.toString());
-      setValue('hideTitle', feedConfiguration.title?.hidden);
-      setValue('titleColor', feedConfiguration.title?.textColor);
-      setValue('titleFontSize', feedConfiguration.title?.fontSize?.toString());
-      if (feedConfiguration.titlePosition) {
+  let titleFontSizeErrorMessage: string | undefined = undefined;
+  if (errors.titleFontSize) {
+    if (
+      errors.titleFontSize.type === 'max' ||
+      errors.titleFontSize.type === 'min'
+    ) {
+      titleFontSizeErrorMessage = 'Please enter font size in [8, 30]';
+    } else {
+      titleFontSizeErrorMessage = 'Please enter correct font size';
+    }
+  }
+
+  let playIconWidthErrorMessage: string | undefined = undefined;
+  if (errors.playIconWidth) {
+    if (
+      errors.playIconWidth.type === 'max' ||
+      errors.playIconWidth.type === 'min'
+    ) {
+      playIconWidthErrorMessage = 'Please enter play icon width in [0, 100]';
+    } else {
+      playIconWidthErrorMessage = 'Please enter correct play icon width';
+    }
+  }
+
+  let cornerRadiusErrorMessage: string | undefined = undefined;
+  if (errors.cornerRadius) {
+    if (
+      errors.cornerRadius.type === 'max' ||
+      errors.cornerRadius.type === 'min'
+    ) {
+      cornerRadiusErrorMessage = 'Please enter corner radius in [0, 50]';
+    } else {
+      cornerRadiusErrorMessage = 'Please enter correct corner radius';
+    }
+  }
+
+  const syncFormValuesFromConfiguration = (configuration?: VideoFeedConfiguration) => {
+    if (configuration) {
+      setValue('backgroundColor', configuration.backgroundColor);
+      setValue('cornerRadius', configuration.cornerRadius?.toString());
+      setValue('hideTitle', configuration.title?.hidden);
+      setValue('titleColor', configuration.title?.textColor);
+      setValue('titleFontSize', configuration.title?.fontSize?.toString());
+      if (configuration.titlePosition) {
         const titlePositionIndex = TitlePositionList.indexOf(
-          feedConfiguration.titlePosition
+          configuration.titlePosition
         );
         setValue(
           'titlePosition',
@@ -69,14 +107,15 @@ const FeedConfigurationModal = ({
       } else {
         setValue('titlePosition', undefined);
       }
-      setValue('hidePlayIcon', feedConfiguration.playIcon?.hidden);
-      setValue(
-        'playIconWidth',
-        feedConfiguration.playIcon?.iconWidth?.toString()
-      );
+      setValue('hidePlayIcon', configuration.playIcon?.hidden);
+      setValue('playIconWidth', configuration.playIcon?.iconWidth?.toString());
     } else {
       reset();
     }
+  };
+
+  useEffect(() => {
+    syncFormValuesFromConfiguration(feedConfiguration);
   }, [feedConfiguration]);
 
   const onSave = (data: FeedConfigurationFormData) => {
@@ -155,11 +194,7 @@ const FeedConfigurationModal = ({
               placeholder="e.g. 30"
               onBlur={onBlur}
               onChangeText={(value) => onChange(value)}
-              errorMessage={
-                errors.cornerRadius
-                  ? 'Please enter correct corner radius'
-                  : undefined
-              }
+              errorMessage={cornerRadiusErrorMessage}
               value={value}
               rightIcon={
                 <TouchableOpacity
@@ -176,6 +211,8 @@ const FeedConfigurationModal = ({
           name="cornerRadius"
           rules={{
             pattern: Patterns.number,
+            min: 0,
+            max: 50,
           }}
         />
       </View>
@@ -244,11 +281,7 @@ const FeedConfigurationModal = ({
                 onBlur={onBlur}
                 onChangeText={(value) => onChange(value)}
                 value={value}
-                errorMessage={
-                  errors.titleFontSize
-                    ? 'Please enter correct font size'
-                    : undefined
-                }
+                errorMessage={titleFontSizeErrorMessage}
                 rightIcon={
                   <TouchableOpacity
                     onPress={() => {
@@ -264,6 +297,8 @@ const FeedConfigurationModal = ({
             name="titleFontSize"
             rules={{
               pattern: Patterns.number,
+              max: 30,
+              min: 8,
             }}
           />
         </View>
@@ -315,9 +350,7 @@ const FeedConfigurationModal = ({
               onBlur={onBlur}
               onChangeText={(value) => onChange(value)}
               value={value}
-              errorMessage={
-                errors.playIconWidth ? 'Please enter correct width' : undefined
-              }
+              errorMessage={playIconWidthErrorMessage}
               rightIcon={
                 <TouchableOpacity
                   onPress={() => {
@@ -333,6 +366,8 @@ const FeedConfigurationModal = ({
           name="playIconWidth"
           rules={{
             pattern: Patterns.number,
+            min: 0,
+            max: 100,
           }}
         />
       </View>
@@ -345,18 +380,13 @@ const FeedConfigurationModal = ({
       transparent={true}
       visible={visible}
       onRequestClose={() => {
+        syncFormValuesFromConfiguration(feedConfiguration);
         if (onRequestClose) {
           onRequestClose();
         }
       }}
     >
-      <TouchableWithoutFeedback
-        onPress={() => {
-          if (onRequestClose) {
-            onRequestClose();
-          }
-        }}
-      >
+      <TouchableWithoutFeedback onPress={() => {}}>
         <View style={styles.content}>
           <View
             style={{
@@ -378,6 +408,7 @@ const FeedConfigurationModal = ({
                   marginRight: 20,
                 }}
                 onPress={() => {
+                  syncFormValuesFromConfiguration(feedConfiguration);
                   if (onRequestClose) {
                     onRequestClose();
                   }
@@ -393,7 +424,7 @@ const FeedConfigurationModal = ({
                   marginRight: 20,
                 }}
                 onPress={() => {
-                  reset();
+                  syncFormValuesFromConfiguration(defaultFeedConfiguration);
                 }}
                 title="Reset"
               />

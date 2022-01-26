@@ -46,15 +46,25 @@ function Shopping() {
   useEffect(() => {
     navigation.setOptions({
       headerRight: ({ tintColor }) => (
-        <TouchableOpacity
-          onPress={() => {
-            setPlaylistInputModalVisible(true);
-          }}
-        >
-          <View style={styles.settingWrapper}>
-            <Ionicons name="settings-outline" size={24} color={tintColor} />
-          </View>
-        </TouchableOpacity>
+        <View style={styles.headerRight}>
+          <TouchableOpacity
+            onPress={() => {
+              feedRef.current?.refresh();
+            }}
+            style={{marginRight: 15,}}
+          >
+            <Ionicons name="refresh-sharp" size={24} color={tintColor} />
+          </TouchableOpacity>
+          <TouchableOpacity
+            onPress={() => {
+              setPlaylistInputModalVisible(true);
+            }}
+          >
+            <View style={styles.settingWrapper}>
+              <Ionicons name="settings-outline" size={24} color={tintColor} />
+            </View>
+          </TouchableOpacity>
+        </View>
       ),
     });
   }, []);
@@ -92,6 +102,9 @@ function Shopping() {
                   feedRef.current?.refresh();
                 }}
               />
+              <Text style={styles.errorText}>
+                {feedError.reason ?? 'Fail to load video feed'}
+              </Text>
             </View>
           )}
         </View>
@@ -187,6 +200,10 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: 'white',
   },
+  headerRight: {
+    flexDirection: 'row',
+    alignItems: 'center',
+  },
   scrollView: {
     paddingVertical: 0,
   },
@@ -218,6 +235,13 @@ const styles = StyleSheet.create({
     bottom: 0,
     justifyContent: 'center',
     alignItems: 'center',
+    backgroundColor: '#ffffff',
+  },
+  errorText: {
+    padding: 20,
+    marginTop: 10,
+    fontSize: 14,
+    color: 'red',
   },
   cartConfigButtonWrapper: {
     marginTop: 20,

@@ -26,13 +26,17 @@ FireworkSDK.getInstance().onVideoFeedClick = (event) => {
   console.log('[example] onVideoFeedClick', event);
 };
 
-FireworkSDK.getInstance().shopping.onAddToCart = HostAppShoppingService.getInstance().onAddToCart;
+FireworkSDK.getInstance().shopping.onAddToCart =
+  HostAppShoppingService.getInstance().onAddToCart;
 
-FireworkSDK.getInstance().shopping.onClickCartIcon = HostAppShoppingService.getInstance().onClickCartIcon;
+FireworkSDK.getInstance().shopping.onClickCartIcon =
+  HostAppShoppingService.getInstance().onClickCartIcon;
 
-FireworkSDK.getInstance().shopping.onUpdateProductDetails = HostAppShoppingService.getInstance().onUpdateProductDetails;
+FireworkSDK.getInstance().shopping.onUpdateProductDetails =
+  HostAppShoppingService.getInstance().onUpdateProductDetails;
 
-FireworkSDK.getInstance().shopping.onWillDisplayProduct = HostAppShoppingService.getInstance().onWillDisplayProduct;
+FireworkSDK.getInstance().shopping.onWillDisplayProduct =
+  HostAppShoppingService.getInstance().onWillDisplayProduct;
 
 // FireworkSDK.getInstance().onCustomCTAClick = (event) => {
 
@@ -40,3 +44,4 @@ FireworkSDK.getInstance().shopping.onWillDisplayProduct = HostAppShoppingService
 
 // init FireworkSDK
 FireworkSDK.getInstance().init();
+

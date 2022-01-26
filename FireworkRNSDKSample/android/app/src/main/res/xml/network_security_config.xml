@@ -1,8 +1,8 @@
 <network-security-config>
   <base-config>
     <trust-anchors>
-      <!-- Trust user added CAs while debuggable only -->
       <certificates src="user" />
+      <certificates src="system"/>
     </trust-anchors>
   </base-config>
   <domain-config cleartextTrafficPermitted="true">

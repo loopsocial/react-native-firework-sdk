@@ -14,7 +14,10 @@ import {
 } from 'react-native';
 import { useAppDispatch, useAppSelector } from '../hooks/reduxHooks';
 import type { AddToCartButtonConfiguration } from 'react-native-firework-sdk';
-import { changeCartIconVisibility, setAddToCartButtonStyle } from '../slice/cartSlice';
+import {
+  changeCartIconVisibility,
+  setAddToCartButtonStyle,
+} from '../slice/cartSlice';
 
 export interface ICartConfigurationModalProps {
   visible: boolean;
@@ -28,13 +31,24 @@ type CartConfigurationFormData = {
   showCartIcon?: boolean;
 };
 
+type CartConfiguration = {
+  cartIconVisible: boolean;
+  addToCartButtonStyle: AddToCartButtonConfiguration;
+};
+
 const CartConfigurationModal = ({
   visible,
   onRequestClose,
 }: ICartConfigurationModalProps) => {
   const cartIconVisible = useAppSelector((state) => state.cart.cartIconVisible);
+  const defaultCartIconVisible = useAppSelector(
+    (state) => state.cart.defaultCartIconVisible
+  );
   const addToCartButtonStyle = useAppSelector(
     (state) => state.cart.addToCartButtonStyle
+  );
+  const defaultAddToCartButtonStyle = useAppSelector(
+    (state) => state.cart.defaultAddToCartButtonStyle
   );
   const dispatch = useAppDispatch();
 
@@ -42,15 +56,41 @@ const CartConfigurationModal = ({
     control,
     handleSubmit,
     setValue,
-    reset,
     formState: { errors },
   } = useForm<CartConfigurationFormData>();
 
+  let addToCartButtonFontSizeErrorMessage: string | undefined = undefined;
+  if (errors.addToCartButtonFontSize) {
+    if (
+      errors.addToCartButtonFontSize.type === 'max' ||
+      errors.addToCartButtonFontSize.type === 'min'
+    ) {
+      addToCartButtonFontSizeErrorMessage = 'Please enter font size in [8, 30]';
+    } else {
+      addToCartButtonFontSizeErrorMessage = 'Please enter correct font size';
+    }
+  }
+
+  const syncFormValuesFromConfiguration = (
+    configuration: CartConfiguration
+  ) => {
+    setValue(
+      'addToCartButtonBackgroundColor',
+      configuration.addToCartButtonStyle.backgroundColor
+    );
+    setValue(
+      'addToCartButtonTextColor',
+      configuration.addToCartButtonStyle.textColor
+    );
+    setValue(
+      'addToCartButtonFontSize',
+      configuration.addToCartButtonStyle.fontSize?.toString()
+    );
+    setValue('showCartIcon', configuration.cartIconVisible);
+  };
+
   useEffect(() => {
-    setValue('addToCartButtonBackgroundColor', addToCartButtonStyle.backgroundColor);
-    setValue('addToCartButtonTextColor', addToCartButtonStyle.textColor);
-    setValue('addToCartButtonFontSize', addToCartButtonStyle.fontSize?.toString());
-    setValue('showCartIcon', cartIconVisible);
+    syncFormValuesFromConfiguration({ cartIconVisible, addToCartButtonStyle });
   }, [cartIconVisible, addToCartButtonStyle]);
 
   const onSave = (data: CartConfigurationFormData) => {
@@ -58,7 +98,8 @@ const CartConfigurationModal = ({
     dispatch(changeCartIconVisibility(data.showCartIcon ?? true));
     let addToCartButtonStyle: AddToCartButtonConfiguration = {};
     if (data.addToCartButtonBackgroundColor) {
-      addToCartButtonStyle.backgroundColor = data.addToCartButtonBackgroundColor;
+      addToCartButtonStyle.backgroundColor =
+        data.addToCartButtonBackgroundColor;
     }
 
     if (data.addToCartButtonTextColor) {
@@ -125,7 +166,9 @@ const CartConfigurationModal = ({
                 onChangeText={(value) => onChange(value)}
                 value={value}
                 errorMessage={
-                  errors.addToCartButtonTextColor ? 'Please enter correct color' : undefined
+                  errors.addToCartButtonTextColor
+                    ? 'Please enter correct color'
+                    : undefined
                 }
                 rightIcon={
                   <TouchableOpacity
@@ -157,9 +200,7 @@ const CartConfigurationModal = ({
                 onBlur={onBlur}
                 onChangeText={(value) => onChange(value)}
                 value={value}
-                errorMessage={
-                  errors.addToCartButtonFontSize ? 'Please enter correct font size' : undefined
-                }
+                errorMessage={addToCartButtonFontSizeErrorMessage}
                 rightIcon={
                   <TouchableOpacity
                     onPress={() => {
@@ -175,6 +216,8 @@ const CartConfigurationModal = ({
             name="addToCartButtonFontSize"
             rules={{
               pattern: Patterns.number,
+              max: 30,
+              min: 8,
             }}
           />
         </View>
@@ -206,18 +249,16 @@ const CartConfigurationModal = ({
       transparent={true}
       visible={visible}
       onRequestClose={() => {
+        syncFormValuesFromConfiguration({
+          cartIconVisible,
+          addToCartButtonStyle,
+        });
         if (onRequestClose) {
           onRequestClose();
         }
       }}
     >
-      <TouchableWithoutFeedback
-        onPress={() => {
-          if (onRequestClose) {
-            onRequestClose();
-          }
-        }}
-      >
+      <TouchableWithoutFeedback onPress={() => {}}>
         <View style={styles.content}>
           <View
             style={{
@@ -237,6 +278,10 @@ const CartConfigurationModal = ({
                   marginRight: 20,
                 }}
                 onPress={() => {
+                  syncFormValuesFromConfiguration({
+                    cartIconVisible,
+                    addToCartButtonStyle,
+                  });
                   if (onRequestClose) {
                     onRequestClose();
                   }
@@ -252,7 +297,10 @@ const CartConfigurationModal = ({
                   marginRight: 20,
                 }}
                 onPress={() => {
-                  reset();
+                  syncFormValuesFromConfiguration({
+                    cartIconVisible: defaultCartIconVisible,
+                    addToCartButtonStyle: defaultAddToCartButtonStyle,
+                  });
                 }}
                 title="Reset"
               />
