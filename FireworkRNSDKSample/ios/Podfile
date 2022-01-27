@@ -10,6 +10,16 @@ target 'FireworkSdkExample' do
   use_react_native!(:path => config["reactNativePath"])
 
 
+
+# admob
+  # pod 'FireworkVideoGAMSupport', '0.1.0'
+  # pod 'Google-Mobile-Ads-SDK', '8.13.0'
+
+# ima
+  # pod 'FireworkVideoGIMASupport', '0.1.0'
+  # pod 'GoogleAds-IMA-iOS-SDK', '~> 3.14.5'
+
+  
   # Enables Flipper.
     #
     # Note that if you have use_frameworks! enabled, Flipper will not work and

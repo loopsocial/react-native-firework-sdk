@@ -4,8 +4,6 @@ project(':react-native-vector-icons').projectDir = new File(rootProject.projectD
 apply from: file("../node_modules/@react-native-community/cli-platform-android/native_modules.gradle"); applyNativeModulesSettingsGradle(settings)
 include ':app'
 
-include ':firework-react-native-sdk'
-project(':firework-react-native-sdk').projectDir = new File(rootProject.projectDir, '../../android')
 
 // local firework sdk library
 //include ':fireworklibrary'

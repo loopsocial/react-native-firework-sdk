@@ -1,14 +1,11 @@
-## CHANGELOG
+# CHANGELOG
 
-## [1.0.0] - 2022-1-26
+## [1.0.0]
 
 ### Added
 
-- FireworkSDK RN module, init sdk and global 
-- Vide Feed UI Component
+- FireworkSDK RN module, which supports the sdk initialization and global configuration
+- Video Feed UI Component
 - Video Shopping module
-- Ads support module
+- Ad support
 - Event callback notification
-- Demo Project for host app developer
-- Public API document
-- CICD release process
