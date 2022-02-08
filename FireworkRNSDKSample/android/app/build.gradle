@@ -137,15 +137,6 @@ def fw_appid_staging = ""
 android {
   compileSdkVersion rootProject.ext.compileSdkVersion
 
-  dataBinding {
-    enabled = true
-  }
-
-  compileOptions {
-    sourceCompatibility JavaVersion.VERSION_1_8
-    targetCompatibility JavaVersion.VERSION_1_8
-  }
-
   defaultConfig {
     applicationId "com.loopnow.bogano"
     minSdkVersion rootProject.ext.minSdkVersion
@@ -248,17 +239,6 @@ task copyDownloadableDepsToLibs(type: Copy) {
 
 apply from: file("../../node_modules/react-native-vector-icons/fonts.gradle")
 apply from: file("../../node_modules/@react-native-community/cli-platform-android/native_modules.gradle"); applyNativeModulesAppBuildGradle(project)
-
-
-// AAPT: error: resource android:attr/lStar not found
-// solution 1: some library may dependent on 1.7.x, you can force it to 1.6.0
-// solution 2: upgrade compileSdkVersion and targetSdkVersion to 31
-configurations.all {
-  resolutionStrategy {
-    force 'androidx.core:core-ktx:1.6.0'
-    force 'androidx.core:core:1.6.0'
-  }
-}
 
 apply from: 'google.gradle'
 apply from: 'version.gradle'

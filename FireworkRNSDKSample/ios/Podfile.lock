@@ -210,7 +210,7 @@ PODS:
   - React-jsinspector (0.66.4)
   - React-logger (0.66.4):
     - glog
-  - react-native-firework-sdk (1.0.0-beta.2):
+  - react-native-firework-sdk (1.0.1):
     - FireworkVideo (= 0.13.0)
     - React-Core
   - react-native-safe-area-context (3.3.2):
@@ -420,8 +420,8 @@ SPEC CHECKSUMS:
   React-jsiexecutor: 94ce921e1d8ce7023366873ec371f3441383b396
   React-jsinspector: d0374f7509d407d2264168b6d0fad0b54e300b85
   React-logger: 933f80c97c633ee8965d609876848148e3fef438
-  react-native-firework-sdk: ff79842500a23efb1d1589845767bf162d7bc7be
-  react-native-safe-area-context: 5cf05f49df9d17261e40e518481f2e334c6cd4b5
+  react-native-firework-sdk: 0420c3dd87de20f8bf152fa1a8ed367b52b04b08
+  react-native-safe-area-context: 584dc04881deb49474363f3be89e4ca0e854c057
   React-perflogger: 93075d8931c32cd1fce8a98c15d2d5ccc4d891bd
   React-RCTActionSheet: 7d3041e6761b4f3044a37079ddcb156575fb6d89
   React-RCTAnimation: 743e88b55ac62511ae5c2e22803d4f503f2a3a13
@@ -438,6 +438,6 @@ SPEC CHECKSUMS:
   RNVectorIcons: 4143ba35feebab8fdbe6bc43d1e776b393d47ac8
   Yoga: e7dc4e71caba6472ff48ad7d234389b91dadc280
 
-PODFILE CHECKSUM: 894ad74bde7c2b460e0eb857aa526e37086e49f3
+PODFILE CHECKSUM: fcc7194928e0adda15a7f04e3e005f9f735dc61c
 
 COCOAPODS: 1.11.2
