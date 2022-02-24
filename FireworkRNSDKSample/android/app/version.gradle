@@ -1,16 +1,5 @@
 import java.util.regex.Pattern
 
-apply plugin: 'com.zen.lib.analysis'
-
-libReport {
-  output = [
-    "txt", "html" // default
-  ]
-  ignore = [
-    "com.android.support:support-v4"
-  ]
-}
-
 ext {
   commitId = "git rev-parse --short=5 HEAD".execute([], rootDir).text.trim()
   commitTime = "git log HEAD -1 --pretty=%cd --date=iso".execute([], rootDir).text.trim()
@@ -152,11 +141,6 @@ static def isVersionCodeChanged(project) {
 
 afterEvaluate {
   try {
-    dependenciesTree.dependsOn libReportReleaseRuntimeClasspath
-  } catch (Exception e) {
-    e.printStackTrace()
-  }
-  try {
     preBuild.dependsOn libReportReleaseRuntimeClasspath
   } catch (Exception e) {
     e.printStackTrace()
@@ -183,31 +167,6 @@ afterEvaluate {
     } catch (Exception e) {
       e.printStackTrace()
     }
-  }
-}
-
-task dependenciesTree() {
-  doLast {
-    if (project.name != 'app') {
-      return
-    }
-    def file = project.file("build/reports/zen/analysis/library/releaseRuntimeClasspath/Tree.txt")
-    if (!file.exists()) {
-      return
-    }
-    def set = new TreeSet<String>()
-    for (line in file.readLines()) {
-      if (!line.startsWith(" ") && line.matches("\\w{3}\t\\w.*")) {
-        set.add(line.substring(4).replaceFirst("^project", "-project"))
-      }
-    }
-    def version = "git log --pretty=format:\"%cd %H\" --date=iso HEAD -1".execute([], rootDir).text.trim()
-    def outFile = project.file("dependencies.txt")
-    outFile.write("")
-    outFile.append(version)
-    outFile.append("\r\n\r\n")
-    outFile.append(set.join("\r\n"))
-    outFile.append("\r\n")
   }
 }
 
