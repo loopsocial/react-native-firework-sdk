@@ -3,5 +3,6 @@ export default {
   hexColor: /^#(?:[0-9a-fA-F]{3,4}){1,2}$/gi,
   number: /^\d+$/gi,
   channelId: /^\S+$/gi,
-  playListId: /^\S+$/gi,
+  playlistId: /^\S+$/gi,
+  playlistGroupId: /^\S+$/gi,
 };

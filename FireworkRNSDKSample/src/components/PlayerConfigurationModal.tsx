@@ -10,7 +10,7 @@ import {
   Text,
   TouchableOpacity,
   View,
-  TouchableWithoutFeedback,
+  ScrollView,
 } from 'react-native';
 import type {
   VideoPlayerConfiguration,
@@ -33,6 +33,8 @@ type PlayerConfigurationFormData = {
   ctaBackgroundColor?: string;
   ctaTextColor?: string;
   ctaFontSize?: string;
+  showPlaybackButton?: boolean;
+  showMuteButton?: boolean;
 };
 
 const PlayStyleList: VideoPlayerStyle[] = ['full', 'fit'];
@@ -96,6 +98,7 @@ const PlayerConfigurationModal = ({
       } else {
         setValue('videoCompleteAction', undefined);
       }
+
       setValue('showShareButton', configuration.showShareButton);
       setValue(
         'ctaBackgroundColor',
@@ -106,6 +109,8 @@ const PlayerConfigurationModal = ({
         'ctaFontSize',
         configuration.ctaButtonStyle?.fontSize?.toString()
       );
+      setValue('showPlaybackButton', configuration.showPlaybackButton);
+      setValue('showMuteButton', configuration.showMuteButton);
     } else {
       reset();
     }
@@ -135,6 +140,8 @@ const PlayerConfigurationModal = ({
             ? parseInt(data.ctaFontSize)
             : undefined,
       };
+      configuration.showPlaybackButton = data.showPlaybackButton;
+      configuration.showMuteButton = data.showMuteButton;
       console.log('configuration', configuration);
       onSubmit(configuration);
     }
@@ -152,14 +159,14 @@ const PlayerConfigurationModal = ({
         }
       }}
     >
-      <TouchableWithoutFeedback onPress={() => {}}>
-        <View style={styles.content}>
-          <View
-            style={{
-              ...CommonStyles.formContainer,
-              ...styles.formContainerExtra,
-            }}
-          >
+      <View style={styles.content}>
+        <View
+          style={{
+            ...CommonStyles.formContainer,
+            ...styles.formContainerExtra,
+          }}
+        >
+          <ScrollView>
             <Text style={styles.sectionTitle}>Video Player Configuration</Text>
             <View style={styles.formItemRow}>
               <View style={{ ...styles.formItem }}>
@@ -316,6 +323,40 @@ const PlayerConfigurationModal = ({
                 />
               </View>
             </View>
+            <View style={styles.formItemRow}>
+              <View style={{ ...styles.formItem, marginRight: 10 }}>
+                <Controller
+                  control={control}
+                  render={({ field: { onChange, value } }) => {
+                    return (
+                      <CheckBox
+                        center
+                        title={`Show playback${'\n'}button`}
+                        checked={value}
+                        onPress={() => onChange(!value)}
+                      />
+                    );
+                  }}
+                  name="showPlaybackButton"
+                />
+              </View>
+              <View style={styles.formItem}>
+                <Controller
+                  control={control}
+                  render={({ field: { onChange, value } }) => {
+                    return (
+                      <CheckBox
+                        center
+                        title={`Show mute${'\n'}button`}
+                        checked={value}
+                        onPress={() => onChange(!value)}
+                      />
+                    );
+                  }}
+                  name="showMuteButton"
+                />
+              </View>
+            </View>
             <View style={{ ...CommonStyles.formItem, ...styles.buttonList }}>
               <Button
                 type="outline"
@@ -356,9 +397,9 @@ const PlayerConfigurationModal = ({
                 title="Save"
               />
             </View>
-          </View>
+          </ScrollView>
         </View>
-      </TouchableWithoutFeedback>
+      </View>
     </Modal>
   );
 };
@@ -370,6 +411,7 @@ const styles = StyleSheet.create({
     alignItems: 'stretch',
     backgroundColor: 'rgba(0, 0, 0, 0.3)',
     paddingHorizontal: 20,
+    paddingVertical: 30,
   },
   formContainerExtra: {
     backgroundColor: 'white',

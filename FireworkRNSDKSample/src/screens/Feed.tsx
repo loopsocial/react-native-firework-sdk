@@ -33,6 +33,7 @@ const Feed = () => {
   const source = route.params?.source || 'discover';
   const channel = route.params?.channel;
   const playlist = route.params?.playlist;
+  const playlistGroup =route.params?.playlistGroup;
 
   const feedRef = useRef<VideoFeed>(null);
   const [feedError, setFeedError] = useState<FWError | undefined>(undefined);
@@ -100,6 +101,7 @@ const Feed = () => {
           source={source}
           channel={channel}
           playlist={playlist}
+          playlistGroup={playlistGroup}
           mode={mode}
           videoFeedConfiguration={feedConfiguration}
           videoPlayerConfiguration={playerConfiguration}
