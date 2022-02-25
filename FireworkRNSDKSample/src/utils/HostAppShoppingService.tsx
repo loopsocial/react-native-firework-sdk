@@ -75,35 +75,38 @@ export default class HostAppShoppingService {
   public onUpdateProductDetails: UpdateProductDetailsCallback = async (
     event: UpdateProductDetailsEvent
   ) => {
-    console.log('[example] onUpdateProductDetails', event);
-
+    console.log('[example] onUpdateProductDetails event', event);
+    let productList: Product[] = [];
+    const productIds = event.productIds ?? [];
     try {
-      const shopifyProduct = await ShopifyClient.getInstance().fetchProduct(
-        event.productId
-      );
-      let product: Product = { productId: event.productId };
-      product.name = shopifyProduct.title;
-      product.description = (shopifyProduct as any).descriptionHtml;
-      product.units = shopifyProduct.variants.map((shopifyProductVariant) => {
-        const {
-          amount,
-          currencyCode,
-        }: { amount: string; currencyCode: string } = (
-          shopifyProductVariant as any
-        ).priceV2;
-
-        return {
-          unitId: ShopifyClient.getInstance().parseId(
-            `${shopifyProductVariant.id}`
-          ),
-          name: shopifyProductVariant.title,
-          price: { amount: parseFloat(amount), currencyCode },
-        };
-      });
-
-      return product;
+      for (let productId of productIds) {
+        const shopifyProduct = await ShopifyClient.getInstance().fetchProduct(
+          productId
+        );
+        let product: Product = { productId: productId };
+        product.name = shopifyProduct.title;
+        product.description = (shopifyProduct as any).descriptionHtml;
+        product.units = shopifyProduct.variants.map((shopifyProductVariant) => {
+          const {
+            amount,
+            currencyCode,
+          }: { amount: string; currencyCode: string } = (
+            shopifyProductVariant as any
+          ).priceV2;
+  
+          return {
+            unitId: ShopifyClient.getInstance().parseId(
+              `${shopifyProductVariant.id}`
+            ),
+            name: shopifyProductVariant.title,
+            price: { amount: parseFloat(amount), currencyCode },
+          };
+        });
+        productList.push(product);
+      }
+      return productList;
     } catch (e) {}
-    return null;
+    return [];
   };
 
   public onWillDisplayProduct?: WillDisplayProductCallback = async (

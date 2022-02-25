@@ -10,7 +10,7 @@
     "bundle-ios": "react-native bundle --entry-file index.js --platform ios --dev false --bundle-output ios/main.jsbundle --assets-dest ios"
   },
   "dependencies": {
-  "react-native-firework-sdk": "^1.0.5",
+  "react-native-firework-sdk": "^1.0.6-beta.2",
     "@expo/react-native-action-sheet": "^3.12.0",
     "@react-navigation/bottom-tabs": "^6.0.9",
     "@react-navigation/native": "^6.0.6",

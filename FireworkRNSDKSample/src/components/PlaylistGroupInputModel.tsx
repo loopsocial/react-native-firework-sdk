@@ -13,52 +13,42 @@ import {
 } from 'react-native';
 import Patterns from '../constants/Patterns';
 
-export interface IPlaylistInputModalProps {
+export interface IPlaylistGroupInputModalProps {
   visible: boolean;
   onRequestClose?: () => void;
-  onSubmit?: (channelId: string, playlistId: string) => void;
+  onSubmit?: (playlistGroupId: string) => void;
 }
 
-type PlaylistInputFormData = {
-  channelId: string;
-  playlistId: string;
+type PlaylistGroupInputFormData = {
+  playlistGroupId: string;
 };
 
-const PlaylistInputModal = ({
+const PlaylistGroupInputModal = ({
   visible,
   onRequestClose,
   onSubmit,
-}: IPlaylistInputModalProps) => {
+}: IPlaylistGroupInputModalProps) => {
   const {
     control,
     handleSubmit,
     setValue,
     formState: { errors },
     reset,
-  } = useForm<PlaylistInputFormData>();
+  } = useForm<PlaylistGroupInputFormData>();
 
-  const onUse = (data: PlaylistInputFormData) => {
+  const onUse = (data: PlaylistGroupInputFormData) => {
     if (onSubmit) {
-      onSubmit(data.channelId, data.playlistId);
+      onSubmit(data.playlistGroupId);
     }
     reset();
   };
 
-  let channelIdErrorMessage: string | undefined = undefined;
-  if (errors.channelId) {
-    if (errors.channelId.type === 'pattern') {
-      channelIdErrorMessage = 'Please enter correct channel id';
+  let playlistGroupIdErrorMessage: string | undefined = undefined;
+  if (errors.playlistGroupId) {
+    if (errors.playlistGroupId.type === 'pattern') {
+      playlistGroupIdErrorMessage = 'Please enter correct playlist group id';
     } else {
-      channelIdErrorMessage = 'Please enter channel id';
-    }
-  }
-
-  let playlistIdErrorMessage: string | undefined = undefined;
-  if (errors.playlistId) {
-    if (errors.playlistId.type === 'pattern') {
-      playlistIdErrorMessage = 'Please enter correct playlist id';
-    } else {
-      playlistIdErrorMessage = 'Please enter playlist id';
+      playlistGroupIdErrorMessage = 'Please enter playlist group id';
     }
   }
 
@@ -83,38 +73,7 @@ const PlaylistInputModal = ({
             }}
           >
             <View style={CommonStyles.formItem}>
-              <Text style={CommonStyles.formItemTitle}>Channel id</Text>
-              <Controller
-                control={control}
-                render={({ field: { onChange, onBlur, value } }) => (
-                  <Input
-                    placeholder="Enter channel id"
-                    onBlur={onBlur}
-                    onChangeText={(value) => onChange(value)}
-                    value={value}
-                    rightIcon={
-                      <TouchableOpacity
-                        onPress={() => {
-                          setValue('channelId', '');
-                        }}
-                      >
-                        <Ionicons name="close" size={24} />
-                      </TouchableOpacity>
-                    }
-                    errorMessage={channelIdErrorMessage}
-                    autoCompleteType={undefined}
-                  />
-                )}
-                name="channelId"
-                rules={{
-                  required: true,
-                  pattern: Patterns.channelId,
-                }}
-                defaultValue=""
-              />
-            </View>
-            <View style={CommonStyles.formItem}>
-              <Text style={CommonStyles.formItemTitle}>Playlist id</Text>
+              <Text style={CommonStyles.formItemTitle}>Playlist Group id</Text>
               <Controller
                 control={control}
                 render={({ field: { onChange, onBlur, value } }) => (
@@ -126,20 +85,20 @@ const PlaylistInputModal = ({
                     rightIcon={
                       <TouchableOpacity
                         onPress={() => {
-                          setValue('playlistId', '');
+                          setValue('playlistGroupId', '');
                         }}
                       >
                         <Ionicons name="close" size={24} />
                       </TouchableOpacity>
                     }
-                    errorMessage={playlistIdErrorMessage}
+                    errorMessage={playlistGroupIdErrorMessage}
                     autoCompleteType={undefined}
                   />
                 )}
-                name="playlistId"
+                name="playlistGroupId"
                 rules={{
                   required: true,
-                  pattern: Patterns.playlistId,
+                  pattern: Patterns.playlistGroupId,
                 }}
                 defaultValue=""
               />
@@ -196,4 +155,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default PlaylistInputModal;
+export default PlaylistGroupInputModal;

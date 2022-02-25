@@ -1,22 +1,29 @@
-import ChannelInputModal from '../components/ChannelInputModal';
 import React, { useState } from 'react';
-import { ListItem } from 'react-native-elements';
-import { useActionSheet } from '@expo/react-native-action-sheet';
-import { useNavigation } from '@react-navigation/native';
-import {
-  ScrollView,
-  View,
-  StyleSheet,
-  GestureResponderEvent,
-} from 'react-native';
-import type { BottomTabNavigationProp } from '@react-navigation/bottom-tabs';
-import type { NativeStackNavigationProp } from '@react-navigation/native-stack';
-import type { TabParamsList } from './paramList/TabParamsList';
-import type { CompositeNavigationProp } from '@react-navigation/native';
-import type { RootStackParamList } from './paramList/RootStackParamList';
-import PlaylistInputModal from '../components/PlaylistInputModal';
-import { defaultChannelIdArray, defaultPlaylistInfoArray } from '../config/Feed.json';
 
+import {
+  GestureResponderEvent,
+  ScrollView,
+  StyleSheet,
+  View,
+} from 'react-native';
+import { ListItem } from 'react-native-elements';
+
+import { useActionSheet } from '@expo/react-native-action-sheet';
+import type { BottomTabNavigationProp } from '@react-navigation/bottom-tabs';
+import type { CompositeNavigationProp } from '@react-navigation/native';
+import { useNavigation } from '@react-navigation/native';
+import type { NativeStackNavigationProp } from '@react-navigation/native-stack';
+
+import ChannelInputModal from '../components/ChannelInputModal';
+import PlaylistGroupInputModal from '../components/PlaylistGroupInputModel';
+import PlaylistInputModal from '../components/PlaylistInputModal';
+import {
+  defaultChannelIdArray,
+  defaultPlaylistGroupInfoArray,
+  defaultPlaylistInfoArray,
+} from '../config/Feed.json';
+import type { RootStackParamList } from './paramList/RootStackParamList';
+import type { TabParamsList } from './paramList/TabParamsList';
 
 type FeedLayoutsScreenNavigationProp = CompositeNavigationProp<
   BottomTabNavigationProp<TabParamsList, 'FeedLayouts'>,
@@ -34,6 +41,8 @@ export default function FeedLayouts() {
   const [channelInputModalVisible, setChannelInputModalVisible] =
     useState(false);
   const [playlistInputModalVisible, setPlaylistInputModalVisible] =
+    useState(false);
+  const [playlistGroupInputModalVisible, setPlaylistGroupInputModalVisible] =
     useState(false);
 
   const dataList: FeedListItemData[] = [
@@ -75,7 +84,10 @@ export default function FeedLayouts() {
       title: 'Playlist Feed',
       pressCallback: (_) => {
         const options = [
-          ...defaultPlaylistInfoArray.map((item: any) => `ChannelId: ${item.channelId} PlaylistId: ${item.playlistId}`),
+          ...defaultPlaylistInfoArray.map(
+            (item: any) =>
+              `ChannelId: ${item.channelId} PlaylistId: ${item.playlistId}`
+          ),
           'Custom',
           'Cancel',
         ];
@@ -98,6 +110,41 @@ export default function FeedLayouts() {
                 });
               } else if (buttonIndex === customButtonIndex) {
                 setPlaylistInputModalVisible(true);
+              }
+            }
+          }
+        );
+      },
+    },
+    {
+      title: 'Playlist Group Feed',
+      pressCallback: (_) => {
+        const options = [
+          ...defaultPlaylistGroupInfoArray.map(
+            (item: any) => `PlaylistGroupId: ${item.playlistGroupId}`
+          ),
+          'Custom',
+          'Cancel',
+        ];
+        const cancelButtonIndex = defaultPlaylistGroupInfoArray.length + 1;
+        const customButtonIndex = defaultPlaylistGroupInfoArray.length;
+        showActionSheetWithOptions(
+          {
+            title: 'Select Playlist Group',
+            options,
+            cancelButtonIndex,
+          },
+          (buttonIndex) => {
+            if (typeof buttonIndex === 'number') {
+              if (buttonIndex < customButtonIndex) {
+                const playlistGroupInfo =
+                  defaultPlaylistGroupInfoArray[buttonIndex];
+                navigation.navigate('Feed', {
+                  source: 'playlistGroup',
+                  playlistGroup: playlistGroupInfo.playlistGroupId,
+                });
+              } else if (buttonIndex === customButtonIndex) {
+                setPlaylistGroupInputModalVisible(true);
               }
             }
           }
@@ -146,6 +193,20 @@ export default function FeedLayouts() {
             source: 'playlist',
             channel: channelId,
             playlist: playlistId,
+          });
+        }}
+      />
+      <PlaylistGroupInputModal
+        visible={playlistGroupInputModalVisible}
+        onRequestClose={() => {
+          setPlaylistGroupInputModalVisible(false);
+        }}
+        onSubmit={(playlistGroupId) => {
+          console.log('playlistGroupId', playlistGroupId);
+          setPlaylistGroupInputModalVisible(false);
+          navigation.navigate('Feed', {
+            source: 'playlistGroup',
+            playlistGroup: playlistGroupId,
           });
         }}
       />
