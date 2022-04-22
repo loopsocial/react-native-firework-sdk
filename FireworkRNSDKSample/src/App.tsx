@@ -21,6 +21,7 @@ import type { RootStackParamList } from './screens/paramList/RootStackParamList'
 import SetShareBaseURL from './screens/SetShareBaseURL';
 import Tab from './screens/Tab';
 import { store } from './store';
+import SetAdBadgeConfiguration from './screens/SetAdBadgeConfiguration';
 
 const StackNavigator = createNativeStackNavigator<RootStackParamList>();
 
@@ -54,6 +55,11 @@ const FWNavigationContainer = () => {
           name="SetShareBaseURL"
           component={SetShareBaseURL}
           options={{ title: 'Set Share Base URL' }}
+        />
+        <StackNavigator.Screen
+          name="SetAdBadgeConfiguration"
+          component={SetAdBadgeConfiguration}
+          options={{ title: 'Set Ad Badge Configuration' }}
         />
         <StackNavigator.Screen name="Feed" component={Feed} />
         <StackNavigator.Screen name="Checkout" component={Checkout} />

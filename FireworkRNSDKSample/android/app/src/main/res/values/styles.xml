@@ -47,4 +47,18 @@
     <item name="android:textSize">16sp</item>
   </style>
 
+  <!--  Apply your feed custom "ad badge" Label by "FwAdBadgeOnFeedStyle" style.-->
+  <style name="FwAdBadgeOnFeedStyle">
+    <item name="android:background">@null</item>
+    <item name="android:textColor">@android:color/white</item>
+    <item name="android:textSize">@dimen/fw_font_size_14</item>
+  </style>
+
+  <!--  Apply your player custom "ad badge" Label by "FwAdBadgeOnPlayerStyle" style.-->
+  <style name="FwAdBadgeOnPlayerStyle" >
+    <item name="android:background">@null</item>
+    <item name="android:textColor">@android:color/white</item>
+    <item name="android:textSize">@dimen/fw_font_size_16</item>
+  </style>
+
 </resources>

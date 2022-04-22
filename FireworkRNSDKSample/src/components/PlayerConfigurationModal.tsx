@@ -16,6 +16,7 @@ import type {
   VideoPlayerConfiguration,
   VideoPlayerStyle,
   VideoPlayerCompleteAction,
+  VideoLaunchBehavior,
 } from 'react-native-firework-sdk';
 
 export interface IPlayerConfigurationModalProps {
@@ -35,12 +36,18 @@ type PlayerConfigurationFormData = {
   ctaFontSize?: string;
   showPlaybackButton?: boolean;
   showMuteButton?: boolean;
+  launchBehavior?: number;
 };
 
 const PlayStyleList: VideoPlayerStyle[] = ['full', 'fit'];
 const VideoCompleteActionList: VideoPlayerCompleteAction[] = [
   'loop',
   'advanceToNext',
+];
+
+const VideoLaunchBehaviorList: VideoLaunchBehavior[] = [
+  'default',
+  'muteOnFirstLaunch',
 ];
 
 const PlayerConfigurationModal = ({
@@ -111,6 +118,18 @@ const PlayerConfigurationModal = ({
       );
       setValue('showPlaybackButton', configuration.showPlaybackButton);
       setValue('showMuteButton', configuration.showMuteButton);
+      if (configuration.launchBehavior) {
+        const launchBehaviorIndex = VideoLaunchBehaviorList.indexOf(
+          configuration.launchBehavior
+        );
+        if (launchBehaviorIndex >= 0) {
+          setValue('launchBehavior', launchBehaviorIndex);
+        } else {
+          setValue('launchBehavior', undefined);
+        }
+      } else {
+        setValue('launchBehavior', undefined);
+      }
     } else {
       reset();
     }
@@ -142,6 +161,10 @@ const PlayerConfigurationModal = ({
       };
       configuration.showPlaybackButton = data.showPlaybackButton;
       configuration.showMuteButton = data.showMuteButton;
+      configuration.launchBehavior =
+      typeof data.launchBehavior === 'number'
+        ? VideoLaunchBehaviorList[data.launchBehavior]
+        : undefined;
       console.log('configuration', configuration);
       onSubmit(configuration);
     }
@@ -354,6 +377,24 @@ const PlayerConfigurationModal = ({
                     );
                   }}
                   name="showMuteButton"
+                />
+              </View>
+            </View>
+            <View style={styles.formItemRow}>
+              <View style={styles.formItem}>
+                <Text style={styles.formItemLabel}>Video launch behavior</Text>
+                <Controller
+                  control={control}
+                  render={({ field: { onChange, value } }) => (
+                    <ButtonGroup
+                      buttons={VideoLaunchBehaviorList}
+                      selectedIndex={value}
+                      onPress={(value) => {
+                        onChange(value);
+                      }}
+                    />
+                  )}
+                  name="launchBehavior"
                 />
               </View>
             </View>

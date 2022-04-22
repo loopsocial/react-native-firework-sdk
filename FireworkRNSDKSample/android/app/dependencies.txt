@@ -1,6 +1,6 @@
 
 
--project :firework-react-native-sdk
+-project :fireworksdk_bridge
 -project :react-native-safe-area-context
 -project :react-native-screens
 -project :react-native-vector-icons

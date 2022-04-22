@@ -141,11 +141,6 @@ static def isVersionCodeChanged(project) {
 
 afterEvaluate {
   try {
-    preBuild.dependsOn libReportReleaseRuntimeClasspath
-  } catch (Exception e) {
-    e.printStackTrace()
-  }
-  try {
     android.applicationVariants.all { variant ->
       def upVariantName = variant.name.substring(0, 1).toUpperCase() + variant.name.substring(1)
       project.task("createReleaseNotes$upVariantName") {

@@ -141,8 +141,8 @@ android {
     applicationId "com.loopnow.bogano"
     minSdkVersion rootProject.ext.minSdkVersion
     targetSdkVersion rootProject.ext.targetSdkVersion
-    versionCode 100002
-    versionName "1.0.0"
+    versionCode 101009
+    versionName "1.1.0"
   }
   splits {
     abi {
@@ -228,6 +228,7 @@ dependencies {
     implementation jscFlavor
   }
 
+  implementation project(':fireworksdk_bridge')
 }
 
 // Run this once to be able to run the application with BUCK

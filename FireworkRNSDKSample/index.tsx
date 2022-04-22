@@ -42,6 +42,14 @@ FireworkSDK.getInstance().shopping.onWillDisplayProduct =
 
 // };
 
+FireworkSDK.getInstance().liveStream.onLiveStreamEvent = (event) => {
+  console.log('[example] onLiveStreamEvent', event);
+};
+
+FireworkSDK.getInstance().liveStream.onLiveStreamChatEvent = (event) => {
+  console.log('[example] onLiveStreamChatEvent', event);
+};
+
 // init FireworkSDK
 FireworkSDK.getInstance().init();
 
