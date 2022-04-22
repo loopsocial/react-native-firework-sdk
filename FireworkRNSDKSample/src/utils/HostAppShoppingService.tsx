@@ -13,7 +13,7 @@ import type {
 
 import CartApp from '../CartApp';
 import type CartItem from '../models/CartItem';
-import { addCartItem } from '../slice/cartSlice';
+import { addCartItem } from '../slice/cartSlice'; 
 import { store } from '../store';
 import ShopifyClient from './ShopifyClient';
 

@@ -25,6 +25,8 @@ export function OpenVideoForm() {
     playerStyle: 'full',
     videoCompleteAction: 'advanceToNext',
     showShareButton: true,
+    showMuteButton: true,
+    showPlaybackButton: true,
   };
   const [playerConfiguration, setPlayerConfiguration] = useState<
     VideoPlayerConfiguration | undefined

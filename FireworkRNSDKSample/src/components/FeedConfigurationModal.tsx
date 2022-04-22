@@ -34,6 +34,7 @@ type FeedConfigurationFormData = {
   titlePosition?: number;
   hidePlayIcon?: boolean;
   playIconWidth?: string;
+  showAdBadge?: boolean;
 };
 
 const TitlePositionList: VideoFeedTitlePosition[] = ['stacked', 'nested'];
@@ -109,6 +110,7 @@ const FeedConfigurationModal = ({
       }
       setValue('hidePlayIcon', configuration.playIcon?.hidden);
       setValue('playIconWidth', configuration.playIcon?.iconWidth?.toString());
+      setValue('showAdBadge', configuration.showAdBadge);
     } else {
       reset();
     }
@@ -145,6 +147,7 @@ const FeedConfigurationModal = ({
             ? parseInt(data.playIconWidth)
             : undefined,
       };
+      configuration.showAdBadge = data.showAdBadge;
       console.log('configuration', configuration);
       onSubmit(configuration);
     }
@@ -374,6 +377,27 @@ const FeedConfigurationModal = ({
     </View>
   );
 
+  const showAdBadgeRow = (
+    <View style={styles.formItemRow}>
+      <View style={styles.formItem}>
+        <Controller
+          control={control}
+          render={({ field: { onChange, value } }) => {
+            return (
+              <CheckBox
+                center
+                title="Show Ad Badge"
+                checked={value}
+                onPress={() => onChange(!value)}
+              />
+            );
+          }}
+          name="showAdBadge"
+        />
+      </View>
+    </View>
+  );
+
   return (
     <Modal
       animationType="fade"
@@ -398,6 +422,7 @@ const FeedConfigurationModal = ({
             {backgroundColorAndCornerRadius}
             {titleConfiguration}
             {playIconConfiguration}
+            {showAdBadgeRow}
             <View style={{ ...CommonStyles.formItem, ...styles.buttonList }}>
               <Button
                 type="outline"

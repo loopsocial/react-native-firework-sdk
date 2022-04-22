@@ -43,6 +43,12 @@ function More() {
         navigation.push('SetShareBaseURL');
       },
     },
+    {
+      title: 'Set Ad Badge Configuration',
+      pressCallback: (_) => {
+        navigation.push('SetAdBadgeConfiguration');
+      },
+    },
   ];
   return (
     <View style={styles.container}>
