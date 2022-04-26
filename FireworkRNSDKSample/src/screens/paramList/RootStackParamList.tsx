@@ -12,4 +12,5 @@ export type RootStackParamList = {
   SetShareBaseURL: undefined;
   Checkout: undefined;
   SetAdBadgeConfiguration: undefined;
+  EnableCustomCTAClickCallback: undefined;
 };
