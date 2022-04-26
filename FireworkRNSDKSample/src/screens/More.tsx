@@ -49,6 +49,12 @@ function More() {
         navigation.push('SetAdBadgeConfiguration');
       },
     },
+    {
+      title: 'Enable Custom CTA Click Callback',
+      pressCallback: (_) => {
+        navigation.push('EnableCustomCTAClickCallback');
+      },
+    }
   ];
   return (
     <View style={styles.container}>

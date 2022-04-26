@@ -22,6 +22,7 @@ import SetShareBaseURL from './screens/SetShareBaseURL';
 import Tab from './screens/Tab';
 import { store } from './store';
 import SetAdBadgeConfiguration from './screens/SetAdBadgeConfiguration';
+import EnableCustomCTAClickCallback from './screens/EnableCustomCTAClickCallback';
 
 const StackNavigator = createNativeStackNavigator<RootStackParamList>();
 
@@ -60,6 +61,11 @@ const FWNavigationContainer = () => {
           name="SetAdBadgeConfiguration"
           component={SetAdBadgeConfiguration}
           options={{ title: 'Set Ad Badge Configuration' }}
+        />
+        <StackNavigator.Screen
+          name="EnableCustomCTAClickCallback"
+          component={EnableCustomCTAClickCallback}
+          options={{ title: 'Enable Custom CTA Click Callback' }}
         />
         <StackNavigator.Screen name="Feed" component={Feed} />
         <StackNavigator.Screen name="Checkout" component={Checkout} />
