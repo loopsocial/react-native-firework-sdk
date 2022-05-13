@@ -34,11 +34,12 @@ const EnableCustomCTAClickCallbackForm = () => {
           );
         }
       };
+      Toast.show('Enable custom CTA click callback successfully');
     } else {
       FireworkSDK.getInstance().onCustomCTAClick = undefined;
+      Toast.show('Disable custom CTA click callback successfully');
     }
     navigation.goBack();
-    Toast.show('Enable custom CTA click callback successfully');
   };
   return (
     <View style={CommonStyles.formContainer}>
