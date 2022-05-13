@@ -210,7 +210,7 @@ PODS:
   - React-jsinspector (0.66.4)
   - React-logger (0.66.4):
     - glog
-  - react-native-firework-sdk (1.1.0):
+  - react-native-firework-sdk (1.2.0-beta.1):
     - FireworkVideo (= 0.15.0)
     - React-Core
   - react-native-safe-area-context (3.3.2):
@@ -425,7 +425,7 @@ SPEC CHECKSUMS:
   React-jsiexecutor: 94ce921e1d8ce7023366873ec371f3441383b396
   React-jsinspector: d0374f7509d407d2264168b6d0fad0b54e300b85
   React-logger: 933f80c97c633ee8965d609876848148e3fef438
-  react-native-firework-sdk: 4551bb63365b6d46383f91efca816b800a07ceba
+  react-native-firework-sdk: ad00504894a6318ca4bbc9b9dd21a8024001b7ba
   react-native-safe-area-context: 5cf05f49df9d17261e40e518481f2e334c6cd4b5
   react-native-webview: ba5a82f852bdd2564241a921c31dffdd696f88be
   React-perflogger: 93075d8931c32cd1fce8a98c15d2d5ccc4d891bd
