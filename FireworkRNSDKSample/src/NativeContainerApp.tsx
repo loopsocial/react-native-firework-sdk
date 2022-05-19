@@ -17,11 +17,53 @@ import { store } from './store';
 
 const StackNavigator = createNativeStackNavigator<NativeContainerParamList>();
 
+type NativeContainerAppRouteName = 'CTALinkContent';
+
 export interface INativeContainerAppProps {
-  ctaLink: string;
+  initialRouteName?: NativeContainerAppRouteName;
+  initialParams?: any;
 }
 
-const NativeContainerApp = ({ ctaLink }: INativeContainerAppProps) => {
+const NativeContainerApp = ({
+  initialRouteName,
+  initialParams,
+}: INativeContainerAppProps) => {
+  const renderScreen = ({
+    name,
+    title,
+    component,
+  }: {
+    name: NativeContainerAppRouteName;
+    title: string;
+    component: React.ComponentType<any>;
+  }) => {
+    return (
+      <StackNavigator.Screen
+        name={name}
+        initialParams={initialRouteName === name ? initialParams : undefined}
+        component={component}
+        options={{
+          title: title,
+          headerLeft:
+            initialRouteName === name
+              ? ({ tintColor }) => {
+                  return (
+                    <BackButton
+                      tintColor={tintColor}
+                      size={30}
+                      customBack={() => {
+                        FireworkSDK.getInstance().navigator.popNativeContainer();
+                      }}
+                    />
+                  );
+                }
+              : undefined,
+          headerBackVisible: initialRouteName === name ? false : true,
+        }}
+      />
+    );
+  };
+
   return (
     <Provider store={store}>
       <ThemeProvider theme={AppTheme}>
@@ -29,6 +71,7 @@ const NativeContainerApp = ({ ctaLink }: INativeContainerAppProps) => {
           <RootSiblingParent>
             <NavigationContainer>
               <StackNavigator.Navigator
+                initialRouteName={initialRouteName}
                 screenOptions={{
                   headerTitleAlign: 'center',
                   headerBackTitleVisible: false,
@@ -38,26 +81,11 @@ const NativeContainerApp = ({ ctaLink }: INativeContainerAppProps) => {
                   },
                 }}
               >
-                <StackNavigator.Screen
-                  name="CTALinkContent"
-                  initialParams={{ url: ctaLink }}
-                  component={CTALinkContent}
-                  options={{
-                    title: 'CTA Link Content(RN page)',
-                    headerLeft: ({ tintColor }) => {
-                      return (
-                        <BackButton
-                          tintColor={tintColor}
-                          size={30}
-                          customBack={() => {
-                            FireworkSDK.getInstance().navigator.popNativeContainer();
-                          }}
-                        />
-                      );
-                    },
-                    headerBackVisible: false,
-                  }}
-                />
+                {renderScreen({
+                  name: 'CTALinkContent',
+                  title: 'CTA Link Content(RN page)',
+                  component: CTALinkContent,
+                })}
               </StackNavigator.Navigator>
             </NavigationContainer>
           </RootSiblingParent>

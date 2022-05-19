@@ -1,6 +1,5 @@
 import React from 'react';
 
-import { StyleSheet } from 'react-native';
 import { WebView } from 'react-native-webview';
 
 import type { RouteProp } from '@react-navigation/native';
@@ -17,9 +16,7 @@ const CTALinkContent = () => {
   const route = useRoute<CTALinkContentScreenRouteProp>();
   const url = route.params?.url ?? '';
 
-  return <WebView source={{ uri: url }}></WebView>;
+  return <WebView mediaPlaybackRequiresUserAction source={{ uri: url }} />;
 };
 
 export default CTALinkContent;
-
-const styles = StyleSheet.create({});
