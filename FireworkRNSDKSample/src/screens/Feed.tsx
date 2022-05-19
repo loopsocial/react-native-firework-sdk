@@ -34,6 +34,7 @@ const Feed = () => {
   const channel = route.params?.channel;
   const playlist = route.params?.playlist;
   const playlistGroup =route.params?.playlistGroup;
+  const dynamicContentParameters = route.params?.dynamicContentParameters;
 
   const feedRef = useRef<VideoFeed>(null);
   const [feedError, setFeedError] = useState<FWError | undefined>(undefined);
@@ -104,6 +105,7 @@ const Feed = () => {
           channel={channel}
           playlist={playlist}
           playlistGroup={playlistGroup}
+          dynamicContentParameters={dynamicContentParameters}
           mode={mode}
           videoFeedConfiguration={feedConfiguration}
           videoPlayerConfiguration={playerConfiguration}
