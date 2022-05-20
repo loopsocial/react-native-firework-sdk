@@ -52,4 +52,3 @@ FireworkSDK.getInstance().liveStream.onLiveStreamChatEvent = (event) => {
 
 // init FireworkSDK
 FireworkSDK.getInstance().init();
-

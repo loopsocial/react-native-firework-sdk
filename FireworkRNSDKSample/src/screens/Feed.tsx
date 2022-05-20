@@ -33,7 +33,7 @@ const Feed = () => {
   const source = route.params?.source || 'discover';
   const channel = route.params?.channel;
   const playlist = route.params?.playlist;
-  const playlistGroup =route.params?.playlistGroup;
+  const playlistGroup = route.params?.playlistGroup;
   const dynamicContentParameters = route.params?.dynamicContentParameters;
 
   const feedRef = useRef<VideoFeed>(null);
@@ -80,15 +80,15 @@ const Feed = () => {
         </TouchableOpacity>
       ),
     });
-  }, []);
+  }, [navigation, source]);
 
   return (
     <View style={styles.container}>
       <View style={styles.videoFormWrapper}>
         <VideoFeedForm
           mode={mode}
-          onChangeMode={(mode) => {
-            setMode(mode);
+          onChangeMode={(newMode) => {
+            setMode(newMode);
           }}
           onGoToFeedConfiguration={() => {
             setShowFeedConfiguration(true);
@@ -137,8 +137,8 @@ const Feed = () => {
         onRequestClose={() => {
           setShowFeedConfiguration(false);
         }}
-        onSubmit={(feedConfiguration) => {
-          setFeedConfiguration(feedConfiguration);
+        onSubmit={(newFeedConfiguration) => {
+          setFeedConfiguration(newFeedConfiguration);
           setTimeout(() => {
             setShowFeedConfiguration(false);
           }, 0);
@@ -151,8 +151,8 @@ const Feed = () => {
         onRequestClose={() => {
           setShowPlayerConfiguration(false);
         }}
-        onSubmit={(playerConfiguration) => {
-          setPlayerConfiguration(playerConfiguration);
+        onSubmit={(newPlayerConfiguration) => {
+          setPlayerConfiguration(newPlayerConfiguration);
           setTimeout(() => {
             setShowPlayerConfiguration(false);
           }, 0);

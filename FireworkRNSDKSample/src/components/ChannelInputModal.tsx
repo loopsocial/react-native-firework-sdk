@@ -43,7 +43,7 @@ const ChannelInputModal = ({
     reset();
   };
 
-  let channelIdErrorMessage: string | undefined = undefined;
+  let channelIdErrorMessage: string | undefined;
   if (errors.channelId) {
     if (errors.channelId.type === 'pattern') {
       channelIdErrorMessage = 'Please enter correct channel id';
@@ -80,7 +80,7 @@ const ChannelInputModal = ({
                   <Input
                     placeholder="Enter channel id"
                     onBlur={onBlur}
-                    onChangeText={(value) => onChange(value)}
+                    onChangeText={(newValue) => onChange(newValue)}
                     value={value}
                     rightIcon={
                       <TouchableOpacity
