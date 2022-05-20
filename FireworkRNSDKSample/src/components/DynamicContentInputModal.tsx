@@ -47,7 +47,7 @@ const DynamicContentInputModal = ({
     reset();
   };
 
-  let channelIdErrorMessage: string | undefined = undefined;
+  let channelIdErrorMessage: string | undefined;
   if (errors.channelId) {
     if (errors.channelId.type === 'pattern') {
       channelIdErrorMessage = 'Please enter correct channel id';
@@ -56,8 +56,7 @@ const DynamicContentInputModal = ({
     }
   }
 
-  let dynamicContentParametersStringErrorMessage: string | undefined =
-    undefined;
+  let dynamicContentParametersStringErrorMessage: string | undefined;
   if (errors.dynamicContentParametersString) {
     if (errors.dynamicContentParametersString.type === 'required') {
       dynamicContentParametersStringErrorMessage =
@@ -98,7 +97,7 @@ const DynamicContentInputModal = ({
                   <Input
                     placeholder="Enter channel id"
                     onBlur={onBlur}
-                    onChangeText={(value) => onChange(value)}
+                    onChangeText={(newValue) => onChange(newValue)}
                     value={value}
                     rightIcon={
                       <TouchableOpacity
@@ -134,7 +133,7 @@ const DynamicContentInputModal = ({
                     style={{ height: 150 }}
                     placeholder={'e.g. {"key": ["value1", "value2"]}'}
                     onBlur={onBlur}
-                    onChangeText={(value) => onChange(value)}
+                    onChangeText={(newValue) => onChange(newValue)}
                     value={value}
                     rightIcon={
                       <TouchableOpacity
@@ -163,9 +162,9 @@ const DynamicContentInputModal = ({
                           return errorMessage;
                         }
                         for (const key of keyList) {
-                          const value = jsonParsedResult[key];
-                          if (Array.isArray(value)) {
-                            for (const valueItem of value) {
+                          const jsonValue = jsonParsedResult[key];
+                          if (Array.isArray(jsonValue)) {
+                            for (const valueItem of jsonValue) {
                               if (typeof valueItem !== 'string') {
                                 return errorMessage;
                               }

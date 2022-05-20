@@ -1,4 +1,4 @@
-import type { ProductPrice } from "react-native-firework-sdk";
+import type { ProductPrice } from 'react-native-firework-sdk';
 
 export default interface CartItem {
   productId: string;

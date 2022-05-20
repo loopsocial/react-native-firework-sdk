@@ -1,5 +1,5 @@
-import { View, StyleSheet } from 'react-native'
-import React from 'react'
+import { View, StyleSheet } from 'react-native';
+import React from 'react';
 import SetAdBadgeConfigurationForm from '../components/SetAdBadgeConfigurationForm';
 
 const SetAdBadgeConfiguration = () => {
@@ -7,8 +7,8 @@ const SetAdBadgeConfiguration = () => {
     <View style={styles.container}>
       <SetAdBadgeConfigurationForm />
     </View>
-  )
-}
+  );
+};
 
 const styles = StyleSheet.create({
   container: {
@@ -20,4 +20,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default SetAdBadgeConfiguration
+export default SetAdBadgeConfiguration;

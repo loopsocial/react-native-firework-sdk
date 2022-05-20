@@ -23,7 +23,9 @@ export default function SetShareBaseURLForm() {
       shareBaseURL: FireworkSDK.getInstance().shareBaseURL ?? '',
     },
   });
-  const [currentLink, setCurrentLink] = useState<string>(FireworkSDK.getInstance().shareBaseURL ?? '')
+  const [currentLink, setCurrentLink] = useState<string>(
+    FireworkSDK.getInstance().shareBaseURL ?? ''
+  );
   console.log('SetShareBaseURLForm error', errors);
 
   const onSetShareURLHandler = (data: SetShareBaseURLFormData) => {
@@ -43,7 +45,7 @@ export default function SetShareBaseURLForm() {
           render={({ field: { onChange, onBlur, value } }) => (
             <Input
               onBlur={onBlur}
-              onChangeText={(value) => onChange(value)}
+              onChangeText={(newValue) => onChange(newValue)}
               value={value}
               rightIcon={
                 <TouchableOpacity

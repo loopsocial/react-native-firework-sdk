@@ -1,7 +1,7 @@
 import CommonStyles from './CommonStyles';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import Patterns from '../constants/Patterns';
-import React, { useEffect } from 'react';
+import React, { useCallback, useEffect } from 'react';
 import { Button, ButtonGroup, CheckBox, Input } from 'react-native-elements';
 import { Controller, useForm } from 'react-hook-form';
 import {
@@ -54,7 +54,7 @@ const FeedConfigurationModal = ({
     formState: { errors },
   } = useForm<FeedConfigurationFormData>();
 
-  let titleFontSizeErrorMessage: string | undefined = undefined;
+  let titleFontSizeErrorMessage: string | undefined;
   if (errors.titleFontSize) {
     if (
       errors.titleFontSize.type === 'max' ||
@@ -66,7 +66,7 @@ const FeedConfigurationModal = ({
     }
   }
 
-  let playIconWidthErrorMessage: string | undefined = undefined;
+  let playIconWidthErrorMessage: string | undefined;
   if (errors.playIconWidth) {
     if (
       errors.playIconWidth.type === 'max' ||
@@ -78,7 +78,7 @@ const FeedConfigurationModal = ({
     }
   }
 
-  let cornerRadiusErrorMessage: string | undefined = undefined;
+  let cornerRadiusErrorMessage: string | undefined;
   if (errors.cornerRadius) {
     if (
       errors.cornerRadius.type === 'max' ||
@@ -90,35 +90,41 @@ const FeedConfigurationModal = ({
     }
   }
 
-  const syncFormValuesFromConfiguration = (configuration?: VideoFeedConfiguration) => {
-    if (configuration) {
-      setValue('backgroundColor', configuration.backgroundColor);
-      setValue('cornerRadius', configuration.cornerRadius?.toString());
-      setValue('hideTitle', configuration.title?.hidden);
-      setValue('titleColor', configuration.title?.textColor);
-      setValue('titleFontSize', configuration.title?.fontSize?.toString());
-      if (configuration.titlePosition) {
-        const titlePositionIndex = TitlePositionList.indexOf(
-          configuration.titlePosition
-        );
+  const syncFormValuesFromConfiguration = useCallback(
+    (configuration?: VideoFeedConfiguration) => {
+      if (configuration) {
+        setValue('backgroundColor', configuration.backgroundColor);
+        setValue('cornerRadius', configuration.cornerRadius?.toString());
+        setValue('hideTitle', configuration.title?.hidden);
+        setValue('titleColor', configuration.title?.textColor);
+        setValue('titleFontSize', configuration.title?.fontSize?.toString());
+        if (configuration.titlePosition) {
+          const titlePositionIndex = TitlePositionList.indexOf(
+            configuration.titlePosition
+          );
+          setValue(
+            'titlePosition',
+            titlePositionIndex >= 0 ? titlePositionIndex : undefined
+          );
+        } else {
+          setValue('titlePosition', undefined);
+        }
+        setValue('hidePlayIcon', configuration.playIcon?.hidden);
         setValue(
-          'titlePosition',
-          titlePositionIndex >= 0 ? titlePositionIndex : undefined
+          'playIconWidth',
+          configuration.playIcon?.iconWidth?.toString()
         );
+        setValue('showAdBadge', configuration.showAdBadge);
       } else {
-        setValue('titlePosition', undefined);
+        reset();
       }
-      setValue('hidePlayIcon', configuration.playIcon?.hidden);
-      setValue('playIconWidth', configuration.playIcon?.iconWidth?.toString());
-      setValue('showAdBadge', configuration.showAdBadge);
-    } else {
-      reset();
-    }
-  };
+    },
+    [setValue, reset]
+  );
 
   useEffect(() => {
     syncFormValuesFromConfiguration(feedConfiguration);
-  }, [feedConfiguration]);
+  }, [feedConfiguration, syncFormValuesFromConfiguration]);
 
   const onSave = (data: FeedConfigurationFormData) => {
     if (onSubmit) {
@@ -163,7 +169,7 @@ const FeedConfigurationModal = ({
               label="Background color"
               placeholder="e.g. #c0c0c0"
               onBlur={onBlur}
-              onChangeText={(value) => onChange(value)}
+              onChangeText={(newValue) => onChange(newValue)}
               value={value}
               errorMessage={
                 errors.backgroundColor
@@ -196,7 +202,7 @@ const FeedConfigurationModal = ({
               label="Corner radius"
               placeholder="e.g. 30"
               onBlur={onBlur}
-              onChangeText={(value) => onChange(value)}
+              onChangeText={(newValue) => onChange(newValue)}
               errorMessage={cornerRadiusErrorMessage}
               value={value}
               rightIcon={
@@ -249,7 +255,7 @@ const FeedConfigurationModal = ({
                 label="Title color"
                 placeholder="e.g. #000000"
                 onBlur={onBlur}
-                onChangeText={(value) => onChange(value)}
+                onChangeText={(newValue) => onChange(newValue)}
                 value={value}
                 errorMessage={
                   errors.titleColor ? 'Please enter correct color' : undefined
@@ -282,7 +288,7 @@ const FeedConfigurationModal = ({
                 label="Title font size"
                 placeholder="e.g. 14"
                 onBlur={onBlur}
-                onChangeText={(value) => onChange(value)}
+                onChangeText={(newValue) => onChange(newValue)}
                 value={value}
                 errorMessage={titleFontSizeErrorMessage}
                 rightIcon={
@@ -313,8 +319,8 @@ const FeedConfigurationModal = ({
               <ButtonGroup
                 buttons={TitlePositionList}
                 selectedIndex={value}
-                onPress={(value) => {
-                  onChange(value);
+                onPress={(newValue) => {
+                  onChange(newValue);
                 }}
               />
             )}
@@ -351,7 +357,7 @@ const FeedConfigurationModal = ({
               label="Play icon width"
               placeholder="e.g. 36"
               onBlur={onBlur}
-              onChangeText={(value) => onChange(value)}
+              onChangeText={(newValue) => onChange(newValue)}
               value={value}
               errorMessage={playIconWidthErrorMessage}
               rightIcon={

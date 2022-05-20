@@ -44,7 +44,7 @@ const PlaylistInputModal = ({
     reset();
   };
 
-  let channelIdErrorMessage: string | undefined = undefined;
+  let channelIdErrorMessage: string | undefined;
   if (errors.channelId) {
     if (errors.channelId.type === 'pattern') {
       channelIdErrorMessage = 'Please enter correct channel id';
@@ -53,7 +53,7 @@ const PlaylistInputModal = ({
     }
   }
 
-  let playlistIdErrorMessage: string | undefined = undefined;
+  let playlistIdErrorMessage: string | undefined;
   if (errors.playlistId) {
     if (errors.playlistId.type === 'pattern') {
       playlistIdErrorMessage = 'Please enter correct playlist id';
@@ -90,7 +90,7 @@ const PlaylistInputModal = ({
                   <Input
                     placeholder="Enter channel id"
                     onBlur={onBlur}
-                    onChangeText={(value) => onChange(value)}
+                    onChangeText={(newValue) => onChange(newValue)}
                     value={value}
                     rightIcon={
                       <TouchableOpacity
@@ -121,7 +121,7 @@ const PlaylistInputModal = ({
                   <Input
                     placeholder="Enter playlist id"
                     onBlur={onBlur}
-                    onChangeText={(value) => onChange(value)}
+                    onChangeText={(newValue) => onChange(newValue)}
                     value={value}
                     rightIcon={
                       <TouchableOpacity

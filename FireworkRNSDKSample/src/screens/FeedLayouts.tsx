@@ -46,10 +46,8 @@ export default function FeedLayouts() {
     useState(false);
   const [playlistGroupInputModalVisible, setPlaylistGroupInputModalVisible] =
     useState(false);
-  const [
-    dynamicContentInputModalVisible,
-    setDynamicContentInputModalVisible,
-  ] = useState(false);
+  const [dynamicContentInputModalVisible, setDynamicContentInputModalVisible] =
+    useState(false);
   const dataList: FeedListItemData[] = [
     {
       title: 'Discover Feed',

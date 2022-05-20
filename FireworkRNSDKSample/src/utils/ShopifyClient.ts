@@ -1,6 +1,9 @@
 import ShopifyBuy from 'shopify-buy';
 import Base64 from 'react-native-base64';
-import { shopifyDomain, shopifyStorefrontAccessToken } from '../config/Shopify.json';
+import {
+  shopifyDomain,
+  shopifyStorefrontAccessToken,
+} from '../config/Shopify.json';
 
 export default class ShopifyClient {
   private static _instance?: ShopifyClient;
@@ -24,7 +27,7 @@ export default class ShopifyClient {
   public async fetchProduct(productId: string): Promise<ShopifyBuy.Product> {
     const gid = this.generateProductGid(productId);
     const product = await this._client.product.fetch(gid);
-    
+
     return product;
   }
 

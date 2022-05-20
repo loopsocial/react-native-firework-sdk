@@ -43,7 +43,7 @@ const PlaylistGroupInputModal = ({
     reset();
   };
 
-  let playlistGroupIdErrorMessage: string | undefined = undefined;
+  let playlistGroupIdErrorMessage: string | undefined;
   if (errors.playlistGroupId) {
     if (errors.playlistGroupId.type === 'pattern') {
       playlistGroupIdErrorMessage = 'Please enter correct playlist group id';
@@ -80,7 +80,7 @@ const PlaylistGroupInputModal = ({
                   <Input
                     placeholder="Enter playlist id"
                     onBlur={onBlur}
-                    onChangeText={(value) => onChange(value)}
+                    onChangeText={(newValue) => onChange(newValue)}
                     value={value}
                     rightIcon={
                       <TouchableOpacity
