@@ -67,8 +67,6 @@ const DynamicContentInputModal = ({
     }
   }
 
-  console.log('DynamicContentInputModal errors', errors);
-
   return (
     <Modal
       animationType="fade"
