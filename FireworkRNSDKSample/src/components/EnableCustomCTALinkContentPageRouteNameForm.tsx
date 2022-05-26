@@ -6,40 +6,35 @@ import FireworkSDK from 'react-native-firework-sdk';
 import { Button, CheckBox } from 'react-native-elements';
 import Toast from 'react-native-root-toast';
 import { useNavigation } from '@react-navigation/native';
-import NativeContainerApp from '../NativeContainerApp';
 
-type EnableCustomCTALinkContentRenderFormData = {
-  enableCustomCTALinkContentRender?: boolean;
+type EnableCustomCTALinkContentPageRouteNameFormData = {
+  enableCustomCTALinkContentPageRouteName?: boolean;
 };
 
-const EnableCustomCTALinkContentRenderForm = () => {
+const EnableCustomCTALinkContentPageRouteNameForm = () => {
   const { control, handleSubmit } =
-    useForm<EnableCustomCTALinkContentRenderFormData>({
+    useForm<EnableCustomCTALinkContentPageRouteNameFormData>({
       defaultValues: {
-        enableCustomCTALinkContentRender: FireworkSDK.getInstance()
-          .customCTALinkContentRender
+        enableCustomCTALinkContentPageRouteName: FireworkSDK.getInstance()
+          .customCTALinkContentPageRouteName
           ? true
           : false,
       },
     });
   const navigation = useNavigation();
 
-  const onEnableCustomCTALinkContentRender = (
-    data: EnableCustomCTALinkContentRenderFormData
+  const onEnableCustomCTALinkContentPageRouteName = (
+    data: EnableCustomCTALinkContentPageRouteNameFormData
   ) => {
-    if (data.enableCustomCTALinkContentRender) {
-      FireworkSDK.getInstance().customCTALinkContentRender = (event) => {
-        return (
-          <NativeContainerApp
-            initialRouteName="CTALinkContent"
-            initialParams={{ url: event.url }}
-          />
-        );
-      };
-      Toast.show('Enable custom CTA link content render successfully');
+    if (data.enableCustomCTALinkContentPageRouteName) {
+      FireworkSDK.getInstance().customCTALinkContentPageRouteName =
+        'CTALinkContent';
+      Toast.show('Enable custom CTA link content page route name successfully');
     } else {
-      FireworkSDK.getInstance().customCTALinkContentRender = undefined;
-      Toast.show('Disable custom CTA link content render successfully');
+      FireworkSDK.getInstance().customCTALinkContentPageRouteName = undefined;
+      Toast.show(
+        'Disable custom CTA link content page route name successfully'
+      );
     }
     navigation.goBack();
   };
@@ -52,20 +47,20 @@ const EnableCustomCTALinkContentRenderForm = () => {
             return (
               <CheckBox
                 center
-                title="Enable Custom CTA Link Content Render"
+                title="Enable Custom CTA Link Content Page Route Name"
                 checked={value}
                 onPress={() => onChange(!value)}
               />
             );
           }}
-          name="enableCustomCTALinkContentRender"
+          name="enableCustomCTALinkContentPageRouteName"
         />
       </View>
       <View style={CommonStyles.formItem}>
         <Button
           containerStyle={CommonStyles.mainButtonContainer}
           titleStyle={CommonStyles.mainButtonText}
-          onPress={handleSubmit(onEnableCustomCTALinkContentRender)}
+          onPress={handleSubmit(onEnableCustomCTALinkContentPageRouteName)}
           title="Save"
         />
       </View>
@@ -73,4 +68,4 @@ const EnableCustomCTALinkContentRenderForm = () => {
   );
 };
 
-export default EnableCustomCTALinkContentRenderForm;
+export default EnableCustomCTALinkContentPageRouteNameForm;
