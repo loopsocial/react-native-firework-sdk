@@ -1,16 +1,16 @@
 import { StyleSheet, View } from 'react-native';
 import React from 'react';
-import EnableCustomCTALinkContentPageRouteNameForm from '../components/EnableCustomCTALinkContentPageRouteNameForm';
+import EnableCustomCTALinkContentRenderForm from '../components/EnableCustomCTALinkContentRenderForm';
 
-const EnableCustomCTALinkContentPageRouteName = () => {
+const EnableCustomCTALinkContentRender = () => {
   return (
     <View style={styles.container}>
-      <EnableCustomCTALinkContentPageRouteNameForm />
+      <EnableCustomCTALinkContentRenderForm />
     </View>
   );
 };
 
-export default EnableCustomCTALinkContentPageRouteName;
+export default EnableCustomCTALinkContentRender;
 
 const styles = StyleSheet.create({
   container: {

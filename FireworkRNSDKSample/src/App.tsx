@@ -23,72 +23,17 @@ import Tab from './screens/Tab';
 import { store } from './store';
 import SetAdBadgeConfiguration from './screens/SetAdBadgeConfiguration';
 import EnableCustomCTAClickCallback from './screens/EnableCustomCTAClickCallback';
-import EnableCustomCTALinkContentPageRouteName from './screens/EnableCustomCTALinkContentPageRouteName';
-import FireworkSDK from 'react-native-firework-sdk';
-import CTALinkContent from './screens/CTALinkContent';
+import EnableCustomCTALinkContentRender from './screens/EnableCustomCTALinkContentRender';
 
 const StackNavigator = createNativeStackNavigator<RootStackParamList>();
 
-type AppRouteName = keyof RootStackParamList;
-export interface IFWNavigationContainer {
-  initialRouteName?: keyof RootStackParamList;
-  initialParams?: any;
-}
-const FWNavigationContainer = ({
-  initialRouteName, //If initialRouteName is not equal to undefined, it indicates this is a new native container.
-  initialParams,
-}: IFWNavigationContainer) => {
-  console.log(
-    'FWNavigationContainer initialRouteName',
-    initialRouteName,
-    'initialParams',
-    initialParams
-  );
+const FWNavigationContainer = () => {
   useCartIconVisibilityEffect();
   useCartItemCountEffect();
-
-  const renderScreen = ({
-    name,
-    options,
-    component,
-  }: {
-    name: AppRouteName;
-    options?: any;
-    component: React.ComponentType<any>;
-  }) => {
-    const isFirstScreenForNewNativeContainer = initialRouteName === name;
-    return (
-      <StackNavigator.Screen
-        name={name}
-        initialParams={
-          isFirstScreenForNewNativeContainer ? initialParams : undefined
-        }
-        component={component}
-        options={{
-          ...options,
-          headerLeft: isFirstScreenForNewNativeContainer
-            ? ({ tintColor }) => {
-                return (
-                  <BackButton
-                    tintColor={tintColor}
-                    size={30}
-                    customBack={() => {
-                      FireworkSDK.getInstance().navigator.popNativeContainer();
-                    }}
-                  />
-                );
-              }
-            : undefined,
-          headerBackVisible: isFirstScreenForNewNativeContainer ? false : true,
-        }}
-      />
-    );
-  };
 
   return (
     <NavigationContainer>
       <StackNavigator.Navigator
-        initialRouteName={initialRouteName}
         screenOptions={{
           headerTitleAlign: 'center',
           headerBackTitleVisible: false,
@@ -98,65 +43,50 @@ const FWNavigationContainer = ({
           },
         }}
       >
-        {renderScreen({
-          name: 'Tab',
-          component: Tab,
-          options: { headerShown: false },
-        })}
-        {renderScreen({
-          name: 'OpenVideo',
-          component: OpenVideo,
-          options: { title: 'Open Video URL' },
-        })}
-        {renderScreen({
-          name: 'SetShareBaseURL',
-          component: SetShareBaseURL,
-          options: { title: 'Set Share Base URL' },
-        })}
-        {renderScreen({
-          name: 'SetAdBadgeConfiguration',
-          component: SetAdBadgeConfiguration,
-          options: { title: 'Set Ad Badge Configuration' },
-        })}
-        {renderScreen({
-          name: 'EnableCustomCTAClickCallback',
-          component: EnableCustomCTAClickCallback,
-          options: { title: 'Enable Custom CTA Click Callback' },
-        })}
-        {renderScreen({
-          name: 'EnableCustomCTALinkContentPageRouteName',
-          component: EnableCustomCTALinkContentPageRouteName,
-          options: { title: 'Enable CTA Link Content Page Route Name' },
-        })}
-        {renderScreen({
-          name: 'Feed',
-          component: Feed,
-        })}
-        {renderScreen({
-          name: 'Checkout',
-          component: Checkout,
-        })}
-        {renderScreen({
-          name: 'CTALinkContent',
-          component: CTALinkContent,
-          options: { title: 'CTA Link Content(RN page)' },
-        })}
+        <StackNavigator.Screen
+          name="Tab"
+          component={Tab}
+          options={{ headerShown: false }}
+        />
+        <StackNavigator.Screen
+          name="OpenVideo"
+          component={OpenVideo}
+          options={{ title: 'Open Video URL' }}
+        />
+        <StackNavigator.Screen
+          name="SetShareBaseURL"
+          component={SetShareBaseURL}
+          options={{ title: 'Set Share Base URL' }}
+        />
+        <StackNavigator.Screen
+          name="SetAdBadgeConfiguration"
+          component={SetAdBadgeConfiguration}
+          options={{ title: 'Set Ad Badge Configuration' }}
+        />
+        <StackNavigator.Screen
+          name="EnableCustomCTAClickCallback"
+          component={EnableCustomCTAClickCallback}
+          options={{ title: 'Enable Custom CTA Click Callback' }}
+        />
+        <StackNavigator.Screen
+          name="EnableCustomCTALinkContentRender"
+          component={EnableCustomCTALinkContentRender}
+          options={{ title: 'Enable Custom CTA Link Content Render' }}
+        />
+        <StackNavigator.Screen name="Feed" component={Feed} />
+        <StackNavigator.Screen name="Checkout" component={Checkout} />
       </StackNavigator.Navigator>
     </NavigationContainer>
   );
 };
 
-export interface IAppProps {
-  initialRouteName?: keyof RootStackParamList;
-  initialParams?: any;
-}
-export default function App(props: IAppProps) {
+export default function App() {
   return (
     <Provider store={store}>
       <ThemeProvider theme={AppTheme}>
         <ActionSheetProvider>
           <RootSiblingParent>
-            <FWNavigationContainer {...props} />
+            <FWNavigationContainer />
           </RootSiblingParent>
         </ActionSheetProvider>
       </ThemeProvider>

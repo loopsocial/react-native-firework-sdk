@@ -14,8 +14,5 @@ export type RootStackParamList = {
   Checkout: undefined;
   SetAdBadgeConfiguration: undefined;
   EnableCustomCTAClickCallback: undefined;
-  EnableCustomCTALinkContentPageRouteName: undefined;
-  CTALinkContent: {
-    url: string;
-  };
+  EnableCustomCTALinkContentRender: undefined;
 };

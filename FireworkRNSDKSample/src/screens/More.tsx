@@ -52,9 +52,9 @@ function More() {
       },
     },
     {
-      title: 'Enable Custom CTA Link Content Page Route Name',
+      title: 'Enable Custom CTA Link Content Render',
       pressCallback: (_) => {
-        navigation.push('EnableCustomCTALinkContentPageRouteName');
+        navigation.push('EnableCustomCTALinkContentRender');
       },
     },
   ];
