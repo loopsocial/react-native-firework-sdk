@@ -15,7 +15,6 @@ type CTALinkContentScreenRouteProp = RouteProp<
 const CTALinkContent = () => {
   const route = useRoute<CTALinkContentScreenRouteProp>();
   const url = route.params?.url ?? '';
-  console.log('CTALinkContent url', url);
 
   return <WebView mediaPlaybackRequiresUserAction source={{ uri: url }} />;
 };

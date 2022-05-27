@@ -35,6 +35,7 @@ type FeedConfigurationFormData = {
   hidePlayIcon?: boolean;
   playIconWidth?: string;
   showAdBadge?: boolean;
+  enableCustomLayoutName?: boolean;
 };
 
 const TitlePositionList: VideoFeedTitlePosition[] = ['stacked', 'nested'];
@@ -115,6 +116,7 @@ const FeedConfigurationModal = ({
           configuration.playIcon?.iconWidth?.toString()
         );
         setValue('showAdBadge', configuration.showAdBadge);
+        setValue('enableCustomLayoutName', !!configuration.customLayoutName);
       } else {
         reset();
       }
@@ -154,6 +156,9 @@ const FeedConfigurationModal = ({
             : undefined,
       };
       configuration.showAdBadge = data.showAdBadge;
+      if (data.enableCustomLayoutName) {
+        configuration.customLayoutName = 'fw_feed_custom_layout';
+      }
       console.log('configuration', configuration);
       onSubmit(configuration);
     }
@@ -404,6 +409,27 @@ const FeedConfigurationModal = ({
     </View>
   );
 
+  const enableCustomLayoutName = (
+    <View style={styles.formItemRow}>
+      <View style={styles.formItem}>
+        <Controller
+          control={control}
+          render={({ field: { onChange, value } }) => {
+            return (
+              <CheckBox
+                center
+                title="Enable Custom Layout Name(Android)"
+                checked={value}
+                onPress={() => onChange(!value)}
+              />
+            );
+          }}
+          name="enableCustomLayoutName"
+        />
+      </View>
+    </View>
+  );
+
   return (
     <Modal
       animationType="fade"
@@ -429,6 +455,7 @@ const FeedConfigurationModal = ({
             {titleConfiguration}
             {playIconConfiguration}
             {showAdBadgeRow}
+            {enableCustomLayoutName}
             <View style={{ ...CommonStyles.formItem, ...styles.buttonList }}>
               <Button
                 type="outline"
