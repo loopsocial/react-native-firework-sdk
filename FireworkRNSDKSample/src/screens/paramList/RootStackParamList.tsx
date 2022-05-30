@@ -11,8 +11,12 @@ export type RootStackParamList = {
     dynamicContentParameters?: { [key: string]: string[] };
   };
   SetShareBaseURL: undefined;
+  Cart: undefined;
   Checkout: undefined;
   SetAdBadgeConfiguration: undefined;
   EnableCustomCTAClickCallback: undefined;
-  EnableCustomCTALinkContentRender: undefined;
+  EnableCustomCTALinkContentPageRouteName: undefined;
+  CTALinkContent: {
+    url: string;
+  };
 };
