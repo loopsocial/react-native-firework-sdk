@@ -5,16 +5,17 @@ import { WebView } from 'react-native-webview';
 import type { RouteProp } from '@react-navigation/native';
 import { useRoute } from '@react-navigation/native';
 
-import type { NativeContainerParamList } from './paramList/NativeContainerParamList';
+import type { RootStackParamList } from './paramList/RootStackParamList';
 
 type CTALinkContentScreenRouteProp = RouteProp<
-  NativeContainerParamList,
+  RootStackParamList,
   'CTALinkContent'
 >;
 
 const CTALinkContent = () => {
   const route = useRoute<CTALinkContentScreenRouteProp>();
   const url = route.params?.url ?? '';
+  console.log('CTALinkContent url', url);
 
   return <WebView mediaPlaybackRequiresUserAction source={{ uri: url }} />;
 };

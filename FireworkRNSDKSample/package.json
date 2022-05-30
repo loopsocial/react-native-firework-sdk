@@ -6,11 +6,10 @@
   "scripts": {
     "android": "react-native run-android",
     "ios": "react-native run-ios",
-    "start": "react-native start",
-    "bundle-ios": "react-native bundle --entry-file index.js --platform ios --dev false --bundle-output ios/main.jsbundle --assets-dest ios"
+    "start": "react-native start"
   },
   "dependencies": {
-  "react-native-firework-sdk": "^1.2.0-beta.9",
+  "react-native-firework-sdk": "^1.2.0-beta.10",
     "@expo/react-native-action-sheet": "^3.12.0",
     "@react-navigation/bottom-tabs": "^6.0.9",
     "@react-navigation/native": "^6.0.6",

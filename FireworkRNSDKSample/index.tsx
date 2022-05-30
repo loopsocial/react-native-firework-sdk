@@ -14,6 +14,8 @@ MaterialIcons.loadFont();
 
 AppRegistry.registerComponent(appName, () => App);
 
+FireworkSDK.getInstance().appComponentName = appName;
+
 FireworkSDK.getInstance().onSDKInit = (event) => {
   console.log('[example] onSDKInit', event);
 };
