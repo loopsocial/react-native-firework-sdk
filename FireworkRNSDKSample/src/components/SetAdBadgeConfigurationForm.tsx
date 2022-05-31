@@ -1,5 +1,5 @@
 import FireworkSDK from 'react-native-firework-sdk';
-import React, { useCallback, useEffect } from 'react';
+import React, { useEffect } from 'react';
 
 import { Controller, useForm } from 'react-hook-form';
 import { TouchableOpacity, View } from 'react-native';
@@ -44,41 +44,40 @@ const SetAdBadgeConfigurationForm = () => {
       typeof data.badgeTextType === 'number'
         ? BadgeTextTypeList[data.badgeTextType!]
         : undefined;
-    console.log('AdBadgeConfiguration configuration', configuration);
+    console.log("AdBadgeConfiguration configuration", configuration);
     FireworkSDK.getInstance().adBadgeConfiguration = configuration;
     navigation.goBack();
     Toast.show('Set Ad badge configuration successfully');
   };
 
-  const syncFormValuesFromConfiguration = useCallback(
-    (configuration?: AdBadgeConfiguration) => {
-      if (configuration) {
-        setValue('backgroundColor', configuration.backgroundColor);
-        setValue('textColor', configuration.textColor);
+  const syncFormValuesFromConfiguration = (
+    configuration?: AdBadgeConfiguration
+  ) => {
+    if (configuration) {
+      setValue('backgroundColor', configuration.backgroundColor);
+      setValue('textColor', configuration.textColor);
 
-        if (configuration.badgeTextType) {
-          const badgeTextTypeIndex = BadgeTextTypeList.indexOf(
-            configuration.badgeTextType
-          );
-          setValue(
-            'badgeTextType',
-            badgeTextTypeIndex >= 0 ? badgeTextTypeIndex : undefined
-          );
-        } else {
-          setValue('badgeTextType', undefined);
-        }
+      if (configuration.badgeTextType) {
+        const badgeTextTypeIndex = BadgeTextTypeList.indexOf(
+          configuration.badgeTextType
+        );
+        setValue(
+          'badgeTextType',
+          badgeTextTypeIndex >= 0 ? badgeTextTypeIndex : undefined
+        );
       } else {
-        reset();
+        setValue('badgeTextType', undefined);
       }
-    },
-    [setValue, reset]
-  );
+    } else {
+      reset();
+    }
+  };
 
   useEffect(() => {
     syncFormValuesFromConfiguration(
       FireworkSDK.getInstance().adBadgeConfiguration
     );
-  }, [syncFormValuesFromConfiguration]);
+  }, []);
 
   return (
     <View style={CommonStyles.formContainer}>
@@ -90,7 +89,7 @@ const SetAdBadgeConfigurationForm = () => {
               label="Background color"
               placeholder="e.g. #c0c0c0"
               onBlur={onBlur}
-              onChangeText={(newValue) => onChange(newValue)}
+              onChangeText={(value) => onChange(value)}
               value={value}
               errorMessage={
                 errors.backgroundColor
@@ -123,7 +122,7 @@ const SetAdBadgeConfigurationForm = () => {
               label="Text color"
               placeholder="e.g. #000000"
               onBlur={onBlur}
-              onChangeText={(newValue) => onChange(newValue)}
+              onChangeText={(value) => onChange(value)}
               value={value}
               errorMessage={
                 errors.textColor ? 'Please enter correct color' : undefined
@@ -153,8 +152,8 @@ const SetAdBadgeConfigurationForm = () => {
             <ButtonGroup
               buttons={BadgeTextTypeList}
               selectedIndex={value}
-              onPress={(newValue) => {
-                onChange(newValue);
+              onPress={(value) => {
+                onChange(value);
               }}
             />
           )}

@@ -4,10 +4,11 @@ import { configureStore } from '@reduxjs/toolkit';
 
 import cartSlice from '../slice/cartSlice';
 
+
 export const store = configureStore({
   reducer: { cart: cartSlice },
   middleware: (getDefaultMiddleware) => getDefaultMiddleware().concat(logger),
-  devTools: process.env.NODE_ENV === 'development',
+  devTools: process.env.NODE_ENV !== 'production',
 });
 
 export type RootState = ReturnType<typeof store.getState>;

@@ -9,8 +9,12 @@ import {
 import type { BottomTabNavigationProp } from '@react-navigation/bottom-tabs';
 import type { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import type { TabParamsList } from './paramList/TabParamsList';
-import { useNavigation } from '@react-navigation/native';
-import type { CompositeNavigationProp } from '@react-navigation/native';
+import {
+  useNavigation,
+} from '@react-navigation/native';
+import type {
+  CompositeNavigationProp,
+} from '@react-navigation/native';
 import type { RootStackParamList } from './paramList/RootStackParamList';
 
 type MoreScreenNavigationProp = CompositeNavigationProp<
@@ -43,18 +47,6 @@ function More() {
       title: 'Set Ad Badge Configuration',
       pressCallback: (_) => {
         navigation.push('SetAdBadgeConfiguration');
-      },
-    },
-    {
-      title: 'Enable Custom CTA Click Callback',
-      pressCallback: (_) => {
-        navigation.push('EnableCustomCTAClickCallback');
-      },
-    },
-    {
-      title: 'Enable Custom CTA Link Content Page Route Name',
-      pressCallback: (_) => {
-        navigation.push('EnableCustomCTALinkContentPageRouteName');
       },
     },
   ];

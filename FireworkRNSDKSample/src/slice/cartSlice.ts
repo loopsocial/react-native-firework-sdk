@@ -18,6 +18,7 @@ const initialState: CartState = {
   defaultAddToCartButtonStyle: {},
 };
 
+
 export const cartSlice = createSlice({
   name: 'cart',
   initialState,

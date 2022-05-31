@@ -33,8 +33,7 @@ const Feed = () => {
   const source = route.params?.source || 'discover';
   const channel = route.params?.channel;
   const playlist = route.params?.playlist;
-  const playlistGroup = route.params?.playlistGroup;
-  const dynamicContentParameters = route.params?.dynamicContentParameters;
+  const playlistGroup =route.params?.playlistGroup;
 
   const feedRef = useRef<VideoFeed>(null);
   const [feedError, setFeedError] = useState<FWError | undefined>(undefined);
@@ -80,15 +79,15 @@ const Feed = () => {
         </TouchableOpacity>
       ),
     });
-  }, [navigation, source]);
+  }, []);
 
   return (
     <View style={styles.container}>
       <View style={styles.videoFormWrapper}>
         <VideoFeedForm
           mode={mode}
-          onChangeMode={(newMode) => {
-            setMode(newMode);
+          onChangeMode={(mode) => {
+            setMode(mode);
           }}
           onGoToFeedConfiguration={() => {
             setShowFeedConfiguration(true);
@@ -105,7 +104,6 @@ const Feed = () => {
           channel={channel}
           playlist={playlist}
           playlistGroup={playlistGroup}
-          dynamicContentParameters={dynamicContentParameters}
           mode={mode}
           videoFeedConfiguration={feedConfiguration}
           videoPlayerConfiguration={playerConfiguration}
@@ -137,8 +135,8 @@ const Feed = () => {
         onRequestClose={() => {
           setShowFeedConfiguration(false);
         }}
-        onSubmit={(newFeedConfiguration) => {
-          setFeedConfiguration(newFeedConfiguration);
+        onSubmit={(feedConfiguration) => {
+          setFeedConfiguration(feedConfiguration);
           setTimeout(() => {
             setShowFeedConfiguration(false);
           }, 0);
@@ -151,8 +149,8 @@ const Feed = () => {
         onRequestClose={() => {
           setShowPlayerConfiguration(false);
         }}
-        onSubmit={(newPlayerConfiguration) => {
-          setPlayerConfiguration(newPlayerConfiguration);
+        onSubmit={(playerConfiguration) => {
+          setPlayerConfiguration(playerConfiguration);
           setTimeout(() => {
             setShowPlayerConfiguration(false);
           }, 0);

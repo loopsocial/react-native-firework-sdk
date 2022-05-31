@@ -1,7 +1,7 @@
 import CommonStyles from './CommonStyles';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import Patterns from '../constants/Patterns';
-import React, { useCallback, useEffect } from 'react';
+import React, { useEffect } from 'react';
 import { Button, ButtonGroup, CheckBox, Input } from 'react-native-elements';
 import { Controller, useForm } from 'react-hook-form';
 import {
@@ -35,7 +35,6 @@ type FeedConfigurationFormData = {
   hidePlayIcon?: boolean;
   playIconWidth?: string;
   showAdBadge?: boolean;
-  enableCustomLayoutName?: boolean;
 };
 
 const TitlePositionList: VideoFeedTitlePosition[] = ['stacked', 'nested'];
@@ -55,7 +54,7 @@ const FeedConfigurationModal = ({
     formState: { errors },
   } = useForm<FeedConfigurationFormData>();
 
-  let titleFontSizeErrorMessage: string | undefined;
+  let titleFontSizeErrorMessage: string | undefined = undefined;
   if (errors.titleFontSize) {
     if (
       errors.titleFontSize.type === 'max' ||
@@ -67,7 +66,7 @@ const FeedConfigurationModal = ({
     }
   }
 
-  let playIconWidthErrorMessage: string | undefined;
+  let playIconWidthErrorMessage: string | undefined = undefined;
   if (errors.playIconWidth) {
     if (
       errors.playIconWidth.type === 'max' ||
@@ -79,7 +78,7 @@ const FeedConfigurationModal = ({
     }
   }
 
-  let cornerRadiusErrorMessage: string | undefined;
+  let cornerRadiusErrorMessage: string | undefined = undefined;
   if (errors.cornerRadius) {
     if (
       errors.cornerRadius.type === 'max' ||
@@ -91,42 +90,35 @@ const FeedConfigurationModal = ({
     }
   }
 
-  const syncFormValuesFromConfiguration = useCallback(
-    (configuration?: VideoFeedConfiguration) => {
-      if (configuration) {
-        setValue('backgroundColor', configuration.backgroundColor);
-        setValue('cornerRadius', configuration.cornerRadius?.toString());
-        setValue('hideTitle', configuration.title?.hidden);
-        setValue('titleColor', configuration.title?.textColor);
-        setValue('titleFontSize', configuration.title?.fontSize?.toString());
-        if (configuration.titlePosition) {
-          const titlePositionIndex = TitlePositionList.indexOf(
-            configuration.titlePosition
-          );
-          setValue(
-            'titlePosition',
-            titlePositionIndex >= 0 ? titlePositionIndex : undefined
-          );
-        } else {
-          setValue('titlePosition', undefined);
-        }
-        setValue('hidePlayIcon', configuration.playIcon?.hidden);
-        setValue(
-          'playIconWidth',
-          configuration.playIcon?.iconWidth?.toString()
+  const syncFormValuesFromConfiguration = (configuration?: VideoFeedConfiguration) => {
+    if (configuration) {
+      setValue('backgroundColor', configuration.backgroundColor);
+      setValue('cornerRadius', configuration.cornerRadius?.toString());
+      setValue('hideTitle', configuration.title?.hidden);
+      setValue('titleColor', configuration.title?.textColor);
+      setValue('titleFontSize', configuration.title?.fontSize?.toString());
+      if (configuration.titlePosition) {
+        const titlePositionIndex = TitlePositionList.indexOf(
+          configuration.titlePosition
         );
-        setValue('showAdBadge', configuration.showAdBadge);
-        setValue('enableCustomLayoutName', !!configuration.customLayoutName);
+        setValue(
+          'titlePosition',
+          titlePositionIndex >= 0 ? titlePositionIndex : undefined
+        );
       } else {
-        reset();
+        setValue('titlePosition', undefined);
       }
-    },
-    [setValue, reset]
-  );
+      setValue('hidePlayIcon', configuration.playIcon?.hidden);
+      setValue('playIconWidth', configuration.playIcon?.iconWidth?.toString());
+      setValue('showAdBadge', configuration.showAdBadge);
+    } else {
+      reset();
+    }
+  };
 
   useEffect(() => {
     syncFormValuesFromConfiguration(feedConfiguration);
-  }, [feedConfiguration, syncFormValuesFromConfiguration]);
+  }, [feedConfiguration]);
 
   const onSave = (data: FeedConfigurationFormData) => {
     if (onSubmit) {
@@ -156,9 +148,6 @@ const FeedConfigurationModal = ({
             : undefined,
       };
       configuration.showAdBadge = data.showAdBadge;
-      if (data.enableCustomLayoutName) {
-        configuration.customLayoutName = 'fw_feed_custom_layout';
-      }
       console.log('configuration', configuration);
       onSubmit(configuration);
     }
@@ -174,7 +163,7 @@ const FeedConfigurationModal = ({
               label="Background color"
               placeholder="e.g. #c0c0c0"
               onBlur={onBlur}
-              onChangeText={(newValue) => onChange(newValue)}
+              onChangeText={(value) => onChange(value)}
               value={value}
               errorMessage={
                 errors.backgroundColor
@@ -207,7 +196,7 @@ const FeedConfigurationModal = ({
               label="Corner radius"
               placeholder="e.g. 30"
               onBlur={onBlur}
-              onChangeText={(newValue) => onChange(newValue)}
+              onChangeText={(value) => onChange(value)}
               errorMessage={cornerRadiusErrorMessage}
               value={value}
               rightIcon={
@@ -260,7 +249,7 @@ const FeedConfigurationModal = ({
                 label="Title color"
                 placeholder="e.g. #000000"
                 onBlur={onBlur}
-                onChangeText={(newValue) => onChange(newValue)}
+                onChangeText={(value) => onChange(value)}
                 value={value}
                 errorMessage={
                   errors.titleColor ? 'Please enter correct color' : undefined
@@ -293,7 +282,7 @@ const FeedConfigurationModal = ({
                 label="Title font size"
                 placeholder="e.g. 14"
                 onBlur={onBlur}
-                onChangeText={(newValue) => onChange(newValue)}
+                onChangeText={(value) => onChange(value)}
                 value={value}
                 errorMessage={titleFontSizeErrorMessage}
                 rightIcon={
@@ -324,8 +313,8 @@ const FeedConfigurationModal = ({
               <ButtonGroup
                 buttons={TitlePositionList}
                 selectedIndex={value}
-                onPress={(newValue) => {
-                  onChange(newValue);
+                onPress={(value) => {
+                  onChange(value);
                 }}
               />
             )}
@@ -362,7 +351,7 @@ const FeedConfigurationModal = ({
               label="Play icon width"
               placeholder="e.g. 36"
               onBlur={onBlur}
-              onChangeText={(newValue) => onChange(newValue)}
+              onChangeText={(value) => onChange(value)}
               value={value}
               errorMessage={playIconWidthErrorMessage}
               rightIcon={
@@ -409,27 +398,6 @@ const FeedConfigurationModal = ({
     </View>
   );
 
-  const enableCustomLayoutName = (
-    <View style={styles.formItemRow}>
-      <View style={styles.formItem}>
-        <Controller
-          control={control}
-          render={({ field: { onChange, value } }) => {
-            return (
-              <CheckBox
-                center
-                title="Enable Custom Layout Name(Android)"
-                checked={value}
-                onPress={() => onChange(!value)}
-              />
-            );
-          }}
-          name="enableCustomLayoutName"
-        />
-      </View>
-    </View>
-  );
-
   return (
     <Modal
       animationType="fade"
@@ -455,7 +423,6 @@ const FeedConfigurationModal = ({
             {titleConfiguration}
             {playIconConfiguration}
             {showAdBadgeRow}
-            {enableCustomLayoutName}
             <View style={{ ...CommonStyles.formItem, ...styles.buttonList }}>
               <Button
                 type="outline"

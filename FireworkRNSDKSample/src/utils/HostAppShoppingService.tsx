@@ -1,3 +1,5 @@
+import React from 'react';
+
 import type {
   AddToCartCallback,
   AddToCartEvent,
@@ -9,8 +11,9 @@ import type {
   WillDisplayProductEvent,
 } from 'react-native-firework-sdk';
 
+import CartApp from '../CartApp';
 import type CartItem from '../models/CartItem';
-import { addCartItem } from '../slice/cartSlice';
+import { addCartItem } from '../slice/cartSlice'; 
 import { store } from '../store';
 import ShopifyClient from './ShopifyClient';
 
@@ -66,9 +69,7 @@ export default class HostAppShoppingService {
   public onClickCartIcon?: ClickCartIconCallback = async () => {
     console.log('[example] onClickCartIcon');
 
-    return {
-      initialRouteName: 'Cart',
-    };
+    return <CartApp />;
   };
 
   public onUpdateProductDetails: UpdateProductDetailsCallback = async (
@@ -92,7 +93,7 @@ export default class HostAppShoppingService {
           }: { amount: string; currencyCode: string } = (
             shopifyProductVariant as any
           ).priceV2;
-
+  
           return {
             unitId: ShopifyClient.getInstance().parseId(
               `${shopifyProductVariant.id}`
@@ -127,4 +128,5 @@ export default class HostAppShoppingService {
   }
 
   private constructor() {}
+
 }

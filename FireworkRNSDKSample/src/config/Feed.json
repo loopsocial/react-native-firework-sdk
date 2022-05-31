@@ -8,20 +8,13 @@
       "playlistId": "g206q5"
     }
   ],
+  "defaultShoppingPlaylist": {
+    "channelId": "",
+    "playlistId": ""
+  },
   "defaultPlaylistGroupInfoArray": [
     {
       "playlistGroupId": ""
     }
-  ],
-  "defaultDynamicContentInfoArray": [
-    {
-      "channelId": "",
-      "parameters": {},
-      "name": ""
-    }
-  ],
-  "defaultShoppingPlaylist": {
-    "channelId": "",
-    "playlistId": ""
-  }
+  ]
 }
