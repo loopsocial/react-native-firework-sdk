@@ -5,7 +5,7 @@ import { View, StyleSheet, ScrollView, TouchableOpacity } from 'react-native';
 import CommonStyles from '../components/CommonStyles';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import { SafeAreaView } from 'react-native-safe-area-context';
-import { useAppDispatch } from '../hooks/reduxHooks';
+import { useAppDispatch, useAppSelector } from '../hooks/reduxHooks';
 import { removeAllCartItems } from '../slice/cartSlice';
 
 interface CheckoutFormData {
@@ -22,7 +22,11 @@ interface CheckoutFormData {
 }
 
 const Checkout = () => {
-  const { control, handleSubmit, setValue } = useForm<CheckoutFormData>();
+  const {
+    control,
+    handleSubmit,
+    setValue,
+  } = useForm<CheckoutFormData>();
   const dispatch = useAppDispatch();
   const onBuy = (data: CheckoutFormData) => {
     console.log('[example] onBuy', data);
@@ -38,7 +42,7 @@ const Checkout = () => {
           <Input
             placeholder="Card Number"
             onBlur={onBlur}
-            onChangeText={(newValue) => onChange(newValue)}
+            onChangeText={(value) => onChange(value)}
             value={value}
             rightIcon={
               <TouchableOpacity
@@ -62,7 +66,7 @@ const Checkout = () => {
               containerStyle={{ flex: 1, marginRight: 15 }}
               placeholder="MM"
               onBlur={onBlur}
-              onChangeText={(newValue) => onChange(newValue)}
+              onChangeText={(value) => onChange(value)}
               value={value}
               errorStyle={{ height: 0 }}
               rightIcon={
@@ -86,7 +90,7 @@ const Checkout = () => {
               containerStyle={{ flex: 1, marginRight: 15 }}
               placeholder="YY"
               onBlur={onBlur}
-              onChangeText={(newValue) => onChange(newValue)}
+              onChangeText={(value) => onChange(value)}
               value={value}
               errorStyle={{ height: 0 }}
               rightIcon={
@@ -110,7 +114,7 @@ const Checkout = () => {
               containerStyle={{ flex: 2, marginRight: 30 }}
               placeholder="CVC"
               onBlur={onBlur}
-              onChangeText={(newValue) => onChange(newValue)}
+              onChangeText={(value) => onChange(value)}
               value={value}
               errorStyle={{ height: 0 }}
               rightIcon={
@@ -135,7 +139,7 @@ const Checkout = () => {
           <Input
             placeholder="Name On Card"
             onBlur={onBlur}
-            onChangeText={(newValue) => onChange(newValue)}
+            onChangeText={(value) => onChange(value)}
             value={value}
             rightIcon={
               <TouchableOpacity
@@ -163,7 +167,7 @@ const Checkout = () => {
           <Input
             placeholder="Name"
             onBlur={onBlur}
-            onChangeText={(newValue) => onChange(newValue)}
+            onChangeText={(value) => onChange(value)}
             value={value}
             rightIcon={
               <TouchableOpacity
@@ -185,7 +189,7 @@ const Checkout = () => {
           <Input
             placeholder="Street"
             onBlur={onBlur}
-            onChangeText={(newValue) => onChange(newValue)}
+            onChangeText={(value) => onChange(value)}
             value={value}
             rightIcon={
               <TouchableOpacity
@@ -209,7 +213,7 @@ const Checkout = () => {
               containerStyle={{ flex: 1, marginRight: 15 }}
               placeholder="City"
               onBlur={onBlur}
-              onChangeText={(newValue) => onChange(newValue)}
+              onChangeText={(value) => onChange(value)}
               value={value}
               errorStyle={{ height: 0 }}
               rightIcon={
@@ -233,7 +237,7 @@ const Checkout = () => {
               containerStyle={{ flex: 1, marginRight: 15 }}
               placeholder="State"
               onBlur={onBlur}
-              onChangeText={(newValue) => onChange(newValue)}
+              onChangeText={(value) => onChange(value)}
               value={value}
               errorStyle={{ height: 0 }}
               rightIcon={
@@ -257,7 +261,7 @@ const Checkout = () => {
           <Input
             placeholder="Zip code"
             onBlur={onBlur}
-            onChangeText={(newValue) => onChange(newValue)}
+            onChangeText={(value) => onChange(value)}
             value={value}
             rightIcon={
               <TouchableOpacity

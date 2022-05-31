@@ -51,7 +51,7 @@ function Shopping() {
             onPress={() => {
               feedRef.current?.refresh();
             }}
-            style={{ marginRight: 15 }}
+            style={{marginRight: 15,}}
           >
             <Ionicons name="refresh-sharp" size={24} color={tintColor} />
           </TouchableOpacity>
@@ -67,7 +67,7 @@ function Shopping() {
         </View>
       ),
     });
-  }, [navigation]);
+  }, []);
 
   return (
     <View style={styles.container}>
@@ -179,10 +179,10 @@ function Shopping() {
         onRequestClose={() => {
           setPlaylistInputModalVisible(false);
         }}
-        onSubmit={(newChannelId, newPlaylistId) => {
+        onSubmit={(channelId, playlistId) => {
           setPlaylistInputModalVisible(false);
-          setChannelId(newChannelId);
-          setPlaylistId(newPlaylistId);
+          setChannelId(channelId);
+          setPlaylistId(playlistId);
         }}
       />
       <CartConfigurationModal

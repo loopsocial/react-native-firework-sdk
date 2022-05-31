@@ -52,7 +52,7 @@ export function OpenVideoForm() {
           render={({ field: { onChange, onBlur, value } }) => (
             <Input
               onBlur={onBlur}
-              onChangeText={(newValue) => onChange(newValue)}
+              onChangeText={(value) => onChange(value)}
               value={value}
               rightIcon={
                 <TouchableOpacity
@@ -107,8 +107,8 @@ export function OpenVideoForm() {
         onRequestClose={() => {
           setShowPlayerConfiguration(false);
         }}
-        onSubmit={(newPlayerConfiguration) => {
-          setPlayerConfiguration(newPlayerConfiguration);
+        onSubmit={(playerConfiguration) => {
+          setPlayerConfiguration(playerConfiguration);
           setTimeout(() => {
             setShowPlayerConfiguration(false);
           }, 0);

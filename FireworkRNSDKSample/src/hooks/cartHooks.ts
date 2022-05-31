@@ -1,13 +1,13 @@
-import { useEffect } from 'react';
-import FireworkSDK from 'react-native-firework-sdk';
-import { useAppSelector } from './reduxHooks';
+import { useEffect } from "react";
+import FireworkSDK from "react-native-firework-sdk";
+import { useAppSelector } from "./reduxHooks";
 
 export function useCartIconVisibilityEffect() {
   const cartIconVisible = useAppSelector((state) => state.cart.cartIconVisible);
 
   useEffect(() => {
     FireworkSDK.getInstance().shopping.cartIconVisible = cartIconVisible;
-  }, [cartIconVisible]);
+  }, [cartIconVisible])
 }
 
 export function useCartItemCountEffect() {
@@ -15,5 +15,5 @@ export function useCartItemCountEffect() {
 
   useEffect(() => {
     FireworkSDK.getInstance().shopping.setCartItemCount(cartItemCount);
-  }, [cartItemCount]);
+  }, [cartItemCount])
 }
