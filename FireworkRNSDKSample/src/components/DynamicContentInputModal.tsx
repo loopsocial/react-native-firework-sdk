@@ -13,33 +13,36 @@ import {
 } from 'react-native';
 import Patterns from '../constants/Patterns';
 
-export interface IPlaylistInputModalProps {
+export interface IDynamicContentInputModalProps {
   visible: boolean;
   onRequestClose?: () => void;
-  onSubmit?: (channelId: string, playlistId: string) => void;
+  onSubmit?: (
+    channelId: string,
+    dynamicContentParameters: { [key: string]: string[] }
+  ) => void;
 }
 
-type PlaylistInputFormData = {
+type DynamicContentInputFormData = {
   channelId: string;
-  playlistId: string;
+  dynamicContentParametersString: string;
 };
 
-const PlaylistInputModal = ({
+const DynamicContentInputModal = ({
   visible,
   onRequestClose,
   onSubmit,
-}: IPlaylistInputModalProps) => {
+}: IDynamicContentInputModalProps) => {
   const {
     control,
     handleSubmit,
     setValue,
     formState: { errors },
     reset,
-  } = useForm<PlaylistInputFormData>();
+  } = useForm<DynamicContentInputFormData>();
 
-  const onUse = (data: PlaylistInputFormData) => {
+  const onUse = (data: DynamicContentInputFormData) => {
     if (onSubmit) {
-      onSubmit(data.channelId, data.playlistId);
+      onSubmit(data.channelId, JSON.parse(data.dynamicContentParametersString));
     }
     reset();
   };
@@ -53,12 +56,14 @@ const PlaylistInputModal = ({
     }
   }
 
-  let playlistIdErrorMessage: string | undefined;
-  if (errors.playlistId) {
-    if (errors.playlistId.type === 'pattern') {
-      playlistIdErrorMessage = 'Please enter correct playlist id';
+  let dynamicContentParametersStringErrorMessage: string | undefined;
+  if (errors.dynamicContentParametersString) {
+    if (errors.dynamicContentParametersString.type === 'required') {
+      dynamicContentParametersStringErrorMessage =
+        'Please enter dynamic content parameters';
     } else {
-      playlistIdErrorMessage = 'Please enter playlist id';
+      dynamicContentParametersStringErrorMessage =
+        'Please enter correct dynamic content parameters';
     }
   }
 
@@ -114,32 +119,68 @@ const PlaylistInputModal = ({
               />
             </View>
             <View style={CommonStyles.formItem}>
-              <Text style={CommonStyles.formItemTitle}>Playlist id</Text>
+              <Text style={CommonStyles.formItemTitle}>
+                Dynamic content parameters
+              </Text>
               <Controller
                 control={control}
                 render={({ field: { onChange, onBlur, value } }) => (
                   <Input
-                    placeholder="Enter playlist id"
+                    multiline
+                    numberOfLines={5}
+                    style={{ height: 150 }}
+                    placeholder={'e.g. {"key": ["value1", "value2"]}'}
                     onBlur={onBlur}
                     onChangeText={(newValue) => onChange(newValue)}
                     value={value}
                     rightIcon={
                       <TouchableOpacity
                         onPress={() => {
-                          setValue('playlistId', '');
+                          setValue('dynamicContentParametersString', '');
                         }}
                       >
                         <Ionicons name="close" size={24} />
                       </TouchableOpacity>
                     }
-                    errorMessage={playlistIdErrorMessage}
+                    errorMessage={dynamicContentParametersStringErrorMessage}
                     autoCompleteType={undefined}
                   />
                 )}
-                name="playlistId"
+                name="dynamicContentParametersString"
                 rules={{
                   required: true,
-                  pattern: Patterns.playlistId,
+                  validate: (value) => {
+                    const errorMessage =
+                      'Please enter correct dynamic content parameters';
+                    try {
+                      const jsonParsedResult = JSON.parse(value);
+                      if (typeof jsonParsedResult === 'object') {
+                        const keyList = Object.keys(jsonParsedResult);
+                        if (keyList.length === 0) {
+                          return errorMessage;
+                        }
+                        for (const key of keyList) {
+                          const jsonValue = jsonParsedResult[key];
+                          if (Array.isArray(jsonValue)) {
+                            for (const valueItem of jsonValue) {
+                              if (typeof valueItem !== 'string') {
+                                return errorMessage;
+                              }
+                            }
+                          } else {
+                            return errorMessage;
+                          }
+                        }
+                      } else {
+                        return errorMessage;
+                      }
+                      console.log('jsonParsedResult', jsonParsedResult);
+                    } catch (e) {
+                      console.log('jsonParsedError', e);
+                      return errorMessage;
+                    }
+                    return true;
+                  },
                 }}
                 defaultValue=""
               />
@@ -196,4 +237,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default PlaylistInputModal;
+export default DynamicContentInputModal;

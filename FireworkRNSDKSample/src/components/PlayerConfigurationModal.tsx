@@ -1,7 +1,7 @@
 import CommonStyles from './CommonStyles';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import Patterns from '../constants/Patterns';
-import React, { useEffect } from 'react';
+import React, { useCallback, useEffect } from 'react';
 import { Button, ButtonGroup, CheckBox, Input } from 'react-native-elements';
 import { Controller, useForm } from 'react-hook-form';
 import {
@@ -65,7 +65,7 @@ const PlayerConfigurationModal = ({
     formState: { errors },
   } = useForm<PlayerConfigurationFormData>();
 
-  let ctaFontSizeErrorMessage: string | undefined = undefined;
+  let ctaFontSizeErrorMessage: string | undefined;
   if (errors.ctaFontSize) {
     if (
       errors.ctaFontSize.type === 'max' ||
@@ -76,67 +76,69 @@ const PlayerConfigurationModal = ({
       ctaFontSizeErrorMessage = 'Please enter correct font size';
     }
   }
-  const syncFormValuesFromConfiguration = (
-    configuration?: VideoPlayerConfiguration
-  ) => {
-    if (configuration) {
-      if (configuration.playerStyle) {
-        const playerStyleIndex = PlayStyleList.indexOf(
-          configuration.playerStyle
-        );
-        if (playerStyleIndex >= 0) {
-          setValue('playerStyle', playerStyleIndex);
+  const syncFormValuesFromConfiguration = useCallback(
+    (configuration?: VideoPlayerConfiguration) => {
+      if (configuration) {
+        if (configuration.playerStyle) {
+          const playerStyleIndex = PlayStyleList.indexOf(
+            configuration.playerStyle
+          );
+          if (playerStyleIndex >= 0) {
+            setValue('playerStyle', playerStyleIndex);
+          } else {
+            setValue('playerStyle', undefined);
+          }
         } else {
           setValue('playerStyle', undefined);
         }
-      } else {
-        setValue('playerStyle', undefined);
-      }
 
-      if (configuration.videoCompleteAction) {
-        const videoCompleteActionIndex = VideoCompleteActionList.indexOf(
-          configuration.videoCompleteAction
-        );
-        if (videoCompleteActionIndex >= 0) {
-          setValue('videoCompleteAction', videoCompleteActionIndex);
+        if (configuration.videoCompleteAction) {
+          const videoCompleteActionIndex = VideoCompleteActionList.indexOf(
+            configuration.videoCompleteAction
+          );
+          if (videoCompleteActionIndex >= 0) {
+            setValue('videoCompleteAction', videoCompleteActionIndex);
+          } else {
+            setValue('videoCompleteAction', undefined);
+          }
         } else {
           setValue('videoCompleteAction', undefined);
         }
-      } else {
-        setValue('videoCompleteAction', undefined);
-      }
 
-      setValue('showShareButton', configuration.showShareButton);
-      setValue(
-        'ctaBackgroundColor',
-        configuration.ctaButtonStyle?.backgroundColor
-      );
-      setValue('ctaTextColor', configuration.ctaButtonStyle?.textColor);
-      setValue(
-        'ctaFontSize',
-        configuration.ctaButtonStyle?.fontSize?.toString()
-      );
-      setValue('showPlaybackButton', configuration.showPlaybackButton);
-      setValue('showMuteButton', configuration.showMuteButton);
-      if (configuration.launchBehavior) {
-        const launchBehaviorIndex = VideoLaunchBehaviorList.indexOf(
-          configuration.launchBehavior
+        setValue('showShareButton', configuration.showShareButton);
+        setValue(
+          'ctaBackgroundColor',
+          configuration.ctaButtonStyle?.backgroundColor
         );
-        if (launchBehaviorIndex >= 0) {
-          setValue('launchBehavior', launchBehaviorIndex);
+        setValue('ctaTextColor', configuration.ctaButtonStyle?.textColor);
+        setValue(
+          'ctaFontSize',
+          configuration.ctaButtonStyle?.fontSize?.toString()
+        );
+        setValue('showPlaybackButton', configuration.showPlaybackButton);
+        setValue('showMuteButton', configuration.showMuteButton);
+        if (configuration.launchBehavior) {
+          const launchBehaviorIndex = VideoLaunchBehaviorList.indexOf(
+            configuration.launchBehavior
+          );
+          if (launchBehaviorIndex >= 0) {
+            setValue('launchBehavior', launchBehaviorIndex);
+          } else {
+            setValue('launchBehavior', undefined);
+          }
         } else {
           setValue('launchBehavior', undefined);
         }
       } else {
-        setValue('launchBehavior', undefined);
+        reset();
       }
-    } else {
-      reset();
-    }
-  };
+    },
+    [setValue, reset]
+  );
+
   useEffect(() => {
     syncFormValuesFromConfiguration(playerConfiguration);
-  }, [playerConfiguration]);
+  }, [playerConfiguration, syncFormValuesFromConfiguration]);
 
   const onSave = (data: PlayerConfigurationFormData) => {
     if (onSubmit) {
@@ -162,9 +164,9 @@ const PlayerConfigurationModal = ({
       configuration.showPlaybackButton = data.showPlaybackButton;
       configuration.showMuteButton = data.showMuteButton;
       configuration.launchBehavior =
-      typeof data.launchBehavior === 'number'
-        ? VideoLaunchBehaviorList[data.launchBehavior]
-        : undefined;
+        typeof data.launchBehavior === 'number'
+          ? VideoLaunchBehaviorList[data.launchBehavior]
+          : undefined;
       console.log('configuration', configuration);
       onSubmit(configuration);
     }
@@ -200,8 +202,8 @@ const PlayerConfigurationModal = ({
                     <ButtonGroup
                       buttons={PlayStyleList}
                       selectedIndex={value}
-                      onPress={(value) => {
-                        onChange(value);
+                      onPress={(newValue) => {
+                        onChange(newValue);
                       }}
                     />
                   )}
@@ -218,8 +220,8 @@ const PlayerConfigurationModal = ({
                     <ButtonGroup
                       buttons={VideoCompleteActionList}
                       selectedIndex={value}
-                      onPress={(value) => {
-                        onChange(value);
+                      onPress={(newValue) => {
+                        onChange(newValue);
                       }}
                     />
                   )}
@@ -254,7 +256,7 @@ const PlayerConfigurationModal = ({
                       label="CTA background color"
                       placeholder="e.g. #c0c0c0"
                       onBlur={onBlur}
-                      onChangeText={(value) => onChange(value)}
+                      onChangeText={(newValue) => onChange(newValue)}
                       value={value}
                       errorMessage={
                         errors.ctaBackgroundColor
@@ -287,7 +289,7 @@ const PlayerConfigurationModal = ({
                       label="CTA text color"
                       placeholder="e.g. #000000"
                       onBlur={onBlur}
-                      onChangeText={(value) => onChange(value)}
+                      onChangeText={(newValue) => onChange(newValue)}
                       value={value}
                       errorMessage={
                         errors.ctaTextColor
@@ -322,7 +324,7 @@ const PlayerConfigurationModal = ({
                       label="CTA font size"
                       placeholder="e.g. 14"
                       onBlur={onBlur}
-                      onChangeText={(value) => onChange(value)}
+                      onChangeText={(newValue) => onChange(newValue)}
                       value={value}
                       errorMessage={ctaFontSizeErrorMessage}
                       rightIcon={
@@ -389,8 +391,8 @@ const PlayerConfigurationModal = ({
                     <ButtonGroup
                       buttons={VideoLaunchBehaviorList}
                       selectedIndex={value}
-                      onPress={(value) => {
-                        onChange(value);
+                      onPress={(newValue) => {
+                        onChange(newValue);
                       }}
                     />
                   )}

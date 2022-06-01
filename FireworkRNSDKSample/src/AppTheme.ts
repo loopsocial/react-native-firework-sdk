@@ -17,7 +17,7 @@ const AppTheme = {
     },
     labelStyle: {
       fontSize: 14,
-    }
+    },
   },
 };
 

@@ -15,12 +15,14 @@ import { useNavigation } from '@react-navigation/native';
 import type { NativeStackNavigationProp } from '@react-navigation/native-stack';
 
 import ChannelInputModal from '../components/ChannelInputModal';
-import PlaylistGroupInputModal from '../components/PlaylistGroupInputModel';
+import DynamicContentInputModal from '../components/DynamicContentInputModal';
+import PlaylistGroupInputModal from '../components/PlaylistGroupInputModal';
 import PlaylistInputModal from '../components/PlaylistInputModal';
 import {
   defaultChannelIdArray,
   defaultPlaylistGroupInfoArray,
   defaultPlaylistInfoArray,
+  defaultDynamicContentInfoArray,
 } from '../config/Feed.json';
 import type { RootStackParamList } from './paramList/RootStackParamList';
 import type { TabParamsList } from './paramList/TabParamsList';
@@ -44,7 +46,8 @@ export default function FeedLayouts() {
     useState(false);
   const [playlistGroupInputModalVisible, setPlaylistGroupInputModalVisible] =
     useState(false);
-
+  const [dynamicContentInputModalVisible, setDynamicContentInputModalVisible] =
+    useState(false);
   const dataList: FeedListItemData[] = [
     {
       title: 'Discover Feed',
@@ -61,7 +64,7 @@ export default function FeedLayouts() {
 
         showActionSheetWithOptions(
           {
-            title: 'Select Channel',
+            title: 'Select Channel Id',
             options,
             cancelButtonIndex,
           },
@@ -85,7 +88,7 @@ export default function FeedLayouts() {
       pressCallback: (_) => {
         const options = [
           ...defaultPlaylistInfoArray.map(
-            (item: any) =>
+            (item) =>
               `ChannelId: ${item.channelId} PlaylistId: ${item.playlistId}`
           ),
           'Custom',
@@ -95,7 +98,7 @@ export default function FeedLayouts() {
         const customButtonIndex = defaultPlaylistInfoArray.length;
         showActionSheetWithOptions(
           {
-            title: 'Select Playlist',
+            title: 'Select Playlist Info',
             options,
             cancelButtonIndex,
           },
@@ -121,7 +124,7 @@ export default function FeedLayouts() {
       pressCallback: (_) => {
         const options = [
           ...defaultPlaylistGroupInfoArray.map(
-            (item: any) => `PlaylistGroupId: ${item.playlistGroupId}`
+            (item) => `PlaylistGroupId: ${item.playlistGroupId}`
           ),
           'Custom',
           'Cancel',
@@ -130,7 +133,7 @@ export default function FeedLayouts() {
         const customButtonIndex = defaultPlaylistGroupInfoArray.length;
         showActionSheetWithOptions(
           {
-            title: 'Select Playlist Group',
+            title: 'Select Playlist Group Id',
             options,
             cancelButtonIndex,
           },
@@ -145,6 +148,40 @@ export default function FeedLayouts() {
                 });
               } else if (buttonIndex === customButtonIndex) {
                 setPlaylistGroupInputModalVisible(true);
+              }
+            }
+          }
+        );
+      },
+    },
+    {
+      title: 'Dynamic Content Feed',
+      pressCallback: (_) => {
+        const options = [
+          ...defaultDynamicContentInfoArray.map((item) => item.name),
+          'Custom',
+          'Cancel',
+        ];
+        const cancelButtonIndex = defaultDynamicContentInfoArray.length + 1;
+        const customButtonIndex = defaultDynamicContentInfoArray.length;
+        showActionSheetWithOptions(
+          {
+            title: 'Select Dynamic Content Info',
+            options,
+            cancelButtonIndex,
+          },
+          (buttonIndex) => {
+            if (typeof buttonIndex === 'number') {
+              if (buttonIndex < customButtonIndex) {
+                const dynamicContentInfo =
+                  defaultDynamicContentInfoArray[buttonIndex];
+                navigation.navigate('Feed', {
+                  source: 'dynamicContent',
+                  channel: dynamicContentInfo.channelId,
+                  dynamicContentParameters: dynamicContentInfo.parameters,
+                });
+              } else if (buttonIndex === customButtonIndex) {
+                setDynamicContentInputModalVisible(true);
               }
             }
           }
@@ -207,6 +244,23 @@ export default function FeedLayouts() {
           navigation.navigate('Feed', {
             source: 'playlistGroup',
             playlistGroup: playlistGroupId,
+          });
+        }}
+      />
+      <DynamicContentInputModal
+        visible={dynamicContentInputModalVisible}
+        onRequestClose={() => {
+          setDynamicContentInputModalVisible(false);
+        }}
+        onSubmit={(channelId, dynamicContentParameters) => {
+          console.log('channelId', channelId);
+          console.log('dynamicContentParameters', dynamicContentParameters);
+
+          setDynamicContentInputModalVisible(false);
+          navigation.navigate('Feed', {
+            source: 'dynamicContent',
+            channel: channelId,
+            dynamicContentParameters: dynamicContentParameters,
           });
         }}
       />
