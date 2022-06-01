@@ -1,14 +1,16 @@
-import { View, StyleSheet } from 'react-native';
+import { StyleSheet, View } from 'react-native';
 import React from 'react';
-import SetAdBadgeConfigurationForm from '../components/SetAdBadgeConfigurationForm';
+import EnableCustomCTAClickCallbackForm from '../components/EnableCustomCTAClickCallbackForm';
 
-const SetAdBadgeConfiguration = () => {
+const EnableCustomCTAClickCallback = () => {
   return (
     <View style={styles.container}>
-      <SetAdBadgeConfigurationForm />
+      <EnableCustomCTAClickCallbackForm />
     </View>
   );
 };
+
+export default EnableCustomCTAClickCallback;
 
 const styles = StyleSheet.create({
   container: {
@@ -19,5 +21,3 @@ const styles = StyleSheet.create({
     paddingHorizontal: 20,
   },
 });
-
-export default SetAdBadgeConfiguration;

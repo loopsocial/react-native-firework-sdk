@@ -1,7 +1,7 @@
 import CommonStyles from './CommonStyles';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import Patterns from '../constants/Patterns';
-import React, { useEffect } from 'react';
+import React, { useCallback, useEffect } from 'react';
 import { Button, CheckBox, Input } from 'react-native-elements';
 import { Controller, useForm } from 'react-hook-form';
 import {
@@ -59,7 +59,7 @@ const CartConfigurationModal = ({
     formState: { errors },
   } = useForm<CartConfigurationFormData>();
 
-  let addToCartButtonFontSizeErrorMessage: string | undefined = undefined;
+  let addToCartButtonFontSizeErrorMessage: string | undefined;
   if (errors.addToCartButtonFontSize) {
     if (
       errors.addToCartButtonFontSize.type === 'max' ||
@@ -71,45 +71,45 @@ const CartConfigurationModal = ({
     }
   }
 
-  const syncFormValuesFromConfiguration = (
-    configuration: CartConfiguration
-  ) => {
-    setValue(
-      'addToCartButtonBackgroundColor',
-      configuration.addToCartButtonStyle.backgroundColor
-    );
-    setValue(
-      'addToCartButtonTextColor',
-      configuration.addToCartButtonStyle.textColor
-    );
-    setValue(
-      'addToCartButtonFontSize',
-      configuration.addToCartButtonStyle.fontSize?.toString()
-    );
-    setValue('showCartIcon', configuration.cartIconVisible);
-  };
+  const syncFormValuesFromConfiguration = useCallback(
+    (configuration: CartConfiguration) => {
+      setValue(
+        'addToCartButtonBackgroundColor',
+        configuration.addToCartButtonStyle.backgroundColor
+      );
+      setValue(
+        'addToCartButtonTextColor',
+        configuration.addToCartButtonStyle.textColor
+      );
+      setValue(
+        'addToCartButtonFontSize',
+        configuration.addToCartButtonStyle.fontSize?.toString()
+      );
+      setValue('showCartIcon', configuration.cartIconVisible);
+    },
+    [setValue]
+  );
 
   useEffect(() => {
     syncFormValuesFromConfiguration({ cartIconVisible, addToCartButtonStyle });
-  }, [cartIconVisible, addToCartButtonStyle]);
+  }, [cartIconVisible, addToCartButtonStyle, syncFormValuesFromConfiguration]);
 
   const onSave = (data: CartConfigurationFormData) => {
     console.log('onSave CartConfigurationFormData', data);
     dispatch(changeCartIconVisibility(data.showCartIcon ?? true));
-    let addToCartButtonStyle: AddToCartButtonConfiguration = {};
+    let cartButtonStyle: AddToCartButtonConfiguration = {};
     if (data.addToCartButtonBackgroundColor) {
-      addToCartButtonStyle.backgroundColor =
-        data.addToCartButtonBackgroundColor;
+      cartButtonStyle.backgroundColor = data.addToCartButtonBackgroundColor;
     }
 
     if (data.addToCartButtonTextColor) {
-      addToCartButtonStyle.textColor = data.addToCartButtonTextColor;
+      cartButtonStyle.textColor = data.addToCartButtonTextColor;
     }
 
     if (data.addToCartButtonFontSize) {
-      addToCartButtonStyle.fontSize = parseInt(data.addToCartButtonFontSize);
+      cartButtonStyle.fontSize = parseInt(data.addToCartButtonFontSize);
     }
-    dispatch(setAddToCartButtonStyle(addToCartButtonStyle));
+    dispatch(setAddToCartButtonStyle(cartButtonStyle));
     setTimeout(() => {
       if (onRequestClose) {
         onRequestClose();
@@ -128,7 +128,7 @@ const CartConfigurationModal = ({
                 label={'Background color of "Add to cart" button'}
                 placeholder="e.g. #c0c0c0"
                 onBlur={onBlur}
-                onChangeText={(value) => onChange(value)}
+                onChangeText={(newValue) => onChange(newValue)}
                 value={value}
                 errorMessage={
                   errors.addToCartButtonBackgroundColor
@@ -163,7 +163,7 @@ const CartConfigurationModal = ({
                 label={'Text color of "Add to cart" button'}
                 placeholder="e.g. #ffffff"
                 onBlur={onBlur}
-                onChangeText={(value) => onChange(value)}
+                onChangeText={(newValue) => onChange(newValue)}
                 value={value}
                 errorMessage={
                   errors.addToCartButtonTextColor
@@ -198,7 +198,7 @@ const CartConfigurationModal = ({
                 label={'Font size of "Add to cart" button'}
                 placeholder="e.g. 14"
                 onBlur={onBlur}
-                onChangeText={(value) => onChange(value)}
+                onChangeText={(newValue) => onChange(newValue)}
                 value={value}
                 errorMessage={addToCartButtonFontSizeErrorMessage}
                 rightIcon={

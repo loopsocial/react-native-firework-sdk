@@ -1,5 +1,19 @@
 # CHANGELOG
 
+## [1.2.0]
+
+### Added
+
+- Add a new video feed source: `dynamicContent`
+- Support for navigating from native page to RN page
+
+### Breaking Changes
+
+- Remove `AdConfig` interface 
+- Remove `adConfig` parameter from `init` method of `FireworkSDK` class
+- Modify the return type of `onClickCartIcon` callback
+- Remove `exitCartPage` method from `VideoShopping` class
+
 ## [1.1.0]
 
 ### Added
