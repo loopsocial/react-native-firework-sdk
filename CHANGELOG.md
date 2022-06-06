@@ -1,5 +1,11 @@
 # CHANGELOG
 
+## [1.2.2]
+
+### Added
+
+- Add new properties in `FeedItemDetails` interface
+
 ## [1.2.1]
 
 ### Added
