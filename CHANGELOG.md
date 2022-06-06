@@ -1,5 +1,11 @@
 # CHANGELOG
 
+## [1.2.3]
+
+### Changed
+- Fix the issue that the video sound does not stop when the video player is closed in certain scenarios
+- Fix the issue that the video sound does not stop when the new native container is displayed in certain scenarios
+
 ## [1.2.2]
 
 ### Added
