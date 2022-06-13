@@ -1,8 +1,15 @@
 # CHANGELOG
 
+## [1.2.5]
+
+### Changed
+
+- Fix the issue that JSON serialization is unsuccessful in certain conditions on the Android platform
+
 ## [1.2.3]
 
 ### Changed
+
 - Fix the issue that the video sound does not stop when the video player is closed in certain scenarios
 - Fix the issue that the video sound does not stop when the new native container is displayed in certain scenarios
 
