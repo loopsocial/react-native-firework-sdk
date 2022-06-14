@@ -27,6 +27,7 @@ import EnableCustomCTALinkContentPageRouteName from './screens/EnableCustomCTALi
 import FireworkSDK from 'react-native-firework-sdk';
 import CTALinkContent from './screens/CTALinkContent';
 import Cart from './screens/Cart';
+import CircleThumbnails from './screens/CircleThumbnails';
 
 const StackNavigator = createNativeStackNavigator<RootStackParamList>();
 
@@ -146,6 +147,11 @@ const FWNavigationContainer = ({
           name: 'CTALinkContent',
           component: CTALinkContent,
           options: { title: 'CTA Link Content(RN page)' },
+        })}
+        {renderScreen({
+          name: 'CircleThumbnails',
+          component: CircleThumbnails,
+          options: { title: 'Circle Thumbnails(iOS)' },
         })}
       </StackNavigator.Navigator>
     </NavigationContainer>

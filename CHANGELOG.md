@@ -1,5 +1,11 @@
 # CHANGELOG
 
+## [1.2.6]
+
+### Added
+
+- Add new properties in `VideoFeedConfiguration` interface
+
 ## [1.2.5]
 
 ### Changed

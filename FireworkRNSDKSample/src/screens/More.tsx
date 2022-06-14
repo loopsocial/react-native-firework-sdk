@@ -57,6 +57,12 @@ function More() {
         navigation.push('EnableCustomCTALinkContentPageRouteName');
       },
     },
+    {
+      title: 'Circle Thumbnails(iOS)',
+      pressCallback: (_) => {
+        navigation.push('CircleThumbnails');
+      },
+    },
   ];
   return (
     <View style={styles.container}>

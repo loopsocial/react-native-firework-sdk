@@ -19,4 +19,5 @@ export type RootStackParamList = {
   CTALinkContent: {
     url: string;
   };
+  CircleThumbnails: undefined;
 };
