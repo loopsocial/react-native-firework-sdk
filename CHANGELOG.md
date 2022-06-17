@@ -1,5 +1,11 @@
 # CHANGELOG
 
+## [1.2.7]
+
+### Added
+
+- Add `showBranding` property in `VideoPlayerConfiguration` interface
+
 ## [1.2.6]
 
 ### Added
