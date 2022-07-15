@@ -1,5 +1,11 @@
 # CHANGELOG
 
+## [1.2.8]
+
+### Added
+
+- Add `onCustomClickCartIcon` callback in `VideoShopping` class
+
 ## [1.2.7]
 
 ### Added

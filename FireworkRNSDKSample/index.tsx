@@ -34,6 +34,9 @@ FireworkSDK.getInstance().shopping.onAddToCart =
 FireworkSDK.getInstance().shopping.onClickCartIcon =
   HostAppShoppingService.getInstance().onClickCartIcon;
 
+// FireworkSDK.getInstance().shopping.onCustomClickCartIcon =
+//   HostAppShoppingService.getInstance().onCustomClickCartIcon;
+
 FireworkSDK.getInstance().shopping.onUpdateProductDetails =
   HostAppShoppingService.getInstance().onUpdateProductDetails;
 
