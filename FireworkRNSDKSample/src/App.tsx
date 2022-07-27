@@ -28,6 +28,7 @@ import FireworkSDK from 'react-native-firework-sdk';
 import CTALinkContent from './screens/CTALinkContent';
 import Cart from './screens/Cart';
 import CircleThumbnails from './screens/CircleThumbnails';
+import EnableCustomClickCartIconCallback from './screens/EnableCustomClickCartIconCallback';
 
 const StackNavigator = createNativeStackNavigator<RootStackParamList>();
 
@@ -152,6 +153,11 @@ const FWNavigationContainer = ({
           name: 'CircleThumbnails',
           component: CircleThumbnails,
           options: { title: 'Circle Thumbnails(iOS)' },
+        })}
+        {renderScreen({
+          name: 'EnableCustomClickCartIconCallback',
+          component: EnableCustomClickCartIconCallback,
+          options: { title: 'Enable Custom Click Cart Icon Callback' },
         })}
       </StackNavigator.Navigator>
     </NavigationContainer>

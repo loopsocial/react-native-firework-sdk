@@ -99,11 +99,11 @@ export default class HostAppShoppingService {
           }: { amount: string; currencyCode: string } = (
             shopifyProductVariant as any
           ).priceV2;
-
+          const unitId = ShopifyClient.getInstance().parseId(
+            `${shopifyProductVariant.id}`
+          );
           return {
-            unitId: ShopifyClient.getInstance().parseId(
-              `${shopifyProductVariant.id}`
-            ),
+            unitId,
             name: shopifyProductVariant.title,
             price: { amount: parseFloat(amount), currencyCode },
           };

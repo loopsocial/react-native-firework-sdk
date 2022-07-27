@@ -8,26 +8,16 @@ android {
   buildTypes {
 
     debug {
-      def debugNotesTxt = "build/$project.name-releasenotes-debug.txt"
       firebaseAppDistribution {
-        if (project.file(debugNotesTxt).exists()) {
-          releaseNotesFile= project.file(debugNotesTxt)
-        } else {
-          releaseNotes=""
-        }
+        releaseNotes="bogano debug"
         groups="email-notification"
         serviceCredentialsFile=project.hasProperty('FIREBASE_CREDENTIAL_FILE_PATH') ? FIREBASE_CREDENTIAL_FILE_PATH : ""
       }
     }
 
     release {
-      def releaseNotesTxt = "build/$project.name-releasenotes-release.txt"
       firebaseAppDistribution {
-        if (project.file(releaseNotesTxt).exists()) {
-          releaseNotesFile= project.file(releaseNotesTxt)
-        } else {
-          releaseNotes=""
-        }
+        releaseNotes="bogano release"
         groups="email-notification"
         serviceCredentialsFile=project.hasProperty('FIREBASE_CREDENTIAL_FILE_PATH') ? FIREBASE_CREDENTIAL_FILE_PATH : ""
       }
