@@ -63,6 +63,12 @@ function More() {
         navigation.push('CircleThumbnails');
       },
     },
+    {
+      title: 'Enable Custom Click Cart Icon Callback',
+      pressCallback: (_) => {
+        navigation.push('EnableCustomClickCartIconCallback');
+      },
+    },
   ];
   return (
     <View style={styles.container}>

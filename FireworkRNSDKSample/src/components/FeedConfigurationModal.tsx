@@ -36,6 +36,7 @@ type FeedConfigurationFormData = {
   playIconWidth?: string;
   showAdBadge?: boolean;
   enableCustomLayoutName?: boolean;
+  enableAutoplay?: boolean;
 };
 
 const TitlePositionList: VideoFeedTitlePosition[] = ['stacked', 'nested'];
@@ -117,6 +118,7 @@ const FeedConfigurationModal = ({
         );
         setValue('showAdBadge', configuration.showAdBadge);
         setValue('enableCustomLayoutName', !!configuration.customLayoutName);
+        setValue('enableAutoplay', configuration.enableAutoplay);
       } else {
         reset();
       }
@@ -159,6 +161,7 @@ const FeedConfigurationModal = ({
       if (data.enableCustomLayoutName) {
         configuration.customLayoutName = 'fw_feed_custom_layout';
       }
+      configuration.enableAutoplay = data.enableAutoplay;
       console.log('configuration', configuration);
       onSubmit(configuration);
     }
@@ -430,6 +433,27 @@ const FeedConfigurationModal = ({
     </View>
   );
 
+  const enableAutoplay = (
+    <View style={styles.formItemRow}>
+      <View style={styles.formItem}>
+        <Controller
+          control={control}
+          render={({ field: { onChange, value } }) => {
+            return (
+              <CheckBox
+                center
+                title="Enable Autoplay"
+                checked={value}
+                onPress={() => onChange(!value)}
+              />
+            );
+          }}
+          name="enableAutoplay"
+        />
+      </View>
+    </View>
+  );
+
   return (
     <Modal
       animationType="fade"
@@ -456,6 +480,7 @@ const FeedConfigurationModal = ({
             {playIconConfiguration}
             {showAdBadgeRow}
             {enableCustomLayoutName}
+            {enableAutoplay}
             <View style={{ ...CommonStyles.formItem, ...styles.buttonList }}>
               <Button
                 type="outline"
