@@ -1,5 +1,14 @@
 # CHANGELOG
 
+## [1.3.0]
+
+### Added
+
+- Support for RTL and Arabic translations
+- Support for autoplay video in thumbnails
+- Add `imageUrl` and `options` to `ProductUnit` interface
+- Add `gridColumns` to `VideoFeedConfiguration` interface
+
 ## [1.2.8]
 
 ### Added

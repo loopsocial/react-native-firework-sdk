@@ -1,4 +1,3 @@
-import type { CustomCTAClickCallback } from 'lib/typescript';
 import type {
   AddToCartCallback,
   AddToCartEvent,
@@ -10,7 +9,6 @@ import type {
   WillDisplayProductEvent,
 } from 'react-native-firework-sdk';
 import FireworkSDK from 'react-native-firework-sdk';
-import type { CustomClickCartIconCallback } from 'src/VideoShopping';
 
 import type CartItem from '../models/CartItem';
 import { addCartItem } from '../slice/cartSlice';
@@ -73,11 +71,6 @@ export default class HostAppShoppingService {
     };
   };
 
-  public onCustomClickCartIcon?: CustomClickCartIconCallback = async () => {
-    console.log('[example] onCustomClickCartIcon');
-    FireworkSDK.getInstance().navigator.popNativeContainer();
-  };
-
   public onUpdateProductDetails: UpdateProductDetailsCallback = async (
     event: UpdateProductDetailsEvent
   ) => {
@@ -99,11 +92,11 @@ export default class HostAppShoppingService {
           }: { amount: string; currencyCode: string } = (
             shopifyProductVariant as any
           ).priceV2;
-
+          const unitId = ShopifyClient.getInstance().parseId(
+            `${shopifyProductVariant.id}`
+          );
           return {
-            unitId: ShopifyClient.getInstance().parseId(
-              `${shopifyProductVariant.id}`
-            ),
+            unitId,
             name: shopifyProductVariant.title,
             price: { amount: parseFloat(amount), currencyCode },
           };

@@ -1,6 +1,12 @@
 import React, { useEffect, useRef, useState } from 'react';
 
-import { StyleSheet, Text, TouchableOpacity, View } from 'react-native';
+import {
+  Platform,
+  StyleSheet,
+  Text,
+  TouchableOpacity,
+  View,
+} from 'react-native';
 import { Button } from 'react-native-elements';
 import {
   FWError,
@@ -98,16 +104,27 @@ const Feed = () => {
           }}
         />
       </View>
-      <View style={mode === 'row' ? { height: 200 } : { flex: 1 }}>
+      <View
+        style={
+          mode === 'row' ? { height: 200 } : { flex: 1, alignItems: 'center' }
+        }
+      >
         <VideoFeed
-          style={{ height: '100%', width: '100%' }}
+          style={{
+            height: '100%',
+            width:
+              Platform.OS === 'android' && mode === 'column' ? 150 : '100%',
+          }}
           source={source}
           channel={channel}
           playlist={playlist}
           playlistGroup={playlistGroup}
           dynamicContentParameters={dynamicContentParameters}
           mode={mode}
-          videoFeedConfiguration={feedConfiguration}
+          videoFeedConfiguration={{
+            ...feedConfiguration,
+            aspectRatio: mode === 'column' ? 1 : undefined,
+          }}
           videoPlayerConfiguration={playerConfiguration}
           onVideoFeedLoadFinished={(error?: FWError) => {
             console.log('[example] onVideoFeedLoadFinished error', error);
