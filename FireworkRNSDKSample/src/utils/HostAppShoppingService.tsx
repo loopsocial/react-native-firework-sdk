@@ -9,6 +9,7 @@ import type {
   WillDisplayProductEvent,
 } from 'react-native-firework-sdk';
 import FireworkSDK from 'react-native-firework-sdk';
+import type { CustomClickCartIconCallback } from 'src/VideoShopping';
 
 import type CartItem from '../models/CartItem';
 import { addCartItem } from '../slice/cartSlice';
@@ -69,6 +70,11 @@ export default class HostAppShoppingService {
     return {
       initialRouteName: 'Cart',
     };
+  };
+
+  public onCustomClickCartIcon?: CustomClickCartIconCallback = async () => {
+    console.log('[example] onCustomClickCartIcon');
+    FireworkSDK.getInstance().navigator.popNativeContainer();
   };
 
   public onUpdateProductDetails: UpdateProductDetailsCallback = async (
