@@ -14,6 +14,8 @@ MaterialIcons.loadFont();
 
 AppRegistry.registerComponent(appName, () => App);
 
+FireworkSDK.getInstance().debugLogsEnabled = true;
+
 FireworkSDK.getInstance().appComponentName = appName;
 
 FireworkSDK.getInstance().onSDKInit = (event) => {
@@ -33,6 +35,9 @@ FireworkSDK.getInstance().shopping.onAddToCart =
 
 FireworkSDK.getInstance().shopping.onClickCartIcon =
   HostAppShoppingService.getInstance().onClickCartIcon;
+
+// FireworkSDK.getInstance().shopping.onCustomClickCartIcon =
+//   HostAppShoppingService.getInstance().onCustomClickCartIcon;
 
 FireworkSDK.getInstance().shopping.onUpdateProductDetails =
   HostAppShoppingService.getInstance().onUpdateProductDetails;
