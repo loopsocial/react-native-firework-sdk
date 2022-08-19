@@ -2,6 +2,7 @@ import type {
   AddToCartCallback,
   AddToCartEvent,
   ClickCartIconCallback,
+  CustomClickCartIconCallback,
   Product,
   UpdateProductDetailsCallback,
   UpdateProductDetailsEvent,
@@ -9,7 +10,6 @@ import type {
   WillDisplayProductEvent,
 } from 'react-native-firework-sdk';
 import FireworkSDK from 'react-native-firework-sdk';
-import type { CustomClickCartIconCallback } from 'src/VideoShopping';
 
 import type CartItem from '../models/CartItem';
 import { addCartItem } from '../slice/cartSlice';
