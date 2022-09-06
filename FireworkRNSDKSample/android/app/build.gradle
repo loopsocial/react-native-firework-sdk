@@ -181,6 +181,7 @@ android {
     // ./gradlew installDebug
     debug {
       manifestPlaceholders = [fw_appid: env=="STAGING" ? fw_appid_staging : fw_appid_production]
+      proguardFiles getDefaultProguardFile("proguard-android.txt"), "proguard-rules.pro"
       minifyEnabled enableProguardInReleaseBuilds
       signingConfig signingConfigs.release
       if (nativeArchitectures) {
