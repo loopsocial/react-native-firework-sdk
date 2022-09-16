@@ -34,6 +34,7 @@ const EnableCustomCTAClickCallbackForm = () => {
           });
         }
       };
+      FireworkSDK.getInstance().customCTALinkContentPageRouteName = undefined;
       Toast.show('Enable custom CTA click callback successfully');
     } else {
       FireworkSDK.getInstance().onCustomCTAClick = undefined;
