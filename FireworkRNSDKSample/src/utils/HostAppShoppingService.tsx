@@ -2,12 +2,12 @@ import type {
   AddToCartCallback,
   AddToCartEvent,
   ClickCartIconCallback,
-  CustomClickCartIconCallback,
   Product,
   UpdateProductDetailsCallback,
   UpdateProductDetailsEvent,
   WillDisplayProductCallback,
   WillDisplayProductEvent,
+  CustomClickCartIconCallback,
 } from 'react-native-firework-sdk';
 import FireworkSDK from 'react-native-firework-sdk';
 

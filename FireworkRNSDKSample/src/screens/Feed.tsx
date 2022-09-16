@@ -7,9 +7,11 @@ import {
   TouchableOpacity,
   View,
 } from 'react-native';
-import { Button } from 'react-native-elements';
+import { Button, ButtonGroup } from 'react-native-elements';
 import {
   FWError,
+  StoryBlock,
+  StoryBlockSource,
   VideoFeed,
   VideoFeedConfiguration,
   VideoFeedMode,
@@ -25,6 +27,7 @@ import FeedConfigurationModal from '../components/FeedConfigurationModal';
 import PlayerConfigurationModal from '../components/PlayerConfigurationModal';
 import VideoFeedForm from '../components/VideoFeedForm';
 import type { RootStackParamList } from './paramList/RootStackParamList';
+import { SafeAreaView } from 'react-native-safe-area-context';
 
 type FeedScreenRouteProp = RouteProp<RootStackParamList, 'Feed'>;
 type FeedScreenNavigationProp = NativeStackNavigationProp<
@@ -32,10 +35,14 @@ type FeedScreenNavigationProp = NativeStackNavigationProp<
   'Feed'
 >;
 
+type FeedComponentType = 'VideoFeed' | 'StoryBlock';
+const feedComponentTypeList = ['VideoFeed', 'StoryBlock'];
+
 const Feed = () => {
   const route = useRoute<FeedScreenRouteProp>();
   const navigation = useNavigation<FeedScreenNavigationProp>();
-
+  const [feedComponentType, setFeedComponentType] =
+    useState<FeedComponentType>('VideoFeed');
   const source = route.params?.source || 'discover';
   const channel = route.params?.channel;
   const playlist = route.params?.playlist;
@@ -76,34 +83,21 @@ const Feed = () => {
           ? source.charAt(0).toUpperCase() + source.slice(1)
           : ''
       } Feed`,
-      headerRight: ({ tintColor }) => (
-        <TouchableOpacity
-          onPress={() => {
-            feedRef.current?.refresh();
-          }}
-        >
-          <Ionicons name="refresh-sharp" size={24} color={tintColor} />
-        </TouchableOpacity>
-      ),
+      headerRight: ({ tintColor }) =>
+        feedComponentType === 'VideoFeed' ? (
+          <TouchableOpacity
+            onPress={() => {
+              feedRef.current?.refresh();
+            }}
+          >
+            <Ionicons name="refresh-sharp" size={24} color={tintColor} />
+          </TouchableOpacity>
+        ) : null,
     });
-  }, [navigation, source]);
+  }, [navigation, source, feedComponentType]);
 
-  return (
-    <View style={styles.container}>
-      <View style={styles.videoFormWrapper}>
-        <VideoFeedForm
-          mode={mode}
-          onChangeMode={(newMode) => {
-            setMode(newMode);
-          }}
-          onGoToFeedConfiguration={() => {
-            setShowFeedConfiguration(true);
-          }}
-          onGoToPlayerConfiguration={() => {
-            setShowPlayerConfiguration(true);
-          }}
-        />
-      </View>
+  const renderVideoFeed = () => {
+    return (
       <View
         style={
           mode === 'row' ? { height: 200 } : { flex: 1, alignItems: 'center' }
@@ -147,6 +141,75 @@ const Feed = () => {
           </View>
         )}
       </View>
+    );
+  };
+
+  const renderStoryBlock = () => {
+    return (
+      <SafeAreaView style={{ flex: 1, alignItems: 'center', marginBottom: 20 }}>
+        <StoryBlock
+          style={{ flex: 1, width: '80%', borderRadius: 30 }}
+          source={source as StoryBlockSource}
+          channel={channel}
+          playlist={playlist}
+          dynamicContentParameters={dynamicContentParameters}
+          onStoryBlockLoadFinished={(error?: FWError) => {
+            console.log('[example] onStoryBlockLoadFinished error', error);
+            setFeedError(error);
+          }}
+        />
+        {feedError && (
+          <View style={styles.errorView}>
+            <Button
+              title="Refresh"
+              onPress={() => {
+                setFeedError(undefined);
+                feedRef.current?.refresh();
+              }}
+            />
+            <Text style={styles.errorText}>
+              {feedError.reason ?? 'Fail to load story block'}
+            </Text>
+          </View>
+        )}
+      </SafeAreaView>
+    );
+  };
+
+  return (
+    <View style={styles.container}>
+      {source !== 'playlistGroup' && (
+        <View style={styles.feedComponentTypeButtonGroupWrapper}>
+          <ButtonGroup
+            buttons={feedComponentTypeList}
+            selectedIndex={feedComponentTypeList.indexOf(feedComponentType)}
+            onPress={(value) => {
+              setFeedComponentType(
+                feedComponentTypeList[value] as FeedComponentType
+              );
+            }}
+          />
+        </View>
+      )}
+      {feedComponentType === 'VideoFeed' && (
+        <View style={styles.videoFormWrapper}>
+          <VideoFeedForm
+            mode={mode}
+            onChangeMode={(newMode) => {
+              setMode(newMode);
+            }}
+            onGoToFeedConfiguration={() => {
+              setShowFeedConfiguration(true);
+            }}
+            onGoToPlayerConfiguration={() => {
+              setShowPlayerConfiguration(true);
+            }}
+          />
+        </View>
+      )}
+      {feedComponentType === 'VideoFeed'
+        ? renderVideoFeed()
+        : renderStoryBlock()}
       <FeedConfigurationModal
         visible={showFeedConfiguration}
         feedConfiguration={feedConfiguration}
@@ -185,6 +248,10 @@ const styles = StyleSheet.create({
     justifyContent: 'flex-start',
     alignItems: 'stretch',
     backgroundColor: 'white',
+  },
+  feedComponentTypeButtonGroupWrapper: {
+    paddingHorizontal: 10,
+    paddingVertical: 20,
   },
   videoFormWrapper: {
     paddingHorizontal: 10,

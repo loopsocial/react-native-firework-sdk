@@ -29,6 +29,7 @@ const EnableCustomCTALinkContentPageRouteNameForm = () => {
     if (data.enableCustomCTALinkContentPageRouteName) {
       FireworkSDK.getInstance().customCTALinkContentPageRouteName =
         'CTALinkContent';
+      FireworkSDK.getInstance().onCustomCTAClick = undefined;
       Toast.show('Enable custom CTA link content page route name successfully');
     } else {
       FireworkSDK.getInstance().customCTALinkContentPageRouteName = undefined;

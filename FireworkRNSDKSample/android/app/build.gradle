@@ -141,8 +141,8 @@ android {
     applicationId "com.loopnow.bogano"
     minSdkVersion rootProject.ext.minSdkVersion
     targetSdkVersion rootProject.ext.targetSdkVersion
-    versionCode 103007
-    versionName "1.3.0"
+    versionCode 110000
+    versionName "1.4.0"
   }
   splits {
     abi {
@@ -243,3 +243,5 @@ apply from: file("../../node_modules/@react-native-community/cli-platform-androi
 
 apply from: 'google.gradle'
 apply from: 'firework.gradle'
+
+apply from: rootProject.file('lint.gradle')
