@@ -1,5 +1,15 @@
 # CHANGELOG
 
+## [1.4.1]
+
+### Changed
+
+- Change the `onAddToCart` callback timeout to 10s on the Android side to keep the parity with iOS side
+
+### Fixed
+
+- The cart icon is missiong on the iOS side when `cartIconVisible` is `true`
+
 ## [1.4.0]
 
 ### Added
