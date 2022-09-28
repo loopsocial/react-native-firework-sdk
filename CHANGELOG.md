@@ -8,7 +8,7 @@
 
 ### Fixed
 
-- The cart icon is missiong on the iOS side when `cartIconVisible` is `true`
+- The cart icon is missing on the iOS side when `cartIconVisible` is `true`
 
 ## [1.4.0]
 
