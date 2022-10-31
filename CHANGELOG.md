@@ -1,5 +1,11 @@
 # CHANGELOG
 
+## [1.4.3]
+
+### Removed
+
+- Remove `jcenter()`
+
 ## [1.4.1]
 
 ### Changed
