@@ -13,6 +13,7 @@ import {
   StoryBlock,
   StoryBlockSource,
   VideoFeed,
+  AdConfiguration,
   VideoFeedConfiguration,
   VideoFeedMode,
   VideoPlayerConfiguration,
@@ -55,10 +56,17 @@ const Feed = () => {
   const defaultFeedConfiguration: VideoFeedConfiguration = {
     title: { hidden: false },
     titlePosition: 'nested',
+    showAdBadge: true,
+    enablePictureInPicture: true,
   };
-  const [feedConfiguration, setFeedConfiguration] = useState<
-    VideoFeedConfiguration | undefined
-  >(defaultFeedConfiguration);
+  const [feedConfiguration, setFeedConfiguration] =
+    useState<VideoFeedConfiguration>(defaultFeedConfiguration);
+  const defaultFeedAdConfiguration: AdConfiguration = {
+    requiresAds: false,
+    adsFetchTimeout: 20,
+  };
+  const [feedAdConfiguration, setFeedAdConfiguration] =
+    useState<AdConfiguration>(defaultFeedAdConfiguration);
 
   const defaultPlayerConfiguration: VideoPlayerConfiguration = {
     playerStyle: 'full',
@@ -120,6 +128,7 @@ const Feed = () => {
             aspectRatio: mode === 'column' ? 1 : undefined,
           }}
           videoPlayerConfiguration={playerConfiguration}
+          adConfiguration={feedAdConfiguration}
           onVideoFeedLoadFinished={(error?: FWError) => {
             console.log('[example] onVideoFeedLoadFinished error', error);
             setFeedError(error);
@@ -214,11 +223,14 @@ const Feed = () => {
         visible={showFeedConfiguration}
         feedConfiguration={feedConfiguration}
         defaultFeedConfiguration={defaultFeedConfiguration}
+        feedAdConfiguration={feedAdConfiguration}
+        defaultFeedAdConfiguration={defaultFeedAdConfiguration}
         onRequestClose={() => {
           setShowFeedConfiguration(false);
         }}
-        onSubmit={(newFeedConfiguration) => {
+        onSubmit={(newFeedConfiguration, newFeedAdConfiguration) => {
           setFeedConfiguration(newFeedConfiguration);
+          setFeedAdConfiguration(newFeedAdConfiguration);
           setTimeout(() => {
             setShowFeedConfiguration(false);
           }, 0);

@@ -1,6 +1,7 @@
 import React from 'react';
 
 import { ThemeProvider } from 'react-native-elements';
+import FireworkSDK from 'react-native-firework-sdk';
 import { RootSiblingParent } from 'react-native-root-siblings';
 import { Provider } from 'react-redux';
 
@@ -14,21 +15,20 @@ import {
   useCartIconVisibilityEffect,
   useCartItemCountEffect,
 } from './hooks/cartHooks';
+import Cart from './screens/Cart';
 import Checkout from './screens/Checkout';
+import CircleThumbnails from './screens/CircleThumbnails';
+import CTALinkContent from './screens/CTALinkContent';
+import EnableCustomClickCartIconCallback from './screens/EnableCustomClickCartIconCallback';
+import EnableCustomCTAClickCallback from './screens/EnableCustomCTAClickCallback';
+import EnableCustomCTALinkContentPageRouteName from './screens/EnableCustomCTALinkContentPageRouteName';
 import Feed from './screens/Feed';
 import OpenVideo from './screens/OpenVideo';
 import type { RootStackParamList } from './screens/paramList/RootStackParamList';
+import SetAdBadgeConfiguration from './screens/SetAdBadgeConfiguration';
 import SetShareBaseURL from './screens/SetShareBaseURL';
 import Tab from './screens/Tab';
 import { store } from './store';
-import SetAdBadgeConfiguration from './screens/SetAdBadgeConfiguration';
-import EnableCustomCTAClickCallback from './screens/EnableCustomCTAClickCallback';
-import EnableCustomCTALinkContentPageRouteName from './screens/EnableCustomCTALinkContentPageRouteName';
-import FireworkSDK from 'react-native-firework-sdk';
-import CTALinkContent from './screens/CTALinkContent';
-import Cart from './screens/Cart';
-import CircleThumbnails from './screens/CircleThumbnails';
-import EnableCustomClickCartIconCallback from './screens/EnableCustomClickCartIconCallback';
 
 const StackNavigator = createNativeStackNavigator<RootStackParamList>();
 

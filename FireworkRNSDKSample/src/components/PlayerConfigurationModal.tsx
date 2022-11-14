@@ -11,6 +11,7 @@ import {
   TouchableOpacity,
   View,
   ScrollView,
+  TouchableWithoutFeedback,
 } from 'react-native';
 import type {
   VideoPlayerConfiguration,
@@ -184,265 +185,275 @@ const PlayerConfigurationModal = ({
         }
       }}
     >
-      <View style={styles.content}>
-        <View
-          style={{
-            ...CommonStyles.formContainer,
-            ...styles.formContainerExtra,
-          }}
-        >
-          <ScrollView>
-            <Text style={styles.sectionTitle}>Video Player Configuration</Text>
-            <View style={styles.formItemRow}>
-              <View style={{ ...styles.formItem }}>
-                <Text style={styles.formItemLabel}>Player style</Text>
-                <Controller
-                  control={control}
-                  render={({ field: { onChange, value } }) => (
-                    <ButtonGroup
-                      buttons={PlayStyleList}
-                      selectedIndex={value}
-                      onPress={(newValue) => {
-                        onChange(newValue);
-                      }}
-                    />
-                  )}
-                  name="playerStyle"
-                />
-              </View>
-            </View>
-            <View style={styles.formItemRow}>
-              <View style={styles.formItem}>
-                <Text style={styles.formItemLabel}>Video complete action</Text>
-                <Controller
-                  control={control}
-                  render={({ field: { onChange, value } }) => (
-                    <ButtonGroup
-                      buttons={VideoCompleteActionList}
-                      selectedIndex={value}
-                      onPress={(newValue) => {
-                        onChange(newValue);
-                      }}
-                    />
-                  )}
-                  name="videoCompleteAction"
-                />
-              </View>
-            </View>
-            <View style={styles.formItemRow}>
-              <View style={styles.formItem}>
-                <Controller
-                  control={control}
-                  render={({ field: { onChange, value } }) => {
-                    return (
-                      <CheckBox
-                        center
-                        title="Show share button"
-                        checked={value}
-                        onPress={() => onChange(!value)}
+      <TouchableWithoutFeedback onPress={() => {}}>
+        <View style={styles.content}>
+          <View
+            style={{
+              ...CommonStyles.formContainer,
+              ...styles.formContainerExtra,
+            }}
+          >
+            <ScrollView>
+              <Text style={styles.sectionTitle}>
+                Video Player Configuration
+              </Text>
+              <View style={styles.formItemRow}>
+                <View style={{ ...styles.formItem }}>
+                  <Text style={styles.formItemLabel}>Player style</Text>
+                  <Controller
+                    control={control}
+                    render={({ field: { onChange, value } }) => (
+                      <ButtonGroup
+                        buttons={PlayStyleList}
+                        selectedIndex={value}
+                        onPress={(newValue) => {
+                          onChange(newValue);
+                        }}
                       />
-                    );
-                  }}
-                  name="showShareButton"
-                />
+                    )}
+                    name="playerStyle"
+                  />
+                </View>
               </View>
-            </View>
-            <View style={styles.formItemRow}>
-              <View style={{ ...styles.formItem, marginRight: 10 }}>
-                <Controller
-                  control={control}
-                  render={({ field: { onChange, onBlur, value } }) => (
-                    <Input
-                      label="CTA background color"
-                      placeholder="e.g. #c0c0c0"
-                      onBlur={onBlur}
-                      onChangeText={(newValue) => onChange(newValue)}
-                      value={value}
-                      errorMessage={
-                        errors.ctaBackgroundColor
-                          ? 'Please enter correct color'
-                          : undefined
-                      }
-                      rightIcon={
-                        <TouchableOpacity
-                          onPress={() => {
-                            setValue('ctaBackgroundColor', undefined);
-                          }}
-                        >
-                          <Ionicons name="close" size={24} />
-                        </TouchableOpacity>
-                      }
-                      autoCompleteType={undefined}
-                    />
-                  )}
-                  name="ctaBackgroundColor"
-                  rules={{
-                    pattern: Patterns.hexColor,
-                  }}
-                />
-              </View>
-              <View style={styles.formItem}>
-                <Controller
-                  control={control}
-                  render={({ field: { onChange, onBlur, value } }) => (
-                    <Input
-                      label="CTA text color"
-                      placeholder="e.g. #000000"
-                      onBlur={onBlur}
-                      onChangeText={(newValue) => onChange(newValue)}
-                      value={value}
-                      errorMessage={
-                        errors.ctaTextColor
-                          ? 'Please enter correct color'
-                          : undefined
-                      }
-                      rightIcon={
-                        <TouchableOpacity
-                          onPress={() => {
-                            setValue('ctaTextColor', undefined);
-                          }}
-                        >
-                          <Ionicons name="close" size={24} />
-                        </TouchableOpacity>
-                      }
-                      autoCompleteType={undefined}
-                    />
-                  )}
-                  name="ctaTextColor"
-                  rules={{
-                    pattern: Patterns.hexColor,
-                  }}
-                />
-              </View>
-            </View>
-            <View style={styles.formItemRow}>
-              <View style={{ ...styles.formItem, flex: 0.5, marginRight: 10 }}>
-                <Controller
-                  control={control}
-                  render={({ field: { onChange, onBlur, value } }) => (
-                    <Input
-                      label="CTA font size"
-                      placeholder="e.g. 14"
-                      onBlur={onBlur}
-                      onChangeText={(newValue) => onChange(newValue)}
-                      value={value}
-                      errorMessage={ctaFontSizeErrorMessage}
-                      rightIcon={
-                        <TouchableOpacity
-                          onPress={() => {
-                            setValue('ctaFontSize', undefined);
-                          }}
-                        >
-                          <Ionicons name="close" size={24} />
-                        </TouchableOpacity>
-                      }
-                      autoCompleteType={undefined}
-                    />
-                  )}
-                  name="ctaFontSize"
-                  rules={{
-                    pattern: Patterns.number,
-                    max: 30,
-                    min: 8,
-                  }}
-                />
-              </View>
-            </View>
-            <View style={styles.formItemRow}>
-              <View style={{ ...styles.formItem, marginRight: 10 }}>
-                <Controller
-                  control={control}
-                  render={({ field: { onChange, value } }) => {
-                    return (
-                      <CheckBox
-                        center
-                        title={`Show playback${'\n'}button`}
-                        checked={value}
-                        onPress={() => onChange(!value)}
+              <View style={styles.formItemRow}>
+                <View style={styles.formItem}>
+                  <Text style={styles.formItemLabel}>
+                    Video complete action
+                  </Text>
+                  <Controller
+                    control={control}
+                    render={({ field: { onChange, value } }) => (
+                      <ButtonGroup
+                        buttons={VideoCompleteActionList}
+                        selectedIndex={value}
+                        onPress={(newValue) => {
+                          onChange(newValue);
+                        }}
                       />
-                    );
-                  }}
-                  name="showPlaybackButton"
-                />
+                    )}
+                    name="videoCompleteAction"
+                  />
+                </View>
               </View>
-              <View style={styles.formItem}>
-                <Controller
-                  control={control}
-                  render={({ field: { onChange, value } }) => {
-                    return (
-                      <CheckBox
-                        center
-                        title={`Show mute${'\n'}button`}
-                        checked={value}
-                        onPress={() => onChange(!value)}
+              <View style={styles.formItemRow}>
+                <View style={styles.formItem}>
+                  <Controller
+                    control={control}
+                    render={({ field: { onChange, value } }) => {
+                      return (
+                        <CheckBox
+                          center
+                          title="Show share button"
+                          checked={value}
+                          onPress={() => onChange(!value)}
+                        />
+                      );
+                    }}
+                    name="showShareButton"
+                  />
+                </View>
+              </View>
+              <View style={styles.formItemRow}>
+                <View style={{ ...styles.formItem, marginRight: 10 }}>
+                  <Controller
+                    control={control}
+                    render={({ field: { onChange, onBlur, value } }) => (
+                      <Input
+                        label="CTA background color"
+                        placeholder="e.g. #c0c0c0"
+                        onBlur={onBlur}
+                        onChangeText={(newValue) => onChange(newValue)}
+                        value={value}
+                        errorMessage={
+                          errors.ctaBackgroundColor
+                            ? 'Please enter correct color'
+                            : undefined
+                        }
+                        rightIcon={
+                          <TouchableOpacity
+                            onPress={() => {
+                              setValue('ctaBackgroundColor', undefined);
+                            }}
+                          >
+                            <Ionicons name="close" size={24} />
+                          </TouchableOpacity>
+                        }
+                        autoCompleteType={undefined}
                       />
-                    );
+                    )}
+                    name="ctaBackgroundColor"
+                    rules={{
+                      pattern: Patterns.hexColor,
+                    }}
+                  />
+                </View>
+                <View style={styles.formItem}>
+                  <Controller
+                    control={control}
+                    render={({ field: { onChange, onBlur, value } }) => (
+                      <Input
+                        label="CTA text color"
+                        placeholder="e.g. #000000"
+                        onBlur={onBlur}
+                        onChangeText={(newValue) => onChange(newValue)}
+                        value={value}
+                        errorMessage={
+                          errors.ctaTextColor
+                            ? 'Please enter correct color'
+                            : undefined
+                        }
+                        rightIcon={
+                          <TouchableOpacity
+                            onPress={() => {
+                              setValue('ctaTextColor', undefined);
+                            }}
+                          >
+                            <Ionicons name="close" size={24} />
+                          </TouchableOpacity>
+                        }
+                        autoCompleteType={undefined}
+                      />
+                    )}
+                    name="ctaTextColor"
+                    rules={{
+                      pattern: Patterns.hexColor,
+                    }}
+                  />
+                </View>
+              </View>
+              <View style={styles.formItemRow}>
+                <View
+                  style={{ ...styles.formItem, flex: 0.5, marginRight: 10 }}
+                >
+                  <Controller
+                    control={control}
+                    render={({ field: { onChange, onBlur, value } }) => (
+                      <Input
+                        label="CTA font size"
+                        placeholder="e.g. 14"
+                        onBlur={onBlur}
+                        onChangeText={(newValue) => onChange(newValue)}
+                        value={value}
+                        errorMessage={ctaFontSizeErrorMessage}
+                        rightIcon={
+                          <TouchableOpacity
+                            onPress={() => {
+                              setValue('ctaFontSize', undefined);
+                            }}
+                          >
+                            <Ionicons name="close" size={24} />
+                          </TouchableOpacity>
+                        }
+                        autoCompleteType={undefined}
+                      />
+                    )}
+                    name="ctaFontSize"
+                    rules={{
+                      pattern: Patterns.number,
+                      max: 30,
+                      min: 8,
+                    }}
+                  />
+                </View>
+              </View>
+              <View style={styles.formItemRow}>
+                <View style={{ ...styles.formItem, marginRight: 10 }}>
+                  <Controller
+                    control={control}
+                    render={({ field: { onChange, value } }) => {
+                      return (
+                        <CheckBox
+                          center
+                          title={`Show playback${'\n'}button`}
+                          checked={value}
+                          onPress={() => onChange(!value)}
+                        />
+                      );
+                    }}
+                    name="showPlaybackButton"
+                  />
+                </View>
+                <View style={styles.formItem}>
+                  <Controller
+                    control={control}
+                    render={({ field: { onChange, value } }) => {
+                      return (
+                        <CheckBox
+                          center
+                          title={`Show mute${'\n'}button`}
+                          checked={value}
+                          onPress={() => onChange(!value)}
+                        />
+                      );
+                    }}
+                    name="showMuteButton"
+                  />
+                </View>
+              </View>
+              <View style={styles.formItemRow}>
+                <View style={styles.formItem}>
+                  <Text style={styles.formItemLabel}>
+                    Video launch behavior
+                  </Text>
+                  <Controller
+                    control={control}
+                    render={({ field: { onChange, value } }) => (
+                      <ButtonGroup
+                        buttons={VideoLaunchBehaviorList}
+                        selectedIndex={value}
+                        onPress={(newValue) => {
+                          onChange(newValue);
+                        }}
+                      />
+                    )}
+                    name="launchBehavior"
+                  />
+                </View>
+              </View>
+              <View style={{ ...CommonStyles.formItem, ...styles.buttonList }}>
+                <Button
+                  type="outline"
+                  titleStyle={CommonStyles.mainButtonText}
+                  containerStyle={{
+                    ...CommonStyles.mainButtonContainer,
+                    flex: 1,
+                    marginRight: 20,
                   }}
-                  name="showMuteButton"
+                  onPress={() => {
+                    syncFormValuesFromConfiguration(playerConfiguration);
+                    if (onRequestClose) {
+                      onRequestClose();
+                    }
+                  }}
+                  title="Cancel"
+                />
+                <Button
+                  buttonStyle={{ backgroundColor: 'rgba(214, 61, 57, 1)' }}
+                  titleStyle={CommonStyles.mainButtonText}
+                  containerStyle={{
+                    ...CommonStyles.mainButtonContainer,
+                    flex: 1,
+                    marginRight: 20,
+                  }}
+                  onPress={() => {
+                    syncFormValuesFromConfiguration(defaultPlayerConfiguration);
+                  }}
+                  title="Reset"
+                />
+                <Button
+                  titleStyle={CommonStyles.mainButtonText}
+                  containerStyle={{
+                    ...CommonStyles.mainButtonContainer,
+                    flex: 1,
+                  }}
+                  onPress={handleSubmit(onSave)}
+                  title="Save"
                 />
               </View>
-            </View>
-            <View style={styles.formItemRow}>
-              <View style={styles.formItem}>
-                <Text style={styles.formItemLabel}>Video launch behavior</Text>
-                <Controller
-                  control={control}
-                  render={({ field: { onChange, value } }) => (
-                    <ButtonGroup
-                      buttons={VideoLaunchBehaviorList}
-                      selectedIndex={value}
-                      onPress={(newValue) => {
-                        onChange(newValue);
-                      }}
-                    />
-                  )}
-                  name="launchBehavior"
-                />
-              </View>
-            </View>
-            <View style={{ ...CommonStyles.formItem, ...styles.buttonList }}>
-              <Button
-                type="outline"
-                titleStyle={CommonStyles.mainButtonText}
-                containerStyle={{
-                  ...CommonStyles.mainButtonContainer,
-                  flex: 1,
-                  marginRight: 20,
-                }}
-                onPress={() => {
-                  syncFormValuesFromConfiguration(playerConfiguration);
-                  if (onRequestClose) {
-                    onRequestClose();
-                  }
-                }}
-                title="Cancel"
-              />
-              <Button
-                buttonStyle={{ backgroundColor: 'rgba(214, 61, 57, 1)' }}
-                titleStyle={CommonStyles.mainButtonText}
-                containerStyle={{
-                  ...CommonStyles.mainButtonContainer,
-                  flex: 1,
-                  marginRight: 20,
-                }}
-                onPress={() => {
-                  syncFormValuesFromConfiguration(defaultPlayerConfiguration);
-                }}
-                title="Reset"
-              />
-              <Button
-                titleStyle={CommonStyles.mainButtonText}
-                containerStyle={{
-                  ...CommonStyles.mainButtonContainer,
-                  flex: 1,
-                }}
-                onPress={handleSubmit(onSave)}
-                title="Save"
-              />
-            </View>
-          </ScrollView>
+            </ScrollView>
+          </View>
         </View>
-      </View>
+      </TouchableWithoutFeedback>
     </Modal>
   );
 };
@@ -453,7 +464,7 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'stretch',
     backgroundColor: 'rgba(0, 0, 0, 0.3)',
-    paddingHorizontal: 20,
+    paddingHorizontal: 15,
     paddingVertical: 30,
   },
   formContainerExtra: {
