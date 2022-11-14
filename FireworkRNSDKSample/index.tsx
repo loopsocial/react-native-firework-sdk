@@ -1,7 +1,7 @@
 import { AppRegistry } from 'react-native';
 import FireworkSDK from 'react-native-firework-sdk';
-import Ionicons from 'react-native-vector-icons/Ionicons';
 import FontAwesome from 'react-native-vector-icons/FontAwesome';
+import Ionicons from 'react-native-vector-icons/Ionicons';
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 
 import { name as appName } from './app.json';
@@ -14,9 +14,11 @@ MaterialIcons.loadFont();
 
 AppRegistry.registerComponent(appName, () => App);
 
-FireworkSDK.getInstance().debugLogsEnabled = true;
+FireworkSDK.getInstance().debugLogsEnabled = false;
 
 FireworkSDK.getInstance().appComponentName = appName;
+
+FireworkSDK.getInstance().adBadgeConfiguration = { badgeTextType: 'ad' };
 
 FireworkSDK.getInstance().onSDKInit = (event) => {
   console.log('[example] onSDKInit', event);

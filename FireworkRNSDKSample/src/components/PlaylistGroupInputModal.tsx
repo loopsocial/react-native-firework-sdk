@@ -143,7 +143,7 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'stretch',
     backgroundColor: 'rgba(0, 0, 0, 0.3)',
-    paddingHorizontal: 20,
+    paddingHorizontal: 15,
   },
   formContainerExtra: {
     backgroundColor: 'white',

@@ -81,6 +81,8 @@ function Shopping() {
             videoFeedConfiguration={{
               title: { hidden: false },
               titlePosition: 'nested',
+              showAdBadge: true,
+              enablePictureInPicture: true,
             }}
             videoPlayerConfiguration={{
               playerStyle: 'full',

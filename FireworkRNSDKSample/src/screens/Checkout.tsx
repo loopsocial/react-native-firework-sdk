@@ -5,8 +5,10 @@ import { View, StyleSheet, ScrollView, TouchableOpacity } from 'react-native';
 import CommonStyles from '../components/CommonStyles';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import { SafeAreaView } from 'react-native-safe-area-context';
+import uuid from 'react-native-uuid';
 import { useAppDispatch } from '../hooks/reduxHooks';
 import { removeAllCartItems } from '../slice/cartSlice';
+import FireworkSDK from 'react-native-firework-sdk';
 
 interface CheckoutFormData {
   cardNumber?: string;
@@ -26,6 +28,17 @@ const Checkout = () => {
   const dispatch = useAppDispatch();
   const onBuy = (data: CheckoutFormData) => {
     console.log('[example] onBuy', data);
+    FireworkSDK.getInstance().trackPurchase({
+      orderId: uuid.v4() as string,
+      value: Math.floor(Math.random() * 100 + 1),
+      currencyCode: 'USD',
+      countryCode: 'US',
+      additionalInfo: {
+        additionalKey1: 'additionalValue1',
+        additionalKey2: 'additionalValue2',
+        additionalKey3: 'additionalValue3',
+      },
+    });
     dispatch(removeAllCartItems());
   };
 
