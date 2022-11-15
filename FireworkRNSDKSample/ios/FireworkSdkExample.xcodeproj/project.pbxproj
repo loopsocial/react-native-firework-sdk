@@ -55,22 +55,6 @@
 		8938F6A028F6F8220050FE64 /* Release.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = Release.xcconfig; sourceTree = "<group>"; };
 		8948DC60287FC09700C5A348 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		8948DC65287FC0C900C5A348 /* ar */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ar; path = ar.lproj/LaunchScreen.strings; sourceTree = "<group>"; };
-		8973093E2785E4C300BB040D /* Fontisto.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = Fontisto.ttf; sourceTree = "<group>"; };
-		8973093F2785E4C300BB040D /* Octicons.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = Octicons.ttf; sourceTree = "<group>"; };
-		897309402785E4C300BB040D /* Feather.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = Feather.ttf; sourceTree = "<group>"; };
-		897309412785E4C300BB040D /* Entypo.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = Entypo.ttf; sourceTree = "<group>"; };
-		897309422785E4C300BB040D /* FontAwesome5_Brands.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = FontAwesome5_Brands.ttf; sourceTree = "<group>"; };
-		897309432785E4C300BB040D /* MaterialCommunityIcons.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = MaterialCommunityIcons.ttf; sourceTree = "<group>"; };
-		897309442785E4C300BB040D /* AntDesign.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = AntDesign.ttf; sourceTree = "<group>"; };
-		897309452785E4C300BB040D /* Foundation.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = Foundation.ttf; sourceTree = "<group>"; };
-		897309462785E4C300BB040D /* Ionicons.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = Ionicons.ttf; sourceTree = "<group>"; };
-		897309472785E4C300BB040D /* FontAwesome5_Solid.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = FontAwesome5_Solid.ttf; sourceTree = "<group>"; };
-		897309482785E4C300BB040D /* FontAwesome5_Regular.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = FontAwesome5_Regular.ttf; sourceTree = "<group>"; };
-		897309492785E4C300BB040D /* FontAwesome.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = FontAwesome.ttf; sourceTree = "<group>"; };
-		8973094A2785E4C300BB040D /* Zocial.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = Zocial.ttf; sourceTree = "<group>"; };
-		8973094B2785E4C300BB040D /* EvilIcons.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = EvilIcons.ttf; sourceTree = "<group>"; };
-		8973094C2785E4C300BB040D /* SimpleLineIcons.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = SimpleLineIcons.ttf; sourceTree = "<group>"; };
-		8973094D2785E4C300BB040D /* MaterialIcons.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = MaterialIcons.ttf; sourceTree = "<group>"; };
 		9469AD12679CA06B64C86C19 /* Pods-FireworkSdkExample.staging.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-FireworkSdkExample.staging.xcconfig"; path = "Target Support Files/Pods-FireworkSdkExample/Pods-FireworkSdkExample.staging.xcconfig"; sourceTree = "<group>"; };
 		E00ACF0FDA8BF921659E2F9A /* Pods-FireworkSdkExample.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-FireworkSdkExample.release.xcconfig"; path = "Target Support Files/Pods-FireworkSdkExample/Pods-FireworkSdkExample.release.xcconfig"; sourceTree = "<group>"; };
 		ED297162215061F000B7C4FE /* JavaScriptCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = JavaScriptCore.framework; path = System/Library/Frameworks/JavaScriptCore.framework; sourceTree = SDKROOT; };
@@ -131,7 +115,6 @@
 			isa = PBXGroup;
 			children = (
 				8938F69D28F6F7F40050FE64 /* Configurations */,
-				8973093D2785E4C300BB040D /* Fonts */,
 				13B07FAF1A68108700A75B9A /* AppDelegate.h */,
 				13B07FB01A68108700A75B9A /* AppDelegate.m */,
 				13B07FB51A68108700A75B9A /* Images.xcassets */,
@@ -205,30 +188,6 @@
 			);
 			name = Configurations;
 			path = FireworkSdkExample/Configurations;
-			sourceTree = "<group>";
-		};
-		8973093D2785E4C300BB040D /* Fonts */ = {
-			isa = PBXGroup;
-			children = (
-				8973093E2785E4C300BB040D /* Fontisto.ttf */,
-				8973093F2785E4C300BB040D /* Octicons.ttf */,
-				897309402785E4C300BB040D /* Feather.ttf */,
-				897309412785E4C300BB040D /* Entypo.ttf */,
-				897309422785E4C300BB040D /* FontAwesome5_Brands.ttf */,
-				897309432785E4C300BB040D /* MaterialCommunityIcons.ttf */,
-				897309442785E4C300BB040D /* AntDesign.ttf */,
-				897309452785E4C300BB040D /* Foundation.ttf */,
-				897309462785E4C300BB040D /* Ionicons.ttf */,
-				897309472785E4C300BB040D /* FontAwesome5_Solid.ttf */,
-				897309482785E4C300BB040D /* FontAwesome5_Regular.ttf */,
-				897309492785E4C300BB040D /* FontAwesome.ttf */,
-				8973094A2785E4C300BB040D /* Zocial.ttf */,
-				8973094B2785E4C300BB040D /* EvilIcons.ttf */,
-				8973094C2785E4C300BB040D /* SimpleLineIcons.ttf */,
-				8973094D2785E4C300BB040D /* MaterialIcons.ttf */,
-			);
-			name = Fonts;
-			path = "../node_modules/react-native-vector-icons/Fonts";
 			sourceTree = "<group>";
 		};
 		E39394130BA54E2281FC8C16 /* Resources */ = {
@@ -680,7 +639,7 @@
 				INFOPLIST_FILE = FireworkSdkExample/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				MARKETING_VERSION = 1.5.0;
+				MARKETING_VERSION = 1.6.0;
 				OTHER_LDFLAGS = (
 					"$(inherited)",
 					"-ObjC",
@@ -709,7 +668,7 @@
 				INFOPLIST_FILE = FireworkSdkExample/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				MARKETING_VERSION = 1.5.0;
+				MARKETING_VERSION = 1.6.0;
 				OTHER_LDFLAGS = (
 					"$(inherited)",
 					"-ObjC",
@@ -1012,7 +971,7 @@
 				INFOPLIST_FILE = FireworkSdkExample/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				MARKETING_VERSION = 1.5.0;
+				MARKETING_VERSION = 1.6.0;
 				OTHER_LDFLAGS = (
 					"$(inherited)",
 					"-ObjC",
