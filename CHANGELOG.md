@@ -1,5 +1,11 @@
 # CHANGELOG
 
+## [1.5.1]
+
+### Fixed
+
+- The users are navigated to the trailer video when opening the share link of the active live stream on the Android side.
+
 ## [1.5.0]
 
 ### Added
