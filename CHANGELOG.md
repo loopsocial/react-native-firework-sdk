@@ -1,5 +1,11 @@
 # CHANGELOG
 
+## [1.5.2]
+
+### Fixed
+
+- Clicking the cart icon doesn't close the player when enabling the custom click cart icon callback on the iOS side
+
 ## [1.5.1]
 
 ### Fixed

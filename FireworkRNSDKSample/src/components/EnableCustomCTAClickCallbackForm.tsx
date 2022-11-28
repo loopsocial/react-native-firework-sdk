@@ -6,6 +6,8 @@ import FireworkSDK from 'react-native-firework-sdk';
 import { Button, CheckBox } from 'react-native-elements';
 import Toast from 'react-native-root-toast';
 import { useNavigation } from '@react-navigation/native';
+import type { NativeStackNavigationProp } from '@react-navigation/native-stack';
+import type { RootStackParamList } from '../screens/paramList/RootStackParamList';
 
 type EnableCustomCTAClickCallbackFormData = {
   enableCustomCTAClickCallback?: boolean;
@@ -20,7 +22,8 @@ const EnableCustomCTAClickCallbackForm = () => {
           : false,
       },
     });
-  const navigation = useNavigation();
+  const navigation =
+    useNavigation<NativeStackNavigationProp<RootStackParamList>>();
 
   const onEnableCustomCTAClickCallback = (
     data: EnableCustomCTAClickCallbackFormData
@@ -28,10 +31,8 @@ const EnableCustomCTAClickCallbackForm = () => {
     if (data.enableCustomCTAClickCallback) {
       FireworkSDK.getInstance().onCustomCTAClick = (event) => {
         if (event.url) {
-          FireworkSDK.getInstance().navigator.pushNativeContainer({
-            initialRouteName: 'CTALinkContent',
-            initialParams: { url: event.url },
-          });
+          FireworkSDK.getInstance().navigator.popNativeContainer();
+          navigation.navigate('CTALinkContent', { url: event.url });
         }
       };
       FireworkSDK.getInstance().customCTALinkContentPageRouteName = undefined;

@@ -13,7 +13,7 @@
     "start": "react-native start"
   },
   "dependencies": {
-  "react-native-firework-sdk": "^1.5.1",
+  "react-native-firework-sdk": "^1.5.2",
     "@expo/react-native-action-sheet": "^3.12.0",
     "@react-navigation/bottom-tabs": "^6.0.9",
     "@react-navigation/native": "^6.0.6",
