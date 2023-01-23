@@ -8,9 +8,15 @@ import { name as appName } from './app.json';
 import App from './src/App';
 import HostAppShoppingService from './src/utils/HostAppShoppingService';
 
-Ionicons.loadFont();
-FontAwesome.loadFont();
-MaterialIcons.loadFont();
+Ionicons.loadFont().catch((e) => {
+  console.log('[example] Ionicons.loadFont error', e);
+});
+FontAwesome.loadFont().catch((e) => {
+  console.log('[example] FontAwesome.loadFont error', e);
+});
+MaterialIcons.loadFont().catch((e) => {
+  console.log('[example] MaterialIcons.loadFont error', e);
+});
 
 AppRegistry.registerComponent(appName, () => App);
 
@@ -58,6 +64,8 @@ FireworkSDK.getInstance().liveStream.onLiveStreamEvent = (event) => {
 FireworkSDK.getInstance().liveStream.onLiveStreamChatEvent = (event) => {
   console.log('[example] onLiveStreamChatEvent', event);
 };
+
+FireworkSDK.getInstance().shareBaseURL = 'https://fw.tv';
 
 // init FireworkSDK
 FireworkSDK.getInstance().init();
