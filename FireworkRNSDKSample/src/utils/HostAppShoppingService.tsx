@@ -8,9 +8,10 @@ import type {
   WillDisplayProductCallback,
   WillDisplayProductEvent,
   CustomClickCartIconCallback,
+  CustomCTAClickCallback,
 } from 'react-native-firework-sdk';
 import FireworkSDK from 'react-native-firework-sdk';
-
+import * as RootNavigation from '../RootNavigation';
 import type CartItem from '../models/CartItem';
 import { addCartItem } from '../slice/cartSlice';
 import { store } from '../store';
@@ -75,6 +76,14 @@ export default class HostAppShoppingService {
   public onCustomClickCartIcon?: CustomClickCartIconCallback = async () => {
     console.log('[example] onCustomClickCartIcon');
     FireworkSDK.getInstance().navigator.popNativeContainer();
+    RootNavigation.navigate('Cart');
+  };
+
+  public onCustomCTAClick?: CustomCTAClickCallback = (event) => {
+    if (event.url) {
+      FireworkSDK.getInstance().navigator.popNativeContainer();
+      RootNavigation.navigate('CTALinkContent', { url: event.url });
+    }
   };
 
   public onUpdateProductDetails: UpdateProductDetailsCallback = async (

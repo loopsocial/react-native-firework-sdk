@@ -162,7 +162,6 @@ const Feed = () => {
           channel={channel}
           playlist={playlist}
           dynamicContentParameters={dynamicContentParameters}
-          enablePictureInPicture
           onStoryBlockLoadFinished={(error?: FWError) => {
             console.log('[example] onStoryBlockLoadFinished error', error);
             setFeedError(error);

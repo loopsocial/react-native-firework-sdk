@@ -8,7 +8,7 @@ import { Provider } from 'react-redux';
 import { ActionSheetProvider } from '@expo/react-native-action-sheet';
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
-
+import { navigationRef } from './RootNavigation';
 import AppTheme from './AppTheme';
 import BackButton from './components/BackButton';
 import {
@@ -89,7 +89,7 @@ const FWNavigationContainer = ({
   };
 
   return (
-    <NavigationContainer>
+    <NavigationContainer ref={initialRouteName ? undefined : navigationRef}>
       <StackNavigator.Navigator
         initialRouteName={initialRouteName}
         screenOptions={{

@@ -8,15 +8,9 @@ import { name as appName } from './app.json';
 import App from './src/App';
 import HostAppShoppingService from './src/utils/HostAppShoppingService';
 
-Ionicons.loadFont().catch((e) => {
-  console.log('[example] Ionicons.loadFont error', e);
-});
-FontAwesome.loadFont().catch((e) => {
-  console.log('[example] FontAwesome.loadFont error', e);
-});
-MaterialIcons.loadFont().catch((e) => {
-  console.log('[example] MaterialIcons.loadFont error', e);
-});
+Ionicons.loadFont();
+FontAwesome.loadFont();
+MaterialIcons.loadFont();
 
 AppRegistry.registerComponent(appName, () => App);
 
@@ -41,11 +35,11 @@ FireworkSDK.getInstance().onVideoFeedClick = (event) => {
 FireworkSDK.getInstance().shopping.onAddToCart =
   HostAppShoppingService.getInstance().onAddToCart;
 
-FireworkSDK.getInstance().shopping.onClickCartIcon =
-  HostAppShoppingService.getInstance().onClickCartIcon;
+// FireworkSDK.getInstance().shopping.onClickCartIcon =
+//   HostAppShoppingService.getInstance().onClickCartIcon;
 
-// FireworkSDK.getInstance().shopping.onCustomClickCartIcon =
-//   HostAppShoppingService.getInstance().onCustomClickCartIcon;
+FireworkSDK.getInstance().shopping.onCustomClickCartIcon =
+  HostAppShoppingService.getInstance().onCustomClickCartIcon;
 
 FireworkSDK.getInstance().shopping.onUpdateProductDetails =
   HostAppShoppingService.getInstance().onUpdateProductDetails;
@@ -53,9 +47,8 @@ FireworkSDK.getInstance().shopping.onUpdateProductDetails =
 FireworkSDK.getInstance().shopping.onWillDisplayProduct =
   HostAppShoppingService.getInstance().onWillDisplayProduct;
 
-// FireworkSDK.getInstance().onCustomCTAClick = (event) => {
-
-// };
+FireworkSDK.getInstance().onCustomCTAClick =
+  HostAppShoppingService.getInstance().onCustomCTAClick;
 
 FireworkSDK.getInstance().liveStream.onLiveStreamEvent = (event) => {
   console.log('[example] onLiveStreamEvent', event);
@@ -64,8 +57,6 @@ FireworkSDK.getInstance().liveStream.onLiveStreamEvent = (event) => {
 FireworkSDK.getInstance().liveStream.onLiveStreamChatEvent = (event) => {
   console.log('[example] onLiveStreamChatEvent', event);
 };
-
-FireworkSDK.getInstance().shareBaseURL = 'https://fw.tv';
 
 // init FireworkSDK
 FireworkSDK.getInstance().init();
