@@ -57,15 +57,14 @@ export default function SetShareBaseURLForm() {
                 </TouchableOpacity>
               }
               errorMessage={
-                errors.shareBaseURL
-                  ? 'Please enter correct Share base URL'
-                  : undefined
+                errors.shareBaseURL ? 'Please enter correct URL' : undefined
               }
               autoCompleteType={undefined}
             />
           )}
           name="shareBaseURL"
           rules={{
+            required: true,
             pattern: Patterns.url,
           }}
         />
