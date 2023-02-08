@@ -48,6 +48,7 @@ type FeedConfigurationFormData = {
   requiresAds?: boolean;
   vastAttributes?: string;
   enablePictureInPicture?: boolean;
+  gridColumns?: string;
 };
 
 const TitlePositionList: VideoFeedTitlePosition[] = ['stacked', 'nested'];
@@ -95,6 +96,18 @@ const FeedConfigurationModal = ({
     }
   }
 
+  let gridColumnsErrorMessage: string | undefined;
+  if (errors.gridColumns) {
+    if (
+      errors.gridColumns.type === 'max' ||
+      errors.gridColumns.type === 'min'
+    ) {
+      gridColumnsErrorMessage = 'Please enter grid columns in [2, 8]';
+    } else {
+      gridColumnsErrorMessage = 'Please enter correct grid columns';
+    }
+  }
+
   let cornerRadiusErrorMessage: string | undefined;
   if (errors.cornerRadius) {
     if (
@@ -135,6 +148,7 @@ const FeedConfigurationModal = ({
       }
       setValue('hidePlayIcon', configuration?.playIcon?.hidden);
       setValue('playIconWidth', configuration?.playIcon?.iconWidth?.toString());
+      setValue('gridColumns', configuration?.gridColumns?.toString());
       setValue('showAdBadge', configuration?.showAdBadge);
       if (configuration && configuration.customLayoutName) {
         setValue('enableCustomLayoutName', true);
@@ -187,9 +201,13 @@ const FeedConfigurationModal = ({
         hidden: data.hidePlayIcon ? true : false,
         iconWidth:
           typeof data.playIconWidth === 'string'
-            ? parseInt(data.playIconWidth)
+            ? parseInt(data.playIconWidth!)
             : undefined,
       };
+      configuration.gridColumns =
+        typeof data.gridColumns === 'string'
+          ? parseInt(data.gridColumns!)
+          : undefined;
       configuration.showAdBadge = data.showAdBadge;
       if (data.enableCustomLayoutName) {
         configuration.customLayoutName = 'fw_feed_custom_layout';
@@ -441,6 +459,42 @@ const FeedConfigurationModal = ({
     </View>
   );
 
+  const gridColumnsConfiguration = (
+    <View style={styles.formItemRow}>
+      <View style={{ ...styles.formItem }}>
+        <Controller
+          control={control}
+          render={({ field: { onChange, onBlur, value } }) => (
+            <Input
+              label="Grid columns"
+              placeholder="e.g. 2"
+              onBlur={onBlur}
+              onChangeText={(newValue) => onChange(newValue)}
+              value={value}
+              errorMessage={gridColumnsErrorMessage}
+              rightIcon={
+                <TouchableOpacity
+                  onPress={() => {
+                    setValue('gridColumns', undefined);
+                  }}
+                >
+                  <Ionicons name="close" size={24} />
+                </TouchableOpacity>
+              }
+              autoCompleteType={undefined}
+            />
+          )}
+          name="gridColumns"
+          rules={{
+            pattern: Patterns.number,
+            min: 2,
+            max: 8,
+          }}
+        />
+      </View>
+    </View>
+  );
+
   const requiresAds = (
     <View style={styles.formItemRow}>
       <View style={styles.formItem}>
@@ -644,6 +698,7 @@ const FeedConfigurationModal = ({
                   {backgroundColorAndCornerRadius}
                   {titleConfiguration}
                   {playIconConfiguration}
+                  {gridColumnsConfiguration}
                 </View>
               )}
               {configurationIndex === 1 && (
