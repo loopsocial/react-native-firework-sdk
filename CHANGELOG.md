@@ -1,33 +1,5 @@
 # CHANGELOG
 
-## [1.6.0]
-
-### Added
-
-- Support Picture in Picture for story block(only supported on iOS)
-- Support floating player(only supported on iOS)
-- Support sharing and opening universal links(only supported on iOS)
-
-## [1.5.5]
-
-### Fixed
-
-- The product image isn't updated when changing product variant on the Android side
-- The currency isn't displayed correctly on the Android side when the device language is Arabic
-
-## [1.5.4]
-
-### Fixed
-
-- The audio still exists when closing player on the iOS side
-- The videos alignment is incorrect on the Android side when the device language is Arabic
-
-## [1.5.3]
-
-### Fixed
-
-- Unexpected Space between the section title and video feed under certain conditions on the iOS side
-
 ## [1.5.2]
 
 ### Fixed
