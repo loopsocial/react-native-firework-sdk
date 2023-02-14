@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 
 import { ThemeProvider } from 'react-native-elements';
 import FireworkSDK from 'react-native-firework-sdk';
@@ -29,6 +29,8 @@ import SetAdBadgeConfiguration from './screens/SetAdBadgeConfiguration';
 import SetShareBaseURL from './screens/SetShareBaseURL';
 import Tab from './screens/Tab';
 import { store } from './store';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import StorageKey from './constants/StorageKey';
 
 const StackNavigator = createNativeStackNavigator<RootStackParamList>();
 
@@ -49,6 +51,17 @@ const FWNavigationContainer = ({
   );
   useCartIconVisibilityEffect();
   useCartItemCountEffect();
+  useEffect(() => {
+    const sycnCurrentLanguageFromStorage = async () => {
+      try {
+        const language = await AsyncStorage.getItem(StorageKey.appLanguage);
+        FireworkSDK.getInstance().changeAppLanguage(language ?? '');
+      } catch (_) {}
+    };
+    if (!initialRouteName) {
+      sycnCurrentLanguageFromStorage();
+    }
+  }, [initialRouteName]);
 
   const renderScreen = ({
     name,

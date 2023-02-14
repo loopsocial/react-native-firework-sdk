@@ -17,8 +17,7 @@ import { useActionSheet } from '@expo/react-native-action-sheet';
 import RNRestart from 'react-native-restart';
 import FireworkSDK from 'react-native-firework-sdk';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-
-const AppLanguageStorageKey = 'firework_sdk_example_app_language';
+import StorageKey from '../constants/StorageKey';
 
 type MoreScreenNavigationProp = CompositeNavigationProp<
   BottomTabNavigationProp<TabParamsList, 'More'>,
@@ -36,14 +35,26 @@ function More() {
     string | null
   >(null);
   const { showActionSheetWithOptions } = useActionSheet();
-  const handleChangeAppLanguage = async (
-    language: string,
-    displayLanguage: string
-  ) => {
-    try {
-      await AsyncStorage.setItem(AppLanguageStorageKey, displayLanguage);
+  const getDisplayLanguage = (language: string) => {
+    if (language === 'ar') {
+      return 'Arabic';
+    }
 
-      setCurrentDisplayLanguage(displayLanguage);
+    if (language === 'en') {
+      return 'English';
+    }
+
+    if (language === 'ja-JP') {
+      return 'Japanese';
+    }
+
+    return null;
+  };
+  const handleChangeAppLanguage = async (language: string) => {
+    try {
+      await AsyncStorage.setItem(StorageKey.appLanguage, language);
+
+      setCurrentDisplayLanguage(getDisplayLanguage(language));
       if (language.startsWith('ar')) {
         I18nManager.forceRTL(true);
       } else {
@@ -121,10 +132,7 @@ function More() {
               buttonIndex < languageCodeList.length &&
               buttonIndex < options.length
             ) {
-              handleChangeAppLanguage(
-                languageCodeList[buttonIndex],
-                options[buttonIndex]
-              );
+              handleChangeAppLanguage(languageCodeList[buttonIndex]);
             }
           }
         );
@@ -133,14 +141,14 @@ function More() {
   ];
 
   useEffect(() => {
-    const getCurrentDisplayLanguage = async () => {
+    const sycnCurrentDisplayLanguageFromStorage = async () => {
       try {
-        const language = await AsyncStorage.getItem(AppLanguageStorageKey);
-        setCurrentDisplayLanguage(language ?? 'System');
+        const language = await AsyncStorage.getItem(StorageKey.appLanguage);
+        setCurrentDisplayLanguage(getDisplayLanguage(language ?? ''));
       } catch (_) {}
     };
 
-    getCurrentDisplayLanguage();
+    sycnCurrentDisplayLanguageFromStorage();
   }, []);
   return (
     <View style={styles.container}>
