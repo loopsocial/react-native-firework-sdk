@@ -74,6 +74,14 @@ const Feed = () => {
     showShareButton: true,
     showMuteButton: true,
     showPlaybackButton: true,
+    ctaDelay: {
+      type: 'constant',
+      value: 3,
+    },
+    ctaHighlightDelay: {
+      type: 'constant',
+      value: 2,
+    },
   };
   const [playerConfiguration, setPlayerConfiguration] = useState<
     VideoPlayerConfiguration | undefined
@@ -108,7 +116,7 @@ const Feed = () => {
     return (
       <View
         style={
-          mode === 'row' ? { height: 200 } : { flex: 1, alignItems: 'center' }
+          mode === 'row' ? { height: 220 } : { flex: 1, alignItems: 'center' }
         }
       >
         <VideoFeed

@@ -141,8 +141,8 @@ android {
     applicationId "com.loopnow.bogano"
     minSdkVersion rootProject.ext.minSdkVersion
     targetSdkVersion rootProject.ext.targetSdkVersion
-    versionCode 110000
-    versionName "1.5.1"
+    versionCode 1
+    versionName "1.7.0"
   }
   splits {
     abi {

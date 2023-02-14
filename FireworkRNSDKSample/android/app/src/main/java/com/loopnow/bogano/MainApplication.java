@@ -11,6 +11,7 @@ import com.facebook.soloader.SoLoader;
 import java.lang.reflect.InvocationTargetException;
 import java.util.List;
 
+import com.fireworksdk.bridge.utils.FWLanguageUtil;
 
 public class MainApplication extends Application implements ReactApplication {
 
@@ -74,5 +75,10 @@ public class MainApplication extends Application implements ReactApplication {
         e.printStackTrace();
       }
     }
+  }
+
+  @Override
+  protected void attachBaseContext(Context newBase) {
+    super.attachBaseContext(FWLanguageUtil.INSTANCE.updateBaseContextLocale(newBase));
   }
 }

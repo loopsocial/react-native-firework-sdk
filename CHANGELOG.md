@@ -1,5 +1,13 @@
 # CHANGELOG
 
+## [1.7.0]
+
+### Added
+
+- Support the configuration of CTA delay time(only supported on iOS)
+- Support the configuration of CTA highlight delay time(only supported on iOS)
+- Support app-level language setting(only supported on Android)
+
 ## [1.6.0]
 
 ### Added
