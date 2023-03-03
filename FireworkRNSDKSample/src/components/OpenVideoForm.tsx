@@ -27,6 +27,10 @@ export function OpenVideoForm() {
     showShareButton: true,
     showMuteButton: true,
     showPlaybackButton: true,
+    ctaButtonStyle: {
+      fontSize: 14,
+      iOSFontInfo: { systemFontWeight: 'bold' },
+    },
     ctaDelay: {
       type: 'constant',
       value: 3,

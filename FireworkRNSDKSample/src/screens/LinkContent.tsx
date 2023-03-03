@@ -7,17 +7,14 @@ import { useRoute } from '@react-navigation/native';
 
 import type { RootStackParamList } from './paramList/RootStackParamList';
 
-type CTALinkContentScreenRouteProp = RouteProp<
-  RootStackParamList,
-  'CTALinkContent'
->;
+type LinkContentScreenRouteProp = RouteProp<RootStackParamList, 'LinkContent'>;
 
-const CTALinkContent = () => {
-  const route = useRoute<CTALinkContentScreenRouteProp>();
+const LinkContent = () => {
+  const route = useRoute<LinkContentScreenRouteProp>();
   const url = route.params?.url ?? '';
-  console.log('CTALinkContent url', url);
+  console.log('LinkContent url', url);
 
   return <WebView mediaPlaybackRequiresUserAction source={{ uri: url }} />;
 };
 
-export default CTALinkContent;
+export default LinkContent;

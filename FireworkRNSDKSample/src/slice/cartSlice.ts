@@ -8,6 +8,10 @@ export interface CartState {
   defaultCartIconVisible: boolean;
   addToCartButtonStyle: AddToCartButtonConfiguration;
   defaultAddToCartButtonStyle: AddToCartButtonConfiguration;
+  linkButtonHidden: boolean;
+  defaultLinkButtonHidden: boolean;
+  enableCustomClickLinkButton: boolean;
+  defaultEnableCustomClickLinkButton: boolean;
 }
 
 const initialState: CartState = {
@@ -15,7 +19,13 @@ const initialState: CartState = {
   cartIconVisible: true,
   defaultCartIconVisible: true,
   addToCartButtonStyle: {},
-  defaultAddToCartButtonStyle: {},
+  defaultAddToCartButtonStyle: {
+    fontSize: 14,
+  },
+  linkButtonHidden: false,
+  defaultLinkButtonHidden: false,
+  enableCustomClickLinkButton: false,
+  defaultEnableCustomClickLinkButton: false,
 };
 
 export const cartSlice = createSlice({
@@ -50,6 +60,15 @@ export const cartSlice = createSlice({
     ) => {
       state.addToCartButtonStyle = action.payload;
     },
+    changeLinkButtonVisibility: (state, action: PayloadAction<boolean>) => {
+      state.linkButtonHidden = action.payload;
+    },
+    changeCustomClickLinkButtonAbility: (
+      state,
+      action: PayloadAction<boolean>
+    ) => {
+      state.enableCustomClickLinkButton = action.payload;
+    },
   },
 });
 
@@ -58,6 +77,8 @@ export const {
   removeAllCartItems,
   changeCartIconVisibility,
   setAddToCartButtonStyle,
+  changeLinkButtonVisibility,
+  changeCustomClickLinkButtonAbility,
 } = cartSlice.actions;
 
 export default cartSlice.reducer;

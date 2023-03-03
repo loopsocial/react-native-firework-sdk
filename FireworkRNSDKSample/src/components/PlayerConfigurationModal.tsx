@@ -18,6 +18,8 @@ import {
   View,
   ScrollView,
   TouchableWithoutFeedback,
+  KeyboardAvoidingView,
+  Platform,
 } from 'react-native';
 import type {
   VideoPlayerConfiguration,
@@ -42,6 +44,7 @@ type PlayerConfigurationFormData = {
   ctaBackgroundColor?: string;
   ctaTextColor?: string;
   ctaFontSize?: string;
+  ctaIOSFontName?: string;
   showPlaybackButton?: boolean;
   showMuteButton?: boolean;
   launchBehavior?: number;
@@ -150,6 +153,10 @@ const PlayerConfigurationModal = ({
           'ctaFontSize',
           configuration.ctaButtonStyle?.fontSize?.toString()
         );
+        setValue(
+          'ctaIOSFontName',
+          configuration.ctaButtonStyle?.iOSFontInfo?.fontName
+        );
         setValue('showPlaybackButton', configuration.showPlaybackButton);
         setValue('showMuteButton', configuration.showMuteButton);
         if (configuration.launchBehavior) {
@@ -220,6 +227,10 @@ const PlayerConfigurationModal = ({
           typeof data.ctaFontSize === 'string'
             ? parseInt(data.ctaFontSize)
             : undefined,
+        iOSFontInfo: {
+          fontName: data.ctaIOSFontName,
+          systemFontWeight: 'bold',
+        },
       };
       configuration.showPlaybackButton = data.showPlaybackButton;
       configuration.showMuteButton = data.showMuteButton;
@@ -556,6 +567,31 @@ const PlayerConfigurationModal = ({
             }}
           />
         </View>
+        <View style={{ ...styles.formItem, flex: 0.5, marginRight: 10 }}>
+          <Controller
+            control={control}
+            render={({ field: { onChange, onBlur, value } }) => (
+              <Input
+                label="CTA iOS font name"
+                placeholder="e.g. Helvetica"
+                onBlur={onBlur}
+                onChangeText={(newValue) => onChange(newValue)}
+                value={value}
+                rightIcon={
+                  <TouchableOpacity
+                    onPress={() => {
+                      setValue('ctaIOSFontName', undefined);
+                    }}
+                  >
+                    <Ionicons name="close" size={24} />
+                  </TouchableOpacity>
+                }
+                autoCompleteType={undefined}
+              />
+            )}
+            name="ctaIOSFontName"
+          />
+        </View>
       </View>
     </>
   );
@@ -573,7 +609,10 @@ const PlayerConfigurationModal = ({
       }}
     >
       <TouchableWithoutFeedback onPress={() => {}}>
-        <View style={styles.content}>
+        <KeyboardAvoidingView
+          behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
+          style={styles.content}
+        >
           <View
             style={{
               ...CommonStyles.formContainer,
@@ -634,7 +673,7 @@ const PlayerConfigurationModal = ({
               </View>
             </ScrollView>
           </View>
-        </View>
+        </KeyboardAvoidingView>
       </TouchableWithoutFeedback>
     </Modal>
   );

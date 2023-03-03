@@ -22,6 +22,7 @@ import { shopifyDomain } from '../config/Shopify.json';
 import type { RootStackParamList } from './paramList/RootStackParamList';
 import type { TabParamsList } from './paramList/TabParamsList';
 import CartConfigurationModal from '../components/CartConfigurationModal';
+import { useAppSelector } from '../hooks/reduxHooks';
 
 type ShoppingScreenNavigationProp = CompositeNavigationProp<
   BottomTabNavigationProp<TabParamsList, 'Shopping'>,
@@ -42,6 +43,9 @@ function Shopping() {
   );
   const [feedError, setFeedError] = useState<FWError | undefined>(undefined);
   const feedRef = useRef<VideoFeed>(null);
+  const enablePictureInPicture = useAppSelector(
+    (state) => state.feed.enablePictureInPicture
+  );
 
   useEffect(() => {
     navigation.setOptions({
@@ -78,11 +82,11 @@ function Shopping() {
             source="playlist"
             channel={channelId}
             playlist={playlistId}
+            enablePictureInPicture={enablePictureInPicture}
             videoFeedConfiguration={{
               title: { hidden: false },
               titlePosition: 'nested',
               showAdBadge: true,
-              enablePictureInPicture: true,
             }}
             videoPlayerConfiguration={{
               playerStyle: 'full',

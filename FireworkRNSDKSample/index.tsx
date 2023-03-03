@@ -22,8 +22,6 @@ AppRegistry.registerComponent(appName, () => App);
 
 FireworkSDK.getInstance().debugLogsEnabled = false;
 
-FireworkSDK.getInstance().appComponentName = appName;
-
 FireworkSDK.getInstance().adBadgeConfiguration = { badgeTextType: 'ad' };
 
 FireworkSDK.getInstance().onSDKInit = (event) => {
@@ -41,17 +39,11 @@ FireworkSDK.getInstance().onVideoFeedClick = (event) => {
 FireworkSDK.getInstance().shopping.onAddToCart =
   HostAppShoppingService.getInstance().onAddToCart;
 
-// FireworkSDK.getInstance().shopping.onClickCartIcon =
-//   HostAppShoppingService.getInstance().onClickCartIcon;
-
 FireworkSDK.getInstance().shopping.onCustomClickCartIcon =
   HostAppShoppingService.getInstance().onCustomClickCartIcon;
 
 FireworkSDK.getInstance().shopping.onUpdateProductDetails =
   HostAppShoppingService.getInstance().onUpdateProductDetails;
-
-FireworkSDK.getInstance().shopping.onWillDisplayProduct =
-  HostAppShoppingService.getInstance().onWillDisplayProduct;
 
 FireworkSDK.getInstance().onCustomCTAClick =
   HostAppShoppingService.getInstance().onCustomCTAClick;

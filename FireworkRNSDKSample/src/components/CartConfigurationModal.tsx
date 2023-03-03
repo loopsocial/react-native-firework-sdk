@@ -11,13 +11,23 @@ import {
   TouchableOpacity,
   View,
   TouchableWithoutFeedback,
+  KeyboardAvoidingView,
+  Platform,
+  ScrollView,
 } from 'react-native';
 import { useAppDispatch, useAppSelector } from '../hooks/reduxHooks';
 import type { AddToCartButtonConfiguration } from 'react-native-firework-sdk';
 import {
   changeCartIconVisibility,
   setAddToCartButtonStyle,
+  changeLinkButtonVisibility,
+  changeCustomClickLinkButtonAbility,
 } from '../slice/cartSlice';
+import FireworkSDK from 'react-native-firework-sdk';
+import type { NativeStackNavigationProp } from '@react-navigation/native-stack';
+import type { RootStackParamList } from '../screens/paramList/RootStackParamList';
+import { useNavigation } from '@react-navigation/native';
+import HostAppShoppingService from '../utils/HostAppShoppingService';
 
 export interface ICartConfigurationModalProps {
   visible: boolean;
@@ -28,12 +38,17 @@ type CartConfigurationFormData = {
   addToCartButtonBackgroundColor?: string;
   addToCartButtonTextColor?: string;
   addToCartButtonFontSize?: string;
+  addToCartButtonIOSFontName?: string;
   showCartIcon?: boolean;
+  linkButtonHidden?: boolean;
+  enableCustomClickLinkButton?: boolean;
 };
 
 type CartConfiguration = {
   cartIconVisible: boolean;
   addToCartButtonStyle: AddToCartButtonConfiguration;
+  linkButtonHidden: boolean;
+  enableCustomClickLinkButton: boolean;
 };
 
 const CartConfigurationModal = ({
@@ -49,6 +64,18 @@ const CartConfigurationModal = ({
   );
   const defaultAddToCartButtonStyle = useAppSelector(
     (state) => state.cart.defaultAddToCartButtonStyle
+  );
+  const linkButtonHidden = useAppSelector(
+    (state) => state.cart.linkButtonHidden
+  );
+  const defaultLinkButtonHidden = useAppSelector(
+    (state) => state.cart.defaultLinkButtonHidden
+  );
+  const enableCustomClickLinkButton = useAppSelector(
+    (state) => state.cart.enableCustomClickLinkButton
+  );
+  const defaultEnableCustomClickLinkButton = useAppSelector(
+    (state) => state.cart.defaultEnableCustomClickLinkButton
   );
   const dispatch = useAppDispatch();
 
@@ -85,14 +112,33 @@ const CartConfigurationModal = ({
         'addToCartButtonFontSize',
         configuration.addToCartButtonStyle.fontSize?.toString()
       );
+      setValue(
+        'addToCartButtonIOSFontName',
+        configuration.addToCartButtonStyle.iOSFontInfo?.fontName
+      );
       setValue('showCartIcon', configuration.cartIconVisible);
+      setValue('linkButtonHidden', configuration.linkButtonHidden);
     },
     [setValue]
   );
 
   useEffect(() => {
-    syncFormValuesFromConfiguration({ cartIconVisible, addToCartButtonStyle });
-  }, [cartIconVisible, addToCartButtonStyle, syncFormValuesFromConfiguration]);
+    syncFormValuesFromConfiguration({
+      cartIconVisible,
+      addToCartButtonStyle,
+      linkButtonHidden,
+      enableCustomClickLinkButton,
+    });
+  }, [
+    cartIconVisible,
+    addToCartButtonStyle,
+    linkButtonHidden,
+    enableCustomClickLinkButton,
+    syncFormValuesFromConfiguration,
+  ]);
+
+  const navigation =
+    useNavigation<NativeStackNavigationProp<RootStackParamList>>();
 
   const onSave = (data: CartConfigurationFormData) => {
     console.log('onSave CartConfigurationFormData', data);
@@ -109,7 +155,37 @@ const CartConfigurationModal = ({
     if (data.addToCartButtonFontSize) {
       cartButtonStyle.fontSize = parseInt(data.addToCartButtonFontSize);
     }
+
+    if (data.addToCartButtonIOSFontName) {
+      cartButtonStyle.iOSFontInfo = {
+        fontName: data.addToCartButtonIOSFontName,
+      };
+    }
+
     dispatch(setAddToCartButtonStyle(cartButtonStyle));
+
+    dispatch(changeLinkButtonVisibility(data.linkButtonHidden ?? false));
+    dispatch(
+      changeCustomClickLinkButtonAbility(
+        data.enableCustomClickLinkButton ?? false
+      )
+    );
+    if (data.enableCustomClickLinkButton ?? false) {
+      FireworkSDK.getInstance().shopping.onCustomClickLinkButton = async (
+        event
+      ) => {
+        HostAppShoppingService.getInstance().closePlayerOrStartFloatingPlayer();
+        navigation.navigate('LinkContent', { url: event.url });
+      };
+    } else {
+      FireworkSDK.getInstance().shopping.onCustomClickLinkButton = undefined;
+    }
+
+    FireworkSDK.getInstance().shopping.productInfoViewConfiguration = {
+      addToCartButton: cartButtonStyle,
+      linkButton: { isHidden: data.linkButtonHidden ?? false },
+    };
+
     setTimeout(() => {
       if (onRequestClose) {
         onRequestClose();
@@ -222,6 +298,33 @@ const CartConfigurationModal = ({
           />
         </View>
       </View>
+      <View style={styles.formItemRow}>
+        <View style={styles.formItem}>
+          <Controller
+            control={control}
+            render={({ field: { onChange, onBlur, value } }) => (
+              <Input
+                label={'IOS Font name of "Add to cart" button'}
+                placeholder="e.g. Helvetica-Bold"
+                onBlur={onBlur}
+                onChangeText={(newValue) => onChange(newValue)}
+                value={value}
+                rightIcon={
+                  <TouchableOpacity
+                    onPress={() => {
+                      setValue('addToCartButtonIOSFontName', undefined);
+                    }}
+                  >
+                    <Ionicons name="close" size={24} />
+                  </TouchableOpacity>
+                }
+                autoCompleteType={undefined}
+              />
+            )}
+            name="addToCartButtonIOSFontName"
+          />
+        </View>
+      </View>
       <View style={{ ...styles.formItemRow, marginBottom: 20 }}>
         <View style={styles.formItem}>
           <Controller
@@ -240,6 +343,42 @@ const CartConfigurationModal = ({
           />
         </View>
       </View>
+      <View style={{ ...styles.formItemRow, marginBottom: 20 }}>
+        <View style={styles.formItem}>
+          <Controller
+            control={control}
+            render={({ field: { onChange, value } }) => {
+              return (
+                <CheckBox
+                  center
+                  title="Hide link button"
+                  checked={value}
+                  onPress={() => onChange(!value)}
+                />
+              );
+            }}
+            name="linkButtonHidden"
+          />
+        </View>
+      </View>
+      <View style={{ ...styles.formItemRow, marginBottom: 20 }}>
+        <View style={styles.formItem}>
+          <Controller
+            control={control}
+            render={({ field: { onChange, value } }) => {
+              return (
+                <CheckBox
+                  center
+                  title="Enable Custom Click Link Button(Android)"
+                  checked={value}
+                  onPress={() => onChange(!value)}
+                />
+              );
+            }}
+            name="enableCustomClickLinkButton"
+          />
+        </View>
+      </View>
     </>
   );
 
@@ -252,6 +391,8 @@ const CartConfigurationModal = ({
         syncFormValuesFromConfiguration({
           cartIconVisible,
           addToCartButtonStyle,
+          linkButtonHidden,
+          enableCustomClickLinkButton,
         });
         if (onRequestClose) {
           onRequestClose();
@@ -259,63 +400,73 @@ const CartConfigurationModal = ({
       }}
     >
       <TouchableWithoutFeedback onPress={() => {}}>
-        <View style={styles.content}>
+        <KeyboardAvoidingView
+          behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
+          style={styles.content}
+        >
           <View
             style={{
               ...CommonStyles.formContainer,
               ...styles.formContainerExtra,
             }}
           >
-            <Text style={styles.sectionTitle}>Cart Configuration</Text>
-            {formContent}
-            <View style={{ ...CommonStyles.formItem, ...styles.buttonList }}>
-              <Button
-                type="outline"
-                titleStyle={CommonStyles.mainButtonText}
-                containerStyle={{
-                  ...CommonStyles.mainButtonContainer,
-                  flex: 1,
-                  marginRight: 20,
-                }}
-                onPress={() => {
-                  syncFormValuesFromConfiguration({
-                    cartIconVisible,
-                    addToCartButtonStyle,
-                  });
-                  if (onRequestClose) {
-                    onRequestClose();
-                  }
-                }}
-                title="Cancel"
-              />
-              <Button
-                buttonStyle={{ backgroundColor: 'rgba(214, 61, 57, 1)' }}
-                titleStyle={CommonStyles.mainButtonText}
-                containerStyle={{
-                  ...CommonStyles.mainButtonContainer,
-                  flex: 1,
-                  marginRight: 20,
-                }}
-                onPress={() => {
-                  syncFormValuesFromConfiguration({
-                    cartIconVisible: defaultCartIconVisible,
-                    addToCartButtonStyle: defaultAddToCartButtonStyle,
-                  });
-                }}
-                title="Reset"
-              />
-              <Button
-                titleStyle={CommonStyles.mainButtonText}
-                containerStyle={{
-                  ...CommonStyles.mainButtonContainer,
-                  flex: 1,
-                }}
-                onPress={handleSubmit(onSave)}
-                title="Save"
-              />
-            </View>
+            <ScrollView>
+              <Text style={styles.sectionTitle}>Cart Configuration</Text>
+              {formContent}
+              <View style={{ ...CommonStyles.formItem, ...styles.buttonList }}>
+                <Button
+                  type="outline"
+                  titleStyle={CommonStyles.mainButtonText}
+                  containerStyle={{
+                    ...CommonStyles.mainButtonContainer,
+                    flex: 1,
+                    marginRight: 20,
+                  }}
+                  onPress={() => {
+                    syncFormValuesFromConfiguration({
+                      cartIconVisible,
+                      addToCartButtonStyle,
+                      linkButtonHidden,
+                      enableCustomClickLinkButton,
+                    });
+                    if (onRequestClose) {
+                      onRequestClose();
+                    }
+                  }}
+                  title="Cancel"
+                />
+                <Button
+                  buttonStyle={{ backgroundColor: 'rgba(214, 61, 57, 1)' }}
+                  titleStyle={CommonStyles.mainButtonText}
+                  containerStyle={{
+                    ...CommonStyles.mainButtonContainer,
+                    flex: 1,
+                    marginRight: 20,
+                  }}
+                  onPress={() => {
+                    syncFormValuesFromConfiguration({
+                      cartIconVisible: defaultCartIconVisible,
+                      addToCartButtonStyle: defaultAddToCartButtonStyle,
+                      linkButtonHidden: defaultLinkButtonHidden,
+                      enableCustomClickLinkButton:
+                        defaultEnableCustomClickLinkButton,
+                    });
+                  }}
+                  title="Reset"
+                />
+                <Button
+                  titleStyle={CommonStyles.mainButtonText}
+                  containerStyle={{
+                    ...CommonStyles.mainButtonContainer,
+                    flex: 1,
+                  }}
+                  onPress={handleSubmit(onSave)}
+                  title="Save"
+                />
+              </View>
+            </ScrollView>
           </View>
-        </View>
+        </KeyboardAvoidingView>
       </TouchableWithoutFeedback>
     </Modal>
   );

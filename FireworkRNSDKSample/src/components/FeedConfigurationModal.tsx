@@ -12,6 +12,8 @@ import {
   View,
   TouchableWithoutFeedback,
   ScrollView,
+  KeyboardAvoidingView,
+  Platform,
 } from 'react-native';
 import type {
   VastAttribute,
@@ -26,10 +28,13 @@ export interface IFeedConfigurationModalProps {
   defaultFeedConfiguration?: VideoFeedConfiguration;
   feedAdConfiguration?: AdConfiguration;
   defaultFeedAdConfiguration?: AdConfiguration;
+  enablePiP?: boolean;
+  defaultEnablePiP?: boolean;
   onRequestClose?: () => void;
   onSubmit?: (
     configuration: VideoFeedConfiguration,
-    adConfiguration: AdConfiguration
+    adConfiguration: AdConfiguration,
+    enablePiP: boolean
   ) => void;
 }
 
@@ -39,6 +44,7 @@ type FeedConfigurationFormData = {
   hideTitle?: boolean;
   titleColor?: string;
   titleFontSize?: string;
+  titleIOSFontName?: string;
   titlePosition?: number;
   hidePlayIcon?: boolean;
   playIconWidth?: string;
@@ -59,6 +65,8 @@ const FeedConfigurationModal = ({
   defaultFeedConfiguration,
   feedAdConfiguration,
   defaultFeedAdConfiguration,
+  enablePiP,
+  defaultEnablePiP,
   onRequestClose,
   onSubmit,
 }: IFeedConfigurationModalProps) => {
@@ -71,7 +79,6 @@ const FeedConfigurationModal = ({
 
   const [configurationIndex, setConfigurationIndex] = useState<number>(0);
   const configurationTitles = ['Config 1', 'Config 2'];
-
   let titleFontSizeErrorMessage: string | undefined;
   if (errors.titleFontSize) {
     if (
@@ -128,13 +135,15 @@ const FeedConfigurationModal = ({
   const syncFormValuesFromConfiguration = useCallback(
     (
       configuration?: VideoFeedConfiguration,
-      adConfiguration?: AdConfiguration
+      adConfiguration?: AdConfiguration,
+      enablePictureInPicture?: boolean
     ) => {
       setValue('backgroundColor', configuration?.backgroundColor);
       setValue('cornerRadius', configuration?.cornerRadius?.toString());
       setValue('hideTitle', configuration?.title?.hidden);
       setValue('titleColor', configuration?.title?.textColor);
       setValue('titleFontSize', configuration?.title?.fontSize?.toString());
+      setValue('titleIOSFontName', configuration?.title?.iOSFontInfo?.fontName);
       if (configuration && configuration.titlePosition) {
         const titlePositionIndex = TitlePositionList.indexOf(
           configuration.titlePosition!
@@ -156,7 +165,7 @@ const FeedConfigurationModal = ({
         setValue('enableCustomLayoutName', false);
       }
       setValue('enableAutoplay', configuration?.enableAutoplay);
-      setValue('enablePictureInPicture', configuration?.enablePictureInPicture);
+      setValue('enablePictureInPicture', enablePictureInPicture);
       setValue('requiresAds', adConfiguration?.requiresAds);
       if (adConfiguration && adConfiguration.vastAttributes) {
         var vastAttributesJson: { [key: string]: string } = {};
@@ -174,8 +183,17 @@ const FeedConfigurationModal = ({
   );
 
   useEffect(() => {
-    syncFormValuesFromConfiguration(feedConfiguration, feedAdConfiguration);
-  }, [feedConfiguration, feedAdConfiguration, syncFormValuesFromConfiguration]);
+    syncFormValuesFromConfiguration(
+      feedConfiguration,
+      feedAdConfiguration,
+      enablePiP
+    );
+  }, [
+    feedConfiguration,
+    feedAdConfiguration,
+    enablePiP,
+    syncFormValuesFromConfiguration,
+  ]);
 
   const onSave = (data: FeedConfigurationFormData) => {
     if (onSubmit) {
@@ -192,6 +210,9 @@ const FeedConfigurationModal = ({
           typeof data.titleFontSize === 'string'
             ? parseInt(data.titleFontSize!)
             : undefined,
+        iOSFontInfo: {
+          fontName: data.titleIOSFontName,
+        },
       };
       configuration.titlePosition =
         typeof data.titlePosition === 'number'
@@ -213,7 +234,6 @@ const FeedConfigurationModal = ({
         configuration.customLayoutName = 'fw_feed_custom_layout';
       }
       configuration.enableAutoplay = data.enableAutoplay;
-      configuration.enablePictureInPicture = data.enablePictureInPicture;
       console.log('configuration', configuration);
       var adConfiguration: AdConfiguration = {};
       adConfiguration.requiresAds = data.requiresAds;
@@ -231,7 +251,11 @@ const FeedConfigurationModal = ({
         adConfiguration.vastAttributes = vastAttributes;
       }
       console.log('adConfiguration', adConfiguration);
-      onSubmit(configuration, adConfiguration);
+      onSubmit(
+        configuration,
+        adConfiguration,
+        data.enablePictureInPicture ?? false
+      );
     }
   };
 
@@ -401,6 +425,33 @@ const FeedConfigurationModal = ({
               />
             )}
             name="titlePosition"
+          />
+        </View>
+      </View>
+      <View style={styles.formItemRow}>
+        <View style={{ ...styles.formItem, marginRight: 10 }}>
+          <Controller
+            control={control}
+            render={({ field: { onChange, onBlur, value } }) => (
+              <Input
+                label="Title iOS font name"
+                placeholder="e.g. Helvetica-Bold"
+                onBlur={onBlur}
+                onChangeText={(newValue) => onChange(newValue)}
+                value={value}
+                rightIcon={
+                  <TouchableOpacity
+                    onPress={() => {
+                      setValue('titleIOSFontName', undefined);
+                    }}
+                  >
+                    <Ionicons name="close" size={24} />
+                  </TouchableOpacity>
+                }
+                autoCompleteType={undefined}
+              />
+            )}
+            name="titleIOSFontName"
           />
         </View>
       </View>
@@ -671,14 +722,21 @@ const FeedConfigurationModal = ({
       visible={visible}
       onRequestClose={() => {
         console.log('onRequestClose');
-        syncFormValuesFromConfiguration(feedConfiguration, feedAdConfiguration);
+        syncFormValuesFromConfiguration(
+          feedConfiguration,
+          feedAdConfiguration,
+          enablePiP
+        );
         if (onRequestClose) {
           onRequestClose();
         }
       }}
     >
       <TouchableWithoutFeedback onPress={() => {}}>
-        <View style={styles.content}>
+        <KeyboardAvoidingView
+          behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
+          style={styles.content}
+        >
           <View
             style={{
               ...CommonStyles.formContainer,
@@ -723,7 +781,8 @@ const FeedConfigurationModal = ({
                   onPress={() => {
                     syncFormValuesFromConfiguration(
                       feedConfiguration,
-                      feedAdConfiguration
+                      feedAdConfiguration,
+                      enablePiP
                     );
                     if (onRequestClose) {
                       onRequestClose();
@@ -742,7 +801,8 @@ const FeedConfigurationModal = ({
                   onPress={() => {
                     syncFormValuesFromConfiguration(
                       defaultFeedConfiguration,
-                      defaultFeedAdConfiguration
+                      defaultFeedAdConfiguration,
+                      defaultEnablePiP
                     );
                   }}
                   title="Reset"
@@ -759,7 +819,7 @@ const FeedConfigurationModal = ({
               </View>
             </ScrollView>
           </View>
-        </View>
+        </KeyboardAvoidingView>
       </TouchableWithoutFeedback>
     </Modal>
   );

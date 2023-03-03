@@ -18,10 +18,9 @@ import {
 import Cart from './screens/Cart';
 import Checkout from './screens/Checkout';
 import CircleThumbnails from './screens/CircleThumbnails';
-import CTALinkContent from './screens/CTALinkContent';
+import LinkContent from './screens/LinkContent';
 import EnableCustomClickCartIconCallback from './screens/EnableCustomClickCartIconCallback';
 import EnableCustomCTAClickCallback from './screens/EnableCustomCTAClickCallback';
-import EnableCustomCTALinkContentPageRouteName from './screens/EnableCustomCTALinkContentPageRouteName';
 import Feed from './screens/Feed';
 import OpenVideo from './screens/OpenVideo';
 import type { RootStackParamList } from './screens/paramList/RootStackParamList';
@@ -140,11 +139,6 @@ const FWNavigationContainer = ({
           options: { title: 'Enable Custom CTA Click Callback' },
         })}
         {renderScreen({
-          name: 'EnableCustomCTALinkContentPageRouteName',
-          component: EnableCustomCTALinkContentPageRouteName,
-          options: { title: 'Enable CTA Link Content Page Route Name' },
-        })}
-        {renderScreen({
           name: 'Feed',
           component: Feed,
         })}
@@ -158,9 +152,9 @@ const FWNavigationContainer = ({
           component: Checkout,
         })}
         {renderScreen({
-          name: 'CTALinkContent',
-          component: CTALinkContent,
-          options: { title: 'CTA Link Content(RN page)' },
+          name: 'LinkContent',
+          component: LinkContent,
+          options: { title: 'Link Content(RN page)' },
         })}
         {renderScreen({
           name: 'CircleThumbnails',

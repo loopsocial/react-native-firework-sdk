@@ -11,6 +11,7 @@ import type { NativeStackNavigationProp } from '@react-navigation/native-stack';
 
 import type { RootStackParamList } from '../screens/paramList/RootStackParamList';
 import CommonStyles from './CommonStyles';
+import HostAppShoppingService from '../utils/HostAppShoppingService';
 
 type EnableCustomClickCartIconCallbackFormData = {
   enableCustomClickCartIconCallback?: boolean;
@@ -34,7 +35,7 @@ const EnableCustomClickCartIconCallbackForm = () => {
   ) => {
     if (data.enableCustomClickCartIconCallback) {
       FireworkSDK.getInstance().shopping.onCustomClickCartIcon = async () => {
-        FireworkSDK.getInstance().navigator.popNativeContainer();
+        HostAppShoppingService.getInstance().closePlayerOrStartFloatingPlayer();
         navigation.navigate('Cart');
       };
       Toast.show('Enable custom click cart icon callback successfully');

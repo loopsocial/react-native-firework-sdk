@@ -1,12 +1,9 @@
 import type {
   AddToCartCallback,
   AddToCartEvent,
-  ClickCartIconCallback,
   Product,
   UpdateProductDetailsCallback,
   UpdateProductDetailsEvent,
-  WillDisplayProductCallback,
-  WillDisplayProductEvent,
   CustomClickCartIconCallback,
   CustomCTAClickCallback,
 } from 'react-native-firework-sdk';
@@ -66,23 +63,16 @@ export default class HostAppShoppingService {
     }
   };
 
-  public onClickCartIcon?: ClickCartIconCallback = async () => {
-    console.log('[example] onClickCartIcon');
-    return {
-      initialRouteName: 'Cart',
-    };
-  };
-
   public onCustomClickCartIcon?: CustomClickCartIconCallback = async () => {
     console.log('[example] onCustomClickCartIcon');
-    FireworkSDK.getInstance().navigator.popNativeContainer();
+    this.closePlayerOrStartFloatingPlayer();
     RootNavigation.navigate('Cart');
   };
 
   public onCustomCTAClick?: CustomCTAClickCallback = (event) => {
     if (event.url) {
-      FireworkSDK.getInstance().navigator.popNativeContainer();
-      RootNavigation.navigate('CTALinkContent', { url: event.url });
+      this.closePlayerOrStartFloatingPlayer();
+      RootNavigation.navigate('LinkContent', { url: event.url });
     }
   };
 
@@ -123,22 +113,22 @@ export default class HostAppShoppingService {
     return [];
   };
 
-  public onWillDisplayProduct?: WillDisplayProductCallback = async (
-    event: WillDisplayProductEvent
-  ) => {
-    console.log('[example] onWillDisplayProduct', event);
-    const addToCartButtonStyle = store.getState().cart.addToCartButtonStyle;
-    return {
-      addToCartButton: addToCartButtonStyle,
-    };
-  };
-
   public static getInstance() {
     if (!HostAppShoppingService._instance) {
       HostAppShoppingService._instance = new HostAppShoppingService();
     }
 
     return HostAppShoppingService._instance!;
+  }
+
+  public closePlayerOrStartFloatingPlayer() {
+    const enablePictureInPicture = store.getState().feed.enablePictureInPicture;
+
+    if (enablePictureInPicture) {
+      FireworkSDK.getInstance().navigator.startFloatingPlayer();
+    } else {
+      FireworkSDK.getInstance().navigator.popNativeContainer();
+    }
   }
 
   private constructor() {}

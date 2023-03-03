@@ -29,6 +29,8 @@ import PlayerConfigurationModal from '../components/PlayerConfigurationModal';
 import VideoFeedForm from '../components/VideoFeedForm';
 import type { RootStackParamList } from './paramList/RootStackParamList';
 import { SafeAreaView } from 'react-native-safe-area-context';
+import { useAppDispatch, useAppSelector } from '../hooks/reduxHooks';
+import { updateEnablePictureInPicture } from '../slice/feedSlice';
 
 type FeedScreenRouteProp = RouteProp<RootStackParamList, 'Feed'>;
 type FeedScreenNavigationProp = NativeStackNavigationProp<
@@ -54,10 +56,9 @@ const Feed = () => {
   const [feedError, setFeedError] = useState<FWError | undefined>(undefined);
 
   const defaultFeedConfiguration: VideoFeedConfiguration = {
-    title: { hidden: false },
+    title: { hidden: false, fontSize: 14 },
     titlePosition: 'nested',
     showAdBadge: true,
-    enablePictureInPicture: true,
   };
   const [feedConfiguration, setFeedConfiguration] =
     useState<VideoFeedConfiguration>(defaultFeedConfiguration);
@@ -65,6 +66,12 @@ const Feed = () => {
     requiresAds: false,
     adsFetchTimeout: 20,
   };
+
+  const enablePictureInPicture = useAppSelector(
+    (state) => state.feed.enablePictureInPicture
+  );
+  const dispatch = useAppDispatch();
+
   const [feedAdConfiguration, setFeedAdConfiguration] =
     useState<AdConfiguration>(defaultFeedAdConfiguration);
 
@@ -74,6 +81,10 @@ const Feed = () => {
     showShareButton: true,
     showMuteButton: true,
     showPlaybackButton: true,
+    ctaButtonStyle: {
+      fontSize: 14,
+      iOSFontInfo: { systemFontWeight: 'bold' },
+    },
     ctaDelay: {
       type: 'constant',
       value: 3,
@@ -137,6 +148,7 @@ const Feed = () => {
           }}
           videoPlayerConfiguration={playerConfiguration}
           adConfiguration={feedAdConfiguration}
+          enablePictureInPicture={enablePictureInPicture}
           onVideoFeedLoadFinished={(error?: FWError) => {
             console.log('[example] onVideoFeedLoadFinished error', error);
             setFeedError(error);
@@ -234,12 +246,15 @@ const Feed = () => {
         defaultFeedConfiguration={defaultFeedConfiguration}
         feedAdConfiguration={feedAdConfiguration}
         defaultFeedAdConfiguration={defaultFeedAdConfiguration}
+        enablePiP={enablePictureInPicture}
+        defaultEnablePiP={true}
         onRequestClose={() => {
           setShowFeedConfiguration(false);
         }}
-        onSubmit={(newFeedConfiguration, newFeedAdConfiguration) => {
+        onSubmit={(newFeedConfiguration, newFeedAdConfiguration, enablePiP) => {
           setFeedConfiguration(newFeedConfiguration);
           setFeedAdConfiguration(newFeedAdConfiguration);
+          dispatch(updateEnablePictureInPicture(enablePiP));
           setTimeout(() => {
             setShowFeedConfiguration(false);
           }, 0);

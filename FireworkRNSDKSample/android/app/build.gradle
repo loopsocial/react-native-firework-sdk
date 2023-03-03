@@ -74,7 +74,7 @@ apply plugin: "com.android.application"
  */
 
 project.ext.react = [
-  bundleInDebug: false,
+  bundleInDebug: (project.findProperty('BUNDLE_IN_DEBUG')?.toBoolean()) ?: false,
   enableHermes: false,  // clean and rebuild if changing
   entryFile: "index.tsx",
 ]
@@ -124,15 +124,23 @@ def enableHermes = project.ext.react.get("enableHermes", false);
 def nativeArchitectures = project.getProperties().get("reactNativeDebugArchitectures")
 
 /**
- * env: PRODUCTION/STAGING
+ * env: Production/Staging
  */
-def env = findProperty("FWENV")?:"PRODUCTION"
+def env = findProperty("FW_ENV")?:"Production"
 
 /**
  * appid
  */
 def fw_appid_production = ""
+def fw_base_url_production = "https://api.fw.tv"
+def fw_pixel_base_url_production = "https://p2.fwpixel.com/"
+def fw_web_socket_production = "wss://api.firework.tv/socket/websocket"
+
+
 def fw_appid_staging = ""
+def fw_base_url_staging = "https://staging.fireworktv.com"
+def fw_pixel_base_url_staging = "https://p2-staging.fwpixel.com/"
+def fw_web_socket_staging = "wss://staging.fireworktv.com/socket/websocket"
 
 android {
   compileSdkVersion rootProject.ext.compileSdkVersion
@@ -142,7 +150,12 @@ android {
     minSdkVersion rootProject.ext.minSdkVersion
     targetSdkVersion rootProject.ext.targetSdkVersion
     versionCode 1
-    versionName "1.7.0"
+    versionName "2.0.0-beta"
+
+    manifestPlaceholders["fw_appid"] = env=="Staging" ? fw_appid_staging : fw_appid_production
+    manifestPlaceholders["fw_base_url"] = env=="Staging" ? fw_base_url_staging : fw_base_url_production
+    manifestPlaceholders["fw_pixel_base_url"] = env=="Staging" ? fw_pixel_base_url_staging : fw_pixel_base_url_production
+    manifestPlaceholders["fw_web_socket"] = env=="Staging" ? fw_web_socket_staging : fw_web_socket_production
   }
   splits {
     abi {
@@ -180,7 +193,7 @@ android {
     // ./gradlew assembleDebug
     // ./gradlew installDebug
     debug {
-      manifestPlaceholders = [fw_appid: env=="STAGING" ? fw_appid_staging : fw_appid_production]
+      versionNameSuffix "-debug" + (env=="Staging" ? "-staging" : "")
       proguardFiles getDefaultProguardFile("proguard-android.txt"), "proguard-rules.pro"
       minifyEnabled enableProguardInReleaseBuilds
       signingConfig signingConfigs.release
@@ -192,7 +205,7 @@ android {
     }
     // ./gradlew assembleRelease
     release {
-      manifestPlaceholders = [fw_appid: env=="STAGING" ? fw_appid_staging : fw_appid_production]
+      versionNameSuffix env=="Staging" ? "-${env}" : ""
       // Caution! In production, you need to generate your own keystore file.
       // see https://reactnative.dev/docs/signed-apk-android.
       signingConfig signingConfigs.release
@@ -245,3 +258,9 @@ apply from: 'google.gradle'
 apply from: 'firework.gradle'
 
 apply from: rootProject.file('lint.gradle')
+
+configurations.all {
+  resolutionStrategy {
+    force 'androidx.appcompat:appcompat:1.1.0'
+  }
+}
