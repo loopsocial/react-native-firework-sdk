@@ -36,6 +36,7 @@ const EnableCustomCTAClickCallbackForm = () => {
           navigation.navigate('LinkContent', { url: event.url });
         }
       };
+      FireworkSDK.getInstance().customCTALinkContentPageRouteName = undefined;
       Toast.show('Enable custom CTA click callback successfully');
     } else {
       FireworkSDK.getInstance().onCustomCTAClick = undefined;

@@ -1,5 +1,19 @@
 # CHANGELOG
 
+## [1.8.0]
+
+### Added
+
+- Add the ability to programmatically start or stop the floating player(only supported on iOS)
+- Updates Firework Branding on the iOS Side
+- Improves player accessibilty on the iOS side
+- Support configuring feed title iOS font name(only supported on iOS)
+- Support configuring CTA button font name(only supported on iOS)
+- Support configuring the "Add to cart" button font name(only supported on iOS)
+- Add set and get accessors of `productInfoViewConfiguration` in `VideoShopping` class(only supported on iOS)
+- Support hiding link next to "Add to Cart" button(only supported on iOS)
+- Support customizing the click event processing logic of the link button next to the "Add to cart" button(only supported on Android)
+
 ## [1.7.0]
 
 ### Added

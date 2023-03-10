@@ -21,6 +21,7 @@ import CircleThumbnails from './screens/CircleThumbnails';
 import LinkContent from './screens/LinkContent';
 import EnableCustomClickCartIconCallback from './screens/EnableCustomClickCartIconCallback';
 import EnableCustomCTAClickCallback from './screens/EnableCustomCTAClickCallback';
+import EnableCustomCTALinkContentPageRouteName from './screens/EnableCustomCTALinkContentPageRouteName';
 import Feed from './screens/Feed';
 import OpenVideo from './screens/OpenVideo';
 import type { RootStackParamList } from './screens/paramList/RootStackParamList';
@@ -137,6 +138,11 @@ const FWNavigationContainer = ({
           name: 'EnableCustomCTAClickCallback',
           component: EnableCustomCTAClickCallback,
           options: { title: 'Enable Custom CTA Click Callback' },
+        })}
+        {renderScreen({
+          name: 'EnableCustomCTALinkContentPageRouteName',
+          component: EnableCustomCTALinkContentPageRouteName,
+          options: { title: 'Enable CTA Link Content Page Route Name' },
         })}
         {renderScreen({
           name: 'Feed',

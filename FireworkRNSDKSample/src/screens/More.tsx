@@ -93,6 +93,12 @@ function More() {
       },
     },
     {
+      title: 'Enable Custom CTA Link Content Page Route Name',
+      pressCallback: (_) => {
+        navigation.push('EnableCustomCTALinkContentPageRouteName');
+      },
+    },
+    {
       title: 'Circle Thumbnails(iOS)',
       pressCallback: (_) => {
         navigation.push('CircleThumbnails');
