@@ -11,11 +11,11 @@
 		13B07FBC1A68108700A75B9A /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB01A68108700A75B9A /* AppDelegate.m */; };
 		13B07FBF1A68108700A75B9A /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 13B07FB51A68108700A75B9A /* Images.xcassets */; };
 		13B07FC11A68108700A75B9A /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB71A68108700A75B9A /* main.m */; };
+		23B335AE6E9A5CC432EAE22D /* libPods-FireworkSdkExample.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 3AE60B7F7BCDCFD56E2C85D7 /* libPods-FireworkSdkExample.a */; };
 		2D02E4BC1E0B4A80006451C7 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB01A68108700A75B9A /* AppDelegate.m */; };
 		2D02E4BD1E0B4A84006451C7 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 13B07FB51A68108700A75B9A /* Images.xcassets */; };
 		2D02E4BF1E0B4AB3006451C7 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB71A68108700A75B9A /* main.m */; };
 		2DCD954D1E0B4F2C00145EB5 /* FireworkSdkExampleTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 00E356F21AD99517003FC87E /* FireworkSdkExampleTests.m */; };
-		6E657E371602E29AD9401F6D /* libPods-FireworkSdkExample.a in Frameworks */ = {isa = PBXBuildFile; fileRef = E97E99602275303D0D811C12 /* libPods-FireworkSdkExample.a */; };
 		8948DC5F287FC09700C5A348 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 8948DC61287FC09700C5A348 /* LaunchScreen.storyboard */; };
 /* End PBXBuildFile section */
 
@@ -48,17 +48,15 @@
 		13B07FB71A68108700A75B9A /* main.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = main.m; path = FireworkSdkExample/main.m; sourceTree = "<group>"; };
 		2D02E47B1E0B4A5D006451C7 /* FireworkSdkExample-tvOS.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "FireworkSdkExample-tvOS.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		2D02E4901E0B4A5D006451C7 /* FireworkSdkExample-tvOSTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "FireworkSdkExample-tvOSTests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
+		3AE60B7F7BCDCFD56E2C85D7 /* libPods-FireworkSdkExample.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-FireworkSdkExample.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		47F7ED3B7971BE374F7B8635 /* Pods-FireworkSdkExample.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-FireworkSdkExample.debug.xcconfig"; path = "Target Support Files/Pods-FireworkSdkExample/Pods-FireworkSdkExample.debug.xcconfig"; sourceTree = "<group>"; };
 		8938F69E28F6F8060050FE64 /* Debug.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = Debug.xcconfig; sourceTree = "<group>"; };
 		8938F69F28F6F8120050FE64 /* Staging.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = Staging.xcconfig; sourceTree = "<group>"; };
 		8938F6A028F6F8220050FE64 /* Release.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = Release.xcconfig; sourceTree = "<group>"; };
 		8948DC60287FC09700C5A348 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		8948DC65287FC0C900C5A348 /* ar */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ar; path = ar.lproj/LaunchScreen.strings; sourceTree = "<group>"; };
-		8953CF772994CE6100F7413E /* ja */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ja; path = ja.lproj/LaunchScreen.strings; sourceTree = "<group>"; };
-		8953CF782994CE7C00F7413E /* pt-BR */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "pt-BR"; path = "pt-BR.lproj/LaunchScreen.strings"; sourceTree = "<group>"; };
 		9469AD12679CA06B64C86C19 /* Pods-FireworkSdkExample.staging.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-FireworkSdkExample.staging.xcconfig"; path = "Target Support Files/Pods-FireworkSdkExample/Pods-FireworkSdkExample.staging.xcconfig"; sourceTree = "<group>"; };
 		E00ACF0FDA8BF921659E2F9A /* Pods-FireworkSdkExample.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-FireworkSdkExample.release.xcconfig"; path = "Target Support Files/Pods-FireworkSdkExample/Pods-FireworkSdkExample.release.xcconfig"; sourceTree = "<group>"; };
-		E97E99602275303D0D811C12 /* libPods-FireworkSdkExample.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-FireworkSdkExample.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		ED297162215061F000B7C4FE /* JavaScriptCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = JavaScriptCore.framework; path = System/Library/Frameworks/JavaScriptCore.framework; sourceTree = SDKROOT; };
 		ED2971642150620600B7C4FE /* JavaScriptCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = JavaScriptCore.framework; path = Platforms/AppleTVOS.platform/Developer/SDKs/AppleTVOS12.0.sdk/System/Library/Frameworks/JavaScriptCore.framework; sourceTree = DEVELOPER_DIR; };
 /* End PBXFileReference section */
@@ -75,7 +73,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				6E657E371602E29AD9401F6D /* libPods-FireworkSdkExample.a in Frameworks */,
+				23B335AE6E9A5CC432EAE22D /* libPods-FireworkSdkExample.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -132,7 +130,7 @@
 			children = (
 				ED297162215061F000B7C4FE /* JavaScriptCore.framework */,
 				ED2971642150620600B7C4FE /* JavaScriptCore.framework */,
-				E97E99602275303D0D811C12 /* libPods-FireworkSdkExample.a */,
+				3AE60B7F7BCDCFD56E2C85D7 /* libPods-FireworkSdkExample.a */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -231,7 +229,7 @@
 				13B07F8E1A680F5B00A75B9A /* Resources */,
 				00DD1BFF1BD5951E006B06BC /* Bundle React Native code and images */,
 				EC38242317DCD2EFD5D0BAE5 /* [CP] Embed Pods Frameworks */,
-				6DC4E572BF3429BDAC6CCBB4 /* [CP] Copy Pods Resources */,
+				C8D876FBEB8378CF197044F4 /* [CP] Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -315,8 +313,6 @@
 				en,
 				Base,
 				ar,
-				ja,
-				"pt-BR",
 			);
 			mainGroup = 83CBB9F61A601CBA00E9B192;
 			productRefGroup = 83CBBA001A601CBA00E9B192 /* Products */;
@@ -416,7 +412,7 @@
 			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
 			showEnvVarsInLog = 0;
 		};
-		6DC4E572BF3429BDAC6CCBB4 /* [CP] Copy Pods Resources */ = {
+		C8D876FBEB8378CF197044F4 /* [CP] Copy Pods Resources */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -580,8 +576,6 @@
 			children = (
 				8948DC60287FC09700C5A348 /* Base */,
 				8948DC65287FC0C900C5A348 /* ar */,
-				8953CF772994CE6100F7413E /* ja */,
-				8953CF782994CE7C00F7413E /* pt-BR */,
 			);
 			name = LaunchScreen.storyboard;
 			path = FireworkSdkExample;
@@ -645,7 +639,7 @@
 				INFOPLIST_FILE = FireworkSdkExample/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				MARKETING_VERSION = 1.9.0;
+				MARKETING_VERSION = 1.8.0;
 				OTHER_LDFLAGS = (
 					"$(inherited)",
 					"-ObjC",
@@ -675,7 +669,7 @@
 				INFOPLIST_FILE = FireworkSdkExample/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				MARKETING_VERSION = 1.9.0;
+				MARKETING_VERSION = 1.8.0;
 				OTHER_LDFLAGS = (
 					"$(inherited)",
 					"-ObjC",
@@ -980,7 +974,7 @@
 				INFOPLIST_FILE = FireworkSdkExample/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				MARKETING_VERSION = 1.9.0;
+				MARKETING_VERSION = 1.8.0;
 				OTHER_LDFLAGS = (
 					"$(inherited)",
 					"-ObjC",

@@ -25,7 +25,6 @@ import type {
   VideoPlayerConfiguration,
   VideoPlayerStyle,
   VideoPlayerCompleteAction,
-  VideoLaunchBehavior,
   VideoPlayerCTADelayType,
 } from 'react-native-firework-sdk';
 
@@ -47,7 +46,6 @@ type PlayerConfigurationFormData = {
   ctaIOSFontName?: string;
   showPlaybackButton?: boolean;
   showMuteButton?: boolean;
-  launchBehavior?: number;
   ctaDelayType?: number;
   ctaDelayValue?: number;
   ctaHighlightDelayType?: number;
@@ -58,11 +56,6 @@ const PlayStyleList: VideoPlayerStyle[] = ['full', 'fit'];
 const VideoCompleteActionList: VideoPlayerCompleteAction[] = [
   'loop',
   'advanceToNext',
-];
-
-const VideoLaunchBehaviorList: VideoLaunchBehavior[] = [
-  'default',
-  'muteOnFirstLaunch',
 ];
 
 const CTADelayTypeList: VideoPlayerCTADelayType[] = ['constant', 'percentage'];
@@ -159,18 +152,6 @@ const PlayerConfigurationModal = ({
         );
         setValue('showPlaybackButton', configuration.showPlaybackButton);
         setValue('showMuteButton', configuration.showMuteButton);
-        if (configuration.launchBehavior) {
-          const launchBehaviorIndex = VideoLaunchBehaviorList.indexOf(
-            configuration.launchBehavior
-          );
-          if (launchBehaviorIndex >= 0) {
-            setValue('launchBehavior', launchBehaviorIndex);
-          } else {
-            setValue('launchBehavior', undefined);
-          }
-        } else {
-          setValue('launchBehavior', undefined);
-        }
 
         if (configuration.ctaDelay) {
           const typeIndex = CTADelayTypeList.indexOf(
@@ -234,10 +215,7 @@ const PlayerConfigurationModal = ({
       };
       configuration.showPlaybackButton = data.showPlaybackButton;
       configuration.showMuteButton = data.showMuteButton;
-      configuration.launchBehavior =
-        typeof data.launchBehavior === 'number'
-          ? VideoLaunchBehaviorList[data.launchBehavior]
-          : undefined;
+
       if (
         typeof data.ctaDelayType === 'number' &&
         typeof data.ctaDelayValue === 'number'
@@ -349,24 +327,6 @@ const PlayerConfigurationModal = ({
               );
             }}
             name="showMuteButton"
-          />
-        </View>
-      </View>
-      <View style={styles.formItemRow}>
-        <View style={styles.formItem}>
-          <Text style={styles.formItemLabel}>Video launch behavior</Text>
-          <Controller
-            control={control}
-            render={({ field: { onChange, value } }) => (
-              <ButtonGroup
-                buttons={VideoLaunchBehaviorList}
-                selectedIndex={value}
-                onPress={(newValue) => {
-                  onChange(newValue);
-                }}
-              />
-            )}
-            name="launchBehavior"
           />
         </View>
       </View>

@@ -13,7 +13,6 @@ import type CartItem from '../models/CartItem';
 import { addCartItem } from '../slice/cartSlice';
 import { store } from '../store';
 import ShopifyClient from './ShopifyClient';
-import { Platform } from 'react-native';
 
 export default class HostAppShoppingService {
   private static _instance?: HostAppShoppingService;
@@ -122,18 +121,11 @@ export default class HostAppShoppingService {
     return HostAppShoppingService._instance!;
   }
 
-  public closePlayerOrStartFloatingPlayer() {
-    if (Platform.OS === 'android') {
-      FireworkSDK.getInstance().navigator.popNativeContainer();
-    } else {
-      const enablePictureInPicture =
-        store.getState().feed.enablePictureInPicture;
-
-      if (enablePictureInPicture) {
-        FireworkSDK.getInstance().navigator.startFloatingPlayer();
-      } else {
-        FireworkSDK.getInstance().navigator.popNativeContainer();
-      }
+  public async closePlayerOrStartFloatingPlayer() {
+    const result =
+      await FireworkSDK.getInstance().navigator.startFloatingPlayer();
+    if (!result) {
+      await FireworkSDK.getInstance().navigator.popNativeContainer();
     }
   }
 

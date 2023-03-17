@@ -22,9 +22,7 @@ AppRegistry.registerComponent(appName, () => App);
 
 FireworkSDK.getInstance().debugLogsEnabled = false;
 
-FireworkSDK.getInstance().appComponentName = appName;
-
-FireworkSDK.getInstance().adBadgeConfiguration = { badgeTextType: 'ad' };
+FireworkSDK.getInstance().setAdBadgeConfiguration({ badgeTextType: 'ad' });
 
 FireworkSDK.getInstance().onSDKInit = (event) => {
   console.log('[example] onSDKInit', event);
@@ -40,9 +38,6 @@ FireworkSDK.getInstance().onVideoFeedClick = (event) => {
 
 FireworkSDK.getInstance().shopping.onAddToCart =
   HostAppShoppingService.getInstance().onAddToCart;
-
-// FireworkSDK.getInstance().shopping.onClickCartIcon =
-//   HostAppShoppingService.getInstance().onClickCartIcon;
 
 FireworkSDK.getInstance().shopping.onCustomClickCartIcon =
   HostAppShoppingService.getInstance().onCustomClickCartIcon;
@@ -61,7 +56,8 @@ FireworkSDK.getInstance().liveStream.onLiveStreamChatEvent = (event) => {
   console.log('[example] onLiveStreamChatEvent', event);
 };
 
-FireworkSDK.getInstance().shareBaseURL = 'https://fw.tv';
-
 // init FireworkSDK
-FireworkSDK.getInstance().init();
+FireworkSDK.getInstance().init({
+  shareBaseURL: 'https://fw.tv',
+  videoLaunchBehavior: 'muteOnFirstLaunch',
+});

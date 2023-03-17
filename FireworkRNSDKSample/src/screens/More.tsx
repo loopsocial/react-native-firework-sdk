@@ -48,11 +48,7 @@ function More() {
       return 'Japanese';
     }
 
-    if (language === 'pt-BR') {
-      return 'Portuguese (Brazil)';
-    }
-
-    return 'Not set';
+    return null;
   };
   const handleChangeAppLanguage = async (language: string) => {
     try {
@@ -60,10 +56,8 @@ function More() {
 
       setCurrentDisplayLanguage(getDisplayLanguage(language));
       if (language.startsWith('ar')) {
-        I18nManager.allowRTL(true);
         I18nManager.forceRTL(true);
       } else {
-        I18nManager.allowRTL(false);
         I18nManager.forceRTL(false);
       }
 
@@ -81,12 +75,6 @@ function More() {
       },
     },
     {
-      title: 'Set Share Base URL',
-      pressCallback: (_) => {
-        navigation.push('SetShareBaseURL');
-      },
-    },
-    {
       title: 'Set Ad Badge Configuration',
       pressCallback: (_) => {
         navigation.push('SetAdBadgeConfiguration');
@@ -96,12 +84,6 @@ function More() {
       title: 'Enable Custom CTA Click Callback',
       pressCallback: (_) => {
         navigation.push('EnableCustomCTAClickCallback');
-      },
-    },
-    {
-      title: 'Enable Custom CTA Link Content Page Route Name',
-      pressCallback: (_) => {
-        navigation.push('EnableCustomCTALinkContentPageRouteName');
       },
     },
     {
@@ -121,16 +103,10 @@ function More() {
         ? `App Language(${currentDisplayLanguage})`
         : 'App Language',
       pressCallback: (_) => {
-        const options = [
-          'English',
-          'Arabic',
-          'Japanese',
-          'Portuguese (Brazil)',
-          'Cancel',
-        ];
-        const languageCodeList = ['en', 'ar', 'ja', 'pt-BR'];
+        const options = ['English', 'Arabic', 'Japanese', 'Cancel'];
+        const languageCodeList = ['en', 'ar', 'ja-JP'];
 
-        const cancelButtonIndex = 4;
+        const cancelButtonIndex = 3;
 
         showActionSheetWithOptions(
           {
