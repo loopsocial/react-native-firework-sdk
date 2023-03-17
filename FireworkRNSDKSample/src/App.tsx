@@ -55,7 +55,9 @@ const FWNavigationContainer = ({
     const sycnCurrentLanguageFromStorage = async () => {
       try {
         const language = await AsyncStorage.getItem(StorageKey.appLanguage);
-        FireworkSDK.getInstance().changeAppLanguage(language ?? '');
+        if (language) {
+          FireworkSDK.getInstance().changeAppLanguage(language ?? '');
+        }
       } catch (_) {}
     };
     if (!initialRouteName) {

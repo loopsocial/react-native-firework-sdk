@@ -6,7 +6,7 @@
 
 - Add the ability to programmatically start or stop the floating player(only supported on iOS)
 - Updates Firework Branding on the iOS Side
-- Improves player accessibilty on the iOS side
+- Improves player accessibility on the iOS side
 - Support configuring feed title iOS font name(only supported on iOS)
 - Support configuring CTA button font name(only supported on iOS)
 - Support configuring the "Add to cart" button font name(only supported on iOS)

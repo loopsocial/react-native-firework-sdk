@@ -48,7 +48,11 @@ function More() {
       return 'Japanese';
     }
 
-    return null;
+    if (language === 'pt-BR') {
+      return 'Portuguese (Brazil)';
+    }
+
+    return 'Not set';
   };
   const handleChangeAppLanguage = async (language: string) => {
     try {
@@ -56,8 +60,10 @@ function More() {
 
       setCurrentDisplayLanguage(getDisplayLanguage(language));
       if (language.startsWith('ar')) {
+        I18nManager.allowRTL(true);
         I18nManager.forceRTL(true);
       } else {
+        I18nManager.allowRTL(false);
         I18nManager.forceRTL(false);
       }
 
@@ -115,10 +121,16 @@ function More() {
         ? `App Language(${currentDisplayLanguage})`
         : 'App Language',
       pressCallback: (_) => {
-        const options = ['English', 'Arabic', 'Japanese', 'Cancel'];
-        const languageCodeList = ['en', 'ar', 'ja-JP'];
+        const options = [
+          'English',
+          'Arabic',
+          'Japanese',
+          'Portuguese (Brazil)',
+          'Cancel',
+        ];
+        const languageCodeList = ['en', 'ar', 'ja', 'pt-BR'];
 
-        const cancelButtonIndex = 3;
+        const cancelButtonIndex = 4;
 
         showActionSheetWithOptions(
           {
