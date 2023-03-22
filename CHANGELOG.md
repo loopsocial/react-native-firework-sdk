@@ -10,6 +10,7 @@
 - Add `getVideoLaunchBehavior` method in `FireworkSDK` class
 - Add the ability to programmatically start or stop the floating player on the Android side
 - Support passing `shareBaseURL` and `videoLaunchBehavior` in `FireworkSDK` class `init` method
+- Support configuring feed title Android font info(only supported on Android)
 
 ### Changed
 
@@ -27,14 +28,19 @@
 - Remove set and get accessors of `adBadgeConfiguration` property in `FireworkSDK` class
 - Remove `appComponentName` property in `FireworkSDK` class
 - Remove `pushNativeContainer` method in `FWNavigator` class
+- Remove `canPopNativeContainer` method in `FWNavigator` class
 - Remove support for `onLiveStreamEvent` callback in `FWNavigator` class on the Android side
 - Remove support for `onLiveStreamChatEvent` callback in `FWNavigator` class on the Android side
+- Remove support for `onVideoFeedLoadFinished` callback in `VideoFeed` component on the Android side
+- Remove `enablePictureInPicture` property in `VideoFeedConfiguration` interface
+- Remove `launchBehavior` property in `VideoPlayerConfiguration` interface
 - Remove `onClickCartIcon` callback in `VideoShopping` class
 - Remove `onWillDisplayProduct` callback in `VideoShopping` class
-- Remove `NewNativeContainerProps` type
+- Remove `FWNativeContainerProps` type
 - Remove `ClickCartIconCallback` type
-- Remvoe `WillDisplayProductCallback` type
+- Remove `WillDisplayProductCallback` type
 - Remove `WillDisplayProductEvent` interface
+- Remove `NewNativeContainerProps` type
 
 ## [1.8.0]
 
@@ -44,8 +50,8 @@
 - Updates Firework Branding on the iOS Side
 - Improves player accessibility on the iOS side
 - Support configuring feed title iOS font name(only supported on iOS)
-- Support configuring CTA button font name(only supported on iOS)
-- Support configuring the "Add to cart" button font name(only supported on iOS)
+- Support configuring CTA button iOS font name(only supported on iOS)
+- Support configuring the "Add to cart" button iOS font name(only supported on iOS)
 - Add set and get accessors of `productInfoViewConfiguration` in `VideoShopping` class(only supported on iOS)
 - Support hiding link next to "Add to Cart" button(only supported on iOS)
 - Support customizing the click event processing logic of the link button next to the "Add to cart" button(only supported on Android)
