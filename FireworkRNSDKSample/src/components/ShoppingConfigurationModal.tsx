@@ -1,81 +1,92 @@
-import CommonStyles from './CommonStyles';
-import Ionicons from 'react-native-vector-icons/Ionicons';
-import Patterns from '../constants/Patterns';
 import React, { useCallback, useEffect } from 'react';
-import { Button, CheckBox, Input } from 'react-native-elements';
+
 import { Controller, useForm } from 'react-hook-form';
 import {
+  KeyboardAvoidingView,
   Modal,
+  Platform,
+  ScrollView,
   StyleSheet,
   Text,
   TouchableOpacity,
-  View,
   TouchableWithoutFeedback,
-  KeyboardAvoidingView,
-  Platform,
-  ScrollView,
+  View,
 } from 'react-native';
+import { Button, CheckBox, Input, ButtonGroup } from 'react-native-elements';
+import type {
+  ShoppingCTAButtonConfiguration,
+  ShoppingCTAButtonText,
+} from 'react-native-firework-sdk';
+import FireworkSDK from 'react-native-firework-sdk';
+import Ionicons from 'react-native-vector-icons/Ionicons';
+
+import { useNavigation } from '@react-navigation/native';
+import type { NativeStackNavigationProp } from '@react-navigation/native-stack';
+
+import Patterns from '../constants/Patterns';
 import { useAppDispatch, useAppSelector } from '../hooks/reduxHooks';
-import type { AddToCartButtonConfiguration } from 'react-native-firework-sdk';
+import type { RootStackParamList } from '../screens/paramList/RootStackParamList';
 import {
   changeCartIconVisibility,
-  setAddToCartButtonStyle,
-  changeLinkButtonVisibility,
   changeCustomClickLinkButtonAbility,
-} from '../slice/cartSlice';
-import FireworkSDK from 'react-native-firework-sdk';
-import type { NativeStackNavigationProp } from '@react-navigation/native-stack';
-import type { RootStackParamList } from '../screens/paramList/RootStackParamList';
-import { useNavigation } from '@react-navigation/native';
+  changeLinkButtonVisibility,
+  setCTAButtonConfiguration,
+} from '../slice/shoppingSlice';
 import HostAppShoppingService from '../utils/HostAppShoppingService';
+import CommonStyles from './CommonStyles';
 
-export interface ICartConfigurationModalProps {
+export interface IShoppingConfigurationModalProps {
   visible: boolean;
   onRequestClose?: () => void;
 }
 
-type CartConfigurationFormData = {
-  addToCartButtonBackgroundColor?: string;
-  addToCartButtonTextColor?: string;
-  addToCartButtonFontSize?: string;
-  addToCartButtonIOSFontName?: string;
+const ctaButtonTextList: ShoppingCTAButtonText[] = ['addToCart', 'shopNow'];
+
+type ShoppingConfigurationFormData = {
+  ctaButtonTextIndex?: number;
+  ctaButtonBackgroundColor?: string;
+  ctaButtonTextColor?: string;
+  ctaButtonFontSize?: string;
+  ctaButtonIOSFontName?: string;
   showCartIcon?: boolean;
   linkButtonHidden?: boolean;
   enableCustomClickLinkButton?: boolean;
 };
 
-type CartConfiguration = {
+type ShoppingConfiguration = {
   cartIconVisible: boolean;
-  addToCartButtonStyle: AddToCartButtonConfiguration;
+  ctaButtonConfiguration: ShoppingCTAButtonConfiguration;
   linkButtonHidden: boolean;
   enableCustomClickLinkButton: boolean;
 };
 
-const CartConfigurationModal = ({
+const ShoppingConfigurationModal = ({
   visible,
   onRequestClose,
-}: ICartConfigurationModalProps) => {
-  const cartIconVisible = useAppSelector((state) => state.cart.cartIconVisible);
+}: IShoppingConfigurationModalProps) => {
+  const cartIconVisible = useAppSelector(
+    (state) => state.shopping.cartIconVisible
+  );
   const defaultCartIconVisible = useAppSelector(
-    (state) => state.cart.defaultCartIconVisible
+    (state) => state.shopping.defaultCartIconVisible
   );
-  const addToCartButtonStyle = useAppSelector(
-    (state) => state.cart.addToCartButtonStyle
+  const ctaButtonConfiguration = useAppSelector(
+    (state) => state.shopping.ctaButtonConfiguration
   );
-  const defaultAddToCartButtonStyle = useAppSelector(
-    (state) => state.cart.defaultAddToCartButtonStyle
+  const defaultCtaButtonConfiguration = useAppSelector(
+    (state) => state.shopping.defaultCtaButtonConfiguration
   );
   const linkButtonHidden = useAppSelector(
-    (state) => state.cart.linkButtonHidden
+    (state) => state.shopping.linkButtonHidden
   );
   const defaultLinkButtonHidden = useAppSelector(
-    (state) => state.cart.defaultLinkButtonHidden
+    (state) => state.shopping.defaultLinkButtonHidden
   );
   const enableCustomClickLinkButton = useAppSelector(
-    (state) => state.cart.enableCustomClickLinkButton
+    (state) => state.shopping.enableCustomClickLinkButton
   );
   const defaultEnableCustomClickLinkButton = useAppSelector(
-    (state) => state.cart.defaultEnableCustomClickLinkButton
+    (state) => state.shopping.defaultEnableCustomClickLinkButton
   );
   const dispatch = useAppDispatch();
 
@@ -84,37 +95,48 @@ const CartConfigurationModal = ({
     handleSubmit,
     setValue,
     formState: { errors },
-  } = useForm<CartConfigurationFormData>();
+  } = useForm<ShoppingConfigurationFormData>();
 
-  let addToCartButtonFontSizeErrorMessage: string | undefined;
-  if (errors.addToCartButtonFontSize) {
+  let ctaButtonFontSizeErrorMessage: string | undefined;
+  if (errors.ctaButtonFontSize) {
     if (
-      errors.addToCartButtonFontSize.type === 'max' ||
-      errors.addToCartButtonFontSize.type === 'min'
+      errors.ctaButtonFontSize.type === 'max' ||
+      errors.ctaButtonFontSize.type === 'min'
     ) {
-      addToCartButtonFontSizeErrorMessage = 'Please enter font size in [8, 30]';
+      ctaButtonFontSizeErrorMessage = 'Please enter font size in [8, 30]';
     } else {
-      addToCartButtonFontSizeErrorMessage = 'Please enter correct font size';
+      ctaButtonFontSizeErrorMessage = 'Please enter correct font size';
     }
   }
 
   const syncFormValuesFromConfiguration = useCallback(
-    (configuration: CartConfiguration) => {
+    (configuration: ShoppingConfiguration) => {
+      if (configuration && configuration.ctaButtonConfiguration.text) {
+        const ctaButtonTextIndex = ctaButtonTextList.indexOf(
+          configuration.ctaButtonConfiguration.text!
+        );
+        setValue(
+          'ctaButtonTextIndex',
+          ctaButtonTextIndex >= 0 ? ctaButtonTextIndex : undefined
+        );
+      } else {
+        setValue('ctaButtonTextIndex', 0);
+      }
       setValue(
-        'addToCartButtonBackgroundColor',
-        configuration.addToCartButtonStyle.backgroundColor
+        'ctaButtonBackgroundColor',
+        configuration.ctaButtonConfiguration.backgroundColor
       );
       setValue(
-        'addToCartButtonTextColor',
-        configuration.addToCartButtonStyle.textColor
+        'ctaButtonTextColor',
+        configuration.ctaButtonConfiguration.textColor
       );
       setValue(
-        'addToCartButtonFontSize',
-        configuration.addToCartButtonStyle.fontSize?.toString()
+        'ctaButtonFontSize',
+        configuration.ctaButtonConfiguration.fontSize?.toString()
       );
       setValue(
-        'addToCartButtonIOSFontName',
-        configuration.addToCartButtonStyle.iOSFontInfo?.fontName
+        'ctaButtonIOSFontName',
+        configuration.ctaButtonConfiguration.iOSFontInfo?.fontName
       );
       setValue('showCartIcon', configuration.cartIconVisible);
       setValue('linkButtonHidden', configuration.linkButtonHidden);
@@ -125,13 +147,13 @@ const CartConfigurationModal = ({
   useEffect(() => {
     syncFormValuesFromConfiguration({
       cartIconVisible,
-      addToCartButtonStyle,
+      ctaButtonConfiguration,
       linkButtonHidden,
       enableCustomClickLinkButton,
     });
   }, [
     cartIconVisible,
-    addToCartButtonStyle,
+    ctaButtonConfiguration,
     linkButtonHidden,
     enableCustomClickLinkButton,
     syncFormValuesFromConfiguration,
@@ -140,29 +162,34 @@ const CartConfigurationModal = ({
   const navigation =
     useNavigation<NativeStackNavigationProp<RootStackParamList>>();
 
-  const onSave = (data: CartConfigurationFormData) => {
+  const onSave = (data: ShoppingConfigurationFormData) => {
     console.log('onSave CartConfigurationFormData', data);
     dispatch(changeCartIconVisibility(data.showCartIcon ?? true));
-    let cartButtonStyle: AddToCartButtonConfiguration = {};
-    if (data.addToCartButtonBackgroundColor) {
-      cartButtonStyle.backgroundColor = data.addToCartButtonBackgroundColor;
+    let resultCTAButtonConfiguration: ShoppingCTAButtonConfiguration = {};
+    resultCTAButtonConfiguration.text =
+      typeof data.ctaButtonTextIndex === 'number'
+        ? ctaButtonTextList[data.ctaButtonTextIndex!]
+        : undefined;
+    if (data.ctaButtonBackgroundColor) {
+      resultCTAButtonConfiguration.backgroundColor =
+        data.ctaButtonBackgroundColor;
     }
 
-    if (data.addToCartButtonTextColor) {
-      cartButtonStyle.textColor = data.addToCartButtonTextColor;
+    if (data.ctaButtonTextColor) {
+      resultCTAButtonConfiguration.textColor = data.ctaButtonTextColor;
     }
 
-    if (data.addToCartButtonFontSize) {
-      cartButtonStyle.fontSize = parseInt(data.addToCartButtonFontSize);
+    if (data.ctaButtonFontSize) {
+      resultCTAButtonConfiguration.fontSize = parseInt(data.ctaButtonFontSize);
     }
 
-    if (data.addToCartButtonIOSFontName) {
-      cartButtonStyle.iOSFontInfo = {
-        fontName: data.addToCartButtonIOSFontName,
+    if (data.ctaButtonIOSFontName) {
+      resultCTAButtonConfiguration.iOSFontInfo = {
+        fontName: data.ctaButtonIOSFontName,
       };
     }
 
-    dispatch(setAddToCartButtonStyle(cartButtonStyle));
+    dispatch(setCTAButtonConfiguration(resultCTAButtonConfiguration));
 
     dispatch(changeLinkButtonVisibility(data.linkButtonHidden ?? false));
     dispatch(
@@ -182,9 +209,21 @@ const CartConfigurationModal = ({
     }
 
     FireworkSDK.getInstance().shopping.productInfoViewConfiguration = {
-      addToCartButton: cartButtonStyle,
+      ctaButton: resultCTAButtonConfiguration,
       linkButton: { isHidden: data.linkButtonHidden ?? false },
     };
+    if (Platform.OS === 'ios') {
+      if (resultCTAButtonConfiguration.text === 'shopNow') {
+        FireworkSDK.getInstance().shopping.onShoppingCTA =
+          HostAppShoppingService.getInstance().onShopNow;
+      } else {
+        FireworkSDK.getInstance().shopping.onShoppingCTA =
+          HostAppShoppingService.getInstance().onAddToCart;
+      }
+    } else {
+      FireworkSDK.getInstance().shopping.onShoppingCTA =
+        HostAppShoppingService.getInstance().onAddToCart;
+    }
 
     setTimeout(() => {
       if (onRequestClose) {
@@ -197,24 +236,44 @@ const CartConfigurationModal = ({
     <>
       <View style={styles.formItemRow}>
         <View style={styles.formItem}>
+          <Text style={styles.formItemLabel}>
+            Shopping CTA button text(iOS)
+          </Text>
+          <Controller
+            control={control}
+            render={({ field: { onChange, value } }) => (
+              <ButtonGroup
+                buttons={ctaButtonTextList}
+                selectedIndex={value}
+                onPress={(newValue) => {
+                  onChange(newValue);
+                }}
+              />
+            )}
+            name="ctaButtonTextIndex"
+          />
+        </View>
+      </View>
+      <View style={styles.formItemRow}>
+        <View style={styles.formItem}>
           <Controller
             control={control}
             render={({ field: { onChange, onBlur, value } }) => (
               <Input
-                label={'Background color of "Add to cart" button'}
+                label={'Background color of shopping CTA button(iOS)'}
                 placeholder="e.g. #c0c0c0"
                 onBlur={onBlur}
                 onChangeText={(newValue) => onChange(newValue)}
                 value={value}
                 errorMessage={
-                  errors.addToCartButtonBackgroundColor
+                  errors.ctaButtonBackgroundColor
                     ? 'Please enter correct color'
                     : undefined
                 }
                 rightIcon={
                   <TouchableOpacity
                     onPress={() => {
-                      setValue('addToCartButtonBackgroundColor', undefined);
+                      setValue('ctaButtonBackgroundColor', undefined);
                     }}
                   >
                     <Ionicons name="close" size={24} />
@@ -223,7 +282,7 @@ const CartConfigurationModal = ({
                 autoCompleteType={undefined}
               />
             )}
-            name="addToCartButtonBackgroundColor"
+            name="ctaButtonBackgroundColor"
             rules={{
               pattern: Patterns.hexColor,
             }}
@@ -236,20 +295,20 @@ const CartConfigurationModal = ({
             control={control}
             render={({ field: { onChange, onBlur, value } }) => (
               <Input
-                label={'Text color of "Add to cart" button'}
+                label={'Text color of shopping CTA button(iOS)'}
                 placeholder="e.g. #ffffff"
                 onBlur={onBlur}
                 onChangeText={(newValue) => onChange(newValue)}
                 value={value}
                 errorMessage={
-                  errors.addToCartButtonTextColor
+                  errors.ctaButtonTextColor
                     ? 'Please enter correct color'
                     : undefined
                 }
                 rightIcon={
                   <TouchableOpacity
                     onPress={() => {
-                      setValue('addToCartButtonTextColor', undefined);
+                      setValue('ctaButtonTextColor', undefined);
                     }}
                   >
                     <Ionicons name="close" size={24} />
@@ -258,7 +317,7 @@ const CartConfigurationModal = ({
                 autoCompleteType={undefined}
               />
             )}
-            name="addToCartButtonTextColor"
+            name="ctaButtonTextColor"
             rules={{
               pattern: Patterns.hexColor,
             }}
@@ -271,16 +330,16 @@ const CartConfigurationModal = ({
             control={control}
             render={({ field: { onChange, onBlur, value } }) => (
               <Input
-                label={'Font size of "Add to cart" button'}
+                label={'Font size of shopping CTA button(iOS)'}
                 placeholder="e.g. 14"
                 onBlur={onBlur}
                 onChangeText={(newValue) => onChange(newValue)}
                 value={value}
-                errorMessage={addToCartButtonFontSizeErrorMessage}
+                errorMessage={ctaButtonFontSizeErrorMessage}
                 rightIcon={
                   <TouchableOpacity
                     onPress={() => {
-                      setValue('addToCartButtonFontSize', undefined);
+                      setValue('ctaButtonFontSize', undefined);
                     }}
                   >
                     <Ionicons name="close" size={24} />
@@ -289,7 +348,7 @@ const CartConfigurationModal = ({
                 autoCompleteType={undefined}
               />
             )}
-            name="addToCartButtonFontSize"
+            name="ctaButtonFontSize"
             rules={{
               pattern: Patterns.number,
               max: 30,
@@ -304,7 +363,7 @@ const CartConfigurationModal = ({
             control={control}
             render={({ field: { onChange, onBlur, value } }) => (
               <Input
-                label={'IOS Font name of "Add to cart" button'}
+                label={'IOS Font name of shopping CTA button(iOS)'}
                 placeholder="e.g. Helvetica-Bold"
                 onBlur={onBlur}
                 onChangeText={(newValue) => onChange(newValue)}
@@ -312,7 +371,7 @@ const CartConfigurationModal = ({
                 rightIcon={
                   <TouchableOpacity
                     onPress={() => {
-                      setValue('addToCartButtonIOSFontName', undefined);
+                      setValue('ctaButtonIOSFontName', undefined);
                     }}
                   >
                     <Ionicons name="close" size={24} />
@@ -321,7 +380,7 @@ const CartConfigurationModal = ({
                 autoCompleteType={undefined}
               />
             )}
-            name="addToCartButtonIOSFontName"
+            name="ctaButtonIOSFontName"
           />
         </View>
       </View>
@@ -369,7 +428,7 @@ const CartConfigurationModal = ({
               return (
                 <CheckBox
                   center
-                  title="Enable Custom Click Link Button(Android)"
+                  title="Enable Custom Click Link Button"
                   checked={value}
                   onPress={() => onChange(!value)}
                 />
@@ -390,7 +449,7 @@ const CartConfigurationModal = ({
       onRequestClose={() => {
         syncFormValuesFromConfiguration({
           cartIconVisible,
-          addToCartButtonStyle,
+          ctaButtonConfiguration,
           linkButtonHidden,
           enableCustomClickLinkButton,
         });
@@ -411,7 +470,7 @@ const CartConfigurationModal = ({
             }}
           >
             <ScrollView>
-              <Text style={styles.sectionTitle}>Cart Configuration</Text>
+              <Text style={styles.sectionTitle}>Shopping Configuration</Text>
               {formContent}
               <View style={{ ...CommonStyles.formItem, ...styles.buttonList }}>
                 <Button
@@ -425,7 +484,7 @@ const CartConfigurationModal = ({
                   onPress={() => {
                     syncFormValuesFromConfiguration({
                       cartIconVisible,
-                      addToCartButtonStyle,
+                      ctaButtonConfiguration,
                       linkButtonHidden,
                       enableCustomClickLinkButton,
                     });
@@ -446,7 +505,7 @@ const CartConfigurationModal = ({
                   onPress={() => {
                     syncFormValuesFromConfiguration({
                       cartIconVisible: defaultCartIconVisible,
-                      addToCartButtonStyle: defaultAddToCartButtonStyle,
+                      ctaButtonConfiguration: defaultCtaButtonConfiguration,
                       linkButtonHidden: defaultLinkButtonHidden,
                       enableCustomClickLinkButton:
                         defaultEnableCustomClickLinkButton,
@@ -514,4 +573,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default CartConfigurationModal;
+export default ShoppingConfigurationModal;

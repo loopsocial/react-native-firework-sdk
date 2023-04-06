@@ -7,7 +7,7 @@ import Ionicons from 'react-native-vector-icons/Ionicons';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import uuid from 'react-native-uuid';
 import { useAppDispatch } from '../hooks/reduxHooks';
-import { removeAllCartItems } from '../slice/cartSlice';
+import { removeAllCartItems } from '../slice/shoppingSlice';
 import FireworkSDK from 'react-native-firework-sdk';
 
 interface CheckoutFormData {

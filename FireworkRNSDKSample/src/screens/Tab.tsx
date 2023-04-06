@@ -14,7 +14,7 @@ import { useAppSelector } from '../hooks/reduxHooks';
 const TabNavigator = createBottomTabNavigator<TabParamsList>();
 
 const Tab = () => {
-  const cartItems = useAppSelector((state) => state.cart.cartItems);
+  const cartItems = useAppSelector((state) => state.shopping.cartItems);
 
   return (
     <TabNavigator.Navigator

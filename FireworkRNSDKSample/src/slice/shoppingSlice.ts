@@ -1,13 +1,13 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
-import type { AddToCartButtonConfiguration } from 'react-native-firework-sdk';
+import type { ShoppingCTAButtonConfiguration } from 'react-native-firework-sdk';
 import type CartItem from '../models/CartItem';
 
 export interface CartState {
   cartItems: CartItem[];
   cartIconVisible: boolean;
   defaultCartIconVisible: boolean;
-  addToCartButtonStyle: AddToCartButtonConfiguration;
-  defaultAddToCartButtonStyle: AddToCartButtonConfiguration;
+  ctaButtonConfiguration: ShoppingCTAButtonConfiguration;
+  defaultCtaButtonConfiguration: ShoppingCTAButtonConfiguration;
   linkButtonHidden: boolean;
   defaultLinkButtonHidden: boolean;
   enableCustomClickLinkButton: boolean;
@@ -18,9 +18,11 @@ const initialState: CartState = {
   cartItems: [],
   cartIconVisible: true,
   defaultCartIconVisible: true,
-  addToCartButtonStyle: {},
-  defaultAddToCartButtonStyle: {
-    fontSize: 14,
+  ctaButtonConfiguration: {
+    text: 'addToCart',
+  },
+  defaultCtaButtonConfiguration: {
+    text: 'addToCart',
   },
   linkButtonHidden: false,
   defaultLinkButtonHidden: false,
@@ -28,8 +30,8 @@ const initialState: CartState = {
   defaultEnableCustomClickLinkButton: false,
 };
 
-export const cartSlice = createSlice({
-  name: 'cart',
+export const shoppingSlice = createSlice({
+  name: 'shopping',
   initialState,
   reducers: {
     addCartItem: (state, action: PayloadAction<CartItem>) => {
@@ -54,11 +56,11 @@ export const cartSlice = createSlice({
     changeCartIconVisibility: (state, action: PayloadAction<boolean>) => {
       state.cartIconVisible = action.payload;
     },
-    setAddToCartButtonStyle: (
+    setCTAButtonConfiguration: (
       state,
-      action: PayloadAction<AddToCartButtonConfiguration>
+      action: PayloadAction<ShoppingCTAButtonConfiguration>
     ) => {
-      state.addToCartButtonStyle = action.payload;
+      state.ctaButtonConfiguration = action.payload;
     },
     changeLinkButtonVisibility: (state, action: PayloadAction<boolean>) => {
       state.linkButtonHidden = action.payload;
@@ -76,9 +78,9 @@ export const {
   addCartItem,
   removeAllCartItems,
   changeCartIconVisibility,
-  setAddToCartButtonStyle,
+  setCTAButtonConfiguration,
   changeLinkButtonVisibility,
   changeCustomClickLinkButtonAbility,
-} = cartSlice.actions;
+} = shoppingSlice.actions;
 
-export default cartSlice.reducer;
+export default shoppingSlice.reducer;

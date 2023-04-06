@@ -10,7 +10,7 @@ export interface ICartPageProps {
 }
 
 const CartPage = ({ onCheckout }: ICartPageProps) => {
-  const cartItems = useAppSelector((state) => state.cart.cartItems);
+  const cartItems = useAppSelector((state) => state.shopping.cartItems);
 
   return (
     <View style={styles.container}>

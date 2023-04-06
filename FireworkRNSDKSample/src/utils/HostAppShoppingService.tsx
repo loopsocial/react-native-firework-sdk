@@ -6,20 +6,24 @@ import type {
   UpdateProductDetailsEvent,
   CustomClickCartIconCallback,
   CustomCTAClickCallback,
+  ShoppingCTACallback,
+  ShoppingCTAEvent,
 } from 'react-native-firework-sdk';
 import FireworkSDK from 'react-native-firework-sdk';
 import * as RootNavigation from '../RootNavigation';
 import type CartItem from '../models/CartItem';
-import { addCartItem } from '../slice/cartSlice';
+import { addCartItem } from '../slice/shoppingSlice';
 import { store } from '../store';
 import ShopifyClient from './ShopifyClient';
+import { Platform } from 'react-native';
 
 export default class HostAppShoppingService {
   private static _instance?: HostAppShoppingService;
 
-  public onAddToCart?: AddToCartCallback = async (event: AddToCartEvent) => {
-    console.log('[example] onAddToCart', event);
-
+  public onLegacyAddToCart?: AddToCartCallback = async (
+    event: AddToCartEvent
+  ) => {
+    console.log('onLegacyAddToCart event', event);
     try {
       const shopifyProduct = await ShopifyClient.getInstance().fetchProduct(
         event.productId
@@ -30,7 +34,7 @@ export default class HostAppShoppingService {
       if (!variant) {
         return {
           res: 'fail',
-          tips: 'Unable to locate the selected variant',
+          tips: 'Failed to add item to cart',
         };
       }
 
@@ -49,11 +53,70 @@ export default class HostAppShoppingService {
         imageURL: variant.image.src,
       };
       store.dispatch(addCartItem(cartItem));
-      const cartItemCount = store.getState().cart.cartItems.length;
+      const cartItemCount = store.getState().shopping.cartItems.length;
       console.log('cartItemCount', cartItemCount, 'type', typeof cartItemCount);
+      await this.closePlayerOrStartFloatingPlayer();
+      RootNavigation.navigate('Cart');
+      return null;
+    } catch (e) {
+      return {
+        res: 'fail',
+        tips: 'Failed to load product information',
+      };
+    }
+  };
+
+  public onShopNow?: ShoppingCTACallback = async (event: ShoppingCTAEvent) => {
+    console.log('onShopNow event', event);
+
+    await this.closePlayerOrStartFloatingPlayer();
+    RootNavigation.navigate('LinkContent', { url: event.url });
+
+    return {
+      res: 'success',
+    };
+  };
+
+  public onAddToCart?: ShoppingCTACallback = async (
+    event: ShoppingCTAEvent
+  ) => {
+    console.log('onAddToCart event', event);
+
+    try {
+      const shopifyProduct = await ShopifyClient.getInstance().fetchProduct(
+        event.productId
+      );
+      const variant = shopifyProduct.variants.find(
+        (v) => ShopifyClient.getInstance().parseId(`${v.id}`) === event.unitId
+      );
+      if (!variant) {
+        return {
+          res: 'fail',
+          tips: 'Failed to add item to cart',
+        };
+      }
+
+      const { amount, currencyCode }: { amount: string; currencyCode: string } =
+        (variant as any).priceV2;
+
+      let cartItem: CartItem = {
+        productId: event.productId,
+        unitId: event.unitId,
+        name: shopifyProduct.title,
+        price: {
+          amount: parseFloat(amount),
+          currencyCode,
+        },
+        description: variant.title,
+        imageURL: variant.image.src,
+      };
+      store.dispatch(addCartItem(cartItem));
+      const cartItemCount = store.getState().shopping.cartItems.length;
+      console.log('cartItemCount', cartItemCount, 'type', typeof cartItemCount);
+      await this.closePlayerOrStartFloatingPlayer();
+      RootNavigation.navigate('Cart');
       return {
         res: 'success',
-        tips: 'Add to cart successfully',
       };
     } catch (e) {
       return {
@@ -65,14 +128,15 @@ export default class HostAppShoppingService {
 
   public onCustomClickCartIcon?: CustomClickCartIconCallback = async () => {
     console.log('[example] onCustomClickCartIcon');
-    this.closePlayerOrStartFloatingPlayer();
+    await this.closePlayerOrStartFloatingPlayer();
     RootNavigation.navigate('Cart');
   };
 
   public onCustomCTAClick?: CustomCTAClickCallback = (event) => {
     if (event.url) {
-      this.closePlayerOrStartFloatingPlayer();
-      RootNavigation.navigate('LinkContent', { url: event.url });
+      this.closePlayerOrStartFloatingPlayer().then(() => {
+        RootNavigation.navigate('LinkContent', { url: event.url });
+      });
     }
   };
 
@@ -122,10 +186,15 @@ export default class HostAppShoppingService {
   }
 
   public async closePlayerOrStartFloatingPlayer() {
-    const result =
-      await FireworkSDK.getInstance().navigator.startFloatingPlayer();
-    if (!result) {
-      await FireworkSDK.getInstance().navigator.popNativeContainer();
+    if (Platform.OS === 'android') {
+      FireworkSDK.getInstance().navigator.popNativeContainer();
+    } else {
+      const result =
+        await FireworkSDK.getInstance().navigator.startFloatingPlayer();
+
+      if (!result) {
+        FireworkSDK.getInstance().navigator.popNativeContainer();
+      }
     }
   }
 

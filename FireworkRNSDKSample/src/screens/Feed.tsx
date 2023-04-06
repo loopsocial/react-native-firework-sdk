@@ -17,6 +17,7 @@ import {
   VideoFeedConfiguration,
   VideoFeedMode,
   VideoPlayerConfiguration,
+  IStoryBlockMethods,
 } from 'react-native-firework-sdk';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 
@@ -54,6 +55,7 @@ const Feed = () => {
 
   const feedRef = useRef<VideoFeed>(null);
   const [feedError, setFeedError] = useState<FWError | undefined>(undefined);
+  const storyBlockRef = useRef<IStoryBlockMethods>(null);
 
   const defaultFeedConfiguration: VideoFeedConfiguration = {
     title: { hidden: false, fontSize: 14 },
@@ -175,33 +177,60 @@ const Feed = () => {
 
   const renderStoryBlock = () => {
     return (
-      <SafeAreaView style={{ flex: 1, alignItems: 'center', marginBottom: 20 }}>
-        <StoryBlock
-          style={{ flex: 1, width: '80%', borderRadius: 30 }}
-          source={source as StoryBlockSource}
-          channel={channel}
-          playlist={playlist}
-          dynamicContentParameters={dynamicContentParameters}
-          enablePictureInPicture
-          onStoryBlockLoadFinished={(error?: FWError) => {
-            console.log('[example] onStoryBlockLoadFinished error', error);
-            setFeedError(error);
-          }}
-        />
-        {feedError && (
-          <View style={styles.errorView}>
+      <SafeAreaView
+        style={{
+          flex: 1,
+          alignItems: 'center',
+          marginBottom: 20,
+        }}
+        edges={['bottom']}
+      >
+        <View style={styles.storyBlockWrapper}>
+          <View style={styles.storyBlockActionButtonList}>
             <Button
-              title="Refresh"
+              style={styles.storyBlockActionButton}
+              title="Play"
               onPress={() => {
-                setFeedError(undefined);
-                feedRef.current?.refresh();
+                storyBlockRef.current?.play();
               }}
             />
-            <Text style={styles.errorText}>
-              {feedError.reason ?? 'Fail to load story block'}
-            </Text>
+            <Button
+              style={{ ...styles.storyBlockActionButton, marginLeft: 20 }}
+              title="Pause"
+              onPress={() => {
+                storyBlockRef.current?.pause();
+              }}
+            />
           </View>
-        )}
+          <StoryBlock
+            ref={storyBlockRef}
+            style={styles.storyBlock}
+            source={source as StoryBlockSource}
+            channel={channel}
+            playlist={playlist}
+            dynamicContentParameters={dynamicContentParameters}
+            enablePictureInPicture
+            adConfiguration={{ requiresAds: false, adsFetchTimeout: 10 }}
+            onStoryBlockLoadFinished={(error?: FWError) => {
+              console.log('[example] onStoryBlockLoadFinished error', error);
+              setFeedError(error);
+            }}
+          />
+          {feedError && (
+            <View style={styles.errorView}>
+              <Button
+                title="Refresh"
+                onPress={() => {
+                  setFeedError(undefined);
+                  feedRef.current?.refresh();
+                }}
+              />
+              <Text style={styles.errorText}>
+                {feedError.reason ?? 'Fail to load story block'}
+              </Text>
+            </View>
+          )}
+        </View>
       </SafeAreaView>
     );
   };
@@ -312,6 +341,23 @@ const styles = StyleSheet.create({
     fontSize: 14,
     color: 'red',
   },
+  storyBlockWrapper: {
+    width: '100%',
+    alignItems: 'center',
+    flex: 1,
+  },
+  storyBlockActionButtonList: {
+    flexDirection: 'row',
+    height: 50,
+    width: '80%',
+    alignItems: 'center',
+    justifyContent: 'center',
+    marginBottom: 20,
+  },
+  storyBlockActionButton: {
+    width: 100,
+  },
+  storyBlock: { flex: 1, width: '80%', borderRadius: 30 },
 });
 
 export default Feed;

@@ -21,7 +21,7 @@ import { defaultShoppingPlaylist } from '../config/Feed.json';
 import { shopifyDomain } from '../config/Shopify.json';
 import type { RootStackParamList } from './paramList/RootStackParamList';
 import type { TabParamsList } from './paramList/TabParamsList';
-import CartConfigurationModal from '../components/CartConfigurationModal';
+import ShoppingConfigurationModal from '../components/ShoppingConfigurationModal';
 import { useAppSelector } from '../hooks/reduxHooks';
 
 type ShoppingScreenNavigationProp = CompositeNavigationProp<
@@ -33,8 +33,10 @@ function Shopping() {
   const navigation = useNavigation<ShoppingScreenNavigationProp>();
   const [playlistInputModalVisible, setPlaylistInputModalVisible] =
     useState<boolean>(false);
-  const [cartModalVisible, setCartModalVisibleModalVisible] =
-    useState<boolean>(false);
+  const [
+    shoppingConfigurationModalVisible,
+    setShoppingConfigurationModalVisible,
+  ] = useState<boolean>(false);
   const [channelId, setChannelId] = useState<string>(
     defaultShoppingPlaylist.channelId
   );
@@ -92,8 +94,6 @@ function Shopping() {
               playerStyle: 'full',
               videoCompleteAction: 'advanceToNext',
               showShareButton: true,
-              showMuteButton: true,
-              showPlaybackButton: true,
             }}
             onVideoFeedLoadFinished={(error?: FWError) => {
               console.log('onVideoFeedLoadFinished error', error);
@@ -174,9 +174,9 @@ function Shopping() {
         >
           <View style={styles.cartConfigButtonWrapper}>
             <Button
-              title="Cart Configuration"
+              title="Shopping Configuration"
               onPress={() => {
-                setCartModalVisibleModalVisible(true);
+                setShoppingConfigurationModalVisible(true);
               }}
             />
           </View>
@@ -193,10 +193,10 @@ function Shopping() {
           setPlaylistId(newPlaylistId);
         }}
       />
-      <CartConfigurationModal
-        visible={cartModalVisible}
+      <ShoppingConfigurationModal
+        visible={shoppingConfigurationModalVisible}
         onRequestClose={() => {
-          setCartModalVisibleModalVisible(false);
+          setShoppingConfigurationModalVisible(false);
         }}
       />
     </View>

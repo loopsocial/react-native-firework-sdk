@@ -1,4 +1,29 @@
 PODS:
+  - AgoraRtcEngine_iOS (4.1.1):
+    - AgoraRtcEngine_iOS/AIAEC (= 4.1.1)
+    - AgoraRtcEngine_iOS/AINS (= 4.1.1)
+    - AgoraRtcEngine_iOS/AudioBeauty (= 4.1.1)
+    - AgoraRtcEngine_iOS/ClearVision (= 4.1.1)
+    - AgoraRtcEngine_iOS/ContentInspect (= 4.1.1)
+    - AgoraRtcEngine_iOS/DRM (= 4.1.1)
+    - AgoraRtcEngine_iOS/FaceDetection (= 4.1.1)
+    - AgoraRtcEngine_iOS/ReplayKit (= 4.1.1)
+    - AgoraRtcEngine_iOS/RtcBasic (= 4.1.1)
+    - AgoraRtcEngine_iOS/SpatialAudio (= 4.1.1)
+    - AgoraRtcEngine_iOS/VirtualBackground (= 4.1.1)
+    - AgoraRtcEngine_iOS/VQA (= 4.1.1)
+  - AgoraRtcEngine_iOS/AIAEC (4.1.1)
+  - AgoraRtcEngine_iOS/AINS (4.1.1)
+  - AgoraRtcEngine_iOS/AudioBeauty (4.1.1)
+  - AgoraRtcEngine_iOS/ClearVision (4.1.1)
+  - AgoraRtcEngine_iOS/ContentInspect (4.1.1)
+  - AgoraRtcEngine_iOS/DRM (4.1.1)
+  - AgoraRtcEngine_iOS/FaceDetection (4.1.1)
+  - AgoraRtcEngine_iOS/ReplayKit (4.1.1)
+  - AgoraRtcEngine_iOS/RtcBasic (4.1.1)
+  - AgoraRtcEngine_iOS/SpatialAudio (4.1.1)
+  - AgoraRtcEngine_iOS/VirtualBackground (4.1.1)
+  - AgoraRtcEngine_iOS/VQA (4.1.1)
   - boost (1.76.0)
   - DoubleConversion (1.1.6)
   - FBLazyVector (0.66.4)
@@ -9,8 +34,14 @@ PODS:
     - React-Core (= 0.66.4)
     - React-jsi (= 0.66.4)
     - ReactCommon/turbomodule/core (= 0.66.4)
-  - FireworkVideo (1.7.0)
+  - FireworkVideo (1.8.0)
+  - FireworkVideoAgoraSupport (0.2.0)
   - fmt (6.2.1)
+  - FWMultiHostStreaming (1.9.0):
+    - AgoraRtcEngine_iOS (~> 4.1.1)
+    - FireworkVideo
+    - FireworkVideoAgoraSupport (~> 0.2.0)
+    - SwiftProtobuf (~> 1.21.0)
   - glog (0.3.5)
   - RCT-Folly (2021.06.28.00-v2):
     - boost
@@ -210,8 +241,8 @@ PODS:
   - React-jsinspector (0.66.4)
   - React-logger (0.66.4):
     - glog
-  - react-native-firework-sdk (2.0.0):
-    - FireworkVideo (= 1.7.0)
+  - react-native-firework-sdk (1.9.0):
+    - FireworkVideo (= 1.8.0)
     - React-Core
   - react-native-restart (0.0.24):
     - React-Core
@@ -291,6 +322,7 @@ PODS:
     - React-RCTImage
   - RNVectorIcons (9.0.0):
     - React-Core
+  - SwiftProtobuf (1.21.0)
   - Yoga (1.14.0)
 
 DEPENDENCIES:
@@ -298,6 +330,7 @@ DEPENDENCIES:
   - DoubleConversion (from `../node_modules/react-native/third-party-podspecs/DoubleConversion.podspec`)
   - FBLazyVector (from `../node_modules/react-native/Libraries/FBLazyVector`)
   - FBReactNativeSpec (from `../node_modules/react-native/React/FBReactNativeSpec`)
+  - FWMultiHostStreaming (from `/Users/linjiejiang/Documents/firework/bogano/ios/Support/MultiHostStreaming`)
   - glog (from `../node_modules/react-native/third-party-podspecs/glog.podspec`)
   - RCT-Folly (from `../node_modules/react-native/third-party-podspecs/RCT-Folly.podspec`)
   - RCTRequired (from `../node_modules/react-native/Libraries/RCTRequired`)
@@ -336,8 +369,11 @@ DEPENDENCIES:
 
 SPEC REPOS:
   trunk:
+    - AgoraRtcEngine_iOS
     - FireworkVideo
+    - FireworkVideoAgoraSupport
     - fmt
+    - SwiftProtobuf
 
 EXTERNAL SOURCES:
   boost:
@@ -348,6 +384,8 @@ EXTERNAL SOURCES:
     :path: "../node_modules/react-native/Libraries/FBLazyVector"
   FBReactNativeSpec:
     :path: "../node_modules/react-native/React/FBReactNativeSpec"
+  FWMultiHostStreaming:
+    :path: "/Users/linjiejiang/Documents/firework/bogano/ios/Support/MultiHostStreaming"
   glog:
     :podspec: "../node_modules/react-native/third-party-podspecs/glog.podspec"
   RCT-Folly:
@@ -416,12 +454,15 @@ EXTERNAL SOURCES:
     :path: "../node_modules/react-native/ReactCommon/yoga"
 
 SPEC CHECKSUMS:
+  AgoraRtcEngine_iOS: df216a18a01c30fba926565d889c9542319252ac
   boost: a7c83b31436843459a1961bfd74b96033dc77234
   DoubleConversion: 831926d9b8bf8166fd87886c4abab286c2422662
   FBLazyVector: e5569e42a1c79ca00521846c223173a57aca1fe1
   FBReactNativeSpec: fe08c1cd7e2e205718d77ad14b34957cce949b58
-  FireworkVideo: 384c6b6b0883e3a418a6197ee2cd756a5730f65b
+  FireworkVideo: d68f844ef18cfbad781e8ac6b396763b81d07ab3
+  FireworkVideoAgoraSupport: e95988be37bcc8efd0be97c1cb2de4905961c740
   fmt: ff9d55029c625d3757ed641535fd4a75fedc7ce9
+  FWMultiHostStreaming: c7f7ac9ed3c4347884c02f13f597c254aa08c2f4
   glog: 5337263514dd6f09803962437687240c5dc39aa4
   RCT-Folly: a21c126816d8025b547704b777a2ba552f3d9fa9
   RCTRequired: 4bf86c70714490bca4bf2696148638284622644b
@@ -435,7 +476,7 @@ SPEC CHECKSUMS:
   React-jsiexecutor: 94ce921e1d8ce7023366873ec371f3441383b396
   React-jsinspector: d0374f7509d407d2264168b6d0fad0b54e300b85
   React-logger: 933f80c97c633ee8965d609876848148e3fef438
-  react-native-firework-sdk: 9dc7f1e937de51a405ce5239f6c9f4716d451e70
+  react-native-firework-sdk: 201d4ff2c31d4a913423b4bb48cd508bfceb30db
   react-native-restart: 8af4579c94638f38bd9074ec477ebf087de87dc5
   react-native-safe-area-context: 5cf05f49df9d17261e40e518481f2e334c6cd4b5
   react-native-webview: ba5a82f852bdd2564241a921c31dffdd696f88be
@@ -454,8 +495,9 @@ SPEC CHECKSUMS:
   RNCAsyncStorage: 889cea2408e52fe71da475306dcef43951577da0
   RNScreens: 34cc502acf1b916c582c60003dc3089fa01dc66d
   RNVectorIcons: 4143ba35feebab8fdbe6bc43d1e776b393d47ac8
+  SwiftProtobuf: afced68785854575756db965e9da52bbf3dc45e7
   Yoga: e7dc4e71caba6472ff48ad7d234389b91dadc280
 
-PODFILE CHECKSUM: 42d345fbea84dda72e82724fa23abd8e0074811c
+PODFILE CHECKSUM: 9016e4095ad58dacf43d25f61ab8a8f7ee84ea36
 
 COCOAPODS: 1.12.0

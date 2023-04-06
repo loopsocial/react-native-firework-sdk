@@ -21,10 +21,12 @@ import CircleThumbnails from './screens/CircleThumbnails';
 import LinkContent from './screens/LinkContent';
 import EnableCustomClickCartIconCallback from './screens/EnableCustomClickCartIconCallback';
 import EnableCustomCTAClickCallback from './screens/EnableCustomCTAClickCallback';
+import EnableCustomCTALinkContentPageRouteName from './screens/EnableCustomCTALinkContentPageRouteName';
 import Feed from './screens/Feed';
 import OpenVideo from './screens/OpenVideo';
 import type { RootStackParamList } from './screens/paramList/RootStackParamList';
 import SetAdBadgeConfiguration from './screens/SetAdBadgeConfiguration';
+import SetShareBaseURL from './screens/SetShareBaseURL';
 import Tab from './screens/Tab';
 import { store } from './store';
 import AsyncStorage from '@react-native-async-storage/async-storage';
@@ -53,7 +55,7 @@ const FWNavigationContainer = ({
     const sycnCurrentLanguageFromStorage = async () => {
       try {
         const language = await AsyncStorage.getItem(StorageKey.appLanguage);
-        FireworkSDK.getInstance().changeAppLanguage(language ?? '');
+        FireworkSDK.getInstance().changeAppLanguage(language);
       } catch (_) {}
     };
     if (!initialRouteName) {
@@ -123,6 +125,11 @@ const FWNavigationContainer = ({
           options: { title: 'Open Video URL' },
         })}
         {renderScreen({
+          name: 'SetShareBaseURL',
+          component: SetShareBaseURL,
+          options: { title: 'Set Share Base URL' },
+        })}
+        {renderScreen({
           name: 'SetAdBadgeConfiguration',
           component: SetAdBadgeConfiguration,
           options: { title: 'Set Ad Badge Configuration' },
@@ -131,6 +138,11 @@ const FWNavigationContainer = ({
           name: 'EnableCustomCTAClickCallback',
           component: EnableCustomCTAClickCallback,
           options: { title: 'Enable Custom CTA Click Callback' },
+        })}
+        {renderScreen({
+          name: 'EnableCustomCTALinkContentPageRouteName',
+          component: EnableCustomCTALinkContentPageRouteName,
+          options: { title: 'Enable CTA Link Content Page Route Name' },
         })}
         {renderScreen({
           name: 'Feed',

@@ -22,7 +22,9 @@ AppRegistry.registerComponent(appName, () => App);
 
 FireworkSDK.getInstance().debugLogsEnabled = false;
 
-FireworkSDK.getInstance().setAdBadgeConfiguration({ badgeTextType: 'ad' });
+FireworkSDK.getInstance().appComponentName = appName;
+
+FireworkSDK.getInstance().adBadgeConfiguration = { badgeTextType: 'ad' };
 
 FireworkSDK.getInstance().onSDKInit = (event) => {
   console.log('[example] onSDKInit', event);
@@ -36,8 +38,19 @@ FireworkSDK.getInstance().onVideoFeedClick = (event) => {
   console.log('[example] onVideoFeedClick', event);
 };
 
+// deprecated
 FireworkSDK.getInstance().shopping.onAddToCart =
-  HostAppShoppingService.getInstance().onAddToCart;
+  HostAppShoppingService.getInstance().onLegacyAddToCart;
+
+// FireworkSDK.getInstance().shopping.onShoppingCTA =
+//   HostAppShoppingService.getInstance().onAddToCart;
+// deprecated
+// FireworkSDK.getInstance().shopping.productInfoViewConfiguration = {
+//   addToCartButton: { backgroundColor: '#c0c0c0' },
+// };
+
+// FireworkSDK.getInstance().shopping.onClickCartIcon =
+//   HostAppShoppingService.getInstance().onClickCartIcon;
 
 FireworkSDK.getInstance().shopping.onCustomClickCartIcon =
   HostAppShoppingService.getInstance().onCustomClickCartIcon;
@@ -56,8 +69,7 @@ FireworkSDK.getInstance().liveStream.onLiveStreamChatEvent = (event) => {
   console.log('[example] onLiveStreamChatEvent', event);
 };
 
+FireworkSDK.getInstance().shareBaseURL = 'https://fw.tv';
+
 // init FireworkSDK
-FireworkSDK.getInstance().init({
-  shareBaseURL: 'https://fw.tv',
-  videoLaunchBehavior: 'muteOnFirstLaunch',
-});
+FireworkSDK.getInstance().init();

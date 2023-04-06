@@ -48,20 +48,35 @@ function More() {
       return 'Japanese';
     }
 
-    return null;
+    if (language === 'pt-BR') {
+      return 'Portuguese (Brazil)';
+    }
+
+    return 'System';
   };
   const handleChangeAppLanguage = async (language: string) => {
     try {
-      await AsyncStorage.setItem(StorageKey.appLanguage, language);
+      if (language === 'system') {
+        await AsyncStorage.removeItem(StorageKey.appLanguage);
+      } else {
+        await AsyncStorage.setItem(StorageKey.appLanguage, language);
+      }
 
       setCurrentDisplayLanguage(getDisplayLanguage(language));
-      if (language.startsWith('ar')) {
+      if (language === 'system') {
+        I18nManager.allowRTL(true);
+        I18nManager.forceRTL(false);
+      } else if (language.startsWith('ar')) {
+        I18nManager.allowRTL(true);
         I18nManager.forceRTL(true);
       } else {
+        I18nManager.allowRTL(false);
         I18nManager.forceRTL(false);
       }
 
-      await FireworkSDK.getInstance().changeAppLanguage(language);
+      await FireworkSDK.getInstance().changeAppLanguage(
+        language === 'system' ? null : language
+      );
       RNRestart.Restart();
     } catch (e) {
       console.log('handleChangeAppLanguage e', e);
@@ -75,6 +90,12 @@ function More() {
       },
     },
     {
+      title: 'Set Share Base URL',
+      pressCallback: (_) => {
+        navigation.push('SetShareBaseURL');
+      },
+    },
+    {
       title: 'Set Ad Badge Configuration',
       pressCallback: (_) => {
         navigation.push('SetAdBadgeConfiguration');
@@ -84,6 +105,12 @@ function More() {
       title: 'Enable Custom CTA Click Callback',
       pressCallback: (_) => {
         navigation.push('EnableCustomCTAClickCallback');
+      },
+    },
+    {
+      title: 'Enable Custom CTA Link Content Page Route Name',
+      pressCallback: (_) => {
+        navigation.push('EnableCustomCTALinkContentPageRouteName');
       },
     },
     {
@@ -103,10 +130,17 @@ function More() {
         ? `App Language(${currentDisplayLanguage})`
         : 'App Language',
       pressCallback: (_) => {
-        const options = ['English', 'Arabic', 'Japanese', 'Cancel'];
-        const languageCodeList = ['en', 'ar', 'ja-JP'];
+        const options = [
+          'English',
+          'Arabic',
+          'Japanese',
+          'Portuguese (Brazil)',
+          'System',
+          'Cancel',
+        ];
+        const languageCodeList = ['en', 'ar', 'ja', 'pt-BR', 'system'];
 
-        const cancelButtonIndex = 3;
+        const cancelButtonIndex = options.length - 1;
 
         showActionSheetWithOptions(
           {

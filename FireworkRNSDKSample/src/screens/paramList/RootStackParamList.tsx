@@ -13,10 +13,12 @@ export type RootStackParamList = {
     playlistGroup?: string;
     dynamicContentParameters?: { [key: string]: string[] };
   };
+  SetShareBaseURL: undefined;
   Cart: undefined;
   Checkout: undefined;
   SetAdBadgeConfiguration: undefined;
   EnableCustomCTAClickCallback: undefined;
+  EnableCustomCTALinkContentPageRouteName: undefined;
   LinkContent: {
     url: string;
   };
