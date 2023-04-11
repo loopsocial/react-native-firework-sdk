@@ -90,12 +90,6 @@ function More() {
       },
     },
     {
-      title: 'Set Share Base URL',
-      pressCallback: (_) => {
-        navigation.push('SetShareBaseURL');
-      },
-    },
-    {
       title: 'Set Ad Badge Configuration',
       pressCallback: (_) => {
         navigation.push('SetAdBadgeConfiguration');
@@ -105,12 +99,6 @@ function More() {
       title: 'Enable Custom CTA Click Callback',
       pressCallback: (_) => {
         navigation.push('EnableCustomCTAClickCallback');
-      },
-    },
-    {
-      title: 'Enable Custom CTA Link Content Page Route Name',
-      pressCallback: (_) => {
-        navigation.push('EnableCustomCTALinkContentPageRouteName');
       },
     },
     {

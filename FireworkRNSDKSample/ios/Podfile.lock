@@ -37,7 +37,7 @@ PODS:
   - FireworkVideo (1.8.0)
   - FireworkVideoAgoraSupport (0.2.0)
   - fmt (6.2.1)
-  - FWMultiHostStreaming (1.9.0):
+  - FWMultiHostStreaming (2.1.0):
     - AgoraRtcEngine_iOS (~> 4.1.1)
     - FireworkVideo
     - FireworkVideoAgoraSupport (~> 0.2.0)
@@ -241,7 +241,7 @@ PODS:
   - React-jsinspector (0.66.4)
   - React-logger (0.66.4):
     - glog
-  - react-native-firework-sdk (1.9.0):
+  - react-native-firework-sdk (2.1.0):
     - FireworkVideo (= 1.8.0)
     - React-Core
   - react-native-restart (0.0.24):
@@ -462,7 +462,7 @@ SPEC CHECKSUMS:
   FireworkVideo: d68f844ef18cfbad781e8ac6b396763b81d07ab3
   FireworkVideoAgoraSupport: e95988be37bcc8efd0be97c1cb2de4905961c740
   fmt: ff9d55029c625d3757ed641535fd4a75fedc7ce9
-  FWMultiHostStreaming: c7f7ac9ed3c4347884c02f13f597c254aa08c2f4
+  FWMultiHostStreaming: ddefe0cc554caa9e74f6632af1dea506711fcb0a
   glog: 5337263514dd6f09803962437687240c5dc39aa4
   RCT-Folly: a21c126816d8025b547704b777a2ba552f3d9fa9
   RCTRequired: 4bf86c70714490bca4bf2696148638284622644b
@@ -476,7 +476,7 @@ SPEC CHECKSUMS:
   React-jsiexecutor: 94ce921e1d8ce7023366873ec371f3441383b396
   React-jsinspector: d0374f7509d407d2264168b6d0fad0b54e300b85
   React-logger: 933f80c97c633ee8965d609876848148e3fef438
-  react-native-firework-sdk: 201d4ff2c31d4a913423b4bb48cd508bfceb30db
+  react-native-firework-sdk: 9234d48c140faa71955c23e8283fee3910d98e73
   react-native-restart: 8af4579c94638f38bd9074ec477ebf087de87dc5
   react-native-safe-area-context: 5cf05f49df9d17261e40e518481f2e334c6cd4b5
   react-native-webview: ba5a82f852bdd2564241a921c31dffdd696f88be
