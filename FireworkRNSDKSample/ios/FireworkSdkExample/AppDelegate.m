@@ -10,8 +10,7 @@
 #import <React/RCTBridge.h>
 #import <React/RCTBundleURLProvider.h>
 #import <React/RCTRootView.h>
-//#import "FireworkSdkExample-Swift.h"
-@import FWMultiHostStreaming;
+#import "FireworkSdkExample-Swift.h"
 
 #ifdef FB_SONARKIT_ENABLED
 #import <FlipperKit/FlipperClient.h>
@@ -35,8 +34,7 @@ static void InitializeFlipper(UIApplication *application) {
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
-//  [FireworkSupportLibraryBridge enableMultiHostStreaming];
-  [MultiHostStreamingSDK enableMultiHostStreaming];
+//  [FireworkSupportLibraryBridge enableMultiHostPlayback];
   #ifdef FB_SONARKIT_ENABLED
     InitializeFlipper(application);
   #endif

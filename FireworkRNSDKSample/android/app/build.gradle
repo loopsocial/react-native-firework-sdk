@@ -150,7 +150,7 @@ android {
     minSdkVersion rootProject.ext.minSdkVersion
     targetSdkVersion rootProject.ext.targetSdkVersion
     versionCode 1
-    versionName "2.1.0"
+    versionName "1.7.0"
 
     manifestPlaceholders["fw_appid"] = env=="Staging" ? fw_appid_staging : fw_appid_production
     manifestPlaceholders["fw_base_url"] = env=="Staging" ? fw_base_url_staging : fw_base_url_production
@@ -258,9 +258,3 @@ apply from: 'google.gradle'
 apply from: 'firework.gradle'
 
 apply from: rootProject.file('lint.gradle')
-
-configurations.all {
-  resolutionStrategy {
-    force 'androidx.appcompat:appcompat:1.1.0'
-  }
-}

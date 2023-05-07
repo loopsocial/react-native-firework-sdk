@@ -94,8 +94,8 @@ function Shopping() {
               playerStyle: 'full',
               videoCompleteAction: 'advanceToNext',
               showShareButton: true,
-              showMuteButton: true,
               showPlaybackButton: true,
+              showMuteButton: true,
             }}
             onVideoFeedLoadFinished={(error?: FWError) => {
               console.log('onVideoFeedLoadFinished error', error);

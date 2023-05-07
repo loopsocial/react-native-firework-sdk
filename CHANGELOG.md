@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## [2.1.0]
+## [1.9.0]
 
 ### Added
 
@@ -8,56 +8,7 @@
 - Add `onShoppingCTA` callback in `VideoShopping` class
 - Support customizing shopping CTA button text to "Add to cart" or "Shop now"
 - Add `onCustomClickLinkButton` callback in `VideoShopping` class
-- Add `StoryBlock` component on the Android side
-- Support play and pause function on the `StoryBlock` component
-
-### Breaking Changes
-
-- Remove `AddToCartCallback` type
-- Remove `AddToCartResult` interface
-- Remove `AddToCartEvent` interface
-
-## [2.0.0]
-
-### Added
-
-- Add `getShareBaseURL` method in `FireworkSDK` class
-- Add `getAdBadgeConfiguration` method in `FireworkSDK` class(Only supported on iOS)
-- Add `setAdBadgeConfiguration` method in `FireworkSDK` class(Only supported on iOS)
-- Add `getVideoLaunchBehavior` method in `FireworkSDK` class
-- Add the ability to programmatically start or stop the floating player on the Android side
-- Support passing `shareBaseURL` and `videoLaunchBehavior` in `FireworkSDK` class `init` method
-- Support configuring feed title Android font info(only supported on Android)
-
-### Changed
-
-- Upgrade Firework Android SDK from V5 to V6
-
-### Breaking Changes
-
-- Remove support for story block on the Android side
-- Remove support for playlist group video feed source on the Android side
-- Remove support for app-level language setting
-- Change the parameter and return value in `FireworkSDK` class `init` method
-- Remove support for custom layout name on the Android side
-- Remove `customCTALinkContentPageRouteName` property in `FireworkSDK` class
-- Remove set and get accessors of `shareBaseURL` property in `FireworkSDK` class
-- Remove set and get accessors of `adBadgeConfiguration` property in `FireworkSDK` class
-- Remove `appComponentName` property in `FireworkSDK` class
-- Remove `pushNativeContainer` method in `FWNavigator` class
-- Remove `canPopNativeContainer` method in `FWNavigator` class
-- Remove support for `onLiveStreamEvent` callback in `FWNavigator` class on the Android side
-- Remove support for `onLiveStreamChatEvent` callback in `FWNavigator` class on the Android side
-- Remove support for `onVideoFeedLoadFinished` callback in `VideoFeed` component on the Android side
-- Remove `enablePictureInPicture` property in `VideoFeedConfiguration` interface
-- Remove `launchBehavior` property in `VideoPlayerConfiguration` interface
-- Remove `onClickCartIcon` callback in `VideoShopping` class
-- Remove `onWillDisplayProduct` callback in `VideoShopping` class
-- Remove `FWNativeContainerProps` type
-- Remove `ClickCartIconCallback` type
-- Remove `WillDisplayProductCallback` type
-- Remove `WillDisplayProductEvent` interface
-- Remove `NewNativeContainerProps` type
+- Support play and pause function on the `StoryBlock` component on the iOS side
 
 ## [1.8.0]
 
@@ -222,7 +173,7 @@
 
 ### Breaking Changes
 
-- Remove `AdConfig` interface
+- Remove `AdConfig` interface 
 - Remove `adConfig` parameter from `init` method of `FireworkSDK` class
 - Modify the return type of `onClickCartIcon` callback
 - Remove `exitCartPage` method from `VideoShopping` class

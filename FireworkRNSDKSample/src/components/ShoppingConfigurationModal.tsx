@@ -212,9 +212,14 @@ const ShoppingConfigurationModal = ({
       ctaButton: resultCTAButtonConfiguration,
       linkButton: { isHidden: data.linkButtonHidden ?? false },
     };
-    if (resultCTAButtonConfiguration.text === 'shopNow') {
-      FireworkSDK.getInstance().shopping.onShoppingCTA =
-        HostAppShoppingService.getInstance().onShopNow;
+    if (Platform.OS === 'ios') {
+      if (resultCTAButtonConfiguration.text === 'shopNow') {
+        FireworkSDK.getInstance().shopping.onShoppingCTA =
+          HostAppShoppingService.getInstance().onShopNow;
+      } else {
+        FireworkSDK.getInstance().shopping.onShoppingCTA =
+          HostAppShoppingService.getInstance().onAddToCart;
+      }
     } else {
       FireworkSDK.getInstance().shopping.onShoppingCTA =
         HostAppShoppingService.getInstance().onAddToCart;

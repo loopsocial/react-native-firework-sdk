@@ -16,13 +16,14 @@ import type { NativeStackNavigationProp } from '@react-navigation/native-stack';
 
 import ChannelInputModal from '../components/ChannelInputModal';
 import DynamicContentInputModal from '../components/DynamicContentInputModal';
+import HashtagPlaylistInputModal from '../components/HashtagPlaylistInputModal';
 import PlaylistGroupInputModal from '../components/PlaylistGroupInputModal';
 import PlaylistInputModal from '../components/PlaylistInputModal';
 import {
   defaultChannelIdArray,
+  defaultDynamicContentInfoArray,
   defaultPlaylistGroupInfoArray,
   defaultPlaylistInfoArray,
-  defaultDynamicContentInfoArray,
 } from '../config/Feed.json';
 import type { RootStackParamList } from './paramList/RootStackParamList';
 import type { TabParamsList } from './paramList/TabParamsList';
@@ -48,6 +49,10 @@ export default function FeedLayouts() {
     useState(false);
   const [dynamicContentInputModalVisible, setDynamicContentInputModalVisible] =
     useState(false);
+  const [
+    hashtagPlaylistInputModalVisible,
+    setHashtagPlaylistInputModalVisible,
+  ] = useState(false);
   const dataList: FeedListItemData[] = [
     {
       title: 'Discover Feed',
@@ -188,6 +193,12 @@ export default function FeedLayouts() {
         );
       },
     },
+    {
+      title: 'Hashtag Playlist Feed',
+      pressCallback: (_) => {
+        setHashtagPlaylistInputModalVisible(true);
+      },
+    },
   ];
   return (
     <View style={styles.container}>
@@ -261,6 +272,20 @@ export default function FeedLayouts() {
             source: 'dynamicContent',
             channel: channelId,
             dynamicContentParameters: dynamicContentParameters,
+          });
+        }}
+      />
+      <HashtagPlaylistInputModal
+        visible={hashtagPlaylistInputModalVisible}
+        onRequestClose={() => {
+          setHashtagPlaylistInputModalVisible(false);
+        }}
+        onSubmit={(channelId, hashtagFilterExpression) => {
+          setHashtagPlaylistInputModalVisible(false);
+          navigation.navigate('Feed', {
+            source: 'hashtagPlaylist',
+            channel: channelId,
+            hashtagFilterExpression: hashtagFilterExpression,
           });
         }}
       />

@@ -52,6 +52,7 @@ const Feed = () => {
   const playlist = route.params?.playlist;
   const playlistGroup = route.params?.playlistGroup;
   const dynamicContentParameters = route.params?.dynamicContentParameters;
+  const hashtagFilterExpression = route.params?.hashtagFilterExpression;
 
   const feedRef = useRef<VideoFeed>(null);
   const [feedError, setFeedError] = useState<FWError | undefined>(undefined);
@@ -143,6 +144,7 @@ const Feed = () => {
           playlist={playlist}
           playlistGroup={playlistGroup}
           dynamicContentParameters={dynamicContentParameters}
+          hashtagFilterExpression={hashtagFilterExpression}
           mode={mode}
           videoFeedConfiguration={{
             ...feedConfiguration,
@@ -188,17 +190,14 @@ const Feed = () => {
         <View style={styles.storyBlockWrapper}>
           <View style={styles.storyBlockActionButtonList}>
             <Button
-              containerStyle={styles.storyBlockActionButton}
+              style={styles.storyBlockActionButton}
               title="Play"
               onPress={() => {
                 storyBlockRef.current?.play();
               }}
             />
             <Button
-              containerStyle={{
-                ...styles.storyBlockActionButton,
-                marginLeft: 20,
-              }}
+              style={{ ...styles.storyBlockActionButton, marginLeft: 20 }}
               title="Pause"
               onPress={() => {
                 storyBlockRef.current?.pause();
@@ -212,6 +211,7 @@ const Feed = () => {
             channel={channel}
             playlist={playlist}
             dynamicContentParameters={dynamicContentParameters}
+            hashtagFilterExpression={hashtagFilterExpression}
             enablePictureInPicture
             adConfiguration={{ requiresAds: false, adsFetchTimeout: 10 }}
             onStoryBlockLoadFinished={(error?: FWError) => {

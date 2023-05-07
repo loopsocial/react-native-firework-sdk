@@ -45,11 +45,11 @@ type FeedConfigurationFormData = {
   titleColor?: string;
   titleFontSize?: string;
   titleIOSFontName?: string;
-  titleAndroidFontName?: string;
   titlePosition?: number;
   hidePlayIcon?: boolean;
   playIconWidth?: string;
   showAdBadge?: boolean;
+  enableCustomLayoutName?: boolean;
   enableAutoplay?: boolean;
   requiresAds?: boolean;
   vastAttributes?: string;
@@ -144,10 +144,6 @@ const FeedConfigurationModal = ({
       setValue('titleColor', configuration?.title?.textColor);
       setValue('titleFontSize', configuration?.title?.fontSize?.toString());
       setValue('titleIOSFontName', configuration?.title?.iOSFontInfo?.fontName);
-      setValue(
-        'titleAndroidFontName',
-        configuration?.title?.androidFontInfo?.typefaceName
-      );
       if (configuration && configuration.titlePosition) {
         const titlePositionIndex = TitlePositionList.indexOf(
           configuration.titlePosition!
@@ -163,6 +159,11 @@ const FeedConfigurationModal = ({
       setValue('playIconWidth', configuration?.playIcon?.iconWidth?.toString());
       setValue('gridColumns', configuration?.gridColumns?.toString());
       setValue('showAdBadge', configuration?.showAdBadge);
+      if (configuration && configuration.customLayoutName) {
+        setValue('enableCustomLayoutName', true);
+      } else {
+        setValue('enableCustomLayoutName', false);
+      }
       setValue('enableAutoplay', configuration?.enableAutoplay);
       setValue('enablePictureInPicture', enablePictureInPicture);
       setValue('requiresAds', adConfiguration?.requiresAds);
@@ -212,10 +213,6 @@ const FeedConfigurationModal = ({
         iOSFontInfo: {
           fontName: data.titleIOSFontName,
         },
-        androidFontInfo: {
-          isCustom: false,
-          typefaceName: data.titleAndroidFontName,
-        },
       };
       configuration.titlePosition =
         typeof data.titlePosition === 'number'
@@ -233,6 +230,9 @@ const FeedConfigurationModal = ({
           ? parseInt(data.gridColumns!)
           : undefined;
       configuration.showAdBadge = data.showAdBadge;
+      if (data.enableCustomLayoutName) {
+        configuration.customLayoutName = 'fw_feed_custom_layout';
+      }
       configuration.enableAutoplay = data.enableAutoplay;
       console.log('configuration', configuration);
       var adConfiguration: AdConfiguration = {};
@@ -455,33 +455,6 @@ const FeedConfigurationModal = ({
           />
         </View>
       </View>
-      <View style={styles.formItemRow}>
-        <View style={{ ...styles.formItem, marginRight: 10 }}>
-          <Controller
-            control={control}
-            render={({ field: { onChange, onBlur, value } }) => (
-              <Input
-                label="Title android typeface name"
-                placeholder="e.g. MONOSPACE"
-                onBlur={onBlur}
-                onChangeText={(newValue) => onChange(newValue)}
-                value={value}
-                rightIcon={
-                  <TouchableOpacity
-                    onPress={() => {
-                      setValue('titleAndroidFontName', undefined);
-                    }}
-                  >
-                    <Ionicons name="close" size={24} />
-                  </TouchableOpacity>
-                }
-                autoCompleteType={undefined}
-              />
-            )}
-            name="titleAndroidFontName"
-          />
-        </View>
-      </View>
     </>
   );
 
@@ -680,6 +653,27 @@ const FeedConfigurationModal = ({
     </View>
   );
 
+  const enableCustomLayoutName = (
+    <View style={styles.formItemRow}>
+      <View style={styles.formItem}>
+        <Controller
+          control={control}
+          render={({ field: { onChange, value } }) => {
+            return (
+              <CheckBox
+                center
+                title="Enable Custom Layout Name(Android)"
+                checked={value}
+                onPress={() => onChange(!value)}
+              />
+            );
+          }}
+          name="enableCustomLayoutName"
+        />
+      </View>
+    </View>
+  );
+
   const enableAutoplay = (
     <View style={styles.formItemRow}>
       <View style={styles.formItem}>
@@ -770,6 +764,7 @@ const FeedConfigurationModal = ({
                   {requiresAds}
                   {vastAttributes}
                   {showAdBadgeRow}
+                  {enableCustomLayoutName}
                   {enableAutoplay}
                   {enablePictureInPicture}
                 </View>

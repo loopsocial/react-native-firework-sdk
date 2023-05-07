@@ -1,4 +1,6 @@
 import type {
+  AddToCartCallback,
+  AddToCartEvent,
   Product,
   UpdateProductDetailsCallback,
   UpdateProductDetailsEvent,
@@ -13,9 +15,56 @@ import type CartItem from '../models/CartItem';
 import { addCartItem } from '../slice/shoppingSlice';
 import { store } from '../store';
 import ShopifyClient from './ShopifyClient';
+import { Platform } from 'react-native';
 
 export default class HostAppShoppingService {
   private static _instance?: HostAppShoppingService;
+
+  public onLegacyAddToCart?: AddToCartCallback = async (
+    event: AddToCartEvent
+  ) => {
+    console.log('onLegacyAddToCart event', event);
+    try {
+      const shopifyProduct = await ShopifyClient.getInstance().fetchProduct(
+        event.productId
+      );
+      const variant = shopifyProduct.variants.find(
+        (v) => ShopifyClient.getInstance().parseId(`${v.id}`) === event.unitId
+      );
+      if (!variant) {
+        return {
+          res: 'fail',
+          tips: 'Failed to add item to cart',
+        };
+      }
+
+      const { amount, currencyCode }: { amount: string; currencyCode: string } =
+        (variant as any).priceV2;
+
+      let cartItem: CartItem = {
+        productId: event.productId,
+        unitId: event.unitId,
+        name: shopifyProduct.title,
+        price: {
+          amount: parseFloat(amount),
+          currencyCode,
+        },
+        description: variant.title,
+        imageURL: variant.image.src,
+      };
+      store.dispatch(addCartItem(cartItem));
+      const cartItemCount = store.getState().shopping.cartItems.length;
+      console.log('cartItemCount', cartItemCount, 'type', typeof cartItemCount);
+      await this.closePlayerOrStartFloatingPlayer();
+      RootNavigation.navigate('Cart');
+      return null;
+    } catch (e) {
+      return {
+        res: 'fail',
+        tips: 'Failed to load product information',
+      };
+    }
+  };
 
   public onShopNow?: ShoppingCTACallback = async (event: ShoppingCTAEvent) => {
     console.log('onShopNow event', event);
@@ -72,7 +121,7 @@ export default class HostAppShoppingService {
     } catch (e) {
       return {
         res: 'fail',
-        tips: 'Failed to load product information',
+        tips: 'Failed loading product information',
       };
     }
   };
@@ -137,10 +186,15 @@ export default class HostAppShoppingService {
   }
 
   public async closePlayerOrStartFloatingPlayer() {
-    const result =
-      await FireworkSDK.getInstance().navigator.startFloatingPlayer();
-    if (!result) {
+    if (Platform.OS === 'android') {
       await FireworkSDK.getInstance().navigator.popNativeContainer();
+    } else {
+      const result =
+        await FireworkSDK.getInstance().navigator.startFloatingPlayer();
+
+      if (!result) {
+        await FireworkSDK.getInstance().navigator.popNativeContainer();
+      }
     }
   }
 

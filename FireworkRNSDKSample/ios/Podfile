@@ -1,8 +1,7 @@
 require_relative '../node_modules/react-native/scripts/react_native_pods'
 require_relative '../node_modules/@react-native-community/cli-platform-ios/native_modules'
-require_relative '../node_modules/react-native-firework-sdk/ios/scripts/react_native_firework_sdk_pods'
 
-platform :ios, '13.0'
+platform :ios, '12.0'
 #use_frameworks!
 
 target 'FireworkSdkExample' do
@@ -10,30 +9,19 @@ target 'FireworkSdkExample' do
 
   use_react_native!(path: config['reactNativePath'])
 
-  
-  # enable multi host streaming
-   enable_multi_host_streaming
-#  pod 'AgoraRtcEngine_iOS', '~> 4.1.1'
-#  pod 'SwiftProtobuf', '~> 1.21.0'
-#  pod 'FireworkVideoAgoraSupport', '~> 0.2.0'
-
   # admob
   # pod 'FireworkVideoGAMSupport', '0.1.0'
   # pod 'Google-Mobile-Ads-SDK', '8.13.0'
 
   # ima
-#   pod 'FireworkVideoGIMASupport', '0.1.0'
-#   pod 'GoogleAds-IMA-iOS-SDK', '~> 3.14.5'
+  # pod 'FireworkVideoGIMASupport', '0.1.0'
+  # pod 'GoogleAds-IMA-iOS-SDK', '~> 3.14.5'
 
   # Enables Flipper.
   #
   # Note that if you have use_frameworks! enabled, Flipper will not work and
   # you should disable the next line.
   #  use_flipper!()
-
-  pre_install do |installer|
-    react_native_firework_sdk_pre_install(installer)
-  end
 
   post_install do |installer|
     react_native_post_install(installer)
