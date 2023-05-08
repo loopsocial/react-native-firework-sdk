@@ -27,18 +27,21 @@ export default function SetShareBaseURLForm() {
     FireworkSDK.getInstance().shareBaseURL ?? ''
   );
   console.log('SetShareBaseURLForm error', errors);
-
+  console.log(
+    'FireworkSDK.getInstance().shareBaseURL',
+    FireworkSDK.getInstance().shareBaseURL
+  );
   const onSetShareURLHandler = (data: SetShareBaseURLFormData) => {
     console.log('SetShareBaseURLForm data', data);
     FireworkSDK.getInstance().shareBaseURL = data.shareBaseURL;
     setCurrentLink(data.shareBaseURL);
-    Toast.show('Set share base URL successfully');
+    Toast.show('Set global share base URL successfully');
   };
 
   return (
     <View style={CommonStyles.formContainer}>
       <View style={CommonStyles.formItem}>
-        <Text style={CommonStyles.formItemTitle}>Share Base URL</Text>
+        <Text style={CommonStyles.formItemTitle}>Global Share Base URL</Text>
         <Text style={styles.currentText}>{`Current: ${currentLink}`}</Text>
         <Controller
           control={control}

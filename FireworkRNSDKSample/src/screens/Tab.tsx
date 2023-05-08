@@ -10,6 +10,7 @@ import type { TabParamsList } from './paramList/TabParamsList';
 import Shopping from './Shopping';
 import Cart from './Cart';
 import { useAppSelector } from '../hooks/reduxHooks';
+import HostAppShoppingService from '../utils/HostAppShoppingService';
 
 const TabNavigator = createBottomTabNavigator<TabParamsList>();
 
@@ -45,14 +46,16 @@ const Tab = () => {
       })}
     >
       <TabNavigator.Screen name="Shopping" component={Shopping} />
-      <TabNavigator.Screen
-        name="Cart"
-        component={Cart}
-        options={{
-          title: 'Host App Cart',
-          tabBarBadge: cartItems.length > 0 ? cartItems.length : undefined,
-        }}
-      />
+      {HostAppShoppingService.getInstance().shouldShowCart() && (
+        <TabNavigator.Screen
+          name="Cart"
+          component={Cart}
+          options={{
+            title: 'Host App Cart',
+            tabBarBadge: cartItems.length > 0 ? cartItems.length : undefined,
+          }}
+        />
+      )}
       <TabNavigator.Screen
         name="FeedLayouts"
         component={FeedLayouts}

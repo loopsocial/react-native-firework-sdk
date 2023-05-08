@@ -6,6 +6,7 @@ import type {
 export type RootStackParamList = {
   Tab: undefined;
   OpenVideo: undefined;
+  SetShareBaseURL: undefined;
   Feed: {
     source?: VideoFeedSource | StoryBlockSource;
     channel?: string;
@@ -14,12 +15,10 @@ export type RootStackParamList = {
     dynamicContentParameters?: { [key: string]: string[] };
     hashtagFilterExpression?: string;
   };
-  SetShareBaseURL: undefined;
   Cart: undefined;
   Checkout: undefined;
   SetAdBadgeConfiguration: undefined;
   EnableCustomCTAClickCallback: undefined;
-  EnableCustomCTALinkContentPageRouteName: undefined;
   LinkContent: {
     url: string;
   };

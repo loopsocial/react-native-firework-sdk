@@ -84,15 +84,15 @@ function More() {
   };
   const dataList: MoreListItemData[] = [
     {
-      title: 'Open Video URL',
+      title: 'Set Global Share Base URL',
       pressCallback: (_) => {
-        navigation.push('OpenVideo');
+        navigation.push('SetShareBaseURL');
       },
     },
     {
-      title: 'Set Share Base URL',
+      title: 'Open Video URL',
       pressCallback: (_) => {
-        navigation.push('SetShareBaseURL');
+        navigation.push('OpenVideo');
       },
     },
     {
@@ -105,12 +105,6 @@ function More() {
       title: 'Enable Custom CTA Click Callback',
       pressCallback: (_) => {
         navigation.push('EnableCustomCTAClickCallback');
-      },
-    },
-    {
-      title: 'Enable Custom CTA Link Content Page Route Name',
-      pressCallback: (_) => {
-        navigation.push('EnableCustomCTALinkContentPageRouteName');
       },
     },
     {

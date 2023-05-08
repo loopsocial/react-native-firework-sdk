@@ -4,17 +4,17 @@
   "version": "1.0.0",
   "private": true,
   "scripts": {
-    "install_js_depencies_and_lint": "npm i && cd .. && npm i && npm run lint",
+    "install_library_js_depencies": "npm --prefix .. i",
+    "install_example_js_depencies": "npm i",
+    "lint_js": "npm --prefix .. run lint",
     "ios_pod_install": "pod-install",
-    "set_up_ios": "npm run install_js_depencies_and_lint && npm run ios_pod_install",
-    "set_up_android": "npm run install_js_depencies_and_lint",
     "android": "react-native run-android",
     "ios": "react-native run-ios",
     "start": "react-native start",
     "postinstall": "patch-package"
   },
   "dependencies": {
-    "react-native-firework-sdk": "1.10.0-beta.1",
+    "react-native-firework-sdk": "2.2.0-beta.1",
     "@expo/react-native-action-sheet": "^3.12.0",
     "@react-native-async-storage/async-storage": "^1.17.11",
     "@react-navigation/bottom-tabs": "^6.0.9",

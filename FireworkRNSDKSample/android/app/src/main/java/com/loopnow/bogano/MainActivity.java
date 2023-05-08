@@ -26,4 +26,9 @@ public class MainActivity extends ReactActivity {
   protected void attachBaseContext(Context newBase) {
     super.attachBaseContext(FWLanguageUtil.INSTANCE.updateBaseContextLocale(newBase));
   }
+
+  @Override
+  public void onBackPressed() {
+    super.onBackPressed();
+  }
 }

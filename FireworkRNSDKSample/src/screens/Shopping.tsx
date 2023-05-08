@@ -18,7 +18,6 @@ import type { NativeStackNavigationProp } from '@react-navigation/native-stack';
 
 import PlaylistInputModal from '../components/PlaylistInputModal';
 import { defaultShoppingPlaylist } from '../config/Feed.json';
-import { shopifyDomain } from '../config/Shopify.json';
 import type { RootStackParamList } from './paramList/RootStackParamList';
 import type { TabParamsList } from './paramList/TabParamsList';
 import ShoppingConfigurationModal from '../components/ShoppingConfigurationModal';
@@ -94,8 +93,8 @@ function Shopping() {
               playerStyle: 'full',
               videoCompleteAction: 'advanceToNext',
               showShareButton: true,
-              showPlaybackButton: true,
               showMuteButton: true,
+              showPlaybackButton: true,
             }}
             onVideoFeedLoadFinished={(error?: FWError) => {
               console.log('onVideoFeedLoadFinished error', error);
@@ -154,16 +153,6 @@ function Shopping() {
         >
           <ListItem.Title style={styles.title}>Integration:</ListItem.Title>
           <ListItem.Subtitle style={styles.subTitle}>Shopify</ListItem.Subtitle>
-        </ListItem>
-        <ListItem
-          containerStyle={styles.listItemContainer}
-          hasTVPreferredFocus={undefined}
-          tvParallaxProperties={undefined}
-        >
-          <ListItem.Title style={styles.title}>Storefront:</ListItem.Title>
-          <ListItem.Subtitle style={styles.subTitle}>
-            {shopifyDomain}
-          </ListItem.Subtitle>
         </ListItem>
         <ListItem
           containerStyle={{

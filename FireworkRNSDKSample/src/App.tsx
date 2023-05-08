@@ -21,16 +21,15 @@ import CircleThumbnails from './screens/CircleThumbnails';
 import LinkContent from './screens/LinkContent';
 import EnableCustomClickCartIconCallback from './screens/EnableCustomClickCartIconCallback';
 import EnableCustomCTAClickCallback from './screens/EnableCustomCTAClickCallback';
-import EnableCustomCTALinkContentPageRouteName from './screens/EnableCustomCTALinkContentPageRouteName';
 import Feed from './screens/Feed';
 import OpenVideo from './screens/OpenVideo';
 import type { RootStackParamList } from './screens/paramList/RootStackParamList';
 import SetAdBadgeConfiguration from './screens/SetAdBadgeConfiguration';
-import SetShareBaseURL from './screens/SetShareBaseURL';
 import Tab from './screens/Tab';
 import { store } from './store';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import StorageKey from './constants/StorageKey';
+import SetShareBaseURL from './screens/SetShareBaseURL';
 
 const StackNavigator = createNativeStackNavigator<RootStackParamList>();
 
@@ -120,14 +119,14 @@ const FWNavigationContainer = ({
           options: { headerShown: false },
         })}
         {renderScreen({
+          name: 'SetShareBaseURL',
+          component: SetShareBaseURL,
+          options: { title: 'Set Global Share Base URL' },
+        })}
+        {renderScreen({
           name: 'OpenVideo',
           component: OpenVideo,
           options: { title: 'Open Video URL' },
-        })}
-        {renderScreen({
-          name: 'SetShareBaseURL',
-          component: SetShareBaseURL,
-          options: { title: 'Set Share Base URL' },
         })}
         {renderScreen({
           name: 'SetAdBadgeConfiguration',
@@ -138,11 +137,6 @@ const FWNavigationContainer = ({
           name: 'EnableCustomCTAClickCallback',
           component: EnableCustomCTAClickCallback,
           options: { title: 'Enable Custom CTA Click Callback' },
-        })}
-        {renderScreen({
-          name: 'EnableCustomCTALinkContentPageRouteName',
-          component: EnableCustomCTALinkContentPageRouteName,
-          options: { title: 'Enable CTA Link Content Page Route Name' },
         })}
         {renderScreen({
           name: 'Feed',

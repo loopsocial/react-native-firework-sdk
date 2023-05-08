@@ -1,6 +1,4 @@
 import type {
-  AddToCartCallback,
-  AddToCartEvent,
   Product,
   UpdateProductDetailsCallback,
   UpdateProductDetailsEvent,
@@ -15,56 +13,10 @@ import type CartItem from '../models/CartItem';
 import { addCartItem } from '../slice/shoppingSlice';
 import { store } from '../store';
 import ShopifyClient from './ShopifyClient';
-import { Platform } from 'react-native';
+import { shopifyDomain } from '../config/Shopify.json';
 
 export default class HostAppShoppingService {
   private static _instance?: HostAppShoppingService;
-
-  public onLegacyAddToCart?: AddToCartCallback = async (
-    event: AddToCartEvent
-  ) => {
-    console.log('onLegacyAddToCart event', event);
-    try {
-      const shopifyProduct = await ShopifyClient.getInstance().fetchProduct(
-        event.productId
-      );
-      const variant = shopifyProduct.variants.find(
-        (v) => ShopifyClient.getInstance().parseId(`${v.id}`) === event.unitId
-      );
-      if (!variant) {
-        return {
-          res: 'fail',
-          tips: 'Failed to add item to cart',
-        };
-      }
-
-      const { amount, currencyCode }: { amount: string; currencyCode: string } =
-        (variant as any).priceV2;
-
-      let cartItem: CartItem = {
-        productId: event.productId,
-        unitId: event.unitId,
-        name: shopifyProduct.title,
-        price: {
-          amount: parseFloat(amount),
-          currencyCode,
-        },
-        description: variant.title,
-        imageURL: variant.image.src,
-      };
-      store.dispatch(addCartItem(cartItem));
-      const cartItemCount = store.getState().shopping.cartItems.length;
-      console.log('cartItemCount', cartItemCount, 'type', typeof cartItemCount);
-      await this.closePlayerOrStartFloatingPlayer();
-      RootNavigation.navigate('Cart');
-      return null;
-    } catch (e) {
-      return {
-        res: 'fail',
-        tips: 'Failed to load product information',
-      };
-    }
-  };
 
   public onShopNow?: ShoppingCTACallback = async (event: ShoppingCTAEvent) => {
     console.log('onShopNow event', event);
@@ -81,18 +33,36 @@ export default class HostAppShoppingService {
     event: ShoppingCTAEvent
   ) => {
     console.log('onAddToCart event', event);
+    if (!this.shouldShowCart()) {
+      await this.closePlayerOrStartFloatingPlayer();
+      RootNavigation.navigate('LinkContent', { url: event.url });
+      return {
+        res: 'success',
+      };
+    }
 
     try {
       const shopifyProduct = await ShopifyClient.getInstance().fetchProduct(
         event.productId
       );
+      if (!shopifyProduct) {
+        console.log('[example] fetchProduct error: product is empty.');
+        await this.closePlayerOrStartFloatingPlayer();
+        RootNavigation.navigate('LinkContent', { url: event.url });
+        return {
+          res: 'success',
+        };
+      }
+
       const variant = shopifyProduct.variants.find(
         (v) => ShopifyClient.getInstance().parseId(`${v.id}`) === event.unitId
       );
       if (!variant) {
+        console.log('[example] fetchProduct error: variant is empty.');
+        await this.closePlayerOrStartFloatingPlayer();
+        RootNavigation.navigate('LinkContent', { url: event.url });
         return {
-          res: 'fail',
-          tips: 'Failed to add item to cart',
+          res: 'success',
         };
       }
 
@@ -119,9 +89,11 @@ export default class HostAppShoppingService {
         res: 'success',
       };
     } catch (e) {
+      console.log('[example] fetchProduct error', e);
+      await this.closePlayerOrStartFloatingPlayer();
+      RootNavigation.navigate('LinkContent', { url: event.url });
       return {
-        res: 'fail',
-        tips: 'Failed loading product information',
+        res: 'success',
       };
     }
   };
@@ -129,7 +101,9 @@ export default class HostAppShoppingService {
   public onCustomClickCartIcon?: CustomClickCartIconCallback = async () => {
     console.log('[example] onCustomClickCartIcon');
     await this.closePlayerOrStartFloatingPlayer();
-    RootNavigation.navigate('Cart');
+    if (this.shouldShowCart()) {
+      RootNavigation.navigate('Cart');
+    }
   };
 
   public onCustomCTAClick?: CustomCTAClickCallback = (event) => {
@@ -186,16 +160,15 @@ export default class HostAppShoppingService {
   }
 
   public async closePlayerOrStartFloatingPlayer() {
-    if (Platform.OS === 'android') {
+    const result =
+      await FireworkSDK.getInstance().navigator.startFloatingPlayer();
+    if (!result) {
       await FireworkSDK.getInstance().navigator.popNativeContainer();
-    } else {
-      const result =
-        await FireworkSDK.getInstance().navigator.startFloatingPlayer();
-
-      if (!result) {
-        await FireworkSDK.getInstance().navigator.popNativeContainer();
-      }
     }
+  }
+
+  public shouldShowCart() {
+    return !!shopifyDomain;
   }
 
   private constructor() {}

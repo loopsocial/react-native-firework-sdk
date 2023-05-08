@@ -190,14 +190,17 @@ const Feed = () => {
         <View style={styles.storyBlockWrapper}>
           <View style={styles.storyBlockActionButtonList}>
             <Button
-              style={styles.storyBlockActionButton}
+              containerStyle={styles.storyBlockActionButton}
               title="Play"
               onPress={() => {
                 storyBlockRef.current?.play();
               }}
             />
             <Button
-              style={{ ...styles.storyBlockActionButton, marginLeft: 20 }}
+              containerStyle={{
+                ...styles.storyBlockActionButton,
+                marginLeft: 20,
+              }}
               title="Pause"
               onPress={() => {
                 storyBlockRef.current?.pause();
