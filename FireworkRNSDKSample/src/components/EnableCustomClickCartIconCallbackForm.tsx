@@ -36,7 +36,9 @@ const EnableCustomClickCartIconCallbackForm = () => {
     if (data.enableCustomClickCartIconCallback) {
       FireworkSDK.getInstance().shopping.onCustomClickCartIcon = async () => {
         HostAppShoppingService.getInstance().closePlayerOrStartFloatingPlayer();
-        navigation.navigate('Cart');
+        if (HostAppShoppingService.getInstance().shouldShowCart()) {
+          navigation.navigate('Cart');
+        }
       };
       Toast.show('Enable custom click cart icon callback successfully');
     } else {

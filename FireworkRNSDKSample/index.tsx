@@ -38,12 +38,8 @@ FireworkSDK.getInstance().onVideoFeedClick = (event) => {
   console.log('[example] onVideoFeedClick', event);
 };
 
-// deprecated
-FireworkSDK.getInstance().shopping.onAddToCart =
-  HostAppShoppingService.getInstance().onLegacyAddToCart;
-
-// FireworkSDK.getInstance().shopping.onShoppingCTA =
-//   HostAppShoppingService.getInstance().onAddToCart;
+FireworkSDK.getInstance().shopping.onShoppingCTA =
+  HostAppShoppingService.getInstance().onAddToCart;
 // deprecated
 // FireworkSDK.getInstance().shopping.productInfoViewConfiguration = {
 //   addToCartButton: { backgroundColor: '#c0c0c0' },
@@ -68,6 +64,9 @@ FireworkSDK.getInstance().liveStream.onLiveStreamEvent = (event) => {
 FireworkSDK.getInstance().liveStream.onLiveStreamChatEvent = (event) => {
   console.log('[example] onLiveStreamChatEvent', event);
 };
+
+FireworkSDK.getInstance().shopping.cartIconVisible =
+  HostAppShoppingService.getInstance().shouldShowCart();
 
 FireworkSDK.getInstance().shareBaseURL = 'https://fw.tv';
 

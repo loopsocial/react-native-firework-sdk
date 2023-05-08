@@ -138,9 +138,9 @@ def fw_web_socket_production = "wss://api.firework.tv/socket/websocket"
 
 
 def fw_appid_staging = ""
-def fw_base_url_staging = "https://staging.fireworktv.com"
-def fw_pixel_base_url_staging = "https://p2-staging.fwpixel.com/"
-def fw_web_socket_staging = "wss://staging.fireworktv.com/socket/websocket"
+def fw_base_url_staging = ""
+def fw_pixel_base_url_staging = ""
+def fw_web_socket_staging = ""
 
 android {
   compileSdkVersion rootProject.ext.compileSdkVersion
