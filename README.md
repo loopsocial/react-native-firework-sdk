@@ -16,11 +16,11 @@ The integration guide is https://docs.firework.tv/react-native-sdk/integration-g
  2. `npm install`
  3. `npm run ios_pod_install`
 
-### Set Up Default Shopping Playlist(optional)
+### Set up default shopping playlist(optional)
  1. Get the channel id and playlist id for the shopping playlist.
  2. In `./FireworkRNSDKSample/src/config/Feed.json`, use the channel id and playlist id to update the value of `defaultShoppingPlaylist`
 
-### Run IOS Exmaple App
+### Run iOS exmaple app
  
 `npm run ios`
 
