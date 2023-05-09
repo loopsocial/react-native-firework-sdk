@@ -1,5 +1,11 @@
 # CHANGELOG
 
+## [1.10.0]
+
+### Added
+
+- Support hashtag playlist on the iOS side
+
 ## [1.9.0]
 
 ### Added
