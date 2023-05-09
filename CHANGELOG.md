@@ -1,5 +1,22 @@
 # CHANGELOG
 
+## [2.2.0]
+
+### Added
+
+- Support hashtag playlist
+- Support livestream callbacks on the Android side
+- Support playback event on the Android side
+- Add `shareBaseURL` property in `VideoPlayerConfiguration` interface
+
+### Breaking Changes
+
+- Remove support for passing `shareBaseURL` in `FireworkSDK` class `init` method. Please use `FireworkSDK.getInstance().shareBaseURL` instead.
+- Remove `getShareBaseURL` method in `FireworkSDK` class. Please use `FireworkSDK.getInstance().shareBaseURL` instead.
+- Remove `getAdBadgeConfiguration` method in `FireworkSDK` class. Please use `FireworkSDK.getInstance().adBadgeConfiguration` instead.
+- Remove `addToCartButton` property in `ProductInfoViewConfiguration` interface
+- Remove `AddToCartButtonConfiguration` interface
+
 ## [2.1.0]
 
 ### Added
