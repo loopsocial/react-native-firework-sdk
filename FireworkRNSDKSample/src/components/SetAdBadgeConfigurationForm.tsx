@@ -45,7 +45,7 @@ const SetAdBadgeConfigurationForm = () => {
         ? BadgeTextTypeList[data.badgeTextType!]
         : undefined;
     console.log('AdBadgeConfiguration configuration', configuration);
-    FireworkSDK.getInstance().setAdBadgeConfiguration(configuration);
+    FireworkSDK.getInstance().adBadgeConfiguration = configuration;
     navigation.goBack();
     Toast.show('Set Ad badge configuration successfully');
   };
@@ -76,7 +76,7 @@ const SetAdBadgeConfigurationForm = () => {
 
   useEffect(() => {
     syncFormValuesFromConfiguration(
-      FireworkSDK.getInstance().getAdBadgeConfiguration()
+      FireworkSDK.getInstance().adBadgeConfiguration
     );
   }, [syncFormValuesFromConfiguration]);
 

@@ -22,7 +22,7 @@ AppRegistry.registerComponent(appName, () => App);
 
 FireworkSDK.getInstance().debugLogsEnabled = false;
 
-FireworkSDK.getInstance().setAdBadgeConfiguration({ badgeTextType: 'ad' });
+FireworkSDK.getInstance().adBadgeConfiguration = { badgeTextType: 'ad' };
 
 FireworkSDK.getInstance().onSDKInit = (event) => {
   console.log('[example] onSDKInit', event);
