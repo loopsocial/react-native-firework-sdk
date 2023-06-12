@@ -1,5 +1,11 @@
 # CHANGELOG
 
+## [2.2.5]
+
+### Fixed
+
+- The story block cannot re-render on the Android side when props change
+
 ## [2.2.0]
 
 ### Added
