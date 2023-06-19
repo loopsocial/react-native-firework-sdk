@@ -1,10 +1,20 @@
 # CHANGELOG
 
-## [2.2.5]
+## [2.3.0]
 
-### Fixed
+### Added
 
-- The story block cannot re-render on the Android side when props change
+- Support 'Select Replay' feature which allows us to choose from which moment users will see the video being played when opening the live stream
+- Support configuring the width of the CTA button
+- Support configuring the number of feed item title lines on the iOS side
+- Support configuring feed item title padding on the iOS side
+- Support app-level language setting on the Android side
+- Support story block configuration on the Android side
+- Support configuring feed item spacing on the Android side
+
+## Changes
+
+- Change cart icon from default display to default hidden on the iOS side
 
 ## [2.2.0]
 
