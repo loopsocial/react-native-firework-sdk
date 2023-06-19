@@ -7,7 +7,7 @@ The integration guide is https://docs.firework.tv/react-native-sdk/integration-g
 ### Set up Firework app Id
 
  1. Get the Firework app ID from our business team.
- 2. In `./FireworkRNSDKSample/ios/FireworkSdkExample/Info.plist`, set the value of `FireworkVideoAppID` key to the Firework app ID.
+ 2. In `./FireworkRNSDKSample/ios/FireworkSdkExample/info.plist`, set the value of `FireworkVideoAppID` key to the Firework app ID.
  3. In `./FireworkRNSDKSample/android/app/build.gradle`, set the value of `fw_appid_production` to the Firework app ID.
 
 ### Install dependencies

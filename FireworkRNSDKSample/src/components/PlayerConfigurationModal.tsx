@@ -27,6 +27,7 @@ import type {
   VideoPlayerCompleteAction,
   VideoLaunchBehavior,
   VideoPlayerCTADelayType,
+  VideoPlayerCTAWidth,
 } from 'react-native-firework-sdk';
 
 export interface IPlayerConfigurationModalProps {
@@ -52,6 +53,7 @@ type PlayerConfigurationFormData = {
   ctaDelayValue?: number;
   ctaHighlightDelayType?: number;
   ctaHighlightDelayValue?: number;
+  ctaWidth?: number;
 };
 
 const PlayStyleList: VideoPlayerStyle[] = ['full', 'fit'];
@@ -66,6 +68,11 @@ const VideoLaunchBehaviorList: VideoLaunchBehavior[] = [
 ];
 
 const CTADelayTypeList: VideoPlayerCTADelayType[] = ['constant', 'percentage'];
+const CTAWidthList: VideoPlayerCTAWidth[] = [
+  'fullWidth',
+  'compact',
+  'sizeToFit',
+];
 
 const PlayerConfigurationModal = ({
   visible,
@@ -196,6 +203,17 @@ const PlayerConfigurationModal = ({
           setValue('ctaHighlightDelayType', undefined);
           setValue('ctaHighlightDelayValue', undefined);
         }
+
+        if (configuration.ctaWidth) {
+          const ctaWidthIndex = CTAWidthList.indexOf(configuration.ctaWidth);
+          if (ctaWidthIndex >= 0) {
+            setValue('ctaWidth', ctaWidthIndex);
+          } else {
+            setValue('ctaWidth', undefined);
+          }
+        } else {
+          setValue('ctaWidth', undefined);
+        }
       } else {
         reset();
       }
@@ -257,6 +275,10 @@ const PlayerConfigurationModal = ({
           value: data.ctaHighlightDelayValue,
         };
       }
+      configuration.ctaWidth =
+        typeof data.ctaWidth === 'number'
+          ? CTAWidthList[data.ctaWidth]
+          : undefined;
       console.log('configuration', configuration);
       onSubmit(configuration);
     }
@@ -375,6 +397,24 @@ const PlayerConfigurationModal = ({
 
   const config2 = (
     <>
+      <View style={styles.formItemRow}>
+        <View style={{ ...styles.formItem }}>
+          <Text style={styles.formItemLabel}>CTA width</Text>
+          <Controller
+            control={control}
+            render={({ field: { onChange, value } }) => (
+              <ButtonGroup
+                buttons={CTAWidthList}
+                selectedIndex={value}
+                onPress={(newValue) => {
+                  onChange(newValue);
+                }}
+              />
+            )}
+            name="ctaWidth"
+          />
+        </View>
+      </View>
       <View style={styles.formItemRow}>
         <View style={{ ...styles.formItem }}>
           <Text style={styles.formItemLabel}>CTA Delay Type</Text>

@@ -138,6 +138,10 @@ const Feed = () => {
             height: '100%',
             width:
               Platform.OS === 'android' && mode === 'column' ? 150 : '100%',
+            backgroundColor:
+              feedConfiguration.titlePosition === 'stacked'
+                ? '#A9A9A9'
+                : undefined,
           }}
           source={source}
           channel={channel}
@@ -190,14 +194,15 @@ const Feed = () => {
         <View style={styles.storyBlockWrapper}>
           <View style={styles.storyBlockActionButtonList}>
             <Button
-              style={styles.storyBlockActionButton}
+              containerStyle={styles.storyBlockActionButton}
               title="Play"
               onPress={() => {
                 storyBlockRef.current?.play();
               }}
             />
+            <View style={{ width: 20 }} />
             <Button
-              style={{ ...styles.storyBlockActionButton, marginLeft: 20 }}
+              containerStyle={styles.storyBlockActionButton}
               title="Pause"
               onPress={() => {
                 storyBlockRef.current?.pause();

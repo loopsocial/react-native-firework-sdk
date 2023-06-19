@@ -55,6 +55,7 @@ type FeedConfigurationFormData = {
   vastAttributes?: string;
   enablePictureInPicture?: boolean;
   gridColumns?: string;
+  titleNumberOfLines?: string;
 };
 
 const TitlePositionList: VideoFeedTitlePosition[] = ['stacked', 'nested'];
@@ -115,6 +116,18 @@ const FeedConfigurationModal = ({
     }
   }
 
+  let titleNumberOfLinesErrorMessage: string | undefined;
+  if (errors.titleNumberOfLines) {
+    if (
+      errors.titleNumberOfLines.type === 'max' ||
+      errors.titleNumberOfLines.type === 'min'
+    ) {
+      titleNumberOfLinesErrorMessage = 'Please enter number of lines in [1, 5]';
+    } else {
+      titleNumberOfLinesErrorMessage = 'Please enter correct grid columns';
+    }
+  }
+
   let cornerRadiusErrorMessage: string | undefined;
   if (errors.cornerRadius) {
     if (
@@ -158,6 +171,10 @@ const FeedConfigurationModal = ({
       setValue('hidePlayIcon', configuration?.playIcon?.hidden);
       setValue('playIconWidth', configuration?.playIcon?.iconWidth?.toString());
       setValue('gridColumns', configuration?.gridColumns?.toString());
+      setValue(
+        'titleNumberOfLines',
+        configuration?.title?.numberOfLines?.toString()
+      );
       setValue('showAdBadge', configuration?.showAdBadge);
       if (configuration && configuration.customLayoutName) {
         setValue('enableCustomLayoutName', true);
@@ -209,6 +226,10 @@ const FeedConfigurationModal = ({
         fontSize:
           typeof data.titleFontSize === 'string'
             ? parseInt(data.titleFontSize!)
+            : undefined,
+        numberOfLines:
+          typeof data.titleNumberOfLines === 'string'
+            ? parseInt(data.titleNumberOfLines!)
             : undefined,
         iOSFontInfo: {
           fontName: data.titleIOSFontName,
@@ -425,6 +446,39 @@ const FeedConfigurationModal = ({
               />
             )}
             name="titlePosition"
+          />
+        </View>
+      </View>
+      <View style={styles.formItemRow}>
+        <View style={{ ...styles.formItem }}>
+          <Controller
+            control={control}
+            render={({ field: { onChange, onBlur, value } }) => (
+              <Input
+                label="Number of title lines"
+                placeholder="e.g. 1"
+                onBlur={onBlur}
+                onChangeText={(newValue) => onChange(newValue)}
+                value={value}
+                errorMessage={titleNumberOfLinesErrorMessage}
+                rightIcon={
+                  <TouchableOpacity
+                    onPress={() => {
+                      setValue('titleNumberOfLines', undefined);
+                    }}
+                  >
+                    <Ionicons name="close" size={24} />
+                  </TouchableOpacity>
+                }
+                autoCompleteType={undefined}
+              />
+            )}
+            name="titleNumberOfLines"
+            rules={{
+              pattern: Patterns.number,
+              min: 1,
+              max: 5,
+            }}
           />
         </View>
       </View>

@@ -1,6 +1,13 @@
 # CHANGELOG
 
-## [1.10.2]
+## [1.11.0]
+
+### Added
+
+- Support 'Select Replay' feature on the iOS Side, which allows us to choose from which moment users will see the video being played when opening the live stream
+- Support configuring the width of the CTA button on the iOS Side
+
+## [1.10.0]
 
 ### Added
 
@@ -179,7 +186,7 @@
 
 ### Breaking Changes
 
-- Remove `AdConfig` interface 
+- Remove `AdConfig` interface
 - Remove `adConfig` parameter from `init` method of `FireworkSDK` class
 - Modify the return type of `onClickCartIcon` callback
 - Remove `exitCartPage` method from `VideoShopping` class
