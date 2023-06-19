@@ -1,4 +1,5 @@
 PODS:
+  - AmazonIVSPlayer (1.8.3)
   - boost (1.76.0)
   - DoubleConversion (1.1.6)
   - FBLazyVector (0.66.4)
@@ -9,7 +10,11 @@ PODS:
     - React-Core (= 0.66.4)
     - React-jsi (= 0.66.4)
     - ReactCommon/turbomodule/core (= 0.66.4)
-  - FireworkVideo (1.9.0)
+  - FireworkVideo (1.10.0)
+  - FireworkVideo/FireworkLowLatencyStreaming (1.10.0):
+    - FireworkVideoIVSSupport
+  - FireworkVideoIVSSupport (0.4.0):
+    - AmazonIVSPlayer (~> 1.8.3)
   - fmt (6.2.1)
   - glog (0.3.5)
   - RCT-Folly (2021.06.28.00-v2):
@@ -210,18 +215,18 @@ PODS:
   - React-jsinspector (0.66.4)
   - React-logger (0.66.4):
     - glog
-  - react-native-firework-sdk (2.2.4):
-    - FireworkVideo (= 1.9.0)
+  - react-native-firework-sdk (2.3.0):
+    - FireworkVideo (= 1.10.0)
     - React-Core
-    - react-native-firework-sdk/Development (= 2.2.4)
-  - react-native-firework-sdk/Development (2.2.4):
-    - FireworkVideo (= 1.9.0)
+    - react-native-firework-sdk/Development (= 2.3.0)
+  - react-native-firework-sdk/Development (2.3.0):
+    - FireworkVideo (= 1.10.0)
     - React-Core
   - react-native-restart (0.0.24):
     - React-Core
   - react-native-safe-area-context (3.3.2):
     - React-Core
-  - react-native-webview (11.18.1):
+  - react-native-webview (11.26.1):
     - React-Core
   - React-perflogger (0.66.4)
   - React-RCTActionSheet (0.66.4):
@@ -288,7 +293,7 @@ PODS:
     - React-jsi (= 0.66.4)
     - React-logger (= 0.66.4)
     - React-perflogger (= 0.66.4)
-  - RNCAsyncStorage (1.17.11):
+  - RNCAsyncStorage (1.18.1):
     - React-Core
   - RNScreens (3.18.2):
     - React-Core
@@ -302,6 +307,7 @@ DEPENDENCIES:
   - DoubleConversion (from `../node_modules/react-native/third-party-podspecs/DoubleConversion.podspec`)
   - FBLazyVector (from `../node_modules/react-native/Libraries/FBLazyVector`)
   - FBReactNativeSpec (from `../node_modules/react-native/React/FBReactNativeSpec`)
+  - FireworkVideo/FireworkLowLatencyStreaming
   - glog (from `../node_modules/react-native/third-party-podspecs/glog.podspec`)
   - RCT-Folly (from `../node_modules/react-native/third-party-podspecs/RCT-Folly.podspec`)
   - RCTRequired (from `../node_modules/react-native/Libraries/RCTRequired`)
@@ -340,7 +346,9 @@ DEPENDENCIES:
 
 SPEC REPOS:
   trunk:
+    - AmazonIVSPlayer
     - FireworkVideo
+    - FireworkVideoIVSSupport
     - fmt
 
 EXTERNAL SOURCES:
@@ -420,11 +428,13 @@ EXTERNAL SOURCES:
     :path: "../node_modules/react-native/ReactCommon/yoga"
 
 SPEC CHECKSUMS:
+  AmazonIVSPlayer: ce792b427a4fe466d6ea32b3ce8abe391d9242d0
   boost: a7c83b31436843459a1961bfd74b96033dc77234
   DoubleConversion: 831926d9b8bf8166fd87886c4abab286c2422662
   FBLazyVector: e5569e42a1c79ca00521846c223173a57aca1fe1
   FBReactNativeSpec: fe08c1cd7e2e205718d77ad14b34957cce949b58
-  FireworkVideo: 77edd3eb890c09a0656c8599bee874a38aefec53
+  FireworkVideo: 570db884ae53f0ef1ed14469aa4e2ff7b87e8732
+  FireworkVideoIVSSupport: c75d204e55afab922899e2ff90242a5ec6d4ad20
   fmt: ff9d55029c625d3757ed641535fd4a75fedc7ce9
   glog: 5337263514dd6f09803962437687240c5dc39aa4
   RCT-Folly: a21c126816d8025b547704b777a2ba552f3d9fa9
@@ -439,10 +449,10 @@ SPEC CHECKSUMS:
   React-jsiexecutor: 94ce921e1d8ce7023366873ec371f3441383b396
   React-jsinspector: d0374f7509d407d2264168b6d0fad0b54e300b85
   React-logger: 933f80c97c633ee8965d609876848148e3fef438
-  react-native-firework-sdk: 39b5339d8afc2f5e86c462858d4d41b9c91e27fa
+  react-native-firework-sdk: 4aeaa6c1fea67084d73a95a6384b5f149ffccb68
   react-native-restart: 8af4579c94638f38bd9074ec477ebf087de87dc5
   react-native-safe-area-context: 5cf05f49df9d17261e40e518481f2e334c6cd4b5
-  react-native-webview: ba5a82f852bdd2564241a921c31dffdd696f88be
+  react-native-webview: e3b659a6d614bb37fb12a2de82c91a378c59d84b
   React-perflogger: 93075d8931c32cd1fce8a98c15d2d5ccc4d891bd
   React-RCTActionSheet: 7d3041e6761b4f3044a37079ddcb156575fb6d89
   React-RCTAnimation: 743e88b55ac62511ae5c2e22803d4f503f2a3a13
@@ -455,11 +465,11 @@ SPEC CHECKSUMS:
   React-RCTVibration: e3ffca672dd3772536cb844274094b0e2c31b187
   React-runtimeexecutor: dec32ee6f2e2a26e13e58152271535fadff5455a
   ReactCommon: 57b69f6383eafcbd7da625bfa6003810332313c4
-  RNCAsyncStorage: 889cea2408e52fe71da475306dcef43951577da0
+  RNCAsyncStorage: 138c9b908c5569e7e9f633df75aa71a089690a0c
   RNScreens: 34cc502acf1b916c582c60003dc3089fa01dc66d
   RNVectorIcons: 4143ba35feebab8fdbe6bc43d1e776b393d47ac8
   Yoga: e7dc4e71caba6472ff48ad7d234389b91dadc280
 
-PODFILE CHECKSUM: 2282677218b14c265daf6d716eb8490ee6b71e56
+PODFILE CHECKSUM: ce8399dd5bc0281fd0883e6ad36773f567be1b16
 
 COCOAPODS: 1.12.0

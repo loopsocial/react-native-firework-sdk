@@ -7,11 +7,8 @@
 
 import Foundation
 import FireworkVideo
-// import FireworkVideoGAMSupport
-// import FireworkVideoGIMASupport
-//import FireworkVideoAgoraSupport
+import FireworkVideoIVSSupport
 
-//import react_native_firework_sdk
 #if canImport(FireworkVideoUI)
 import FireworkVideoUI
 #endif
@@ -26,11 +23,11 @@ public class FireworkSupportLibraryBridge: NSObject {
 //    FireworkVideoGIMASupportSDK.enableIMAAds()
 //  }
 
-  @objc public static func enableMultiHostPlayback() {
+//  @objc public static func enableMultiHostPlayback() {
 //    FireworkVideoSDK.enableMultiHostPlayback()
-  }
+//  }
   
-  @objc public static func changeLanguage(_ language: String?) {
-//    AppLanguageManager.shared.changeAppLanguage(language)
+  @objc public static func enableIVSPlayback() {
+    FireworkVideoSDK.enableIVSPlayback()
   }
 }

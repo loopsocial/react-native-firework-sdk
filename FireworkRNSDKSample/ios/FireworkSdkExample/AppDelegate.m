@@ -34,7 +34,7 @@ static void InitializeFlipper(UIApplication *application) {
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
-//  [FireworkSupportLibraryBridge enableMultiHostPlayback];
+  [FireworkSupportLibraryBridge enableIVSPlayback];
   #ifdef FB_SONARKIT_ENABLED
     InitializeFlipper(application);
   #endif

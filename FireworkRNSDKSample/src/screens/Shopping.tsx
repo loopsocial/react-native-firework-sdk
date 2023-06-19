@@ -88,6 +88,7 @@ function Shopping() {
               title: { hidden: false },
               titlePosition: 'nested',
               showAdBadge: true,
+              itemSpacing: 10,
             }}
             videoPlayerConfiguration={{
               playerStyle: 'full',

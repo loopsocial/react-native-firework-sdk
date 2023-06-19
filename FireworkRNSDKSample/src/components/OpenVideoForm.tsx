@@ -39,6 +39,7 @@ export function OpenVideoForm() {
       type: 'constant',
       value: 2,
     },
+    ctaWidth: 'fullWidth',
   };
   const [playerConfiguration, setPlayerConfiguration] = useState<
     VideoPlayerConfiguration | undefined

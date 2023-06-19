@@ -4,7 +4,7 @@ import android.content.Context;
 import android.os.Bundle;
 
 import com.facebook.react.ReactActivity;
-import com.fireworksdk.bridge.utils.FWLanguageUtil;
+import com.fireworksdk.bridge.reactnative.FWReactNativeSDK;
 
 public class MainActivity extends ReactActivity {
 
@@ -24,7 +24,7 @@ public class MainActivity extends ReactActivity {
 
   @Override
   protected void attachBaseContext(Context newBase) {
-    super.attachBaseContext(FWLanguageUtil.INSTANCE.updateBaseContextLocale(newBase));
+    super.attachBaseContext(FWReactNativeSDK.INSTANCE.updateBaseContextLocale(newBase));
   }
 
   @Override

@@ -18,6 +18,7 @@ import {
   VideoFeedMode,
   VideoPlayerConfiguration,
   IStoryBlockMethods,
+  StoryBlockConfiguration,
 } from 'react-native-firework-sdk';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 
@@ -32,6 +33,7 @@ import type { RootStackParamList } from './paramList/RootStackParamList';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { useAppDispatch, useAppSelector } from '../hooks/reduxHooks';
 import { updateEnablePictureInPicture } from '../slice/feedSlice';
+import StoryBlockConfigurationModal from '../components/StoryBlockConfigurationModal';
 
 type FeedScreenRouteProp = RouteProp<RootStackParamList, 'Feed'>;
 type FeedScreenNavigationProp = NativeStackNavigationProp<
@@ -96,14 +98,33 @@ const Feed = () => {
       type: 'constant',
       value: 2,
     },
+    ctaWidth: 'fullWidth',
   };
   const [playerConfiguration, setPlayerConfiguration] = useState<
     VideoPlayerConfiguration | undefined
   >(defaultPlayerConfiguration);
+  const defaultStoryBlockConfiguration: StoryBlockConfiguration = {
+    videoCompleteAction: 'advanceToNext',
+    showShareButton: true,
+    showPlaybackButton: true,
+    ctaDelay: {
+      type: 'constant',
+      value: 3,
+    },
+    ctaHighlightDelay: {
+      type: 'constant',
+      value: 2,
+    },
+  };
+  const [storyBlockConfiguration, setStoryBlockConfiguration] = useState<
+    StoryBlockConfiguration | undefined
+  >(defaultStoryBlockConfiguration);
   const [mode, setMode] = useState<VideoFeedMode>('row');
   const [showFeedConfiguration, setShowFeedConfiguration] =
     useState<boolean>(false);
   const [showPlayerConfiguration, setShowPlayerConfiguration] =
+    useState<boolean>(false);
+  const [showStoryBlockConfiguration, setShowStoryBlockConfiguration] =
     useState<boolean>(false);
 
   useEffect(() => {
@@ -122,7 +143,44 @@ const Feed = () => {
           >
             <Ionicons name="refresh-sharp" size={24} color={tintColor} />
           </TouchableOpacity>
-        ) : null,
+        ) : (
+          <View style={styles.headerRight}>
+            <TouchableOpacity
+              onPress={() => {
+                storyBlockRef.current?.play();
+              }}
+              style={styles.headerIconWrapper}
+            >
+              <Ionicons
+                name="play-circle-outline"
+                size={24}
+                color={tintColor}
+              />
+            </TouchableOpacity>
+            <TouchableOpacity
+              onPress={() => {
+                storyBlockRef.current?.pause();
+              }}
+              style={styles.headerIconWrapper}
+            >
+              <Ionicons
+                name="pause-circle-outline"
+                size={24}
+                color={tintColor}
+              />
+            </TouchableOpacity>
+            {Platform.OS === 'android' && (
+              <TouchableOpacity
+                onPress={() => {
+                  setShowStoryBlockConfiguration(true);
+                }}
+                style={styles.headerIconWrapper}
+              >
+                <Ionicons name="settings-outline" size={24} color={tintColor} />
+              </TouchableOpacity>
+            )}
+          </View>
+        ),
     });
   }, [navigation, source, feedComponentType]);
 
@@ -138,6 +196,10 @@ const Feed = () => {
             height: '100%',
             width:
               Platform.OS === 'android' && mode === 'column' ? 150 : '100%',
+            backgroundColor:
+              feedConfiguration.titlePosition === 'stacked'
+                ? '#A9A9A9'
+                : undefined,
           }}
           source={source}
           channel={channel}
@@ -149,6 +211,11 @@ const Feed = () => {
           videoFeedConfiguration={{
             ...feedConfiguration,
             aspectRatio: mode === 'column' ? 1 : undefined,
+            titlePadding:
+              feedConfiguration.titlePosition === 'stacked'
+                ? { top: 8, right: 8, bottom: 0, left: 8 }
+                : undefined,
+            itemSpacing: 10,
           }}
           videoPlayerConfiguration={playerConfiguration}
           adConfiguration={feedAdConfiguration}
@@ -188,25 +255,6 @@ const Feed = () => {
         edges={['bottom']}
       >
         <View style={styles.storyBlockWrapper}>
-          <View style={styles.storyBlockActionButtonList}>
-            <Button
-              containerStyle={styles.storyBlockActionButton}
-              title="Play"
-              onPress={() => {
-                storyBlockRef.current?.play();
-              }}
-            />
-            <Button
-              containerStyle={{
-                ...styles.storyBlockActionButton,
-                marginLeft: 20,
-              }}
-              title="Pause"
-              onPress={() => {
-                storyBlockRef.current?.pause();
-              }}
-            />
-          </View>
           <StoryBlock
             ref={storyBlockRef}
             style={styles.storyBlock}
@@ -217,6 +265,7 @@ const Feed = () => {
             hashtagFilterExpression={hashtagFilterExpression}
             enablePictureInPicture
             adConfiguration={{ requiresAds: false, adsFetchTimeout: 10 }}
+            storyBlockConfiguration={storyBlockConfiguration}
             onStoryBlockLoadFinished={(error?: FWError) => {
               console.log('[example] onStoryBlockLoadFinished error', error);
               setFeedError(error);
@@ -309,6 +358,20 @@ const Feed = () => {
           }, 0);
         }}
       />
+      <StoryBlockConfigurationModal
+        visible={showStoryBlockConfiguration}
+        storyBlockConfiguration={storyBlockConfiguration}
+        defaultStoryBlockConfiguration={defaultStoryBlockConfiguration}
+        onRequestClose={() => {
+          setShowStoryBlockConfiguration(false);
+        }}
+        onSubmit={(newStoryBlockConfiguration) => {
+          setStoryBlockConfiguration(newStoryBlockConfiguration);
+          setTimeout(() => {
+            setShowStoryBlockConfiguration(false);
+          }, 0);
+        }}
+      />
     </View>
   );
 };
@@ -320,6 +383,11 @@ const styles = StyleSheet.create({
     alignItems: 'stretch',
     backgroundColor: 'white',
   },
+  headerRight: {
+    flexDirection: 'row',
+    justifyContent: 'flex-start',
+  },
+  headerIconWrapper: { marginLeft: 10 },
   feedComponentTypeButtonGroupWrapper: {
     paddingHorizontal: 10,
     paddingVertical: 20,
@@ -351,14 +419,6 @@ const styles = StyleSheet.create({
     width: '100%',
     alignItems: 'center',
     flex: 1,
-  },
-  storyBlockActionButtonList: {
-    flexDirection: 'row',
-    height: 50,
-    width: '80%',
-    alignItems: 'center',
-    justifyContent: 'center',
-    marginBottom: 20,
   },
   storyBlockActionButton: {
     width: 100,

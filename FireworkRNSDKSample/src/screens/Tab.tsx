@@ -10,7 +10,7 @@ import type { TabParamsList } from './paramList/TabParamsList';
 import Shopping from './Shopping';
 import Cart from './Cart';
 import { useAppSelector } from '../hooks/reduxHooks';
-import HostAppShoppingService from '../utils/HostAppShoppingService';
+import HostAppService from '../utils/HostAppService';
 
 const TabNavigator = createBottomTabNavigator<TabParamsList>();
 
@@ -46,7 +46,7 @@ const Tab = () => {
       })}
     >
       <TabNavigator.Screen name="Shopping" component={Shopping} />
-      {HostAppShoppingService.getInstance().shouldShowCart() && (
+      {HostAppService.getInstance().shouldShowCart() && (
         <TabNavigator.Screen
           name="Cart"
           component={Cart}

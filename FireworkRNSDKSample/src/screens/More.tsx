@@ -44,7 +44,7 @@ function More() {
       return 'English';
     }
 
-    if (language === 'ja-JP') {
+    if (language === 'ja') {
       return 'Japanese';
     }
 
@@ -111,12 +111,6 @@ function More() {
       title: 'Circle Thumbnails(iOS)',
       pressCallback: (_) => {
         navigation.push('CircleThumbnails');
-      },
-    },
-    {
-      title: 'Enable Custom Click Cart Icon Callback',
-      pressCallback: (_) => {
-        navigation.push('EnableCustomClickCartIconCallback');
       },
     },
     {

@@ -8,7 +8,7 @@ import Toast from 'react-native-root-toast';
 import { useNavigation } from '@react-navigation/native';
 import type { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import type { RootStackParamList } from '../screens/paramList/RootStackParamList';
-import HostAppShoppingService from '../utils/HostAppShoppingService';
+import HostAppService from '../utils/HostAppService';
 
 type EnableCustomCTAClickCallbackFormData = {
   enableCustomCTAClickCallback?: boolean;
@@ -32,7 +32,7 @@ const EnableCustomCTAClickCallbackForm = () => {
     if (data.enableCustomCTAClickCallback) {
       FireworkSDK.getInstance().onCustomCTAClick = (event) => {
         if (event.url) {
-          HostAppShoppingService.getInstance().closePlayerOrStartFloatingPlayer();
+          HostAppService.getInstance().closePlayerOrStartFloatingPlayer();
           navigation.navigate('LinkContent', { url: event.url });
         }
       };

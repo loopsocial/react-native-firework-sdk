@@ -19,6 +19,7 @@ type SetAdBadgeConfigurationFormData = {
   backgroundColor?: string;
   textColor?: string;
   badgeTextType?: number;
+  androidFontName?: string;
 };
 
 const BadgeTextTypeList: AdBadgeTextType[] = ['ad', 'sponsored'];
@@ -44,6 +45,9 @@ const SetAdBadgeConfigurationForm = () => {
       typeof data.badgeTextType === 'number'
         ? BadgeTextTypeList[data.badgeTextType!]
         : undefined;
+    configuration.androidFontInfo = data.androidFontName
+      ? { isCustom: false, typefaceName: data.androidFontName }
+      : undefined;
     console.log('AdBadgeConfiguration configuration', configuration);
     FireworkSDK.getInstance().adBadgeConfiguration = configuration;
     navigation.goBack();
@@ -144,6 +148,36 @@ const SetAdBadgeConfigurationForm = () => {
           rules={{
             pattern: Patterns.hexColor,
           }}
+        />
+      </View>
+      <View style={CommonStyles.formItem}>
+        <Controller
+          control={control}
+          render={({ field: { onChange, onBlur, value } }) => (
+            <Input
+              label="Android typeface name"
+              placeholder="e.g. MONOSPACE"
+              onBlur={onBlur}
+              onChangeText={(newValue) => onChange(newValue)}
+              value={value}
+              errorMessage={
+                errors.androidFontName
+                  ? 'Please enter correct typeface name'
+                  : undefined
+              }
+              rightIcon={
+                <TouchableOpacity
+                  onPress={() => {
+                    setValue('androidFontName', undefined);
+                  }}
+                >
+                  <Ionicons name="close" size={24} />
+                </TouchableOpacity>
+              }
+              autoCompleteType={undefined}
+            />
+          )}
+          name="androidFontName"
         />
       </View>
       <View style={CommonStyles.formItem}>

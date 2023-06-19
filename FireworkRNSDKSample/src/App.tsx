@@ -19,7 +19,6 @@ import Cart from './screens/Cart';
 import Checkout from './screens/Checkout';
 import CircleThumbnails from './screens/CircleThumbnails';
 import LinkContent from './screens/LinkContent';
-import EnableCustomClickCartIconCallback from './screens/EnableCustomClickCartIconCallback';
 import EnableCustomCTAClickCallback from './screens/EnableCustomCTAClickCallback';
 import Feed from './screens/Feed';
 import OpenVideo from './screens/OpenVideo';
@@ -160,11 +159,6 @@ const FWNavigationContainer = ({
           name: 'CircleThumbnails',
           component: CircleThumbnails,
           options: { title: 'Circle Thumbnails(iOS)' },
-        })}
-        {renderScreen({
-          name: 'EnableCustomClickCartIconCallback',
-          component: EnableCustomClickCartIconCallback,
-          options: { title: 'Enable Custom Click Cart Icon Callback' },
         })}
       </StackNavigator.Navigator>
     </NavigationContainer>

@@ -2,7 +2,7 @@ import React from 'react';
 
 import { StyleSheet, View } from 'react-native';
 import type { VideoFeedConfiguration } from 'react-native-firework-sdk';
-import { VideoFeed, VideoFeedContentPadding } from 'react-native-firework-sdk';
+import { VideoFeed, VideoFeedPadding } from 'react-native-firework-sdk';
 
 const CircleThumbnails = () => {
   const feedHeight = 200;
@@ -11,7 +11,7 @@ const CircleThumbnails = () => {
   const paddingBottom = 10;
   const paddingLeft = 10;
 
-  const contentPadding: VideoFeedContentPadding = {
+  const contentPadding: VideoFeedPadding = {
     top: paddingTop,
     right: paddingRight,
     bottom: paddingBottom,

@@ -23,5 +23,4 @@ export type RootStackParamList = {
     url: string;
   };
   CircleThumbnails: undefined;
-  EnableCustomClickCartIconCallback: undefined;
 };

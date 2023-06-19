@@ -15,8 +15,8 @@ import { store } from '../store';
 import ShopifyClient from './ShopifyClient';
 import { shopifyDomain } from '../config/Shopify.json';
 
-export default class HostAppShoppingService {
-  private static _instance?: HostAppShoppingService;
+export default class HostAppService {
+  private static _instance?: HostAppService;
 
   public onShopNow?: ShoppingCTACallback = async (event: ShoppingCTAEvent) => {
     console.log('onShopNow event', event);
@@ -152,11 +152,11 @@ export default class HostAppShoppingService {
   };
 
   public static getInstance() {
-    if (!HostAppShoppingService._instance) {
-      HostAppShoppingService._instance = new HostAppShoppingService();
+    if (!HostAppService._instance) {
+      HostAppService._instance = new HostAppService();
     }
 
-    return HostAppShoppingService._instance!;
+    return HostAppService._instance!;
   }
 
   public async closePlayerOrStartFloatingPlayer() {

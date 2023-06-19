@@ -124,23 +124,23 @@ def enableHermes = project.ext.react.get("enableHermes", false);
 def nativeArchitectures = project.getProperties().get("reactNativeDebugArchitectures")
 
 /**
- * env: Production/Staging
- */
-def env = findProperty("FW_ENV")?:"Production"
-
-/**
- * appid
+ * production env
  */
 def fw_appid_production = ""
 def fw_base_url_production = "https://api.fw.tv"
 def fw_pixel_base_url_production = "https://p2.fwpixel.com/"
 def fw_web_socket_production = "wss://api.firework.tv/socket/websocket"
 
-
+/**
+ * staging env
+ */
 def fw_appid_staging = ""
 def fw_base_url_staging = ""
 def fw_pixel_base_url_staging = ""
 def fw_web_socket_staging = ""
+
+  }
+}
 
 android {
   compileSdkVersion rootProject.ext.compileSdkVersion
@@ -150,12 +150,7 @@ android {
     minSdkVersion rootProject.ext.minSdkVersion
     targetSdkVersion rootProject.ext.targetSdkVersion
     versionCode 1
-    versionName "2.2.0"
-
-    manifestPlaceholders["fw_appid"] = env=="Staging" ? fw_appid_staging : fw_appid_production
-    manifestPlaceholders["fw_base_url"] = env=="Staging" ? fw_base_url_staging : fw_base_url_production
-    manifestPlaceholders["fw_pixel_base_url"] = env=="Staging" ? fw_pixel_base_url_staging : fw_pixel_base_url_production
-    manifestPlaceholders["fw_web_socket"] = env=="Staging" ? fw_web_socket_staging : fw_web_socket_production
+    versionName "2.3.0"
   }
   splits {
     abi {
@@ -167,18 +162,10 @@ android {
   }
   signingConfigs {
     debug {
-      storeFile file('debug.keystore')
-      storePassword 'android'
-      keyAlias 'androiddebugkey'
-      keyPassword 'android'
       v1SigningEnabled true
       v2SigningEnabled true
     }
     release {
-      storeFile rootProject.file('loop-release-key.keystore')
-      storePassword   'LoopMeIn!'
-      keyAlias        'dd-key-alias'
-      keyPassword     'LoopMeIn!'
       v1SigningEnabled true
       v2SigningEnabled true
     }
@@ -193,10 +180,10 @@ android {
     // ./gradlew assembleDebug
     // ./gradlew installDebug
     debug {
-      versionNameSuffix "-debug" + (env=="Staging" ? "-staging" : "")
+      versionNameSuffix "-debug"
+      signingConfig signingConfigs.debug
       proguardFiles getDefaultProguardFile("proguard-android.txt"), "proguard-rules.pro"
       minifyEnabled enableProguardInReleaseBuilds
-      signingConfig signingConfigs.release
       if (nativeArchitectures) {
         ndk {
           abiFilters nativeArchitectures.split(',')
@@ -205,12 +192,32 @@ android {
     }
     // ./gradlew assembleRelease
     release {
-      versionNameSuffix env=="Staging" ? "-${env}" : ""
+      versionNameSuffix ""
       // Caution! In production, you need to generate your own keystore file.
       // see https://reactnative.dev/docs/signed-apk-android.
       signingConfig signingConfigs.release
-      minifyEnabled enableProguardInReleaseBuilds
       proguardFiles getDefaultProguardFile("proguard-android.txt"), "proguard-rules.pro"
+      minifyEnabled enableProguardInReleaseBuilds
+    }
+  }
+
+  flavorDimensions "env"
+  productFlavors {
+    staging {
+      dimension "env"
+      versionNameSuffix "-staging"
+      manifestPlaceholders["fw_appid"] = fw_appid_staging
+      manifestPlaceholders["fw_base_url"] = fw_base_url_staging
+      manifestPlaceholders["fw_pixel_base_url"] = fw_pixel_base_url_staging
+      manifestPlaceholders["fw_web_socket"] = fw_web_socket_staging
+    }
+    production {
+      dimension "env"
+      versionNameSuffix ""
+      manifestPlaceholders["fw_appid"] = fw_appid_production
+      manifestPlaceholders["fw_base_url"] = fw_base_url_production
+      manifestPlaceholders["fw_pixel_base_url"] = fw_pixel_base_url_production
+      manifestPlaceholders["fw_web_socket"] = fw_web_socket_production
     }
   }
 }
@@ -251,10 +258,9 @@ task copyDownloadableDepsToLibs(type: Copy) {
   into 'libs'
 }
 
-apply from: file("../../node_modules/react-native-vector-icons/fonts.gradle")
+apply from: file("react-native-vector-icons/fonts.gradle")
 apply from: file("../../node_modules/@react-native-community/cli-platform-android/native_modules.gradle"); applyNativeModulesAppBuildGradle(project)
 
-apply from: 'google.gradle'
 apply from: 'firework.gradle'
 
 apply from: rootProject.file('lint.gradle')
@@ -264,3 +270,13 @@ configurations.all {
     force 'androidx.appcompat:appcompat:1.1.0'
   }
 }
+
+afterEvaluate {
+  try {
+    installDebug.dependsOn installProductionDebug
+  } catch (Exception e) {
+    e.printStackTrace()
+  }
+}
+task installDebug()
+

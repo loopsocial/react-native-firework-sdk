@@ -32,7 +32,7 @@ import {
   changeLinkButtonVisibility,
   setCTAButtonConfiguration,
 } from '../slice/shoppingSlice';
-import HostAppShoppingService from '../utils/HostAppShoppingService';
+import HostAppService from '../utils/HostAppService';
 import CommonStyles from './CommonStyles';
 
 export interface IShoppingConfigurationModalProps {
@@ -201,7 +201,7 @@ const ShoppingConfigurationModal = ({
       FireworkSDK.getInstance().shopping.onCustomClickLinkButton = async (
         event
       ) => {
-        HostAppShoppingService.getInstance().closePlayerOrStartFloatingPlayer();
+        HostAppService.getInstance().closePlayerOrStartFloatingPlayer();
         navigation.navigate('LinkContent', { url: event.url });
       };
     } else {
@@ -214,10 +214,10 @@ const ShoppingConfigurationModal = ({
     };
     if (resultCTAButtonConfiguration.text === 'shopNow') {
       FireworkSDK.getInstance().shopping.onShoppingCTA =
-        HostAppShoppingService.getInstance().onShopNow;
+        HostAppService.getInstance().onShopNow;
     } else {
       FireworkSDK.getInstance().shopping.onShoppingCTA =
-        HostAppShoppingService.getInstance().onAddToCart;
+        HostAppService.getInstance().onAddToCart;
     }
 
     setTimeout(() => {

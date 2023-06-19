@@ -6,7 +6,7 @@ import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 
 import { name as appName } from './app.json';
 import App from './src/App';
-import HostAppShoppingService from './src/utils/HostAppShoppingService';
+import HostAppService from './src/utils/HostAppService';
 
 Ionicons.loadFont().catch((e) => {
   console.log('[example] Ionicons.loadFont error', e);
@@ -37,16 +37,16 @@ FireworkSDK.getInstance().onVideoFeedClick = (event) => {
 };
 
 FireworkSDK.getInstance().shopping.onShoppingCTA =
-  HostAppShoppingService.getInstance().onAddToCart;
+  HostAppService.getInstance().onAddToCart;
 
 FireworkSDK.getInstance().shopping.onCustomClickCartIcon =
-  HostAppShoppingService.getInstance().onCustomClickCartIcon;
+  HostAppService.getInstance().onCustomClickCartIcon;
 
 FireworkSDK.getInstance().shopping.onUpdateProductDetails =
-  HostAppShoppingService.getInstance().onUpdateProductDetails;
+  HostAppService.getInstance().onUpdateProductDetails;
 
 FireworkSDK.getInstance().onCustomCTAClick =
-  HostAppShoppingService.getInstance().onCustomCTAClick;
+  HostAppService.getInstance().onCustomCTAClick;
 
 FireworkSDK.getInstance().liveStream.onLiveStreamEvent = (event) => {
   console.log('[example] onLiveStreamEvent', event);
@@ -57,7 +57,7 @@ FireworkSDK.getInstance().liveStream.onLiveStreamChatEvent = (event) => {
 };
 
 FireworkSDK.getInstance().shopping.cartIconVisible =
-  HostAppShoppingService.getInstance().shouldShowCart();
+  HostAppService.getInstance().shouldShowCart();
 
 FireworkSDK.getInstance().shareBaseURL = 'https://fw.tv';
 

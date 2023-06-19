@@ -11,6 +11,9 @@ import com.facebook.soloader.SoLoader;
 import java.lang.reflect.InvocationTargetException;
 import java.util.List;
 
+import com.firework.livestream.multihost.MultiHostLivestreamPlayerInitializer;
+import com.firework.livestream.singlehost.SingleHostLivestreamPlayerInitializer;
+import com.fireworksdk.bridge.reactnative.FWReactNativeSDK;
 
 public class MainApplication extends Application implements ReactApplication {
 
@@ -46,6 +49,9 @@ public class MainApplication extends Application implements ReactApplication {
     super.onCreate();
     SoLoader.init(this, /* native exopackage */ false);
     initializeFlipper(this, getReactNativeHost().getReactInstanceManager()); // Remove this line if you don't want Flipper enabled
+
+    FWReactNativeSDK.INSTANCE.addLivestreamPlayerInitializer(new SingleHostLivestreamPlayerInitializer());
+    FWReactNativeSDK.INSTANCE.addLivestreamPlayerInitializer(new MultiHostLivestreamPlayerInitializer());
   }
 
   /**
