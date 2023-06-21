@@ -1,5 +1,11 @@
 # CHANGELOG
 
+## [2.3.1]
+
+## Changed
+
+- Update `FireworkVideo` library version that is used to build `FireworkVideoUI` library
+
 ## [2.3.0]
 
 ### Added
@@ -12,7 +18,7 @@
 - Support story block configuration on the Android side
 - Support configuring feed item spacing on the Android side
 
-## Changes
+## Changed
 
 - Change cart icon from default display to default hidden on the iOS side
 
