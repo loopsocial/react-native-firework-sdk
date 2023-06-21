@@ -1,5 +1,11 @@
 # CHANGELOG
 
+## [1.11.1]
+
+### Changed
+
+- Update `FireworkVideo` library version that is used to build `FireworkVideoUI` library
+
 ## [1.11.0]
 
 ### Added
