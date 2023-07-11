@@ -38,6 +38,7 @@
 <a href="IVideoFeedProps.html#onVideoFeedLoadFinished" class="tsd-index-link tsd-kind-property tsd-parent-kind-interface"><svg class="tsd-kind-icon" width="24" height="24" viewBox="0 0 24 24"><use href="#icon-1024-path"></use><use href="#icon-1024-text"></use></svg><span>on<wbr/>Video<wbr/>Feed<wbr/>Load<wbr/>Finished?</span></a>
 <a href="IVideoFeedProps.html#playlist" class="tsd-index-link tsd-kind-property tsd-parent-kind-interface"><svg class="tsd-kind-icon" width="24" height="24" viewBox="0 0 24 24"><use href="#icon-1024-path"></use><use href="#icon-1024-text"></use></svg><span>playlist?</span></a>
 <a href="IVideoFeedProps.html#playlistGroup" class="tsd-index-link tsd-kind-property tsd-parent-kind-interface"><svg class="tsd-kind-icon" width="24" height="24" viewBox="0 0 24 24"><use href="#icon-1024-path"></use><use href="#icon-1024-text"></use></svg><span>playlist<wbr/>Group?</span></a>
+<a href="IVideoFeedProps.html#productIds" class="tsd-index-link tsd-kind-property tsd-parent-kind-interface"><svg class="tsd-kind-icon" width="24" height="24" viewBox="0 0 24 24"><use href="#icon-1024-path"></use><use href="#icon-1024-text"></use></svg><span>product<wbr/>Ids?</span></a>
 <a href="IVideoFeedProps.html#source" class="tsd-index-link tsd-kind-property tsd-parent-kind-interface"><svg class="tsd-kind-icon" width="24" height="24" viewBox="0 0 24 24"><use href="#icon-1024-path"></use><use href="#icon-1024-text"></use></svg><span>source</span></a>
 <a href="IVideoFeedProps.html#style" class="tsd-index-link tsd-kind-property tsd-parent-kind-interface"><svg class="tsd-kind-icon" width="24" height="24" viewBox="0 0 24 24"><use href="#icon-1024-path"></use><use href="#icon-1024-text"></use></svg><span>style?</span></a>
 <a href="IVideoFeedProps.html#videoFeedConfiguration" class="tsd-index-link tsd-kind-property tsd-parent-kind-interface"><svg class="tsd-kind-icon" width="24" height="24" viewBox="0 0 24 24"><use href="#icon-1024-path"></use><use href="#icon-1024-text"></use></svg><span>video<wbr/>Feed<wbr/>Configuration?</span></a>
@@ -76,7 +77,8 @@
 <div class="tsd-comment tsd-typography"><p>Hashtag filter expression is an s-expression used to provide feeds filtered by hashtags with specified criteria.
 Queries are specified with boolean predicates on what hashtags are there on the video.
 For instance, (and sport food) (or sport food) (and sport (or food comedy)) sport are all valid expressions.
-Non-UTF-8 characters are not allowed. If using boolean predicates, the expression needs to be wrapped with parenthesis.</p>
+Non-UTF-8 characters are not allowed. If using boolean predicates, the expression needs to be wrapped with parenthesis.
+Required when the source is set as hashtagPlaylist.</p>
 </div></section>
 <section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface"><a id="mode" class="tsd-anchor"></a>
 <h3 class="tsd-anchor-link"><code class="tsd-tag ts-flagOptional">Optional</code> <span>mode</span><a href="#mode" aria-label="Permalink" class="tsd-anchor-icon"><svg class="icon icon-tabler icon-tabler-link" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><use href="#icon-anchor-a"></use><use href="#icon-anchor-b"></use><use href="#icon-anchor-c"></use></svg></a></h3>
@@ -111,10 +113,16 @@ Non-UTF-8 characters are not allowed. If using boolean predicates, the expressio
 <div class="tsd-signature">playlist<wbr/>Group<span class="tsd-signature-symbol">?:</span> <span class="tsd-signature-type">string</span></div>
 <div class="tsd-comment tsd-typography"><p>PlaylistGroup id of the feed. Required when the source is set as playlistGroup. Only supported on iOS.</p>
 </div></section>
+<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface"><a id="productIds" class="tsd-anchor"></a>
+<h3 class="tsd-anchor-link"><code class="tsd-tag ts-flagOptional">Optional</code> <span>product<wbr/>Ids</span><a href="#productIds" aria-label="Permalink" class="tsd-anchor-icon"><svg class="icon icon-tabler icon-tabler-link" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><use href="#icon-anchor-a"></use><use href="#icon-anchor-b"></use><use href="#icon-anchor-c"></use></svg></a></h3>
+<div class="tsd-signature">product<wbr/>Ids<span class="tsd-signature-symbol">?:</span> <span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">[]</span></div>
+<div class="tsd-comment tsd-typography"><p>Product ids used to generate the sku feed</p>
+</div></section>
 <section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface"><a id="source" class="tsd-anchor"></a>
 <h3 class="tsd-anchor-link"><span>source</span><a href="#source" aria-label="Permalink" class="tsd-anchor-icon"><svg class="icon icon-tabler icon-tabler-link" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><use href="#icon-anchor-a"></use><use href="#icon-anchor-b"></use><use href="#icon-anchor-c"></use></svg></a></h3>
 <div class="tsd-signature">source<span class="tsd-signature-symbol">:</span> <a href="../types/VideoFeedSource.html" class="tsd-signature-type" data-tsd-kind="Type alias">VideoFeedSource</a></div>
-<div class="tsd-comment tsd-typography"><p>One of five available video feed sources.The playlistGroup is only supported on iOS</p>
+<div class="tsd-comment tsd-typography"><p>One of five available video feed sources.The playlistGroup is only supported on iOS.
+Defaults to discover.</p>
 </div></section>
 <section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface"><a id="style" class="tsd-anchor"></a>
 <h3 class="tsd-anchor-link"><code class="tsd-tag ts-flagOptional">Optional</code> <span>style</span><a href="#style" aria-label="Permalink" class="tsd-anchor-icon"><svg class="icon icon-tabler icon-tabler-link" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><use href="#icon-anchor-a"></use><use href="#icon-anchor-b"></use><use href="#icon-anchor-c"></use></svg></a></h3>
@@ -163,6 +171,7 @@ Non-UTF-8 characters are not allowed. If using boolean predicates, the expressio
 <li class="tsd-kind-property tsd-parent-kind-interface"><a href="IVideoFeedProps.html#onVideoFeedLoadFinished" class="tsd-index-link"><svg class="tsd-kind-icon" width="24" height="24" viewBox="0 0 24 24"><use href="#icon-1024-path"></use><use href="#icon-1024-text"></use></svg>on<wbr/>Video<wbr/>Feed<wbr/>Load<wbr/>Finished?</a></li>
 <li class="tsd-kind-property tsd-parent-kind-interface"><a href="IVideoFeedProps.html#playlist" class="tsd-index-link"><svg class="tsd-kind-icon" width="24" height="24" viewBox="0 0 24 24"><use href="#icon-1024-path"></use><use href="#icon-1024-text"></use></svg>playlist?</a></li>
 <li class="tsd-kind-property tsd-parent-kind-interface"><a href="IVideoFeedProps.html#playlistGroup" class="tsd-index-link"><svg class="tsd-kind-icon" width="24" height="24" viewBox="0 0 24 24"><use href="#icon-1024-path"></use><use href="#icon-1024-text"></use></svg>playlist<wbr/>Group?</a></li>
+<li class="tsd-kind-property tsd-parent-kind-interface"><a href="IVideoFeedProps.html#productIds" class="tsd-index-link"><svg class="tsd-kind-icon" width="24" height="24" viewBox="0 0 24 24"><use href="#icon-1024-path"></use><use href="#icon-1024-text"></use></svg>product<wbr/>Ids?</a></li>
 <li class="tsd-kind-property tsd-parent-kind-interface"><a href="IVideoFeedProps.html#source" class="tsd-index-link"><svg class="tsd-kind-icon" width="24" height="24" viewBox="0 0 24 24"><use href="#icon-1024-path"></use><use href="#icon-1024-text"></use></svg>source</a></li>
 <li class="tsd-kind-property tsd-parent-kind-interface"><a href="IVideoFeedProps.html#style" class="tsd-index-link"><svg class="tsd-kind-icon" width="24" height="24" viewBox="0 0 24 24"><use href="#icon-1024-path"></use><use href="#icon-1024-text"></use></svg>style?</a></li>
 <li class="tsd-kind-property tsd-parent-kind-interface"><a href="IVideoFeedProps.html#videoFeedConfiguration" class="tsd-index-link"><svg class="tsd-kind-icon" width="24" height="24" viewBox="0 0 24 24"><use href="#icon-1024-path"></use><use href="#icon-1024-text"></use></svg>video<wbr/>Feed<wbr/>Configuration?</a></li>
