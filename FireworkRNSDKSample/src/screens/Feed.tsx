@@ -55,6 +55,7 @@ const Feed = () => {
   const playlistGroup = route.params?.playlistGroup;
   const dynamicContentParameters = route.params?.dynamicContentParameters;
   const hashtagFilterExpression = route.params?.hashtagFilterExpression;
+  const productIds = route.params?.productIds;
 
   const feedRef = useRef<VideoFeed>(null);
   const [feedError, setFeedError] = useState<FWError | undefined>(undefined);
@@ -188,7 +189,15 @@ const Feed = () => {
     return (
       <View
         style={
-          mode === 'row' ? { height: 220 } : { flex: 1, alignItems: 'center' }
+          mode === 'row'
+            ? {
+                height: 220,
+                paddingHorizontal: Platform.OS === 'android' ? 10 : 0,
+              }
+            : {
+                flex: 1,
+                alignItems: 'center',
+              }
         }
       >
         <VideoFeed
@@ -207,6 +216,7 @@ const Feed = () => {
           playlistGroup={playlistGroup}
           dynamicContentParameters={dynamicContentParameters}
           hashtagFilterExpression={hashtagFilterExpression}
+          productIds={productIds}
           mode={mode}
           videoFeedConfiguration={{
             ...feedConfiguration,
@@ -263,7 +273,9 @@ const Feed = () => {
             playlist={playlist}
             dynamicContentParameters={dynamicContentParameters}
             hashtagFilterExpression={hashtagFilterExpression}
+            productIds={productIds}
             enablePictureInPicture
+            cornerRadius={30}
             adConfiguration={{ requiresAds: false, adsFetchTimeout: 10 }}
             storyBlockConfiguration={storyBlockConfiguration}
             onStoryBlockLoadFinished={(error?: FWError) => {
@@ -423,7 +435,7 @@ const styles = StyleSheet.create({
   storyBlockActionButton: {
     width: 100,
   },
-  storyBlock: { flex: 1, width: '80%', borderRadius: 30 },
+  storyBlock: { flex: 1, width: '80%' },
 });
 
 export default Feed;

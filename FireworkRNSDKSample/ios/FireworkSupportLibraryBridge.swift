@@ -7,7 +7,8 @@
 
 import Foundation
 import FireworkVideo
-import FireworkVideoIVSSupport
+//import FireworkVideoIVSSupport
+//import FireworkVideoAgoraSupport
 
 #if canImport(FireworkVideoUI)
 import FireworkVideoUI
@@ -26,8 +27,8 @@ public class FireworkSupportLibraryBridge: NSObject {
 //  @objc public static func enableMultiHostPlayback() {
 //    FireworkVideoSDK.enableMultiHostPlayback()
 //  }
-  
-  @objc public static func enableIVSPlayback() {
-    FireworkVideoSDK.enableIVSPlayback()
-  }
+//
+//  @objc public static func enableIVSPlayback() {
+//    FireworkVideoSDK.enableIVSPlayback()
+//  }
 }

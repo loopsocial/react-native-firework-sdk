@@ -6,6 +6,7 @@ import {
   StyleSheet,
   GestureResponderEvent,
   I18nManager,
+  Platform,
 } from 'react-native';
 import type { BottomTabNavigationProp } from '@react-navigation/bottom-tabs';
 import type { NativeStackNavigationProp } from '@react-navigation/native-stack';
@@ -18,6 +19,8 @@ import RNRestart from 'react-native-restart';
 import FireworkSDK from 'react-native-firework-sdk';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import StorageKey from '../constants/StorageKey';
+
+const fwNativeVersionOfAndroid = '6.3.4';
 
 type MoreScreenNavigationProp = CompositeNavigationProp<
   BottomTabNavigationProp<TabParamsList, 'More'>,
@@ -34,6 +37,7 @@ function More() {
   const [currentDisplayLanguage, setCurrentDisplayLanguage] = useState<
     string | null
   >(null);
+
   const { showActionSheetWithOptions } = useActionSheet();
   const getDisplayLanguage = (language: string) => {
     if (language === 'ar') {
@@ -82,7 +86,8 @@ function More() {
       console.log('handleChangeAppLanguage e', e);
     }
   };
-  const dataList: MoreListItemData[] = [
+
+  let dataList: MoreListItemData[] = [
     {
       title: 'Set Global Share Base URL',
       pressCallback: (_) => {
@@ -156,6 +161,13 @@ function More() {
     },
   ];
 
+  if (Platform.OS === 'android') {
+    dataList.push({
+      title: `Firework Android SDK Version: ${fwNativeVersionOfAndroid}`,
+      pressCallback: (_) => {},
+    });
+  }
+
   useEffect(() => {
     const sycnCurrentDisplayLanguageFromStorage = async () => {
       try {
@@ -166,6 +178,7 @@ function More() {
 
     sycnCurrentDisplayLanguageFromStorage();
   }, []);
+
   return (
     <View style={styles.container}>
       <ScrollView style={styles.scrollView}>

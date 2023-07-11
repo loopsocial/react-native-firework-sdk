@@ -50,10 +50,10 @@ export function OpenVideoForm() {
 
   const onOpenVideoPlayer = (data: OpenVideoFormData) => {
     console.log('OpenVideoForm data', data);
-    FireworkSDK.getInstance().openVideoPlayer(
-      data.videoURL,
-      playerConfiguration
-    );
+    FireworkSDK.getInstance().openVideoPlayer(data.videoURL, {
+      ...playerConfiguration,
+      enablePictureInPicture: true,
+    });
   };
 
   return (

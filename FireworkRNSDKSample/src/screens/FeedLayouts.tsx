@@ -19,6 +19,7 @@ import DynamicContentInputModal from '../components/DynamicContentInputModal';
 import HashtagPlaylistInputModal from '../components/HashtagPlaylistInputModal';
 import PlaylistGroupInputModal from '../components/PlaylistGroupInputModal';
 import PlaylistInputModal from '../components/PlaylistInputModal';
+import SkuInputModal from '../components/SkuInputModal';
 import {
   defaultChannelIdArray,
   defaultDynamicContentInfoArray,
@@ -53,16 +54,18 @@ export default function FeedLayouts() {
     hashtagPlaylistInputModalVisible,
     setHashtagPlaylistInputModalVisible,
   ] = useState(false);
-  const dataList: FeedListItemData[] = [
+  const [skuInputModalVisible, setSkuInputModalVisible] = useState(false);
+
+  let dataList: FeedListItemData[] = [
     {
       title: 'Discover Feed',
-      pressCallback: (_) => {
+      pressCallback: () => {
         navigation.navigate('Feed', { source: 'discover' });
       },
     },
     {
       title: 'Channel Feed',
-      pressCallback: (_) => {
+      pressCallback: () => {
         const options = [...defaultChannelIdArray, 'Custom', 'Cancel'];
         const cancelButtonIndex = defaultChannelIdArray.length + 1;
         const customButtonIndex = defaultChannelIdArray.length;
@@ -90,7 +93,7 @@ export default function FeedLayouts() {
     },
     {
       title: 'Playlist Feed',
-      pressCallback: (_) => {
+      pressCallback: () => {
         const options = [
           ...defaultPlaylistInfoArray.map(
             (item) =>
@@ -126,7 +129,7 @@ export default function FeedLayouts() {
     },
     {
       title: 'Playlist Group Feed',
-      pressCallback: (_) => {
+      pressCallback: () => {
         const options = [
           ...defaultPlaylistGroupInfoArray.map(
             (item) => `PlaylistGroupId: ${item.playlistGroupId}`
@@ -161,7 +164,7 @@ export default function FeedLayouts() {
     },
     {
       title: 'Dynamic Content Feed',
-      pressCallback: (_) => {
+      pressCallback: () => {
         const options = [
           ...defaultDynamicContentInfoArray.map((item) => item.name),
           'Custom',
@@ -195,11 +198,18 @@ export default function FeedLayouts() {
     },
     {
       title: 'Hashtag Playlist Feed',
-      pressCallback: (_) => {
+      pressCallback: () => {
         setHashtagPlaylistInputModalVisible(true);
       },
     },
+    {
+      title: 'SKU Feed',
+      pressCallback: () => {
+        setSkuInputModalVisible(true);
+      },
+    },
   ];
+
   return (
     <View style={styles.container}>
       <ScrollView style={styles.scrollView}>
@@ -286,6 +296,20 @@ export default function FeedLayouts() {
             source: 'hashtagPlaylist',
             channel: channelId,
             hashtagFilterExpression: hashtagFilterExpression,
+          });
+        }}
+      />
+      <SkuInputModal
+        visible={skuInputModalVisible}
+        onRequestClose={() => {
+          setSkuInputModalVisible(false);
+        }}
+        onSubmit={(channelId, productIds) => {
+          setSkuInputModalVisible(false);
+          navigation.navigate('Feed', {
+            source: 'sku',
+            channel: channelId,
+            productIds: productIds,
           });
         }}
       />

@@ -14,6 +14,7 @@ export type RootStackParamList = {
     playlistGroup?: string;
     dynamicContentParameters?: { [key: string]: string[] };
     hashtagFilterExpression?: string;
+    productIds?: string[];
   };
   Cart: undefined;
   Checkout: undefined;
