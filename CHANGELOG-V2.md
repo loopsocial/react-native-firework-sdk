@@ -2,7 +2,7 @@
 
 ## [2.3.1]
 
-## Changed
+### Changed
 
 - Update `FireworkVideo` library version that is used to build `FireworkVideoUI` library
 
@@ -17,6 +17,7 @@
 - Support app-level language setting on the Android side
 - Support story block configuration on the Android side
 - Support configuring feed item spacing on the Android side
+- Support polls and questions in livestream and short videos on the Android side
 
 ## Changed
 
