@@ -1,5 +1,17 @@
 # CHANGELOG
 
+## [2.4.0]
+
+### Added
+
+- Support SKU feed and story block
+- Support polls and questions in short videos on the iOS side
+
+### Changed
+
+- Update Firework iOS SDK version to 1.11.0
+- Update Firework Android SDK version to 6.3.4
+
 ## [2.3.1]
 
 ### Changed
