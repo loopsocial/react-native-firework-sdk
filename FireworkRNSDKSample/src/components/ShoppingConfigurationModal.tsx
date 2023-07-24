@@ -12,7 +12,7 @@ import {
   TouchableWithoutFeedback,
   View,
 } from 'react-native';
-import { Button, CheckBox, Input, ButtonGroup } from 'react-native-elements';
+import { Button, ButtonGroup, CheckBox, Input } from 'react-native-elements';
 import type {
   ShoppingCTAButtonConfiguration,
   ShoppingCTAButtonText,
@@ -20,12 +20,8 @@ import type {
 import FireworkSDK from 'react-native-firework-sdk';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 
-import { useNavigation } from '@react-navigation/native';
-import type { NativeStackNavigationProp } from '@react-navigation/native-stack';
-
 import Patterns from '../constants/Patterns';
 import { useAppDispatch, useAppSelector } from '../hooks/reduxHooks';
-import type { RootStackParamList } from '../screens/paramList/RootStackParamList';
 import {
   changeCartIconVisibility,
   changeCustomClickLinkButtonAbility,
@@ -159,9 +155,6 @@ const ShoppingConfigurationModal = ({
     syncFormValuesFromConfiguration,
   ]);
 
-  const navigation =
-    useNavigation<NativeStackNavigationProp<RootStackParamList>>();
-
   const onSave = (data: ShoppingConfigurationFormData) => {
     console.log('onSave CartConfigurationFormData', data);
     dispatch(changeCartIconVisibility(data.showCartIcon ?? true));
@@ -202,7 +195,9 @@ const ShoppingConfigurationModal = ({
         event
       ) => {
         HostAppService.getInstance().closePlayerOrStartFloatingPlayer();
-        navigation.navigate('LinkContent', { url: event.url });
+        HostAppService.getInstance().navigate('LinkContent', {
+          url: event.url,
+        });
       };
     } else {
       FireworkSDK.getInstance().shopping.onCustomClickLinkButton = undefined;

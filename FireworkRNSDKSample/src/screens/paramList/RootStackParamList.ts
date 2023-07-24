@@ -24,4 +24,5 @@ export type RootStackParamList = {
     url: string;
   };
   CircleThumbnails: undefined;
+  EnablePushingRNContainer: undefined;
 };

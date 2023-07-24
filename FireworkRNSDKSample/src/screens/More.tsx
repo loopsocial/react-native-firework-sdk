@@ -168,6 +168,13 @@ function More() {
     });
   }
 
+  dataList.push({
+    title: 'Enable Pushing RN Container',
+    pressCallback: (_) => {
+      navigation.push('EnablePushingRNContainer');
+    },
+  });
+
   useEffect(() => {
     const sycnCurrentDisplayLanguageFromStorage = async () => {
       try {

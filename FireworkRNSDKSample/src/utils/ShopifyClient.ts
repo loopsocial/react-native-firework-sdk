@@ -32,8 +32,12 @@ export default class ShopifyClient {
   }
 
   public parseId(gid: string): string {
-    const decodedGid = Base64.decode(gid);
-    const splitArray = decodedGid.split('/');
+    let rDecodedGid = gid;
+    try {
+      const decodedGid = Base64.decode(gid);
+      rDecodedGid = decodedGid;
+    } catch (e) {}
+    const splitArray = rDecodedGid.split('/');
     if (splitArray.length > 0) {
       return splitArray[splitArray.length - 1];
     }

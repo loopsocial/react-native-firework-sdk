@@ -1,11 +1,13 @@
 import { AppRegistry } from 'react-native';
 import FireworkSDK from 'react-native-firework-sdk';
 
-import { name as appName } from './app.json';
+import { name as appName, topName as topAppName } from './app.json';
 import App from './src/App';
 import HostAppService from './src/utils/HostAppService';
+import TopApp from './src/TopApp';
 
 AppRegistry.registerComponent(appName, () => App);
+AppRegistry.registerComponent(topAppName, () => TopApp);
 
 FireworkSDK.getInstance().debugLogsEnabled = false;
 

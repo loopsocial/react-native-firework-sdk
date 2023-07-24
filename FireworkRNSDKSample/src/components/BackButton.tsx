@@ -1,31 +1,21 @@
 import React from 'react';
-import { View, StyleSheet, TouchableOpacity, Platform } from 'react-native';
+
+import { Platform, StyleSheet, TouchableOpacity, View } from 'react-native';
 import Ionicons from 'react-native-vector-icons/Ionicons';
-import { useNavigation } from '@react-navigation/native';
 
 export interface IBackButtonProps {
   tintColor?: string;
   size?: number;
-  customBack?: () => void;
+  onBack?: () => void;
 }
 
 const BackButton = ({
   tintColor = '#000000',
-  customBack,
+  onBack,
   size = 30,
 }: IBackButtonProps) => {
-  const navigation = useNavigation();
-
   return (
-    <TouchableOpacity
-      onPress={() => {
-        if (customBack) {
-          customBack();
-        } else {
-          navigation.goBack();
-        }
-      }}
-    >
+    <TouchableOpacity onPress={onBack}>
       <View style={styles.container}>
         <Ionicons
           name={Platform.OS === 'ios' ? 'chevron-back' : 'arrow-back'}

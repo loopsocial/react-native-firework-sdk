@@ -14,6 +14,8 @@ import { addCartItem } from '../slice/shoppingSlice';
 import { store } from '../store';
 import ShopifyClient from './ShopifyClient';
 import { shopifyDomain } from '../config/Shopify.json';
+import type { RootStackParamList } from '../screens/paramList/RootStackParamList';
+import { topName as topAppName } from '../../app.json';
 
 export default class HostAppService {
   private static _instance?: HostAppService;
@@ -22,7 +24,7 @@ export default class HostAppService {
     console.log('onShopNow event', event);
 
     await this.closePlayerOrStartFloatingPlayer();
-    RootNavigation.navigate('LinkContent', { url: event.url });
+    this.navigate('LinkContent', { url: event.url });
 
     return {
       res: 'success',
@@ -35,7 +37,7 @@ export default class HostAppService {
     console.log('onAddToCart event', event);
     if (!this.shouldShowCart()) {
       await this.closePlayerOrStartFloatingPlayer();
-      RootNavigation.navigate('LinkContent', { url: event.url });
+      this.navigate('LinkContent', { url: event.url });
       return {
         res: 'success',
       };
@@ -48,7 +50,7 @@ export default class HostAppService {
       if (!shopifyProduct) {
         console.log('[example] fetchProduct error: product is empty.');
         await this.closePlayerOrStartFloatingPlayer();
-        RootNavigation.navigate('LinkContent', { url: event.url });
+        this.navigate('LinkContent', { url: event.url });
         return {
           res: 'success',
         };
@@ -60,7 +62,7 @@ export default class HostAppService {
       if (!variant) {
         console.log('[example] fetchProduct error: variant is empty.');
         await this.closePlayerOrStartFloatingPlayer();
-        RootNavigation.navigate('LinkContent', { url: event.url });
+        this.navigate('LinkContent', { url: event.url });
         return {
           res: 'success',
         };
@@ -83,15 +85,14 @@ export default class HostAppService {
       store.dispatch(addCartItem(cartItem));
       const cartItemCount = store.getState().shopping.cartItems.length;
       console.log('cartItemCount', cartItemCount, 'type', typeof cartItemCount);
-      await this.closePlayerOrStartFloatingPlayer();
-      RootNavigation.navigate('Cart');
       return {
         res: 'success',
+        tips: 'Added to cart',
       };
     } catch (e) {
       console.log('[example] fetchProduct error', e);
       await this.closePlayerOrStartFloatingPlayer();
-      RootNavigation.navigate('LinkContent', { url: event.url });
+      this.navigate('LinkContent', { url: event.url });
       return {
         res: 'success',
       };
@@ -102,14 +103,14 @@ export default class HostAppService {
     console.log('[example] onCustomClickCartIcon');
     await this.closePlayerOrStartFloatingPlayer();
     if (this.shouldShowCart()) {
-      RootNavigation.navigate('Cart');
+      this.navigate('Cart');
     }
   };
 
   public onCustomCTAClick?: CustomCTAClickCallback = (event) => {
     if (event.url) {
       this.closePlayerOrStartFloatingPlayer().then(() => {
-        RootNavigation.navigate('LinkContent', { url: event.url });
+        this.navigate('LinkContent', { url: event.url });
       });
     }
   };
@@ -160,10 +161,28 @@ export default class HostAppService {
   }
 
   public async closePlayerOrStartFloatingPlayer() {
+    if (store.getState().navigation.enablePushingRNContainer) {
+      return;
+    }
+
     const result =
       await FireworkSDK.getInstance().navigator.startFloatingPlayer();
     if (!result) {
       await FireworkSDK.getInstance().navigator.popNativeContainer();
+    }
+  }
+
+  public async navigate(routeName: keyof RootStackParamList, params?: any) {
+    if (store.getState().navigation.enablePushingRNContainer) {
+      FireworkSDK.getInstance().navigator.pushRNContainer({
+        appKey: topAppName,
+        appProps: {
+          initialRouteName: routeName,
+          initialParams: params,
+        },
+      });
+    } else {
+      RootNavigation.navigate(routeName, params);
     }
   }
 

@@ -29,24 +29,13 @@ import { store } from './store';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import StorageKey from './constants/StorageKey';
 import SetShareBaseURL from './screens/SetShareBaseURL';
+import EnablePushingRNContainer from './screens/EnablePushingRNContainer';
 
 const StackNavigator = createNativeStackNavigator<RootStackParamList>();
 
 type AppRouteName = keyof RootStackParamList;
-export interface IFWNavigationContainer {
-  initialRouteName?: keyof RootStackParamList;
-  initialParams?: any;
-}
-const FWNavigationContainer = ({
-  initialRouteName, //If initialRouteName is not equal to undefined, it indicates this is a new native container.
-  initialParams,
-}: IFWNavigationContainer) => {
-  console.log(
-    'FWNavigationContainer initialRouteName',
-    initialRouteName,
-    'initialParams',
-    initialParams
-  );
+
+const FWNavigationContainer = () => {
   useCartIconVisibilityEffect();
   useCartItemCountEffect();
   useEffect(() => {
@@ -56,10 +45,8 @@ const FWNavigationContainer = ({
         FireworkSDK.getInstance().changeAppLanguage(language);
       } catch (_) {}
     };
-    if (!initialRouteName) {
-      sycnCurrentLanguageFromStorage();
-    }
-  }, [initialRouteName]);
+    sycnCurrentLanguageFromStorage();
+  }, []);
 
   const renderScreen = ({
     name,
@@ -70,47 +57,38 @@ const FWNavigationContainer = ({
     options?: any;
     component: React.ComponentType<any>;
   }) => {
-    const isFirstScreenForNewNativeContainer = initialRouteName === name;
     return (
       <StackNavigator.Screen
         name={name}
-        initialParams={
-          isFirstScreenForNewNativeContainer ? initialParams : undefined
-        }
         component={component}
-        options={{
-          ...options,
-          headerLeft: isFirstScreenForNewNativeContainer
-            ? ({ tintColor }) => {
-                return (
-                  <BackButton
-                    tintColor={tintColor}
-                    size={30}
-                    customBack={() => {
-                      FireworkSDK.getInstance().navigator.popNativeContainer();
-                    }}
-                  />
-                );
-              }
-            : undefined,
-          headerBackVisible: isFirstScreenForNewNativeContainer ? false : true,
-        }}
+        options={options}
       />
     );
   };
 
   return (
-    <NavigationContainer ref={initialRouteName ? undefined : navigationRef}>
+    <NavigationContainer ref={navigationRef}>
       <StackNavigator.Navigator
-        initialRouteName={initialRouteName}
-        screenOptions={{
+        initialRouteName="Tab"
+        screenOptions={({ navigation }) => ({
           headerTitleAlign: 'center',
           headerBackTitleVisible: false,
           headerBackButtonMenuEnabled: false,
-          headerLeft: ({ tintColor }) => {
-            return <BackButton tintColor={tintColor} size={30} />;
+          headerBackVisible: false,
+          headerLeft: ({ tintColor, canGoBack }) => {
+            return (
+              <BackButton
+                onBack={() => {
+                  if (canGoBack) {
+                    navigation.goBack();
+                  }
+                }}
+                tintColor={tintColor}
+                size={30}
+              />
+            );
           },
-        }}
+        })}
       >
         {renderScreen({
           name: 'Tab',
@@ -149,6 +127,7 @@ const FWNavigationContainer = ({
         {renderScreen({
           name: 'Checkout',
           component: Checkout,
+          options: { title: 'Checkout(RN page)' },
         })}
         {renderScreen({
           name: 'LinkContent',
@@ -160,15 +139,17 @@ const FWNavigationContainer = ({
           component: CircleThumbnails,
           options: { title: 'Circle Thumbnails(iOS)' },
         })}
+        {renderScreen({
+          name: 'EnablePushingRNContainer',
+          component: EnablePushingRNContainer,
+          options: { title: 'Enable Pushing RN Container' },
+        })}
       </StackNavigator.Navigator>
     </NavigationContainer>
   );
 };
 
-export interface IAppProps {
-  initialRouteName?: keyof RootStackParamList;
-  initialParams?: any;
-}
+export interface IAppProps {}
 export default function App(props: IAppProps) {
   return (
     <Provider store={store}>

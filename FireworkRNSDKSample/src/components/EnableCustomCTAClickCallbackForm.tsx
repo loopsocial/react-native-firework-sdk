@@ -33,7 +33,9 @@ const EnableCustomCTAClickCallbackForm = () => {
       FireworkSDK.getInstance().onCustomCTAClick = (event) => {
         if (event.url) {
           HostAppService.getInstance().closePlayerOrStartFloatingPlayer();
-          navigation.navigate('LinkContent', { url: event.url });
+          HostAppService.getInstance().navigate('LinkContent', {
+            url: event.url,
+          });
         }
       };
       Toast.show('Enable custom CTA click callback successfully');

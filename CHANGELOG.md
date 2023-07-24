@@ -1,5 +1,12 @@
 # CHANGELOG
 
+## [2.4.1]
+
+### Added
+
+- Support video feed click event callback on iOS when SDK init method is called on native side
+- Support RN page overlaying full-screen player
+
 ## [2.4.0]
 
 ### Added
