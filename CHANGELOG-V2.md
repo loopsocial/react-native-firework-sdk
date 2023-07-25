@@ -1,5 +1,11 @@
 # CHANGELOG
 
+## [2.4.2]
+
+### Fixed
+
+- Fix the RTL issues on the iOS side
+
 ## [2.4.1]
 
 ### Added
