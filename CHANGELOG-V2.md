@@ -1,5 +1,15 @@
 # CHANGELOG
 
+## [2.5.0]
+
+### Added
+
+- [iOS] New product card provided in short video
+- [iOS] New content source for single video or live stream for video feed and story block
+- [iOS] New product detail page
+- [iOS] Ability to define custom navigation handling when user taps on product card
+- [iOS] Ability to customize the images of the full screen player buttons namely: video detail button, mute/unmute button, close button, play/pause button
+
 ## [2.4.2]
 
 ### Fixed
