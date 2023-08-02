@@ -1,5 +1,13 @@
 # CHANGELOG
 
+## [2.5.1]
+
+### Added
+
+- Export `CustomTapProductCardEvent` interface
+- Export `VideoPlayerButtonConfiguration` interface
+- Export `Buttoninfo` interface
+
 ## [2.5.0]
 
 ### Added
