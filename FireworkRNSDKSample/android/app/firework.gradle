@@ -1,6 +1,9 @@
 android {
   packagingOptions {
-    exclude 'META-INF/*.kotlin_module'
+    exclude 'META-INF/annotation.kotlin_module'
+    exclude 'META-INF/lifecycle-viewmodel_release.kotlin_module'
+    exclude 'META-INF/annotation-experimental_release.kotlin_module'
+    exclude 'META-INF/kotlin-stdlib.kotlin_module'
   }
 }
 

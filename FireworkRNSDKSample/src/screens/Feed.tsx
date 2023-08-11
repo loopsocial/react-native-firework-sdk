@@ -56,7 +56,6 @@ const Feed = () => {
   const dynamicContentParameters = route.params?.dynamicContentParameters;
   const hashtagFilterExpression = route.params?.hashtagFilterExpression;
   const productIds = route.params?.productIds;
-  const contentId = route.params?.contentId;
 
   const feedRef = useRef<VideoFeed>(null);
   const [feedError, setFeedError] = useState<FWError | undefined>(undefined);
@@ -218,7 +217,6 @@ const Feed = () => {
           dynamicContentParameters={dynamicContentParameters}
           hashtagFilterExpression={hashtagFilterExpression}
           productIds={productIds}
-          contentId={contentId}
           mode={mode}
           videoFeedConfiguration={{
             ...feedConfiguration,
@@ -276,7 +274,6 @@ const Feed = () => {
             dynamicContentParameters={dynamicContentParameters}
             hashtagFilterExpression={hashtagFilterExpression}
             productIds={productIds}
-            contentId={contentId}
             enablePictureInPicture
             cornerRadius={30}
             adConfiguration={{ requiresAds: false, adsFetchTimeout: 10 }}
