@@ -15,6 +15,7 @@ export type RootStackParamList = {
     dynamicContentParameters?: { [key: string]: string[] };
     hashtagFilterExpression?: string;
     productIds?: string[];
+    contentId?: string;
   };
   Cart: undefined;
   Checkout: undefined;

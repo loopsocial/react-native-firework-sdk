@@ -1,5 +1,8 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
-import type { ShoppingCTAButtonConfiguration } from 'react-native-firework-sdk';
+import type {
+  ShoppingCTAButtonConfiguration,
+  ProductCardConfiguration,
+} from 'react-native-firework-sdk';
 import type CartItem from '../models/CartItem';
 
 export interface CartState {
@@ -12,6 +15,10 @@ export interface CartState {
   defaultLinkButtonHidden: boolean;
   enableCustomClickLinkButton: boolean;
   defaultEnableCustomClickLinkButton: boolean;
+  productCardConfiguration: ProductCardConfiguration;
+  defaultProductCardConfiguration: ProductCardConfiguration;
+  enableCustomTapProductCard: boolean;
+  defaultEnableCustomTapProductCard: boolean;
 }
 
 const initialState: CartState = {
@@ -28,6 +35,16 @@ const initialState: CartState = {
   defaultLinkButtonHidden: false,
   enableCustomClickLinkButton: false,
   defaultEnableCustomClickLinkButton: false,
+  productCardConfiguration: {
+    ctaButtonText: 'shopNow',
+    theme: 'dark',
+  },
+  defaultProductCardConfiguration: {
+    ctaButtonText: 'shopNow',
+    theme: 'dark',
+  },
+  enableCustomTapProductCard: false,
+  defaultEnableCustomTapProductCard: false,
 };
 
 export const shoppingSlice = createSlice({
@@ -62,14 +79,26 @@ export const shoppingSlice = createSlice({
     ) => {
       state.ctaButtonConfiguration = action.payload;
     },
+    setProductCardConfiguration: (
+      state,
+      action: PayloadAction<ProductCardConfiguration>
+    ) => {
+      state.productCardConfiguration = action.payload;
+    },
     changeLinkButtonVisibility: (state, action: PayloadAction<boolean>) => {
       state.linkButtonHidden = action.payload;
     },
-    changeCustomClickLinkButtonAbility: (
+    updateEnableCustomClickLinkButton: (
       state,
       action: PayloadAction<boolean>
     ) => {
       state.enableCustomClickLinkButton = action.payload;
+    },
+    updateEnableCustomTapProductCard: (
+      state,
+      action: PayloadAction<boolean>
+    ) => {
+      state.enableCustomTapProductCard = action.payload;
     },
   },
 });
@@ -79,8 +108,10 @@ export const {
   removeAllCartItems,
   changeCartIconVisibility,
   setCTAButtonConfiguration,
+  setProductCardConfiguration,
   changeLinkButtonVisibility,
-  changeCustomClickLinkButtonAbility,
+  updateEnableCustomClickLinkButton,
+  updateEnableCustomTapProductCard,
 } = shoppingSlice.actions;
 
 export default shoppingSlice.reducer;

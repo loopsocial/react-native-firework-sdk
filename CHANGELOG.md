@@ -1,14 +1,28 @@
 # CHANGELOG
 
-## [2.4.3]
+## [2.5.2]
 
 ### Fixed
 
-- `changeAppLanguage` API affects rendering SVG images
+- `changeAppLanguage` API affects rendering SVG images on iOS
 
-### Fixed
+## [2.5.1]
 
-- Fix the RTL issues on the iOS side
+### Added
+
+- Export `CustomTapProductCardEvent` interface
+- Export `VideoPlayerButtonConfiguration` interface
+- Export `Buttoninfo` interface
+
+## [2.5.0]
+
+### Added
+
+- [iOS] New product card provided in short video
+- [iOS] New content source for single video or live stream for video feed and story block
+- [iOS] New product detail page
+- [iOS] Ability to define custom navigation handling when user taps on product card
+- [iOS] Ability to customize the images of the full screen player buttons namely: video detail button, mute/unmute button, close button, play/pause button
 
 ## [2.4.2]
 
