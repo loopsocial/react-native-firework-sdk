@@ -1,5 +1,15 @@
 # CHANGELOG
 
+## [2.4.3]
+
+### Fixed
+
+- `changeAppLanguage` API affects rendering SVG images
+
+### Fixed
+
+- Fix the RTL issues on the iOS side
+
 ## [2.4.2]
 
 ### Fixed
