@@ -16,6 +16,9 @@ import { Button, ButtonGroup, CheckBox, Input } from 'react-native-elements';
 import type {
   ShoppingCTAButtonConfiguration,
   ShoppingCTAButtonText,
+  ProductCardConfiguration,
+  ProductCardCTAButtonText,
+  ProductCardTheme,
 } from 'react-native-firework-sdk';
 import FireworkSDK from 'react-native-firework-sdk';
 import Ionicons from 'react-native-vector-icons/Ionicons';
@@ -24,9 +27,11 @@ import Patterns from '../constants/Patterns';
 import { useAppDispatch, useAppSelector } from '../hooks/reduxHooks';
 import {
   changeCartIconVisibility,
-  changeCustomClickLinkButtonAbility,
+  updateEnableCustomClickLinkButton,
   changeLinkButtonVisibility,
   setCTAButtonConfiguration,
+  setProductCardConfiguration,
+  updateEnableCustomTapProductCard,
 } from '../slice/shoppingSlice';
 import HostAppService from '../utils/HostAppService';
 import CommonStyles from './CommonStyles';
@@ -36,10 +41,20 @@ export interface IShoppingConfigurationModalProps {
   onRequestClose?: () => void;
 }
 
-const ctaButtonTextList: ShoppingCTAButtonText[] = ['addToCart', 'shopNow'];
+const shoppingCTAButtonTextList: ShoppingCTAButtonText[] = [
+  'addToCart',
+  'shopNow',
+];
+const productCardCTAButtonTextList: ProductCardCTAButtonText[] = [
+  'shopNow',
+  'buyNow',
+];
+const productCardThemeList: ProductCardTheme[] = ['dark', 'light'];
 
 type ShoppingConfigurationFormData = {
-  ctaButtonTextIndex?: number;
+  shoppingCTAButtonTextIndex?: number;
+  productCardCTAButtonTextIndex?: number;
+  productCardThemeIndex?: number;
   ctaButtonBackgroundColor?: string;
   ctaButtonTextColor?: string;
   ctaButtonFontSize?: string;
@@ -47,6 +62,7 @@ type ShoppingConfigurationFormData = {
   showCartIcon?: boolean;
   linkButtonHidden?: boolean;
   enableCustomClickLinkButton?: boolean;
+  enableCustomTapProductCard?: boolean;
 };
 
 type ShoppingConfiguration = {
@@ -54,6 +70,8 @@ type ShoppingConfiguration = {
   ctaButtonConfiguration: ShoppingCTAButtonConfiguration;
   linkButtonHidden: boolean;
   enableCustomClickLinkButton: boolean;
+  productCardConfiguration: ProductCardConfiguration;
+  enableCustomTapProductCard: boolean;
 };
 
 const ShoppingConfigurationModal = ({
@@ -84,6 +102,18 @@ const ShoppingConfigurationModal = ({
   const defaultEnableCustomClickLinkButton = useAppSelector(
     (state) => state.shopping.defaultEnableCustomClickLinkButton
   );
+  const productCardConfiguration = useAppSelector(
+    (state) => state.shopping.productCardConfiguration
+  );
+  const defaultProductCardConfiguration = useAppSelector(
+    (state) => state.shopping.defaultProductCardConfiguration
+  );
+  const enableCustomTapProductCard = useAppSelector(
+    (state) => state.shopping.enableCustomTapProductCard
+  );
+  const defaultEnableCustomTapProductCard = useAppSelector(
+    (state) => state.shopping.defaultEnableCustomTapProductCard
+  );
   const dispatch = useAppDispatch();
 
   const {
@@ -108,15 +138,45 @@ const ShoppingConfigurationModal = ({
   const syncFormValuesFromConfiguration = useCallback(
     (configuration: ShoppingConfiguration) => {
       if (configuration && configuration.ctaButtonConfiguration.text) {
-        const ctaButtonTextIndex = ctaButtonTextList.indexOf(
+        const shoppingCTAButtonTextIndex = shoppingCTAButtonTextList.indexOf(
           configuration.ctaButtonConfiguration.text!
         );
         setValue(
-          'ctaButtonTextIndex',
-          ctaButtonTextIndex >= 0 ? ctaButtonTextIndex : undefined
+          'shoppingCTAButtonTextIndex',
+          shoppingCTAButtonTextIndex >= 0
+            ? shoppingCTAButtonTextIndex
+            : undefined
         );
       } else {
-        setValue('ctaButtonTextIndex', 0);
+        setValue('shoppingCTAButtonTextIndex', 0);
+      }
+      if (
+        configuration &&
+        configuration.productCardConfiguration.ctaButtonText
+      ) {
+        const productCardCTAButtonTextIndex =
+          productCardCTAButtonTextList.indexOf(
+            configuration.productCardConfiguration.ctaButtonText!
+          );
+        setValue(
+          'productCardCTAButtonTextIndex',
+          productCardCTAButtonTextIndex >= 0
+            ? productCardCTAButtonTextIndex
+            : undefined
+        );
+      } else {
+        setValue('productCardCTAButtonTextIndex', 0);
+      }
+      if (configuration && configuration.productCardConfiguration.theme) {
+        const productCardThemeIndex = productCardThemeList.indexOf(
+          configuration.productCardConfiguration.theme!
+        );
+        setValue(
+          'productCardThemeIndex',
+          productCardThemeIndex >= 0 ? productCardThemeIndex : undefined
+        );
+      } else {
+        setValue('productCardThemeIndex', 0);
       }
       setValue(
         'ctaButtonBackgroundColor',
@@ -146,13 +206,17 @@ const ShoppingConfigurationModal = ({
       ctaButtonConfiguration,
       linkButtonHidden,
       enableCustomClickLinkButton,
+      productCardConfiguration,
+      enableCustomTapProductCard,
     });
   }, [
     cartIconVisible,
     ctaButtonConfiguration,
     linkButtonHidden,
     enableCustomClickLinkButton,
+    productCardConfiguration,
     syncFormValuesFromConfiguration,
+    enableCustomTapProductCard,
   ]);
 
   const onSave = (data: ShoppingConfigurationFormData) => {
@@ -160,8 +224,17 @@ const ShoppingConfigurationModal = ({
     dispatch(changeCartIconVisibility(data.showCartIcon ?? true));
     let resultCTAButtonConfiguration: ShoppingCTAButtonConfiguration = {};
     resultCTAButtonConfiguration.text =
-      typeof data.ctaButtonTextIndex === 'number'
-        ? ctaButtonTextList[data.ctaButtonTextIndex!]
+      typeof data.shoppingCTAButtonTextIndex === 'number'
+        ? shoppingCTAButtonTextList[data.shoppingCTAButtonTextIndex!]
+        : undefined;
+    let resultProductCardConfiguration: ProductCardConfiguration = {};
+    resultProductCardConfiguration.ctaButtonText =
+      typeof data.productCardCTAButtonTextIndex === 'number'
+        ? productCardCTAButtonTextList[data.productCardCTAButtonTextIndex!]
+        : undefined;
+    resultProductCardConfiguration.theme =
+      typeof data.productCardThemeIndex === 'number'
+        ? productCardThemeList[data.productCardThemeIndex!]
         : undefined;
     if (data.ctaButtonBackgroundColor) {
       resultCTAButtonConfiguration.backgroundColor =
@@ -183,10 +256,10 @@ const ShoppingConfigurationModal = ({
     }
 
     dispatch(setCTAButtonConfiguration(resultCTAButtonConfiguration));
-
+    dispatch(setProductCardConfiguration(resultProductCardConfiguration));
     dispatch(changeLinkButtonVisibility(data.linkButtonHidden ?? false));
     dispatch(
-      changeCustomClickLinkButtonAbility(
+      updateEnableCustomClickLinkButton(
         data.enableCustomClickLinkButton ?? false
       )
     );
@@ -203,9 +276,26 @@ const ShoppingConfigurationModal = ({
       FireworkSDK.getInstance().shopping.onCustomClickLinkButton = undefined;
     }
 
+    dispatch(
+      updateEnableCustomTapProductCard(data.enableCustomTapProductCard ?? false)
+    );
+    if (data.enableCustomTapProductCard ?? false) {
+      FireworkSDK.getInstance().shopping.onCustomTapProductCard = async (
+        event
+      ) => {
+        HostAppService.getInstance().closePlayerOrStartFloatingPlayer();
+        HostAppService.getInstance().navigate('LinkContent', {
+          url: event.url,
+        });
+      };
+    } else {
+      FireworkSDK.getInstance().shopping.onCustomTapProductCard = undefined;
+    }
+
     FireworkSDK.getInstance().shopping.productInfoViewConfiguration = {
       ctaButton: resultCTAButtonConfiguration,
       linkButton: { isHidden: data.linkButtonHidden ?? false },
+      productCard: resultProductCardConfiguration,
     };
     if (resultCTAButtonConfiguration.text === 'shopNow') {
       FireworkSDK.getInstance().shopping.onShoppingCTA =
@@ -233,14 +323,54 @@ const ShoppingConfigurationModal = ({
             control={control}
             render={({ field: { onChange, value } }) => (
               <ButtonGroup
-                buttons={ctaButtonTextList}
+                buttons={shoppingCTAButtonTextList}
                 selectedIndex={value}
                 onPress={(newValue) => {
                   onChange(newValue);
                 }}
               />
             )}
-            name="ctaButtonTextIndex"
+            name="shoppingCTAButtonTextIndex"
+          />
+        </View>
+      </View>
+      <View style={styles.formItemRow}>
+        <View style={styles.formItem}>
+          <Text style={styles.formItemLabel}>
+            Product card CTA button text(iOS)
+          </Text>
+          <Controller
+            control={control}
+            render={({ field: { onChange, value } }) => (
+              <ButtonGroup
+                buttons={productCardCTAButtonTextList}
+                selectedIndex={value}
+                onPress={(newValue) => {
+                  onChange(newValue);
+                }}
+              />
+            )}
+            name="productCardCTAButtonTextIndex"
+          />
+        </View>
+      </View>
+      <View style={styles.formItemRow}>
+        <View style={styles.formItem}>
+          <Text style={styles.formItemLabel}>
+            Product card CTA button text(iOS)
+          </Text>
+          <Controller
+            control={control}
+            render={({ field: { onChange, value } }) => (
+              <ButtonGroup
+                buttons={productCardThemeList}
+                selectedIndex={value}
+                onPress={(newValue) => {
+                  onChange(newValue);
+                }}
+              />
+            )}
+            name="productCardThemeIndex"
           />
         </View>
       </View>
@@ -428,6 +558,24 @@ const ShoppingConfigurationModal = ({
           />
         </View>
       </View>
+      <View style={{ ...styles.formItemRow, marginBottom: 20 }}>
+        <View style={styles.formItem}>
+          <Controller
+            control={control}
+            render={({ field: { onChange, value } }) => {
+              return (
+                <CheckBox
+                  center
+                  title="Enable Custom Tap Product Card(iOS)"
+                  checked={value}
+                  onPress={() => onChange(!value)}
+                />
+              );
+            }}
+            name="enableCustomTapProductCard"
+          />
+        </View>
+      </View>
     </>
   );
 
@@ -442,6 +590,8 @@ const ShoppingConfigurationModal = ({
           ctaButtonConfiguration,
           linkButtonHidden,
           enableCustomClickLinkButton,
+          productCardConfiguration,
+          enableCustomTapProductCard,
         });
         if (onRequestClose) {
           onRequestClose();
@@ -477,6 +627,8 @@ const ShoppingConfigurationModal = ({
                       ctaButtonConfiguration,
                       linkButtonHidden,
                       enableCustomClickLinkButton,
+                      productCardConfiguration,
+                      enableCustomTapProductCard,
                     });
                     if (onRequestClose) {
                       onRequestClose();
@@ -499,6 +651,9 @@ const ShoppingConfigurationModal = ({
                       linkButtonHidden: defaultLinkButtonHidden,
                       enableCustomClickLinkButton:
                         defaultEnableCustomClickLinkButton,
+                      productCardConfiguration: defaultProductCardConfiguration,
+                      enableCustomTapProductCard:
+                        defaultEnableCustomTapProductCard,
                     });
                   }}
                   title="Reset"

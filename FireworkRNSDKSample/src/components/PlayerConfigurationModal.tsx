@@ -53,6 +53,7 @@ type PlayerConfigurationFormData = {
   ctaHighlightDelayValue?: number;
   shareBaseURL?: string;
   ctaWidth?: number;
+  enableCustomButtons?: boolean;
 };
 
 const PlayStyleList: VideoPlayerStyle[] = ['full', 'fit'];
@@ -143,7 +144,7 @@ const PlayerConfigurationModal = ({
         } else {
           setValue('videoCompleteAction', undefined);
         }
-
+        setValue('enableCustomButtons', !!configuration.buttonConfiguration);
         setValue('showShareButton', configuration.showShareButton);
         setValue(
           'ctaBackgroundColor',
@@ -221,6 +222,18 @@ const PlayerConfigurationModal = ({
         typeof data.videoCompleteAction === 'number'
           ? VideoCompleteActionList[data.videoCompleteAction]
           : undefined;
+      if (data.enableCustomButtons) {
+        configuration.buttonConfiguration = {
+          videoDetailButton: { imageName: 'custom_more' },
+          closeButton: { imageName: 'custom_close' },
+          muteButton: { imageName: 'custom_mute' },
+          unmuteButton: { imageName: 'custom_unmute' },
+          playButton: { imageName: 'custom_play' },
+          pauseButton: { imageName: 'custom_pause' },
+        };
+      } else {
+        configuration.buttonConfiguration = undefined;
+      }
       configuration.showShareButton = data.showShareButton;
       configuration.ctaButtonStyle = {
         backgroundColor: data.ctaBackgroundColor,
@@ -305,7 +318,7 @@ const PlayerConfigurationModal = ({
         </View>
       </View>
       <View style={styles.formItemRow}>
-        <View style={styles.formItem}>
+        <View style={{ ...styles.formItem, marginRight: 10 }}>
           <Controller
             control={control}
             render={({ field: { onChange, value } }) => {
@@ -319,6 +332,22 @@ const PlayerConfigurationModal = ({
               );
             }}
             name="showShareButton"
+          />
+        </View>
+        <View style={{ ...styles.formItem }}>
+          <Controller
+            control={control}
+            render={({ field: { onChange, value } }) => {
+              return (
+                <CheckBox
+                  center
+                  title="Enable Custom Buttons"
+                  checked={value}
+                  onPress={() => onChange(!value)}
+                />
+              );
+            }}
+            name="enableCustomButtons"
           />
         </View>
       </View>
@@ -739,6 +768,7 @@ const styles = StyleSheet.create({
     marginBottom: 20,
   },
   formItemRow: {
+    flex: 1,
     marginBottom: 10,
     flexDirection: 'row',
     alignItems: 'flex-start',

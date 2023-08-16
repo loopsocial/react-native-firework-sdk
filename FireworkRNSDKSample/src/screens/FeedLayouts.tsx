@@ -28,6 +28,7 @@ import {
 } from '../config/Feed.json';
 import type { RootStackParamList } from './paramList/RootStackParamList';
 import type { TabParamsList } from './paramList/TabParamsList';
+import SingleContentInputModal from '../components/SingleContentInputModal';
 
 type FeedLayoutsScreenNavigationProp = CompositeNavigationProp<
   BottomTabNavigationProp<TabParamsList, 'FeedLayouts'>,
@@ -55,6 +56,8 @@ export default function FeedLayouts() {
     setHashtagPlaylistInputModalVisible,
   ] = useState(false);
   const [skuInputModalVisible, setSkuInputModalVisible] = useState(false);
+  const [singleContentInputModalVisible, setSingleContentInputModalVisible] =
+    useState(false);
 
   let dataList: FeedListItemData[] = [
     {
@@ -208,6 +211,12 @@ export default function FeedLayouts() {
         setSkuInputModalVisible(true);
       },
     },
+    {
+      title: 'Single Content Feed',
+      pressCallback: () => {
+        setSingleContentInputModalVisible(true);
+      },
+    },
   ];
 
   return (
@@ -310,6 +319,19 @@ export default function FeedLayouts() {
             source: 'sku',
             channel: channelId,
             productIds: productIds,
+          });
+        }}
+      />
+      <SingleContentInputModal
+        visible={singleContentInputModalVisible}
+        onRequestClose={() => {
+          setSingleContentInputModalVisible(false);
+        }}
+        onSubmit={(contentId) => {
+          setSingleContentInputModalVisible(false);
+          navigation.navigate('Feed', {
+            source: 'singleContent',
+            contentId: contentId,
           });
         }}
       />
