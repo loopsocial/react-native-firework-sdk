@@ -1,28 +1,20 @@
 # CHANGELOG
 
-## [2.5.2]
+## [2.4.4]
 
 ### Fixed
 
-- `changeAppLanguage` API affects rendering SVG images on iOS
+- `changeAppLanguage` API doesn't work when app language layout direction is LTR(such as English) but system language layout direction is RTL(such as Arabic)
 
-## [2.5.1]
+## [2.4.3]
 
-### Added
+### Fixed
 
-- Export `CustomTapProductCardEvent` interface
-- Export `VideoPlayerButtonConfiguration` interface
-- Export `Buttoninfo` interface
+- `changeAppLanguage` API affects rendering SVG images
 
-## [2.5.0]
+### Fixed
 
-### Added
-
-- [iOS] New product card provided in short video
-- [iOS] New content source for single video or live stream for video feed and story block
-- [iOS] New product detail page
-- [iOS] Ability to define custom navigation handling when user taps on product card
-- [iOS] Ability to customize the images of the full screen player buttons namely: video detail button, mute/unmute button, close button, play/pause button
+- Fix the RTL issues on the iOS side
 
 ## [2.4.2]
 
