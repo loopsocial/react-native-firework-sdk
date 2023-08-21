@@ -101,6 +101,7 @@ const Feed = () => {
       value: 2,
     },
     ctaWidth: 'fullWidth',
+    showVideoDetailTitle: true,
   };
   const [playerConfiguration, setPlayerConfiguration] = useState<
     VideoPlayerConfiguration | undefined
@@ -117,6 +118,8 @@ const Feed = () => {
       type: 'constant',
       value: 2,
     },
+    showVideoDetailTitle: true,
+    ctaWidth: 'fullWidth',
   };
   const [storyBlockConfiguration, setStoryBlockConfiguration] = useState<
     StoryBlockConfiguration | undefined
@@ -171,16 +174,14 @@ const Feed = () => {
                 color={tintColor}
               />
             </TouchableOpacity>
-            {Platform.OS === 'android' && (
-              <TouchableOpacity
-                onPress={() => {
-                  setShowStoryBlockConfiguration(true);
-                }}
-                style={styles.headerIconWrapper}
-              >
-                <Ionicons name="settings-outline" size={24} color={tintColor} />
-              </TouchableOpacity>
-            )}
+            <TouchableOpacity
+              onPress={() => {
+                setShowStoryBlockConfiguration(true);
+              }}
+              style={styles.headerIconWrapper}
+            >
+              <Ionicons name="settings-outline" size={24} color={tintColor} />
+            </TouchableOpacity>
           </View>
         ),
     });

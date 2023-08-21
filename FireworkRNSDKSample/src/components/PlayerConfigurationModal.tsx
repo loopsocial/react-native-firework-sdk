@@ -54,6 +54,7 @@ type PlayerConfigurationFormData = {
   shareBaseURL?: string;
   ctaWidth?: number;
   enableCustomButtons?: boolean;
+  showVideoDetailTitle?: boolean;
 };
 
 const PlayStyleList: VideoPlayerStyle[] = ['full', 'fit'];
@@ -161,6 +162,7 @@ const PlayerConfigurationModal = ({
         );
         setValue('showPlaybackButton', configuration.showPlaybackButton);
         setValue('showMuteButton', configuration.showMuteButton);
+        setValue('showVideoDetailTitle', configuration.showVideoDetailTitle);
 
         if (configuration.ctaDelay) {
           const typeIndex = CTADelayTypeList.indexOf(
@@ -249,6 +251,7 @@ const PlayerConfigurationModal = ({
       };
       configuration.showPlaybackButton = data.showPlaybackButton;
       configuration.showMuteButton = data.showMuteButton;
+      configuration.showVideoDetailTitle = data.showVideoDetailTitle;
 
       if (
         typeof data.ctaDelayType === 'number' &&
@@ -384,6 +387,22 @@ const PlayerConfigurationModal = ({
             name="showMuteButton"
           />
         </View>
+      </View>
+      <View style={styles.formItem}>
+        <Controller
+          control={control}
+          render={({ field: { onChange, value } }) => {
+            return (
+              <CheckBox
+                center
+                title={`Show video${'\n'}detail title`}
+                checked={value}
+                onPress={() => onChange(!value)}
+              />
+            );
+          }}
+          name="showVideoDetailTitle"
+        />
       </View>
       <View style={styles.formItemRow}>
         <View style={{ ...styles.formItem }}>

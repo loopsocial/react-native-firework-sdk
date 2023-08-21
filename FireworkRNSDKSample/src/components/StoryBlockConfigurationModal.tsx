@@ -48,6 +48,7 @@ type StoryBlockConfigurationFormData = {
   ctaHighlightDelayValue?: number;
   shareBaseURL?: string;
   ctaWidth?: number;
+  showVideoDetailTitle?: boolean;
 };
 
 const VideoCompleteActionList: VideoPlayerCompleteAction[] = [
@@ -142,6 +143,7 @@ const StoryBlockConfigurationModal = ({
         }
 
         setValue('shareBaseURL', configuration.shareBaseURL);
+        setValue('showVideoDetailTitle', configuration.showVideoDetailTitle);
 
         if (configuration.ctaWidth) {
           const ctaWidthIndex = CTAWidthList.indexOf(configuration.ctaWidth);
@@ -199,6 +201,7 @@ const StoryBlockConfigurationModal = ({
         typeof data.ctaWidth === 'number'
           ? CTAWidthList[data.ctaWidth]
           : undefined;
+      configuration.showVideoDetailTitle = data.showVideoDetailTitle;
       console.log('configuration', configuration);
       onSubmit(configuration);
     }
@@ -208,7 +211,11 @@ const StoryBlockConfigurationModal = ({
     <>
       <View style={styles.formItemRow}>
         <View style={styles.formItem}>
-          <Text style={styles.formItemLabel}>Video complete action</Text>
+          <Text style={styles.formItemLabel}>
+            {Platform.OS === 'android'
+              ? 'Video complete action'
+              : 'Video Player CompleteAction(only apply to full-screen story block on iOS)'}
+          </Text>
           <Controller
             control={control}
             render={({ field: { onChange, value } }) => (
@@ -257,6 +264,24 @@ const StoryBlockConfigurationModal = ({
               );
             }}
             name="showPlaybackButton"
+          />
+        </View>
+      </View>
+      <View style={styles.formItemRow}>
+        <View style={{ ...styles.formItem, marginRight: 10 }}>
+          <Controller
+            control={control}
+            render={({ field: { onChange, value } }) => {
+              return (
+                <CheckBox
+                  center
+                  title={`Show video${'\n'}detail title`}
+                  checked={value}
+                  onPress={() => onChange(!value)}
+                />
+              );
+            }}
+            name="showVideoDetailTitle"
           />
         </View>
       </View>
@@ -437,9 +462,7 @@ const StoryBlockConfigurationModal = ({
             }}
           >
             <ScrollView>
-              <Text style={styles.sectionTitle}>
-                Video Player Configuration
-              </Text>
+              <Text style={styles.sectionTitle}>Story Block Configuration</Text>
               <ButtonGroup
                 containerStyle={styles.configurationButtonGroup}
                 selectedIndex={configurationIndex}

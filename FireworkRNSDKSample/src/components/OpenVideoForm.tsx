@@ -40,6 +40,7 @@ export function OpenVideoForm() {
       value: 2,
     },
     ctaWidth: 'fullWidth',
+    showVideoDetailTitle: true,
   };
   const [playerConfiguration, setPlayerConfiguration] = useState<
     VideoPlayerConfiguration | undefined
@@ -52,7 +53,7 @@ export function OpenVideoForm() {
     console.log('OpenVideoForm data', data);
     FireworkSDK.getInstance().openVideoPlayer(data.videoURL, {
       ...playerConfiguration,
-      enablePictureInPicture: true,
+      enablePictureInPicture: false,
     });
   };
 
