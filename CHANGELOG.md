@@ -1,5 +1,14 @@
 # CHANGELOG
 
+## [2.6.0]
+
+### Added
+
+- [iOS] Add story block configuration
+- [iOS] Ability to hide dual title
+- [Android] New product card
+- [Android] Ability to set a single video/live stream id as the source in story block and video feed
+
 ## [2.5.3]
 
 ### Fixed
