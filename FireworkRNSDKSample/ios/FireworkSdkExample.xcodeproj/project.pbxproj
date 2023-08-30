@@ -679,7 +679,7 @@
 				ENABLE_BITCODE = NO;
 				"EXCLUDED_ARCHS[sdk=iphonesimulator*]" = arm64;
 				INFOPLIST_FILE = FireworkSdkExample/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				MARKETING_VERSION = 2.6.0;
 				ONLY_ACTIVE_ARCH = YES;
@@ -715,7 +715,7 @@
 				"DEVELOPMENT_TEAM[sdk=iphoneos*]" = Z24TE4EN73;
 				ENABLE_BITCODE = NO;
 				INFOPLIST_FILE = FireworkSdkExample/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				MARKETING_VERSION = 2.6.0;
 				OTHER_LDFLAGS = (
@@ -1032,7 +1032,7 @@
 				"DEVELOPMENT_TEAM[sdk=iphoneos*]" = Z24TE4EN73;
 				ENABLE_BITCODE = NO;
 				INFOPLIST_FILE = FireworkSdkExample/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				MARKETING_VERSION = 2.6.0;
 				OTHER_LDFLAGS = (

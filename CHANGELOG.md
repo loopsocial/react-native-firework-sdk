@@ -1,5 +1,11 @@
 # CHANGELOG
 
+## [2.6.1]
+
+### Changed
+
+- Upgrade Firework iOS SDK to V1.13.0
+
 ## [2.6.0]
 
 ### Added
