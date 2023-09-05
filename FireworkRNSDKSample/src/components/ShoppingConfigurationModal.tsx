@@ -55,6 +55,9 @@ type ShoppingConfigurationFormData = {
   shoppingCTAButtonTextIndex?: number;
   productCardCTAButtonTextIndex?: number;
   productCardThemeIndex?: number;
+  productCardCornerRadius?: string;
+  productCardPriceHidden?: boolean;
+  productCardCtaButtonHidden?: boolean;
   ctaButtonBackgroundColor?: string;
   ctaButtonTextColor?: string;
   ctaButtonFontSize?: string;
@@ -178,6 +181,43 @@ const ShoppingConfigurationModal = ({
       } else {
         setValue('productCardThemeIndex', 0);
       }
+
+      if (
+        configuration &&
+        configuration.productCardConfiguration.cornerRadius
+      ) {
+        setValue(
+          'productCardCornerRadius',
+          configuration.productCardConfiguration.cornerRadius?.toString()
+        );
+      } else {
+        setValue('productCardCornerRadius', '');
+      }
+
+      if (
+        configuration &&
+        configuration.productCardConfiguration.priceConfiguration?.isHidden
+      ) {
+        setValue(
+          'productCardPriceHidden',
+          configuration.productCardConfiguration.priceConfiguration?.isHidden
+        );
+      } else {
+        setValue('productCardPriceHidden', false);
+      }
+
+      if (
+        configuration &&
+        configuration.productCardConfiguration.isCtaButtonHidden
+      ) {
+        setValue(
+          'productCardCtaButtonHidden',
+          configuration.productCardConfiguration.isCtaButtonHidden
+        );
+      } else {
+        setValue('productCardCtaButtonHidden', false);
+      }
+
       setValue(
         'ctaButtonBackgroundColor',
         configuration.ctaButtonConfiguration.backgroundColor
@@ -236,6 +276,16 @@ const ShoppingConfigurationModal = ({
       typeof data.productCardThemeIndex === 'number'
         ? productCardThemeList[data.productCardThemeIndex!]
         : undefined;
+    if (data.productCardCornerRadius) {
+      resultProductCardConfiguration.cornerRadius = parseInt(
+        data.productCardCornerRadius
+      );
+    }
+    resultProductCardConfiguration.priceConfiguration = {};
+    resultProductCardConfiguration.priceConfiguration.isHidden =
+      data.productCardPriceHidden;
+    resultProductCardConfiguration.isCtaButtonHidden =
+      data.productCardCtaButtonHidden;
     if (data.ctaButtonBackgroundColor) {
       resultCTAButtonConfiguration.backgroundColor =
         data.ctaButtonBackgroundColor;
@@ -371,6 +421,77 @@ const ShoppingConfigurationModal = ({
               />
             )}
             name="productCardThemeIndex"
+          />
+        </View>
+      </View>
+      <View style={styles.formItemRow}>
+        <View style={styles.formItem}>
+          <Controller
+            control={control}
+            render={({ field: { onChange, onBlur, value } }) => (
+              <Input
+                label={'Product card Corner Radius(iOS)'}
+                placeholder="e.g. 0"
+                onBlur={onBlur}
+                onChangeText={(newValue) => onChange(newValue)}
+                value={value}
+                errorMessage={
+                  errors.productCardCornerRadius
+                    ? 'Please enter correct corner radius'
+                    : undefined
+                }
+                rightIcon={
+                  <TouchableOpacity
+                    onPress={() => {
+                      setValue('productCardCornerRadius', undefined);
+                    }}
+                  >
+                    <Ionicons name="close" size={24} />
+                  </TouchableOpacity>
+                }
+                autoCompleteType={undefined}
+              />
+            )}
+            name="productCardCornerRadius"
+            rules={{
+              pattern: Patterns.number,
+            }}
+          />
+        </View>
+      </View>
+      <View style={{ ...styles.formItemRow, marginBottom: 20 }}>
+        <View style={styles.formItem}>
+          <Controller
+            control={control}
+            render={({ field: { onChange, value } }) => {
+              return (
+                <CheckBox
+                  center
+                  title="Hide product card price(iOS)"
+                  checked={value}
+                  onPress={() => onChange(!value)}
+                />
+              );
+            }}
+            name="productCardPriceHidden"
+          />
+        </View>
+      </View>
+      <View style={{ ...styles.formItemRow, marginBottom: 20 }}>
+        <View style={styles.formItem}>
+          <Controller
+            control={control}
+            render={({ field: { onChange, value } }) => {
+              return (
+                <CheckBox
+                  center
+                  title="Hide product card CTA button(iOS)"
+                  checked={value}
+                  onPress={() => onChange(!value)}
+                />
+              );
+            }}
+            name="productCardCtaButtonHidden"
           />
         </View>
       </View>

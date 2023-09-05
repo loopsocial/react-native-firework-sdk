@@ -164,7 +164,9 @@ export default class HostAppService {
     if (store.getState().navigation.enablePushingRNContainer) {
       return;
     }
-
+    if (store.getState().navigation.enableNativeNavigation) {
+      return;
+    }
     const result =
       await FireworkSDK.getInstance().navigator.startFloatingPlayer();
     if (!result) {
@@ -181,6 +183,12 @@ export default class HostAppService {
           initialParams: params,
         },
       });
+    } else if (store.getState().navigation.enableNativeNavigation) {
+      RootNavigation.navigate(routeName, {
+        ...params,
+        isFromNativeNavigation: true,
+      });
+      await FireworkSDK.getInstance().navigator.bringRNContainerToTop();
     } else {
       RootNavigation.navigate(routeName, params);
     }

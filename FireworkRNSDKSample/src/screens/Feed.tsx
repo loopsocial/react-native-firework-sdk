@@ -107,9 +107,11 @@ const Feed = () => {
     VideoPlayerConfiguration | undefined
   >(defaultPlayerConfiguration);
   const defaultStoryBlockConfiguration: StoryBlockConfiguration = {
+    playerStyle: 'full',
     videoCompleteAction: 'advanceToNext',
     showShareButton: true,
     showPlaybackButton: true,
+    showMuteButton: true,
     ctaDelay: {
       type: 'constant',
       value: 3,

@@ -38,10 +38,18 @@ const initialState: CartState = {
   productCardConfiguration: {
     ctaButtonText: 'shopNow',
     theme: 'dark',
+    priceConfiguration: {
+      isHidden: false,
+    },
+    isCtaButtonHidden: false,
   },
   defaultProductCardConfiguration: {
     ctaButtonText: 'shopNow',
     theme: 'dark',
+    priceConfiguration: {
+      isHidden: false,
+    },
+    isCtaButtonHidden: false,
   },
   enableCustomTapProductCard: false,
   defaultEnableCustomTapProductCard: false,

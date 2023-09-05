@@ -23,7 +23,9 @@ export type RootStackParamList = {
   EnableCustomCTAClickCallback: undefined;
   LinkContent: {
     url: string;
+    isFromNativeNavigation?: boolean;
   };
   CircleThumbnails: undefined;
   EnablePushingRNContainer: undefined;
+  EnableNativeNavigation: undefined;
 };

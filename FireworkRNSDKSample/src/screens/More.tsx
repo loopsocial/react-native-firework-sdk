@@ -175,6 +175,13 @@ function More() {
     },
   });
 
+  dataList.push({
+    title: 'Enable Native Navigation',
+    pressCallback: (_) => {
+      navigation.push('EnableNativeNavigation');
+    },
+  });
+
   useEffect(() => {
     const sycnCurrentDisplayLanguageFromStorage = async () => {
       try {

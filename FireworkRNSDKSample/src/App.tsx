@@ -30,6 +30,7 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import StorageKey from './constants/StorageKey';
 import SetShareBaseURL from './screens/SetShareBaseURL';
 import EnablePushingRNContainer from './screens/EnablePushingRNContainer';
+import EnableNativeNavigation from './screens/EnableNativeNavigation';
 
 const StackNavigator = createNativeStackNavigator<RootStackParamList>();
 
@@ -69,8 +70,8 @@ const FWNavigationContainer = () => {
   return (
     <NavigationContainer ref={navigationRef}>
       <StackNavigator.Navigator
-        initialRouteName="Tab"
-        screenOptions={({ navigation }) => ({
+        initialRouteName={'Tab'}
+        screenOptions={({ route, navigation }) => ({
           headerTitleAlign: 'center',
           headerBackTitleVisible: false,
           headerBackButtonMenuEnabled: false,
@@ -78,9 +79,13 @@ const FWNavigationContainer = () => {
           headerLeft: ({ tintColor, canGoBack }) => {
             return (
               <BackButton
-                onBack={() => {
+                onBack={async () => {
+                  console.log('FWTopNavigationContainer canGoBack', canGoBack);
                   if (canGoBack) {
                     navigation.goBack();
+                  }
+                  if ((route.params as any)?.isFromNativeNavigation) {
+                    FireworkSDK.getInstance().navigator.bringRNContainerToBottom();
                   }
                 }}
                 tintColor={tintColor}
@@ -122,7 +127,9 @@ const FWNavigationContainer = () => {
         {renderScreen({
           name: 'Cart',
           component: Cart,
-          options: { title: 'Host App Cart' },
+          options: {
+            title: 'Host App Cart',
+          },
         })}
         {renderScreen({
           name: 'Checkout',
@@ -143,6 +150,11 @@ const FWNavigationContainer = () => {
           name: 'EnablePushingRNContainer',
           component: EnablePushingRNContainer,
           options: { title: 'Enable Pushing RN Container' },
+        })}
+        {renderScreen({
+          name: 'EnableNativeNavigation',
+          component: EnableNativeNavigation,
+          options: { title: 'Enable Native Navigation' },
         })}
       </StackNavigator.Navigator>
     </NavigationContainer>

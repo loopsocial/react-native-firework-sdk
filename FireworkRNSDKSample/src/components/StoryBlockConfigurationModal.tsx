@@ -24,6 +24,7 @@ import type {
   VideoPlayerCompleteAction,
   VideoPlayerCTADelayType,
   VideoPlayerCTAWidth,
+  VideoPlayerStyle,
 } from 'react-native-firework-sdk';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 
@@ -39,18 +40,26 @@ export interface IStoryBlockConfigurationModalProps {
 }
 
 type StoryBlockConfigurationFormData = {
+  playerStyle?: number;
   videoCompleteAction?: number;
   showShareButton?: boolean;
+  ctaBackgroundColor?: string;
+  ctaTextColor?: string;
+  ctaFontSize?: string;
+  ctaIOSFontName?: string;
   showPlaybackButton?: boolean;
+  showMuteButton?: boolean;
   ctaDelayType?: number;
   ctaDelayValue?: number;
   ctaHighlightDelayType?: number;
   ctaHighlightDelayValue?: number;
   shareBaseURL?: string;
   ctaWidth?: number;
+  enableCustomButtons?: boolean;
   showVideoDetailTitle?: boolean;
 };
 
+const PlayStyleList: VideoPlayerStyle[] = ['full', 'fit'];
 const VideoCompleteActionList: VideoPlayerCompleteAction[] = [
   'loop',
   'advanceToNext',
@@ -79,7 +88,17 @@ const StoryBlockConfigurationModal = ({
   } = useForm<StoryBlockConfigurationFormData>();
   const [configurationIndex, setConfigurationIndex] = useState<number>(0);
   const configurationTitles = ['Config 1', 'Config 2'];
-
+  let ctaFontSizeErrorMessage: string | undefined;
+  if (errors.ctaFontSize) {
+    if (
+      errors.ctaFontSize.type === 'max' ||
+      errors.ctaFontSize.type === 'min'
+    ) {
+      ctaFontSizeErrorMessage = 'Please enter font size in [8, 30]';
+    } else {
+      ctaFontSizeErrorMessage = 'Please enter correct font size';
+    }
+  }
   const ctaDelayType = useWatch({
     control,
     name: 'ctaDelayType',
@@ -101,6 +120,19 @@ const StoryBlockConfigurationModal = ({
   const syncFormValuesFromConfiguration = useCallback(
     (configuration?: StoryBlockConfiguration) => {
       if (configuration) {
+        if (configuration.playerStyle) {
+          const playerStyleIndex = PlayStyleList.indexOf(
+            configuration.playerStyle
+          );
+          if (playerStyleIndex >= 0) {
+            setValue('playerStyle', playerStyleIndex);
+          } else {
+            setValue('playerStyle', undefined);
+          }
+        } else {
+          setValue('playerStyle', undefined);
+        }
+
         if (configuration.videoCompleteAction) {
           const videoCompleteActionIndex = VideoCompleteActionList.indexOf(
             configuration.videoCompleteAction
@@ -114,8 +146,10 @@ const StoryBlockConfigurationModal = ({
           setValue('videoCompleteAction', undefined);
         }
 
+        setValue('enableCustomButtons', !!configuration.buttonConfiguration);
         setValue('showShareButton', configuration.showShareButton);
         setValue('showPlaybackButton', configuration.showPlaybackButton);
+        setValue('showMuteButton', configuration.showMuteButton);
 
         if (configuration.ctaDelay) {
           const typeIndex = CTADelayTypeList.indexOf(
@@ -143,6 +177,19 @@ const StoryBlockConfigurationModal = ({
         }
 
         setValue('shareBaseURL', configuration.shareBaseURL);
+        setValue(
+          'ctaBackgroundColor',
+          configuration.ctaButtonStyle?.backgroundColor
+        );
+        setValue('ctaTextColor', configuration.ctaButtonStyle?.textColor);
+        setValue(
+          'ctaFontSize',
+          configuration.ctaButtonStyle?.fontSize?.toString()
+        );
+        setValue(
+          'ctaIOSFontName',
+          configuration.ctaButtonStyle?.iOSFontInfo?.fontName
+        );
         setValue('showVideoDetailTitle', configuration.showVideoDetailTitle);
 
         if (configuration.ctaWidth) {
@@ -170,12 +217,42 @@ const StoryBlockConfigurationModal = ({
     if (onSubmit) {
       console.log('onSave PlayerConfigurationFormData', data);
       var configuration: StoryBlockConfiguration = {};
+      configuration.playerStyle =
+        typeof data.playerStyle === 'number'
+          ? PlayStyleList[data.playerStyle]
+          : undefined;
       configuration.videoCompleteAction =
         typeof data.videoCompleteAction === 'number'
           ? VideoCompleteActionList[data.videoCompleteAction]
           : undefined;
+      if (data.enableCustomButtons) {
+        configuration.buttonConfiguration = {
+          videoDetailButton: { imageName: 'custom_more' },
+          closeButton: { imageName: 'custom_close' },
+          muteButton: { imageName: 'custom_mute' },
+          unmuteButton: { imageName: 'custom_unmute' },
+          playButton: { imageName: 'custom_play' },
+          pauseButton: { imageName: 'custom_pause' },
+        };
+      } else {
+        configuration.buttonConfiguration = undefined;
+      }
       configuration.showShareButton = data.showShareButton;
+      configuration.ctaButtonStyle = {
+        backgroundColor: data.ctaBackgroundColor,
+        textColor: data.ctaTextColor,
+        fontSize:
+          typeof data.ctaFontSize === 'string'
+            ? parseInt(data.ctaFontSize)
+            : undefined,
+        iOSFontInfo: {
+          fontName: data.ctaIOSFontName,
+          systemFontWeight: 'bold',
+        },
+      };
       configuration.showPlaybackButton = data.showPlaybackButton;
+      configuration.showMuteButton = data.showMuteButton;
+      configuration.showVideoDetailTitle = data.showVideoDetailTitle;
 
       if (
         typeof data.ctaDelayType === 'number' &&
@@ -201,7 +278,6 @@ const StoryBlockConfigurationModal = ({
         typeof data.ctaWidth === 'number'
           ? CTAWidthList[data.ctaWidth]
           : undefined;
-      configuration.showVideoDetailTitle = data.showVideoDetailTitle;
       console.log('configuration', configuration);
       onSubmit(configuration);
     }
@@ -210,11 +286,33 @@ const StoryBlockConfigurationModal = ({
   const config1 = (
     <>
       <View style={styles.formItemRow}>
+        <View style={{ ...styles.formItem }}>
+          <Text style={styles.formItemLabel}>
+            {Platform.OS === 'android'
+              ? 'Player style'
+              : 'Player style(full-screen)'}
+          </Text>
+          <Controller
+            control={control}
+            render={({ field: { onChange, value } }) => (
+              <ButtonGroup
+                buttons={PlayStyleList}
+                selectedIndex={value}
+                onPress={(newValue) => {
+                  onChange(newValue);
+                }}
+              />
+            )}
+            name="playerStyle"
+          />
+        </View>
+      </View>
+      <View style={styles.formItemRow}>
         <View style={styles.formItem}>
           <Text style={styles.formItemLabel}>
             {Platform.OS === 'android'
               ? 'Video complete action'
-              : 'Video Player CompleteAction(only apply to full-screen story block on iOS)'}
+              : 'Video player complete action(full-screen)'}
           </Text>
           <Controller
             control={control}
@@ -232,7 +330,7 @@ const StoryBlockConfigurationModal = ({
         </View>
       </View>
       <View style={styles.formItemRow}>
-        <View style={styles.formItem}>
+        <View style={{ ...styles.formItem, marginRight: 10 }}>
           <Controller
             control={control}
             render={({ field: { onChange, value } }) => {
@@ -248,25 +346,59 @@ const StoryBlockConfigurationModal = ({
             name="showShareButton"
           />
         </View>
-      </View>
-      <View style={styles.formItemRow}>
-        <View style={{ ...styles.formItem, marginRight: 10 }}>
+        <View style={{ ...styles.formItem }}>
           <Controller
             control={control}
             render={({ field: { onChange, value } }) => {
               return (
                 <CheckBox
                   center
-                  title={`Show playback${'\n'}button`}
+                  title="Enable Custom Buttons"
                   checked={value}
                   onPress={() => onChange(!value)}
                 />
               );
             }}
-            name="showPlaybackButton"
+            name="enableCustomButtons"
           />
         </View>
       </View>
+      {Platform.OS === 'android' && (
+        <View style={styles.formItemRow}>
+          <View style={{ ...styles.formItem, marginRight: 10 }}>
+            <Controller
+              control={control}
+              render={({ field: { onChange, value } }) => {
+                return (
+                  <CheckBox
+                    center
+                    title={`Show playback${'\n'}button`}
+                    checked={value}
+                    onPress={() => onChange(!value)}
+                  />
+                );
+              }}
+              name="showPlaybackButton"
+            />
+          </View>
+          <View style={styles.formItem}>
+            <Controller
+              control={control}
+              render={({ field: { onChange, value } }) => {
+                return (
+                  <CheckBox
+                    center
+                    title={`Show mute${'\n'}button`}
+                    checked={value}
+                    onPress={() => onChange(!value)}
+                  />
+                );
+              }}
+              name="showMuteButton"
+            />
+          </View>
+        </View>
+      )}
       <View style={styles.formItemRow}>
         <View style={{ ...styles.formItem, marginRight: 10 }}>
           <Controller
@@ -432,6 +564,130 @@ const StoryBlockConfigurationModal = ({
               />
             )}
             name="ctaHighlightDelayValue"
+          />
+        </View>
+      </View>
+      <View style={styles.formItemRow}>
+        <View style={{ ...styles.formItem, marginRight: 10 }}>
+          <Controller
+            control={control}
+            render={({ field: { onChange, onBlur, value } }) => (
+              <Input
+                label="CTA background color(full-screen)"
+                placeholder="e.g. #c0c0c0"
+                onBlur={onBlur}
+                onChangeText={(newValue) => onChange(newValue)}
+                value={value}
+                errorMessage={
+                  errors.ctaBackgroundColor
+                    ? 'Please enter correct color'
+                    : undefined
+                }
+                rightIcon={
+                  <TouchableOpacity
+                    onPress={() => {
+                      setValue('ctaBackgroundColor', undefined);
+                    }}
+                  >
+                    <Ionicons name="close" size={24} />
+                  </TouchableOpacity>
+                }
+                autoCompleteType={undefined}
+              />
+            )}
+            name="ctaBackgroundColor"
+            rules={{
+              pattern: Patterns.hexColor,
+            }}
+          />
+        </View>
+        <View style={styles.formItem}>
+          <Controller
+            control={control}
+            render={({ field: { onChange, onBlur, value } }) => (
+              <Input
+                label="CTA text color(full-screen)"
+                placeholder="e.g. #000000"
+                onBlur={onBlur}
+                onChangeText={(newValue) => onChange(newValue)}
+                value={value}
+                errorMessage={
+                  errors.ctaTextColor ? 'Please enter correct color' : undefined
+                }
+                rightIcon={
+                  <TouchableOpacity
+                    onPress={() => {
+                      setValue('ctaTextColor', undefined);
+                    }}
+                  >
+                    <Ionicons name="close" size={24} />
+                  </TouchableOpacity>
+                }
+                autoCompleteType={undefined}
+              />
+            )}
+            name="ctaTextColor"
+            rules={{
+              pattern: Patterns.hexColor,
+            }}
+          />
+        </View>
+      </View>
+      <View style={styles.formItemRow}>
+        <View style={{ ...styles.formItem, flex: 0.5, marginRight: 10 }}>
+          <Controller
+            control={control}
+            render={({ field: { onChange, onBlur, value } }) => (
+              <Input
+                label="CTA font size(full-screen)"
+                placeholder="e.g. 14"
+                onBlur={onBlur}
+                onChangeText={(newValue) => onChange(newValue)}
+                value={value}
+                errorMessage={ctaFontSizeErrorMessage}
+                rightIcon={
+                  <TouchableOpacity
+                    onPress={() => {
+                      setValue('ctaFontSize', undefined);
+                    }}
+                  >
+                    <Ionicons name="close" size={24} />
+                  </TouchableOpacity>
+                }
+                autoCompleteType={undefined}
+              />
+            )}
+            name="ctaFontSize"
+            rules={{
+              pattern: Patterns.number,
+              max: 30,
+              min: 8,
+            }}
+          />
+        </View>
+        <View style={{ ...styles.formItem, flex: 0.5, marginRight: 10 }}>
+          <Controller
+            control={control}
+            render={({ field: { onChange, onBlur, value } }) => (
+              <Input
+                label="CTA iOS font name(full-screen)"
+                placeholder="e.g. Helvetica"
+                onBlur={onBlur}
+                onChangeText={(newValue) => onChange(newValue)}
+                value={value}
+                rightIcon={
+                  <TouchableOpacity
+                    onPress={() => {
+                      setValue('ctaIOSFontName', undefined);
+                    }}
+                  >
+                    <Ionicons name="close" size={24} />
+                  </TouchableOpacity>
+                }
+                autoCompleteType={undefined}
+              />
+            )}
+            name="ctaIOSFontName"
           />
         </View>
       </View>
