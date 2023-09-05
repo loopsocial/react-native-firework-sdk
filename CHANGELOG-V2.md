@@ -1,10 +1,18 @@
 # CHANGELOG
 
+## [2.7.0]
+
+### Added
+
+- [iOS] Ability to customize product card by changing the corner radius, hiding price labels, and hiding CTA button.
+- [iOS] Support reordering RN Container and Native Container
+
 ## [2.6.1]
 
 ### Changed
 
-- Upgrade Firework iOS SDK to V1.13.0
+- [iOS] Upgrade Firework iOS SDK to V1.13.0
+- [iOS] Dropped support for iOS 12.0 and below.
 
 ## [2.6.0]
 
