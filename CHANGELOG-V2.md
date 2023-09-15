@@ -1,5 +1,11 @@
 # CHANGELOG
 
+## [2.7.1]
+
+### Changed
+
+- Center video detail options
+
 ## [2.7.0]
 
 ### Added
