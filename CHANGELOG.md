@@ -1,5 +1,11 @@
 # CHANGELOG
 
+## [2.7.2-beta.1]
+
+### Fixed
+
+- Fix native navigation issue
+
 ## [2.7.1]
 
 ### Changed
