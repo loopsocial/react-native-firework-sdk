@@ -1,11 +1,17 @@
 # CHANGELOG
 
+## [2.8.1]
+
+### Changed
+
+- [Android] fix openVideoPlayer crash issue.
+
 ## [2.8.0]
 
 ### Added
 
 - [iOS] Support showing and hiding product price based on API
-- [iOS] Add more configurations for product card, including width and height, background color, corner radius, etc.
+- [iOS] Add more configurations for product card, including width and height, background color, price label style, etc.
 - [iOS] Support displaying custom logo instead of ellipsis on the player
 - [iOS] Support pausing and resuming video when handling product card and CTA button click events
 
