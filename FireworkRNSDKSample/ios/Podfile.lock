@@ -9,7 +9,7 @@ PODS:
     - React-Core (= 0.66.4)
     - React-jsi (= 0.66.4)
     - ReactCommon/turbomodule/core (= 0.66.4)
-  - FireworkVideo (1.14.0)
+  - FireworkVideo (1.15.0)
   - fmt (6.2.1)
   - glog (0.3.5)
   - RCT-Folly (2021.06.28.00-v2):
@@ -210,12 +210,12 @@ PODS:
   - React-jsinspector (0.66.4)
   - React-logger (0.66.4):
     - glog
-  - react-native-firework-sdk (2.7.2-beta.1):
-    - FireworkVideo (= 1.14.0)
+  - react-native-firework-sdk (2.8.0):
+    - FireworkVideo (= 1.15.0)
     - React-Core
-    - react-native-firework-sdk/Development (= 2.7.2-beta.1)
-  - react-native-firework-sdk/Development (2.7.2-beta.1):
-    - FireworkVideo (= 1.14.0)
+    - react-native-firework-sdk/Development (= 2.8.0)
+  - react-native-firework-sdk/Development (2.8.0):
+    - FireworkVideo (= 1.15.0)
     - React-Core
   - react-native-restart (0.0.24):
     - React-Core
@@ -424,7 +424,7 @@ SPEC CHECKSUMS:
   DoubleConversion: 831926d9b8bf8166fd87886c4abab286c2422662
   FBLazyVector: e5569e42a1c79ca00521846c223173a57aca1fe1
   FBReactNativeSpec: fe08c1cd7e2e205718d77ad14b34957cce949b58
-  FireworkVideo: c8af446a350e2486e86c0a789ecfd4a57ce6facc
+  FireworkVideo: fae657a5093efadbf7f4aa723466aee8dcf47824
   fmt: ff9d55029c625d3757ed641535fd4a75fedc7ce9
   glog: 5337263514dd6f09803962437687240c5dc39aa4
   RCT-Folly: a21c126816d8025b547704b777a2ba552f3d9fa9
@@ -439,7 +439,7 @@ SPEC CHECKSUMS:
   React-jsiexecutor: 94ce921e1d8ce7023366873ec371f3441383b396
   React-jsinspector: d0374f7509d407d2264168b6d0fad0b54e300b85
   React-logger: 933f80c97c633ee8965d609876848148e3fef438
-  react-native-firework-sdk: 79afac0d749cf77bdb0af2a31d4a408a43742f28
+  react-native-firework-sdk: 9b91018f9a245073aa1b2212a6404d6e489f0319
   react-native-restart: 45c8dca02491980f2958595333cbccd6877cb57e
   react-native-safe-area-context: 584dc04881deb49474363f3be89e4ca0e854c057
   react-native-webview: 9f111dfbcfc826084d6c507f569e5e03342ee1c1

@@ -101,6 +101,18 @@ function Shopping() {
               console.log('onVideoFeedLoadFinished error', error);
               setFeedError(error);
             }}
+            onVideoFeedDidStartPictureInPicture={(error?: FWError) => {
+              console.log(
+                '[example] onVideoFeedDidStartPictureInPicture error',
+                error
+              );
+            }}
+            onVideoFeedDidStopPictureInPicture={(error?: FWError) => {
+              console.log(
+                '[example] onVideoFeedDidStopPictureInPicture error',
+                error
+              );
+            }}
             ref={feedRef}
           />
           {feedError && (

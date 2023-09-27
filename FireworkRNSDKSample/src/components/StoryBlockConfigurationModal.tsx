@@ -24,6 +24,8 @@ import type {
   VideoPlayerCompleteAction,
   VideoPlayerCTADelayType,
   VideoPlayerCTAWidth,
+  VideoPlayerLogoConfiguration,
+  VideoPlayerLogoOption,
   VideoPlayerStyle,
 } from 'react-native-firework-sdk';
 import Ionicons from 'react-native-vector-icons/Ionicons';
@@ -57,6 +59,8 @@ type StoryBlockConfigurationFormData = {
   ctaWidth?: number;
   enableCustomButtons?: boolean;
   showVideoDetailTitle?: boolean;
+  videoPlayerLogoOption?: number;
+  videoPlayerLogoEncodeID?: string;
 };
 
 const PlayStyleList: VideoPlayerStyle[] = ['full', 'fit'];
@@ -70,6 +74,12 @@ const CTAWidthList: VideoPlayerCTAWidth[] = [
   'fullWidth',
   'compact',
   'sizeToFit',
+];
+
+const VideoPlayerLogoOptionList: VideoPlayerLogoOption[] = [
+  'disabled',
+  'creator',
+  'channelAggregator',
 ];
 
 const StoryBlockConfigurationModal = ({
@@ -87,6 +97,8 @@ const StoryBlockConfigurationModal = ({
     formState: { errors },
   } = useForm<StoryBlockConfigurationFormData>();
   const [configurationIndex, setConfigurationIndex] = useState<number>(0);
+  const [enableVideoPlayerLogoEncodeId, setEnableVideoPlayerLogoEncodeId] =
+    useState<boolean>(false);
   const configurationTitles = ['Config 1', 'Config 2'];
   let ctaFontSizeErrorMessage: string | undefined;
   if (errors.ctaFontSize) {
@@ -202,6 +214,31 @@ const StoryBlockConfigurationModal = ({
         } else {
           setValue('ctaWidth', undefined);
         }
+
+        if (configuration.videoPlayerLogoConfiguration?.option) {
+          const videoPlayerLogoOptionIndex = VideoPlayerLogoOptionList.indexOf(
+            configuration.videoPlayerLogoConfiguration?.option ?? 'disabled'
+          );
+          if (videoPlayerLogoOptionIndex >= 0) {
+            setValue('videoPlayerLogoOption', videoPlayerLogoOptionIndex);
+            if (videoPlayerLogoOptionIndex === 0) {
+              setEnableVideoPlayerLogoEncodeId(false);
+            } else {
+              setEnableVideoPlayerLogoEncodeId(true);
+            }
+          } else {
+            setValue('videoPlayerLogoOption', undefined);
+          }
+        } else {
+          setValue('videoPlayerLogoOption', undefined);
+        }
+
+        setValue(
+          'videoPlayerLogoEncodeID',
+          configuration.videoPlayerLogoConfiguration?.option === 'disabled'
+            ? ''
+            : configuration.videoPlayerLogoConfiguration?.encodedId
+        );
       } else {
         reset();
       }
@@ -278,6 +315,18 @@ const StoryBlockConfigurationModal = ({
         typeof data.ctaWidth === 'number'
           ? CTAWidthList[data.ctaWidth]
           : undefined;
+      var videoPlayerLogoConfiguration: VideoPlayerLogoConfiguration = {
+        option: 'disabled',
+      };
+      if (typeof data.videoPlayerLogoOption === 'number') {
+        if (data.videoPlayerLogoOption > 0) {
+          videoPlayerLogoConfiguration = {
+            option: VideoPlayerLogoOptionList[data.videoPlayerLogoOption],
+            encodedId: data.videoPlayerLogoEncodeID ?? '',
+          };
+        }
+      }
+      configuration.videoPlayerLogoConfiguration = videoPlayerLogoConfiguration;
       console.log('configuration', configuration);
       onSubmit(configuration);
     }
@@ -447,6 +496,58 @@ const StoryBlockConfigurationModal = ({
             rules={{
               pattern: Patterns.url,
             }}
+          />
+        </View>
+      </View>
+      <View style={styles.formItemRow}>
+        <View style={{ ...styles.formItem }}>
+          <Text style={styles.formItemLabel}>Custom Logo Type</Text>
+          <Controller
+            control={control}
+            render={({ field: { onChange, value } }) => (
+              <ButtonGroup
+                buttons={VideoPlayerLogoOptionList}
+                selectedIndex={value}
+                onPress={(newValue) => {
+                  onChange(newValue);
+                  if (newValue === 0) {
+                    setEnableVideoPlayerLogoEncodeId(false);
+                    setValue('videoPlayerLogoEncodeID', '');
+                  } else {
+                    setEnableVideoPlayerLogoEncodeId(true);
+                  }
+                }}
+              />
+            )}
+            name="videoPlayerLogoOption"
+          />
+        </View>
+      </View>
+      <View style={styles.formItemRow}>
+        <View style={{ ...styles.formItem }}>
+          <Controller
+            control={control}
+            render={({ field: { onChange, onBlur, value } }) => (
+              <Input
+                disabled={!enableVideoPlayerLogoEncodeId}
+                label="Custom Logo EncodeID"
+                placeholder="e.g. 7xuiui"
+                onBlur={onBlur}
+                onChangeText={(newValue) => onChange(newValue)}
+                value={value}
+                rightIcon={
+                  <TouchableOpacity
+                    onPress={() => {
+                      setValue('videoPlayerLogoEncodeID', undefined);
+                    }}
+                  >
+                    <Ionicons name="close" size={24} />
+                  </TouchableOpacity>
+                }
+                autoCompleteType={undefined}
+              />
+            )}
+            name="videoPlayerLogoEncodeID"
           />
         </View>
       </View>

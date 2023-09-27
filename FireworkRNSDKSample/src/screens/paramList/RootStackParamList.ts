@@ -28,4 +28,5 @@ export type RootStackParamList = {
   CircleThumbnails: undefined;
   EnablePushingRNContainer: undefined;
   EnableNativeNavigation: undefined;
+  EnablePausePlayer: undefined;
 };

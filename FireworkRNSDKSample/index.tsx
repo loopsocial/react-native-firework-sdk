@@ -9,7 +9,7 @@ import TopApp from './src/TopApp';
 AppRegistry.registerComponent(appName, () => App);
 AppRegistry.registerComponent(topAppName, () => TopApp);
 
-FireworkSDK.getInstance().debugLogsEnabled = false;
+FireworkSDK.getInstance().debugLogsEnabled = true;
 
 FireworkSDK.getInstance().adBadgeConfiguration = { badgeTextType: 'ad' };
 

@@ -16,6 +16,7 @@ import ShopifyClient from './ShopifyClient';
 import { shopifyDomain } from '../config/Shopify.json';
 import type { RootStackParamList } from '../screens/paramList/RootStackParamList';
 import { topName as topAppName } from '../../app.json';
+import { Platform } from 'react-native';
 
 export default class HostAppService {
   private static _instance?: HostAppService;
@@ -109,6 +110,12 @@ export default class HostAppService {
 
   public onCustomCTAClick?: CustomCTAClickCallback = (event) => {
     if (event.url) {
+      console.log('[example] onCustomCTAClick event', event);
+      if (store.getState().navigation.enablePausePlayer) {
+        if (Platform.OS === 'ios') {
+          event.playerHandler?.pause();
+        }
+      }
       this.closePlayerOrStartFloatingPlayer().then(() => {
         this.navigate('LinkContent', { url: event.url });
       });

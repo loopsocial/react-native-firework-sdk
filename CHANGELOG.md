@@ -1,5 +1,18 @@
 # CHANGELOG
 
+## [2.8.0]
+
+### Added
+
+- [iOS] Support showing and hiding product price based on API
+- [iOS] Add more configurations for product card, including width and height, background color, corner radius, etc.
+- [iOS] Support displaying custom logo instead of ellipsis on the player
+- [iOS] Support pausing and resuming video when handling product card and CTA button click events
+
+### Deprecated
+
+- [iOS] Deprecate isHidden property of `ProductCardPriceConfiguration` interface
+
 ## [2.7.2-beta.1]
 
 ### Fixed

@@ -41,6 +41,9 @@ export function OpenVideoForm() {
     },
     ctaWidth: 'fullWidth',
     showVideoDetailTitle: true,
+    videoPlayerLogoConfiguration: {
+      option: 'disabled',
+    },
   };
   const [playerConfiguration, setPlayerConfiguration] = useState<
     VideoPlayerConfiguration | undefined

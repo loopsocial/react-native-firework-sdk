@@ -102,6 +102,9 @@ const Feed = () => {
     },
     ctaWidth: 'fullWidth',
     showVideoDetailTitle: true,
+    videoPlayerLogoConfiguration: {
+      option: 'disabled',
+    },
   };
   const [playerConfiguration, setPlayerConfiguration] = useState<
     VideoPlayerConfiguration | undefined
@@ -122,6 +125,9 @@ const Feed = () => {
     },
     showVideoDetailTitle: true,
     ctaWidth: 'fullWidth',
+    videoPlayerLogoConfiguration: {
+      option: 'disabled',
+    },
   };
   const [storyBlockConfiguration, setStoryBlockConfiguration] = useState<
     StoryBlockConfiguration | undefined
@@ -239,6 +245,18 @@ const Feed = () => {
             console.log('[example] onVideoFeedLoadFinished error', error);
             setFeedError(error);
           }}
+          onVideoFeedDidStartPictureInPicture={(error?: FWError) => {
+            console.log(
+              '[example] onVideoFeedDidStartPictureInPicture error',
+              error
+            );
+          }}
+          onVideoFeedDidStopPictureInPicture={(error?: FWError) => {
+            console.log(
+              '[example] onVideoFeedDidStopPictureInPicture error',
+              error
+            );
+          }}
           ref={feedRef}
         />
         {feedError && (
@@ -287,6 +305,18 @@ const Feed = () => {
             onStoryBlockLoadFinished={(error?: FWError) => {
               console.log('[example] onStoryBlockLoadFinished error', error);
               setFeedError(error);
+            }}
+            onStoryBlockDidStartPictureInPicture={(error?: FWError) => {
+              console.log(
+                '[example] onStoryBlockDidStartPictureInPicture error',
+                error
+              );
+            }}
+            onStoryBlockDidStopPictureInPicture={(error?: FWError) => {
+              console.log(
+                '[example] onStoryBlockDidStopPictureInPicture error',
+                error
+              );
             }}
           />
           {feedError && (

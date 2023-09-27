@@ -19,6 +19,7 @@ import type {
   ProductCardConfiguration,
   ProductCardCTAButtonText,
   ProductCardTheme,
+  ProductCardPriceLabelAxis,
 } from 'react-native-firework-sdk';
 import FireworkSDK from 'react-native-firework-sdk';
 import Ionicons from 'react-native-vector-icons/Ionicons';
@@ -50,14 +51,35 @@ const productCardCTAButtonTextList: ProductCardCTAButtonText[] = [
   'buyNow',
 ];
 const productCardThemeList: ProductCardTheme[] = ['dark', 'light'];
+const productCardPriceAxisList: ProductCardPriceLabelAxis[] = [
+  'horizontal',
+  'vertical',
+];
 
 type ShoppingConfigurationFormData = {
   shoppingCTAButtonTextIndex?: number;
   productCardCTAButtonTextIndex?: number;
   productCardThemeIndex?: number;
   productCardCornerRadius?: string;
-  productCardPriceHidden?: boolean;
   productCardCtaButtonHidden?: boolean;
+  productCardCTAButtonTextColor?: string;
+  productCardCTAButtonFontSize?: string;
+  productCardPriceHidden?: boolean;
+  productCardPriceAxisIndex: number;
+  productCardPriceLabelTextColor?: string;
+  productCardPriceLabelFontSize?: string;
+  productCardPriceLabelNumberOfLines?: string;
+  productCardOriginalPriceLabelTextColor?: string;
+  productCardOriginalPriceLabelFontSize?: string;
+  productCardOriginalPriceLabelNumberOfLines?: string;
+  productCardIsPriceFirst?: boolean;
+  productCardWidth?: string;
+  productCardHeight?: string;
+  productCardBackgroundColor?: string;
+  productCardIconCornerRadius?: string;
+  productCardNameLabelTextColor?: string;
+  productCardNameLabelFontSize?: string;
+  productCardNameLabelNumberOfLines?: string;
   ctaButtonBackgroundColor?: string;
   ctaButtonTextColor?: string;
   ctaButtonFontSize?: string;
@@ -117,6 +139,9 @@ const ShoppingConfigurationModal = ({
   const defaultEnableCustomTapProductCard = useAppSelector(
     (state) => state.shopping.defaultEnableCustomTapProductCard
   );
+  const enablePausePlayer = useAppSelector(
+    (state) => state.navigation.enablePausePlayer
+  );
   const dispatch = useAppDispatch();
 
   const {
@@ -135,6 +160,30 @@ const ShoppingConfigurationModal = ({
       ctaButtonFontSizeErrorMessage = 'Please enter font size in [8, 30]';
     } else {
       ctaButtonFontSizeErrorMessage = 'Please enter correct font size';
+    }
+  }
+
+  let productCardWidthErrorMessage: string | undefined;
+  if (errors.productCardWidth) {
+    if (
+      errors.productCardWidth.type === 'max' ||
+      errors.productCardWidth.type === 'min'
+    ) {
+      productCardWidthErrorMessage = 'Please enter font size in [218, 300]';
+    } else {
+      productCardWidthErrorMessage = 'Please enter correct number';
+    }
+  }
+
+  let productCardHeightErrorMessage: string | undefined;
+  if (errors.productCardHeight) {
+    if (
+      errors.productCardHeight.type === 'max' ||
+      errors.productCardHeight.type === 'min'
+    ) {
+      productCardHeightErrorMessage = 'Please enter font size in [88, 120]';
+    } else {
+      productCardHeightErrorMessage = 'Please enter correct number';
     }
   }
 
@@ -191,7 +240,7 @@ const ShoppingConfigurationModal = ({
           configuration.productCardConfiguration.cornerRadius?.toString()
         );
       } else {
-        setValue('productCardCornerRadius', '');
+        setValue('productCardCornerRadius', undefined);
       }
 
       if (
@@ -208,6 +257,192 @@ const ShoppingConfigurationModal = ({
 
       if (
         configuration &&
+        configuration.productCardConfiguration.priceConfiguration?.axis
+      ) {
+        const productCardPriceAxisIndex = productCardPriceAxisList.indexOf(
+          configuration.productCardConfiguration.priceConfiguration?.axis!
+        );
+        setValue(
+          'productCardPriceAxisIndex',
+          productCardPriceAxisIndex >= 0 ? productCardPriceAxisIndex : 0
+        );
+      } else {
+        setValue('productCardPriceAxisIndex', 0);
+      }
+
+      if (
+        configuration &&
+        configuration.productCardConfiguration.priceConfiguration?.priceLabel
+          ?.textColor
+      ) {
+        setValue(
+          'productCardPriceLabelTextColor',
+          configuration.productCardConfiguration.priceConfiguration?.priceLabel
+            .textColor
+        );
+      } else {
+        setValue('productCardPriceLabelTextColor', undefined);
+      }
+
+      if (
+        configuration &&
+        configuration.productCardConfiguration.priceConfiguration?.priceLabel
+          ?.fontSize
+      ) {
+        setValue(
+          'productCardPriceLabelFontSize',
+          configuration.productCardConfiguration.priceConfiguration?.priceLabel?.fontSize?.toString()
+        );
+      } else {
+        setValue('productCardPriceLabelFontSize', undefined);
+      }
+
+      if (
+        configuration &&
+        configuration.productCardConfiguration.priceConfiguration?.priceLabel
+          ?.numberOfLines
+      ) {
+        setValue(
+          'productCardPriceLabelNumberOfLines',
+          configuration.productCardConfiguration.priceConfiguration?.priceLabel?.numberOfLines?.toString()
+        );
+      } else {
+        setValue('productCardPriceLabelNumberOfLines', undefined);
+      }
+
+      if (
+        configuration &&
+        configuration.productCardConfiguration.priceConfiguration
+          ?.originalPriceLabel?.textColor
+      ) {
+        setValue(
+          'productCardOriginalPriceLabelTextColor',
+          configuration.productCardConfiguration.priceConfiguration
+            ?.originalPriceLabel?.textColor
+        );
+      } else {
+        setValue('productCardOriginalPriceLabelTextColor', undefined);
+      }
+
+      if (
+        configuration &&
+        configuration.productCardConfiguration.priceConfiguration
+          ?.originalPriceLabel?.fontSize
+      ) {
+        setValue(
+          'productCardOriginalPriceLabelFontSize',
+          configuration.productCardConfiguration.priceConfiguration?.originalPriceLabel?.fontSize?.toString()
+        );
+      } else {
+        setValue('productCardOriginalPriceLabelFontSize', undefined);
+      }
+
+      if (
+        configuration &&
+        configuration.productCardConfiguration.priceConfiguration
+          ?.originalPriceLabel?.numberOfLines
+      ) {
+        setValue(
+          'productCardOriginalPriceLabelNumberOfLines',
+          configuration.productCardConfiguration.priceConfiguration?.originalPriceLabel?.numberOfLines?.toString()
+        );
+      } else {
+        setValue('productCardOriginalPriceLabelNumberOfLines', undefined);
+      }
+
+      if (
+        configuration &&
+        configuration.productCardConfiguration.priceConfiguration?.isPriceFirst
+      ) {
+        setValue(
+          'productCardIsPriceFirst',
+          configuration.productCardConfiguration.priceConfiguration
+            ?.isPriceFirst
+        );
+      } else {
+        setValue('productCardIsPriceFirst', false);
+      }
+
+      if (configuration && configuration.productCardConfiguration.width) {
+        setValue(
+          'productCardWidth',
+          configuration.productCardConfiguration.width?.toString()
+        );
+      } else {
+        setValue('productCardWidth', undefined);
+      }
+
+      if (configuration && configuration.productCardConfiguration.height) {
+        setValue(
+          'productCardHeight',
+          configuration.productCardConfiguration.height?.toString()
+        );
+      } else {
+        setValue('productCardHeight', undefined);
+      }
+
+      if (
+        configuration &&
+        configuration.productCardConfiguration.backgroundColor
+      ) {
+        setValue(
+          'productCardBackgroundColor',
+          configuration.productCardConfiguration.backgroundColor
+        );
+      } else {
+        setValue('productCardBackgroundColor', undefined);
+      }
+
+      if (
+        configuration &&
+        configuration.productCardConfiguration.iconConfiguration?.cornerRadius
+      ) {
+        setValue(
+          'productCardIconCornerRadius',
+          configuration.productCardConfiguration.iconConfiguration?.cornerRadius.toString()
+        );
+      } else {
+        setValue('productCardIconCornerRadius', undefined);
+      }
+
+      if (
+        configuration &&
+        configuration.productCardConfiguration.nameLabel?.textColor
+      ) {
+        setValue(
+          'productCardNameLabelTextColor',
+          configuration.productCardConfiguration.nameLabel?.textColor
+        );
+      } else {
+        setValue('productCardNameLabelTextColor', undefined);
+      }
+
+      if (
+        configuration &&
+        configuration.productCardConfiguration.nameLabel?.fontSize
+      ) {
+        setValue(
+          'productCardNameLabelFontSize',
+          configuration.productCardConfiguration.nameLabel?.fontSize?.toString()
+        );
+      } else {
+        setValue('productCardNameLabelFontSize', undefined);
+      }
+
+      if (
+        configuration &&
+        configuration.productCardConfiguration.nameLabel?.numberOfLines
+      ) {
+        setValue(
+          'productCardNameLabelNumberOfLines',
+          configuration.productCardConfiguration.nameLabel?.numberOfLines?.toString()
+        );
+      } else {
+        setValue('productCardNameLabelNumberOfLines', undefined);
+      }
+
+      if (
+        configuration &&
         configuration.productCardConfiguration.isCtaButtonHidden
       ) {
         setValue(
@@ -216,6 +451,30 @@ const ShoppingConfigurationModal = ({
         );
       } else {
         setValue('productCardCtaButtonHidden', false);
+      }
+
+      if (
+        configuration &&
+        configuration.productCardConfiguration.ctaButtonStyle?.textColor
+      ) {
+        setValue(
+          'productCardCTAButtonTextColor',
+          configuration.productCardConfiguration.ctaButtonStyle?.textColor
+        );
+      } else {
+        setValue('productCardCTAButtonTextColor', undefined);
+      }
+
+      if (
+        configuration &&
+        configuration.productCardConfiguration.ctaButtonStyle?.fontSize
+      ) {
+        setValue(
+          'productCardCTAButtonFontSize',
+          configuration.productCardConfiguration.ctaButtonStyle?.fontSize?.toString()
+        );
+      } else {
+        setValue('productCardCTAButtonFontSize', undefined);
       }
 
       setValue(
@@ -286,23 +545,134 @@ const ShoppingConfigurationModal = ({
       data.productCardPriceHidden;
     resultProductCardConfiguration.isCtaButtonHidden =
       data.productCardCtaButtonHidden;
+    resultProductCardConfiguration.priceConfiguration.axis =
+      typeof data.productCardPriceAxisIndex === 'number'
+        ? productCardPriceAxisList[data.productCardPriceAxisIndex!]
+        : undefined;
+
+    resultProductCardConfiguration.priceConfiguration.priceLabel = {};
+    if (data.productCardPriceLabelTextColor) {
+      resultProductCardConfiguration.priceConfiguration.priceLabel.textColor =
+        data.productCardPriceLabelTextColor;
+    } else {
+      resultProductCardConfiguration.priceConfiguration.priceLabel.textColor =
+        undefined;
+    }
+
+    if (data.productCardPriceLabelFontSize) {
+      resultProductCardConfiguration.priceConfiguration.priceLabel.fontSize =
+        parseInt(data.productCardPriceLabelFontSize);
+    } else {
+      resultProductCardConfiguration.priceConfiguration.priceLabel.fontSize =
+        undefined;
+    }
+
+    if (data.productCardPriceLabelNumberOfLines) {
+      resultProductCardConfiguration.priceConfiguration.priceLabel.numberOfLines =
+        parseInt(data.productCardPriceLabelNumberOfLines);
+    } else {
+      resultProductCardConfiguration.priceConfiguration.priceLabel.numberOfLines =
+        undefined;
+    }
+
+    resultProductCardConfiguration.priceConfiguration.originalPriceLabel = {};
+    if (data.productCardOriginalPriceLabelTextColor) {
+      resultProductCardConfiguration.priceConfiguration.originalPriceLabel.textColor =
+        data.productCardOriginalPriceLabelTextColor;
+    }
+    if (data.productCardOriginalPriceLabelFontSize) {
+      resultProductCardConfiguration.priceConfiguration.originalPriceLabel.fontSize =
+        parseInt(data.productCardOriginalPriceLabelFontSize);
+    }
+    if (data.productCardOriginalPriceLabelNumberOfLines) {
+      resultProductCardConfiguration.priceConfiguration.originalPriceLabel.numberOfLines =
+        parseInt(data.productCardOriginalPriceLabelNumberOfLines);
+    }
+
+    resultProductCardConfiguration.priceConfiguration.isPriceFirst =
+      data.productCardIsPriceFirst;
+
+    if (data.productCardWidth) {
+      resultProductCardConfiguration.width = parseInt(data.productCardWidth);
+    } else {
+      resultProductCardConfiguration.width = undefined;
+    }
+
+    if (data.productCardHeight) {
+      resultProductCardConfiguration.height = parseInt(data.productCardHeight);
+    } else {
+      resultProductCardConfiguration.height = undefined;
+    }
+
+    if (data.productCardBackgroundColor) {
+      resultProductCardConfiguration.backgroundColor =
+        data.productCardBackgroundColor;
+    } else {
+      resultProductCardConfiguration.backgroundColor = undefined;
+    }
+
+    if (data.productCardIconCornerRadius) {
+      resultProductCardConfiguration.iconConfiguration = {
+        cornerRadius: parseInt(data.productCardIconCornerRadius),
+      };
+    } else {
+      resultProductCardConfiguration.iconConfiguration = undefined;
+    }
+
+    resultProductCardConfiguration.nameLabel = {};
+    if (data.productCardNameLabelTextColor) {
+      resultProductCardConfiguration.nameLabel.textColor =
+        data.productCardNameLabelTextColor;
+    }
+
+    if (data.productCardNameLabelFontSize) {
+      resultProductCardConfiguration.nameLabel.fontSize = parseInt(
+        data.productCardNameLabelFontSize
+      );
+    }
+
+    if (data.productCardNameLabelNumberOfLines) {
+      resultProductCardConfiguration.nameLabel.numberOfLines = parseInt(
+        data.productCardNameLabelNumberOfLines
+      );
+    }
+
+    resultProductCardConfiguration.ctaButtonStyle = {};
+    if (data.productCardCTAButtonTextColor) {
+      resultProductCardConfiguration.ctaButtonStyle.textColor =
+        data.productCardCTAButtonTextColor;
+    }
+    if (data.productCardCTAButtonFontSize) {
+      resultProductCardConfiguration.ctaButtonStyle.fontSize = parseInt(
+        data.productCardCTAButtonFontSize
+      );
+    }
+
     if (data.ctaButtonBackgroundColor) {
       resultCTAButtonConfiguration.backgroundColor =
         data.ctaButtonBackgroundColor;
+    } else {
+      resultCTAButtonConfiguration.backgroundColor = undefined;
     }
 
     if (data.ctaButtonTextColor) {
       resultCTAButtonConfiguration.textColor = data.ctaButtonTextColor;
+    } else {
+      resultCTAButtonConfiguration.textColor = undefined;
     }
 
     if (data.ctaButtonFontSize) {
       resultCTAButtonConfiguration.fontSize = parseInt(data.ctaButtonFontSize);
+    } else {
+      resultCTAButtonConfiguration.fontSize = undefined;
     }
 
     if (data.ctaButtonIOSFontName) {
       resultCTAButtonConfiguration.iOSFontInfo = {
         fontName: data.ctaButtonIOSFontName,
       };
+    } else {
+      resultCTAButtonConfiguration.iOSFontInfo = undefined;
     }
 
     dispatch(setCTAButtonConfiguration(resultCTAButtonConfiguration));
@@ -333,6 +703,9 @@ const ShoppingConfigurationModal = ({
       FireworkSDK.getInstance().shopping.onCustomTapProductCard = async (
         event
       ) => {
+        if (enablePausePlayer) {
+          event.playerHandler?.pause();
+        }
         HostAppService.getInstance().closePlayerOrStartFloatingPlayer();
         HostAppService.getInstance().navigate('LinkContent', {
           url: event.url,
@@ -381,117 +754,6 @@ const ShoppingConfigurationModal = ({
               />
             )}
             name="shoppingCTAButtonTextIndex"
-          />
-        </View>
-      </View>
-      <View style={styles.formItemRow}>
-        <View style={styles.formItem}>
-          <Text style={styles.formItemLabel}>
-            Product card CTA button text(iOS)
-          </Text>
-          <Controller
-            control={control}
-            render={({ field: { onChange, value } }) => (
-              <ButtonGroup
-                buttons={productCardCTAButtonTextList}
-                selectedIndex={value}
-                onPress={(newValue) => {
-                  onChange(newValue);
-                }}
-              />
-            )}
-            name="productCardCTAButtonTextIndex"
-          />
-        </View>
-      </View>
-      <View style={styles.formItemRow}>
-        <View style={styles.formItem}>
-          <Text style={styles.formItemLabel}>
-            Product card CTA button text(iOS)
-          </Text>
-          <Controller
-            control={control}
-            render={({ field: { onChange, value } }) => (
-              <ButtonGroup
-                buttons={productCardThemeList}
-                selectedIndex={value}
-                onPress={(newValue) => {
-                  onChange(newValue);
-                }}
-              />
-            )}
-            name="productCardThemeIndex"
-          />
-        </View>
-      </View>
-      <View style={styles.formItemRow}>
-        <View style={styles.formItem}>
-          <Controller
-            control={control}
-            render={({ field: { onChange, onBlur, value } }) => (
-              <Input
-                label={'Product card Corner Radius(iOS)'}
-                placeholder="e.g. 0"
-                onBlur={onBlur}
-                onChangeText={(newValue) => onChange(newValue)}
-                value={value}
-                errorMessage={
-                  errors.productCardCornerRadius
-                    ? 'Please enter correct corner radius'
-                    : undefined
-                }
-                rightIcon={
-                  <TouchableOpacity
-                    onPress={() => {
-                      setValue('productCardCornerRadius', undefined);
-                    }}
-                  >
-                    <Ionicons name="close" size={24} />
-                  </TouchableOpacity>
-                }
-                autoCompleteType={undefined}
-              />
-            )}
-            name="productCardCornerRadius"
-            rules={{
-              pattern: Patterns.number,
-            }}
-          />
-        </View>
-      </View>
-      <View style={{ ...styles.formItemRow, marginBottom: 20 }}>
-        <View style={styles.formItem}>
-          <Controller
-            control={control}
-            render={({ field: { onChange, value } }) => {
-              return (
-                <CheckBox
-                  center
-                  title="Hide product card price(iOS)"
-                  checked={value}
-                  onPress={() => onChange(!value)}
-                />
-              );
-            }}
-            name="productCardPriceHidden"
-          />
-        </View>
-      </View>
-      <View style={{ ...styles.formItemRow, marginBottom: 20 }}>
-        <View style={styles.formItem}>
-          <Controller
-            control={control}
-            render={({ field: { onChange, value } }) => {
-              return (
-                <CheckBox
-                  center
-                  title="Hide product card CTA button(iOS)"
-                  checked={value}
-                  onPress={() => onChange(!value)}
-                />
-              );
-            }}
-            name="productCardCtaButtonHidden"
           />
         </View>
       </View>
@@ -694,6 +956,675 @@ const ShoppingConfigurationModal = ({
               );
             }}
             name="enableCustomTapProductCard"
+          />
+        </View>
+      </View>
+      <View style={styles.formItemRow}>
+        <View style={styles.formItem}>
+          <Text style={styles.formItemLabel}>
+            Product card CTA button text(iOS)
+          </Text>
+          <Controller
+            control={control}
+            render={({ field: { onChange, value } }) => (
+              <ButtonGroup
+                buttons={productCardThemeList}
+                selectedIndex={value}
+                onPress={(newValue) => {
+                  onChange(newValue);
+                }}
+              />
+            )}
+            name="productCardThemeIndex"
+          />
+        </View>
+      </View>
+      <View style={styles.formItemRow}>
+        <View style={styles.formItem}>
+          <Controller
+            control={control}
+            render={({ field: { onChange, onBlur, value } }) => (
+              <Input
+                label={'Product card corner radius(iOS)'}
+                placeholder="e.g. 0"
+                onBlur={onBlur}
+                onChangeText={(newValue) => onChange(newValue)}
+                value={value}
+                errorMessage={
+                  errors.productCardCornerRadius
+                    ? 'Please enter correct corner radius'
+                    : undefined
+                }
+                rightIcon={
+                  <TouchableOpacity
+                    onPress={() => {
+                      setValue('productCardCornerRadius', undefined);
+                    }}
+                  >
+                    <Ionicons name="close" size={24} />
+                  </TouchableOpacity>
+                }
+                autoCompleteType={undefined}
+              />
+            )}
+            name="productCardCornerRadius"
+            rules={{
+              pattern: Patterns.number,
+            }}
+          />
+        </View>
+      </View>
+      <View style={styles.formItemRow}>
+        <View style={styles.formItem}>
+          <Text style={styles.formItemLabel}>
+            Product card CTA button text(iOS)
+          </Text>
+          <Controller
+            control={control}
+            render={({ field: { onChange, value } }) => (
+              <ButtonGroup
+                buttons={productCardCTAButtonTextList}
+                selectedIndex={value}
+                onPress={(newValue) => {
+                  onChange(newValue);
+                }}
+              />
+            )}
+            name="productCardCTAButtonTextIndex"
+          />
+        </View>
+      </View>
+      <View style={{ ...styles.formItemRow, marginBottom: 20 }}>
+        <View style={styles.formItem}>
+          <Controller
+            control={control}
+            render={({ field: { onChange, value } }) => {
+              return (
+                <CheckBox
+                  center
+                  title="Hide product card CTA button(iOS)"
+                  checked={value}
+                  onPress={() => onChange(!value)}
+                />
+              );
+            }}
+            name="productCardCtaButtonHidden"
+          />
+        </View>
+      </View>
+      <View style={styles.formItemRow}>
+        <View style={styles.formItem}>
+          <Controller
+            control={control}
+            render={({ field: { onChange, onBlur, value } }) => (
+              <Input
+                label={'Product card CTA button text color(iOS)'}
+                placeholder="e.g. #c0c0c0"
+                onBlur={onBlur}
+                onChangeText={(newValue) => onChange(newValue)}
+                value={value}
+                errorMessage={
+                  errors.productCardCTAButtonTextColor
+                    ? 'Please enter correct color'
+                    : undefined
+                }
+                rightIcon={
+                  <TouchableOpacity
+                    onPress={() => {
+                      setValue('productCardCTAButtonTextColor', undefined);
+                    }}
+                  >
+                    <Ionicons name="close" size={24} />
+                  </TouchableOpacity>
+                }
+                autoCompleteType={undefined}
+              />
+            )}
+            name="productCardCTAButtonTextColor"
+            rules={{
+              pattern: Patterns.hexColor,
+            }}
+          />
+        </View>
+      </View>
+      <View style={styles.formItemRow}>
+        <View style={styles.formItem}>
+          <Controller
+            control={control}
+            render={({ field: { onChange, onBlur, value } }) => (
+              <Input
+                label={'Font size of product card CTA button(iOS)'}
+                placeholder="e.g. 14"
+                onBlur={onBlur}
+                onChangeText={(newValue) => onChange(newValue)}
+                value={value}
+                errorMessage={ctaButtonFontSizeErrorMessage}
+                rightIcon={
+                  <TouchableOpacity
+                    onPress={() => {
+                      setValue('productCardCTAButtonFontSize', undefined);
+                    }}
+                  >
+                    <Ionicons name="close" size={24} />
+                  </TouchableOpacity>
+                }
+                autoCompleteType={undefined}
+              />
+            )}
+            name="productCardCTAButtonFontSize"
+            rules={{
+              pattern: Patterns.number,
+              max: 30,
+              min: 8,
+            }}
+          />
+        </View>
+      </View>
+      <View style={{ ...styles.formItemRow, marginBottom: 20 }}>
+        <View style={styles.formItem}>
+          <Controller
+            control={control}
+            render={({ field: { onChange, value } }) => {
+              return (
+                <CheckBox
+                  center
+                  title="Hide product card price(iOS-@deprecated)"
+                  checked={value}
+                  onPress={() => onChange(!value)}
+                />
+              );
+            }}
+            name="productCardPriceHidden"
+          />
+        </View>
+      </View>
+      <View style={styles.formItemRow}>
+        <View style={styles.formItem}>
+          <Text style={styles.formItemLabel}>Product card price axis(iOS)</Text>
+          <Controller
+            control={control}
+            render={({ field: { onChange, value } }) => (
+              <ButtonGroup
+                buttons={productCardPriceAxisList}
+                selectedIndex={value}
+                onPress={(newValue) => {
+                  onChange(newValue);
+                }}
+              />
+            )}
+            name="productCardPriceAxisIndex"
+          />
+        </View>
+      </View>
+      <View style={styles.formItemRow}>
+        <View style={styles.formItem}>
+          <Controller
+            control={control}
+            render={({ field: { onChange, onBlur, value } }) => (
+              <Input
+                label={'Product card price label text color(iOS)'}
+                placeholder="e.g. #c0c0c0"
+                onBlur={onBlur}
+                onChangeText={(newValue) => onChange(newValue)}
+                value={value}
+                errorMessage={
+                  errors.productCardPriceLabelTextColor
+                    ? 'Please enter correct color'
+                    : undefined
+                }
+                rightIcon={
+                  <TouchableOpacity
+                    onPress={() => {
+                      setValue('productCardPriceLabelTextColor', undefined);
+                    }}
+                  >
+                    <Ionicons name="close" size={24} />
+                  </TouchableOpacity>
+                }
+                autoCompleteType={undefined}
+              />
+            )}
+            name="productCardPriceLabelTextColor"
+            rules={{
+              pattern: Patterns.hexColor,
+            }}
+          />
+        </View>
+      </View>
+      <View style={styles.formItemRow}>
+        <View style={styles.formItem}>
+          <Controller
+            control={control}
+            render={({ field: { onChange, onBlur, value } }) => (
+              <Input
+                label={'Font size of product card price label(iOS)'}
+                placeholder="e.g. 14"
+                onBlur={onBlur}
+                onChangeText={(newValue) => onChange(newValue)}
+                value={value}
+                errorMessage={ctaButtonFontSizeErrorMessage}
+                rightIcon={
+                  <TouchableOpacity
+                    onPress={() => {
+                      setValue('productCardPriceLabelFontSize', undefined);
+                    }}
+                  >
+                    <Ionicons name="close" size={24} />
+                  </TouchableOpacity>
+                }
+                autoCompleteType={undefined}
+              />
+            )}
+            name="productCardPriceLabelFontSize"
+            rules={{
+              pattern: Patterns.number,
+              max: 30,
+              min: 8,
+            }}
+          />
+        </View>
+      </View>
+      <View style={styles.formItemRow}>
+        <View style={styles.formItem}>
+          <Controller
+            control={control}
+            render={({ field: { onChange, onBlur, value } }) => (
+              <Input
+                label={'NumberOfines of product card price label(iOS)'}
+                placeholder="e.g. 1"
+                onBlur={onBlur}
+                onChangeText={(newValue) => onChange(newValue)}
+                value={value}
+                errorMessage={
+                  errors.productCardPriceLabelNumberOfLines
+                    ? 'Please enter correct number'
+                    : undefined
+                }
+                rightIcon={
+                  <TouchableOpacity
+                    onPress={() => {
+                      setValue('productCardPriceLabelNumberOfLines', undefined);
+                    }}
+                  >
+                    <Ionicons name="close" size={24} />
+                  </TouchableOpacity>
+                }
+                autoCompleteType={undefined}
+              />
+            )}
+            name="productCardPriceLabelNumberOfLines"
+            rules={{
+              pattern: Patterns.number,
+            }}
+          />
+        </View>
+      </View>
+      <View style={styles.formItemRow}>
+        <View style={styles.formItem}>
+          <Controller
+            control={control}
+            render={({ field: { onChange, onBlur, value } }) => (
+              <Input
+                label={'Product card original price label text color(iOS)'}
+                placeholder="e.g. #c0c0c0"
+                onBlur={onBlur}
+                onChangeText={(newValue) => onChange(newValue)}
+                value={value}
+                errorMessage={
+                  errors.productCardOriginalPriceLabelTextColor
+                    ? 'Please enter correct color'
+                    : undefined
+                }
+                rightIcon={
+                  <TouchableOpacity
+                    onPress={() => {
+                      setValue(
+                        'productCardOriginalPriceLabelTextColor',
+                        undefined
+                      );
+                    }}
+                  >
+                    <Ionicons name="close" size={24} />
+                  </TouchableOpacity>
+                }
+                autoCompleteType={undefined}
+              />
+            )}
+            name="productCardOriginalPriceLabelTextColor"
+            rules={{
+              pattern: Patterns.hexColor,
+            }}
+          />
+        </View>
+      </View>
+      <View style={styles.formItemRow}>
+        <View style={styles.formItem}>
+          <Controller
+            control={control}
+            render={({ field: { onChange, onBlur, value } }) => (
+              <Input
+                label={'Font size of product card original price label(iOS)'}
+                placeholder="e.g. 14"
+                onBlur={onBlur}
+                onChangeText={(newValue) => onChange(newValue)}
+                value={value}
+                errorMessage={ctaButtonFontSizeErrorMessage}
+                rightIcon={
+                  <TouchableOpacity
+                    onPress={() => {
+                      setValue(
+                        'productCardOriginalPriceLabelFontSize',
+                        undefined
+                      );
+                    }}
+                  >
+                    <Ionicons name="close" size={24} />
+                  </TouchableOpacity>
+                }
+                autoCompleteType={undefined}
+              />
+            )}
+            name="productCardOriginalPriceLabelFontSize"
+            rules={{
+              pattern: Patterns.number,
+              max: 30,
+              min: 8,
+            }}
+          />
+        </View>
+      </View>
+      <View style={styles.formItemRow}>
+        <View style={styles.formItem}>
+          <Controller
+            control={control}
+            render={({ field: { onChange, onBlur, value } }) => (
+              <Input
+                label={'NumberOfines of product card original price label(iOS)'}
+                placeholder="e.g. 1"
+                onBlur={onBlur}
+                onChangeText={(newValue) => onChange(newValue)}
+                value={value}
+                errorMessage={
+                  errors.productCardOriginalPriceLabelNumberOfLines
+                    ? 'Please enter correct number'
+                    : undefined
+                }
+                rightIcon={
+                  <TouchableOpacity
+                    onPress={() => {
+                      setValue(
+                        'productCardOriginalPriceLabelNumberOfLines',
+                        undefined
+                      );
+                    }}
+                  >
+                    <Ionicons name="close" size={24} />
+                  </TouchableOpacity>
+                }
+                autoCompleteType={undefined}
+              />
+            )}
+            name="productCardOriginalPriceLabelNumberOfLines"
+            rules={{
+              pattern: Patterns.number,
+            }}
+          />
+        </View>
+      </View>
+      <View style={{ ...styles.formItemRow, marginBottom: 20 }}>
+        <View style={styles.formItem}>
+          <Controller
+            control={control}
+            render={({ field: { onChange, value } }) => {
+              return (
+                <CheckBox
+                  center
+                  title="Product card is price first(iOS)"
+                  checked={value}
+                  onPress={() => onChange(!value)}
+                />
+              );
+            }}
+            name="productCardIsPriceFirst"
+          />
+        </View>
+      </View>
+      <View style={styles.formItemRow}>
+        <View style={styles.formItem}>
+          <Controller
+            control={control}
+            render={({ field: { onChange, onBlur, value } }) => (
+              <Input
+                label={'Product card width(iOS)'}
+                placeholder="e.g. 218"
+                onBlur={onBlur}
+                onChangeText={(newValue) => onChange(newValue)}
+                value={value}
+                errorMessage={productCardWidthErrorMessage}
+                rightIcon={
+                  <TouchableOpacity
+                    onPress={() => {
+                      setValue('productCardWidth', undefined);
+                    }}
+                  >
+                    <Ionicons name="close" size={24} />
+                  </TouchableOpacity>
+                }
+                autoCompleteType={undefined}
+              />
+            )}
+            name="productCardWidth"
+            rules={{
+              pattern: Patterns.number,
+              max: 300,
+              min: 218,
+            }}
+          />
+        </View>
+      </View>
+      <View style={styles.formItemRow}>
+        <View style={styles.formItem}>
+          <Controller
+            control={control}
+            render={({ field: { onChange, onBlur, value } }) => (
+              <Input
+                label={'Product card height(iOS)'}
+                placeholder="e.g. 88"
+                onBlur={onBlur}
+                onChangeText={(newValue) => onChange(newValue)}
+                value={value}
+                errorMessage={productCardHeightErrorMessage}
+                rightIcon={
+                  <TouchableOpacity
+                    onPress={() => {
+                      setValue('productCardHeight', undefined);
+                    }}
+                  >
+                    <Ionicons name="close" size={24} />
+                  </TouchableOpacity>
+                }
+                autoCompleteType={undefined}
+              />
+            )}
+            name="productCardHeight"
+            rules={{
+              pattern: Patterns.number,
+              max: 120,
+              min: 88,
+            }}
+          />
+        </View>
+      </View>
+      <View style={styles.formItemRow}>
+        <View style={styles.formItem}>
+          <Controller
+            control={control}
+            render={({ field: { onChange, onBlur, value } }) => (
+              <Input
+                label={'Product card backgroundColor(iOS)'}
+                placeholder="e.g. #c0c0c0"
+                onBlur={onBlur}
+                onChangeText={(newValue) => onChange(newValue)}
+                value={value}
+                errorMessage={
+                  errors.productCardBackgroundColor
+                    ? 'Please enter correct color'
+                    : undefined
+                }
+                rightIcon={
+                  <TouchableOpacity
+                    onPress={() => {
+                      setValue('productCardBackgroundColor', undefined);
+                    }}
+                  >
+                    <Ionicons name="close" size={24} />
+                  </TouchableOpacity>
+                }
+                autoCompleteType={undefined}
+              />
+            )}
+            name="productCardBackgroundColor"
+            rules={{
+              pattern: Patterns.hexColor,
+            }}
+          />
+        </View>
+      </View>
+      <View style={styles.formItemRow}>
+        <View style={styles.formItem}>
+          <Controller
+            control={control}
+            render={({ field: { onChange, onBlur, value } }) => (
+              <Input
+                label={'Product card icon corner radius(iOS)'}
+                placeholder="e.g. 0"
+                onBlur={onBlur}
+                onChangeText={(newValue) => onChange(newValue)}
+                value={value}
+                errorMessage={
+                  errors.productCardIconCornerRadius
+                    ? 'Please enter correct corner radius'
+                    : undefined
+                }
+                rightIcon={
+                  <TouchableOpacity
+                    onPress={() => {
+                      setValue('productCardIconCornerRadius', undefined);
+                    }}
+                  >
+                    <Ionicons name="close" size={24} />
+                  </TouchableOpacity>
+                }
+                autoCompleteType={undefined}
+              />
+            )}
+            name="productCardIconCornerRadius"
+            rules={{
+              pattern: Patterns.number,
+            }}
+          />
+        </View>
+      </View>
+      <View style={styles.formItemRow}>
+        <View style={styles.formItem}>
+          <Controller
+            control={control}
+            render={({ field: { onChange, onBlur, value } }) => (
+              <Input
+                label={'Product card name label text color(iOS)'}
+                placeholder="e.g. #c0c0c0"
+                onBlur={onBlur}
+                onChangeText={(newValue) => onChange(newValue)}
+                value={value}
+                errorMessage={
+                  errors.productCardNameLabelTextColor
+                    ? 'Please enter correct color'
+                    : undefined
+                }
+                rightIcon={
+                  <TouchableOpacity
+                    onPress={() => {
+                      setValue('productCardNameLabelTextColor', undefined);
+                    }}
+                  >
+                    <Ionicons name="close" size={24} />
+                  </TouchableOpacity>
+                }
+                autoCompleteType={undefined}
+              />
+            )}
+            name="productCardNameLabelTextColor"
+            rules={{
+              pattern: Patterns.hexColor,
+            }}
+          />
+        </View>
+      </View>
+      <View style={styles.formItemRow}>
+        <View style={styles.formItem}>
+          <Controller
+            control={control}
+            render={({ field: { onChange, onBlur, value } }) => (
+              <Input
+                label={'Font size of product card name label(iOS)'}
+                placeholder="e.g. 14"
+                onBlur={onBlur}
+                onChangeText={(newValue) => onChange(newValue)}
+                value={value}
+                errorMessage={ctaButtonFontSizeErrorMessage}
+                rightIcon={
+                  <TouchableOpacity
+                    onPress={() => {
+                      setValue('productCardNameLabelFontSize', undefined);
+                    }}
+                  >
+                    <Ionicons name="close" size={24} />
+                  </TouchableOpacity>
+                }
+                autoCompleteType={undefined}
+              />
+            )}
+            name="productCardNameLabelFontSize"
+            rules={{
+              pattern: Patterns.number,
+              max: 30,
+              min: 8,
+            }}
+          />
+        </View>
+      </View>
+      <View style={styles.formItemRow}>
+        <View style={styles.formItem}>
+          <Controller
+            control={control}
+            render={({ field: { onChange, onBlur, value } }) => (
+              <Input
+                label={'NumberOfines of product card name label(iOS)'}
+                placeholder="e.g. 1"
+                onBlur={onBlur}
+                onChangeText={(newValue) => onChange(newValue)}
+                value={value}
+                errorMessage={
+                  errors.productCardNameLabelNumberOfLines
+                    ? 'Please enter correct number'
+                    : undefined
+                }
+                rightIcon={
+                  <TouchableOpacity
+                    onPress={() => {
+                      setValue('productCardNameLabelNumberOfLines', undefined);
+                    }}
+                  >
+                    <Ionicons name="close" size={24} />
+                  </TouchableOpacity>
+                }
+                autoCompleteType={undefined}
+              />
+            )}
+            name="productCardNameLabelNumberOfLines"
+            rules={{
+              pattern: Patterns.number,
+            }}
           />
         </View>
       </View>

@@ -182,6 +182,13 @@ function More() {
     },
   });
 
+  dataList.push({
+    title: 'Enable Pause Player',
+    pressCallback: (_) => {
+      navigation.push('EnablePausePlayer');
+    },
+  });
+
   useEffect(() => {
     const sycnCurrentDisplayLanguageFromStorage = async () => {
       try {
