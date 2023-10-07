@@ -1,10 +1,17 @@
 # CHANGELOG
 
+## [2.8.2]
+
+### Changed
+
+- Export `PlayerHandler` interface
+- Optimize `bringRNContainerToTop` and `bringRNContainerToBottom` methods
+
 ## [2.8.1]
 
 ### Changed
 
-- [Android] fix openVideoPlayer crash issue.
+- [Android] Fix `openVideoPlayer` crash issue.
 
 ## [2.8.0]
 
