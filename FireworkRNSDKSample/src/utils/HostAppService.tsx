@@ -117,7 +117,10 @@ export default class HostAppService {
         }
       }
       this.closePlayerOrStartFloatingPlayer().then(() => {
-        this.navigate('LinkContent', { url: event.url });
+        this.navigate('LinkContent', {
+          url: event.url,
+          playerHandler: event.playerHandler,
+        });
       });
     }
   };

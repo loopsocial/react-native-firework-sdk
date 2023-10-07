@@ -1,4 +1,5 @@
 import type {
+  PlayerHandler,
   StoryBlockSource,
   VideoFeedSource,
 } from 'react-native-firework-sdk';
@@ -24,6 +25,7 @@ export type RootStackParamList = {
   LinkContent: {
     url: string;
     isFromNativeNavigation?: boolean;
+    playerHandler?: PlayerHandler;
   };
   CircleThumbnails: undefined;
   EnablePushingRNContainer: undefined;

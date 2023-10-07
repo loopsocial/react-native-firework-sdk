@@ -704,11 +704,13 @@ const ShoppingConfigurationModal = ({
         event
       ) => {
         if (enablePausePlayer) {
+          console.log('call pause api');
           event.playerHandler?.pause();
         }
-        HostAppService.getInstance().closePlayerOrStartFloatingPlayer();
+        // HostAppService.getInstance().closePlayerOrStartFloatingPlayer();
         HostAppService.getInstance().navigate('LinkContent', {
           url: event.url,
+          playerHandler: event.playerHandler,
         });
       };
     } else {

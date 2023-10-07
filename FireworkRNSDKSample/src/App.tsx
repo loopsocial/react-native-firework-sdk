@@ -86,7 +86,8 @@ const FWNavigationContainer = () => {
                     navigation.goBack();
                   }
                   if ((route.params as any)?.isFromNativeNavigation) {
-                    FireworkSDK.getInstance().navigator.bringRNContainerToBottom();
+                    await FireworkSDK.getInstance().navigator.bringRNContainerToBottom();
+                    (route.params as any)?.playerHandler?.resume();
                   }
                 }}
                 tintColor={tintColor}
