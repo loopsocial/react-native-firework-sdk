@@ -501,7 +501,7 @@ const StoryBlockConfigurationModal = ({
       </View>
       <View style={styles.formItemRow}>
         <View style={{ ...styles.formItem }}>
-          <Text style={styles.formItemLabel}>Custom Logo Type</Text>
+          <Text style={styles.formItemLabel}>Player logo option</Text>
           <Controller
             control={control}
             render={({ field: { onChange, value } }) => (
@@ -530,8 +530,8 @@ const StoryBlockConfigurationModal = ({
             render={({ field: { onChange, onBlur, value } }) => (
               <Input
                 disabled={!enableVideoPlayerLogoEncodeId}
-                label="Custom Logo EncodeID"
-                placeholder="e.g. 7xuiui"
+                label="Player logo encoded id"
+                placeholder="Enter channel id"
                 onBlur={onBlur}
                 onChangeText={(newValue) => onChange(newValue)}
                 value={value}
