@@ -1,5 +1,11 @@
 # CHANGELOG
 
+## [2.8.3]
+
+### Fixed
+
+- [Android] Fix the crash issue when feed is destroyed before init
+
 ## [2.8.2]
 
 ### Changed
