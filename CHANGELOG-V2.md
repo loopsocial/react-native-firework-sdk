@@ -1,5 +1,11 @@
 # CHANGELOG
 
+## [2.8.4]
+
+### Changed
+
+- Recreate `StoryBlock` components when `productInfoViewConfiguration` property of `VideoShopping` class is changed
+
 ## [2.8.3]
 
 ### Fixed
