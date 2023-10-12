@@ -1232,7 +1232,7 @@ const ShoppingConfigurationModal = ({
             control={control}
             render={({ field: { onChange, onBlur, value } }) => (
               <Input
-                label={'NumberOfines of product card price label(iOS)'}
+                label={'Number of lines for product card price label(iOS)'}
                 placeholder="e.g. 1"
                 onBlur={onBlur}
                 onChangeText={(newValue) => onChange(newValue)}
@@ -1341,7 +1341,9 @@ const ShoppingConfigurationModal = ({
             control={control}
             render={({ field: { onChange, onBlur, value } }) => (
               <Input
-                label={'NumberOfines of product card original price label(iOS)'}
+                label={
+                  'Number of lines for product card original price label(iOS)'
+                }
                 placeholder="e.g. 1"
                 onBlur={onBlur}
                 onChangeText={(newValue) => onChange(newValue)}
@@ -1601,7 +1603,7 @@ const ShoppingConfigurationModal = ({
             control={control}
             render={({ field: { onChange, onBlur, value } }) => (
               <Input
-                label={'NumberOfines of product card name label(iOS)'}
+                label={'Number of lines for product card name label(iOS)'}
                 placeholder="e.g. 1"
                 onBlur={onBlur}
                 onChangeText={(newValue) => onChange(newValue)}
