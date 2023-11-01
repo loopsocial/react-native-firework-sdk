@@ -1,5 +1,11 @@
 # CHANGELOG
 
+## [2.8.5]
+
+### Changed
+
+- [iOS] Support dynamically enabling autoplay for `VideoFeed` component
+
 ## [2.8.4]
 
 ### Changed
