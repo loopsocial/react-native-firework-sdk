@@ -1,5 +1,11 @@
 # CHANGELOG
 
+## [2.8.6]
+
+### Changed
+
+- [iOS] Avoid unnecessary changes to video feed layout
+
 ## [2.8.5]
 
 ### Changed
