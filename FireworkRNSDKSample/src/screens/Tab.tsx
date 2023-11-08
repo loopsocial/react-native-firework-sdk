@@ -7,10 +7,10 @@ import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import FeedLayouts from './FeedLayouts';
 import More from './More';
 import type { TabParamsList } from './paramList/TabParamsList';
-import Shopping from './Shopping';
 import Cart from './Cart';
 import { useAppSelector } from '../hooks/reduxHooks';
 import HostAppService from '../utils/HostAppService';
+import Home from './Home';
 
 const TabNavigator = createBottomTabNavigator<TabParamsList>();
 
@@ -23,8 +23,8 @@ const Tab = () => {
         tabBarIcon: ({ focused, color, size }) => {
           let iconName = '';
           switch (route.name) {
-            case 'Shopping':
-              iconName = focused ? 'apps-outline' : 'apps';
+            case 'Home':
+              iconName = focused ? 'home' : 'home';
               break;
             case 'Cart':
               iconName = focused ? 'cart-outline' : 'cart';
@@ -45,7 +45,7 @@ const Tab = () => {
         headerTitleAlign: 'center',
       })}
     >
-      <TabNavigator.Screen name="Shopping" component={Shopping} />
+      <TabNavigator.Screen name="Home" component={Home} />
       {HostAppService.getInstance().shouldShowCart() && (
         <TabNavigator.Screen
           name="Cart"

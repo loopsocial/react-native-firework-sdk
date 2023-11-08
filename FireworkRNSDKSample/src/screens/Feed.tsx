@@ -245,6 +245,9 @@ const Feed = () => {
             console.log('[example] onVideoFeedLoadFinished error', error);
             setFeedError(error);
           }}
+          onVideoFeedEmpty={(error?: FWError) => {
+            console.log('[example] onVideoFeedEmpty error', error);
+          }}
           onVideoFeedDidStartPictureInPicture={(error?: FWError) => {
             console.log(
               '[example] onVideoFeedDidStartPictureInPicture error',
@@ -305,6 +308,9 @@ const Feed = () => {
             onStoryBlockLoadFinished={(error?: FWError) => {
               console.log('[example] onStoryBlockLoadFinished error', error);
               setFeedError(error);
+            }}
+            onStoryBlockEmpty={(error?: FWError) => {
+              console.log('[example] onStoryBlockEmpty error', error);
             }}
             onStoryBlockDidStartPictureInPicture={(error?: FWError) => {
               console.log(

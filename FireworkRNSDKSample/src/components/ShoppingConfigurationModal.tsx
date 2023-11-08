@@ -139,9 +139,6 @@ const ShoppingConfigurationModal = ({
   const defaultEnableCustomTapProductCard = useAppSelector(
     (state) => state.shopping.defaultEnableCustomTapProductCard
   );
-  const enablePausePlayer = useAppSelector(
-    (state) => state.navigation.enablePausePlayer
-  );
   const dispatch = useAppDispatch();
 
   const {
@@ -700,19 +697,8 @@ const ShoppingConfigurationModal = ({
       updateEnableCustomTapProductCard(data.enableCustomTapProductCard ?? false)
     );
     if (data.enableCustomTapProductCard ?? false) {
-      FireworkSDK.getInstance().shopping.onCustomTapProductCard = async (
-        event
-      ) => {
-        if (enablePausePlayer) {
-          console.log('call pause api');
-          event.playerHandler?.pause();
-        }
-        // HostAppService.getInstance().closePlayerOrStartFloatingPlayer();
-        HostAppService.getInstance().navigate('LinkContent', {
-          url: event.url,
-          playerHandler: event.playerHandler,
-        });
-      };
+      FireworkSDK.getInstance().shopping.onCustomTapProductCard =
+        HostAppService.getInstance().onCustomTapProductCard;
     } else {
       FireworkSDK.getInstance().shopping.onCustomTapProductCard = undefined;
     }
@@ -741,9 +727,7 @@ const ShoppingConfigurationModal = ({
     <>
       <View style={styles.formItemRow}>
         <View style={styles.formItem}>
-          <Text style={styles.formItemLabel}>
-            Shopping CTA button text(iOS)
-          </Text>
+          <Text style={styles.formItemLabel}>Shopping CTA button text</Text>
           <Controller
             control={control}
             render={({ field: { onChange, value } }) => (
@@ -765,7 +749,7 @@ const ShoppingConfigurationModal = ({
             control={control}
             render={({ field: { onChange, onBlur, value } }) => (
               <Input
-                label={'Background color of shopping CTA button(iOS)'}
+                label={'Background color of shopping CTA button'}
                 placeholder="e.g. #c0c0c0"
                 onBlur={onBlur}
                 onChangeText={(newValue) => onChange(newValue)}
@@ -800,7 +784,7 @@ const ShoppingConfigurationModal = ({
             control={control}
             render={({ field: { onChange, onBlur, value } }) => (
               <Input
-                label={'Text color of shopping CTA button(iOS)'}
+                label={'Text color of shopping CTA button'}
                 placeholder="e.g. #ffffff"
                 onBlur={onBlur}
                 onChangeText={(newValue) => onChange(newValue)}
@@ -835,7 +819,7 @@ const ShoppingConfigurationModal = ({
             control={control}
             render={({ field: { onChange, onBlur, value } }) => (
               <Input
-                label={'Font size of shopping CTA button(iOS)'}
+                label={'Font size of shopping CTA button'}
                 placeholder="e.g. 14"
                 onBlur={onBlur}
                 onChangeText={(newValue) => onChange(newValue)}
@@ -868,7 +852,7 @@ const ShoppingConfigurationModal = ({
             control={control}
             render={({ field: { onChange, onBlur, value } }) => (
               <Input
-                label={'IOS Font name of shopping CTA button(iOS)'}
+                label={'IOS Font name of shopping CTA button'}
                 placeholder="e.g. Helvetica-Bold"
                 onBlur={onBlur}
                 onChangeText={(newValue) => onChange(newValue)}
@@ -951,7 +935,7 @@ const ShoppingConfigurationModal = ({
               return (
                 <CheckBox
                   center
-                  title="Enable Custom Tap Product Card(iOS)"
+                  title="Enable Custom Tap Product Card"
                   checked={value}
                   onPress={() => onChange(!value)}
                 />
@@ -963,9 +947,7 @@ const ShoppingConfigurationModal = ({
       </View>
       <View style={styles.formItemRow}>
         <View style={styles.formItem}>
-          <Text style={styles.formItemLabel}>
-            Product card CTA button text(iOS)
-          </Text>
+          <Text style={styles.formItemLabel}>Product card CTA button text</Text>
           <Controller
             control={control}
             render={({ field: { onChange, value } }) => (
@@ -987,7 +969,7 @@ const ShoppingConfigurationModal = ({
             control={control}
             render={({ field: { onChange, onBlur, value } }) => (
               <Input
-                label={'Product card corner radius(iOS)'}
+                label={'Product card corner radius'}
                 placeholder="e.g. 0"
                 onBlur={onBlur}
                 onChangeText={(newValue) => onChange(newValue)}
@@ -1018,9 +1000,7 @@ const ShoppingConfigurationModal = ({
       </View>
       <View style={styles.formItemRow}>
         <View style={styles.formItem}>
-          <Text style={styles.formItemLabel}>
-            Product card CTA button text(iOS)
-          </Text>
+          <Text style={styles.formItemLabel}>Product card CTA button text</Text>
           <Controller
             control={control}
             render={({ field: { onChange, value } }) => (
@@ -1044,7 +1024,7 @@ const ShoppingConfigurationModal = ({
               return (
                 <CheckBox
                   center
-                  title="Hide product card CTA button(iOS)"
+                  title="Hide product card CTA button"
                   checked={value}
                   onPress={() => onChange(!value)}
                 />
@@ -1130,7 +1110,7 @@ const ShoppingConfigurationModal = ({
               return (
                 <CheckBox
                   center
-                  title="Hide product card price(iOS-@deprecated)"
+                  title="Hide product card price(@deprecated)"
                   checked={value}
                   onPress={() => onChange(!value)}
                 />

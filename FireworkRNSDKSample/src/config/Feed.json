@@ -23,5 +23,13 @@
   "defaultShoppingPlaylist": {
     "channelId": "",
     "playlistId": ""
-  }
+  },
+  "defaultHomeVideoFeedPlaylistInfoArray": [
+    { "channelId": "V3Wyyr4", "playlistId": "o8MBjg" },
+    { "channelId": "V3Wyyr4", "playlistId": "o3Ed8v" }
+  ],
+  "defaultHomeStoryBlockPlaylistInfoArray": [
+    { "channelId": "V3Wyyr4", "playlistId": "gkEBB5" },
+    { "channelId": "V3Wyyr4", "playlistId": "o9ZLrg" }
+  ]
 }

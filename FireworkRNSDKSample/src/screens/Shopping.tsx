@@ -11,22 +11,17 @@ import { Button, ListItem } from 'react-native-elements';
 import { FWError, VideoFeed } from 'react-native-firework-sdk';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 
-import type { BottomTabNavigationProp } from '@react-navigation/bottom-tabs';
-import type { CompositeNavigationProp } from '@react-navigation/native';
 import { useNavigation } from '@react-navigation/native';
 import type { NativeStackNavigationProp } from '@react-navigation/native-stack';
 
 import PlaylistInputModal from '../components/PlaylistInputModal';
 import { defaultShoppingPlaylist } from '../config/Feed.json';
 import type { RootStackParamList } from './paramList/RootStackParamList';
-import type { TabParamsList } from './paramList/TabParamsList';
 import ShoppingConfigurationModal from '../components/ShoppingConfigurationModal';
 import { useAppSelector } from '../hooks/reduxHooks';
 
-type ShoppingScreenNavigationProp = CompositeNavigationProp<
-  BottomTabNavigationProp<TabParamsList, 'Shopping'>,
-  NativeStackNavigationProp<RootStackParamList>
->;
+type ShoppingScreenNavigationProp =
+  NativeStackNavigationProp<RootStackParamList>;
 
 function Shopping() {
   const navigation = useNavigation<ShoppingScreenNavigationProp>();

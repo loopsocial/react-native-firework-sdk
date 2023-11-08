@@ -38,6 +38,7 @@
 <a href="IStoryBlockProps.html#hashtagFilterExpression" class="tsd-index-link tsd-kind-property tsd-parent-kind-interface"><svg class="tsd-kind-icon" width="24" height="24" viewBox="0 0 24 24"><use href="#icon-1024-path"></use><use href="#icon-1024-text"></use></svg><span>hashtag<wbr/>Filter<wbr/>Expression?</span></a>
 <a href="IStoryBlockProps.html#onStoryBlockDidStartPictureInPicture" class="tsd-index-link tsd-kind-property tsd-parent-kind-interface"><svg class="tsd-kind-icon" width="24" height="24" viewBox="0 0 24 24"><use href="#icon-1024-path"></use><use href="#icon-1024-text"></use></svg><span>on<wbr/>Story<wbr/>Block<wbr/>Did<wbr/>Start<wbr/>Picture<wbr/>In<wbr/>Picture?</span></a>
 <a href="IStoryBlockProps.html#onStoryBlockDidStopPictureInPicture" class="tsd-index-link tsd-kind-property tsd-parent-kind-interface"><svg class="tsd-kind-icon" width="24" height="24" viewBox="0 0 24 24"><use href="#icon-1024-path"></use><use href="#icon-1024-text"></use></svg><span>on<wbr/>Story<wbr/>Block<wbr/>Did<wbr/>Stop<wbr/>Picture<wbr/>In<wbr/>Picture?</span></a>
+<a href="IStoryBlockProps.html#onStoryBlockEmpty" class="tsd-index-link tsd-kind-property tsd-parent-kind-interface"><svg class="tsd-kind-icon" width="24" height="24" viewBox="0 0 24 24"><use href="#icon-1024-path"></use><use href="#icon-1024-text"></use></svg><span>on<wbr/>Story<wbr/>Block<wbr/>Empty?</span></a>
 <a href="IStoryBlockProps.html#onStoryBlockLoadFinished" class="tsd-index-link tsd-kind-property tsd-parent-kind-interface"><svg class="tsd-kind-icon" width="24" height="24" viewBox="0 0 24 24"><use href="#icon-1024-path"></use><use href="#icon-1024-text"></use></svg><span>on<wbr/>Story<wbr/>Block<wbr/>Load<wbr/>Finished?</span></a>
 <a href="IStoryBlockProps.html#playlist" class="tsd-index-link tsd-kind-property tsd-parent-kind-interface"><svg class="tsd-kind-icon" width="24" height="24" viewBox="0 0 24 24"><use href="#icon-1024-path"></use><use href="#icon-1024-text"></use></svg><span>playlist?</span></a>
 <a href="IStoryBlockProps.html#productIds" class="tsd-index-link tsd-kind-property tsd-parent-kind-interface"><svg class="tsd-kind-icon" width="24" height="24" viewBox="0 0 24 24"><use href="#icon-1024-path"></use><use href="#icon-1024-text"></use></svg><span>product<wbr/>Ids?</span></a>
@@ -50,7 +51,7 @@
 <section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface"><a id="adConfiguration" class="tsd-anchor"></a>
 <h3 class="tsd-anchor-link"><code class="tsd-tag ts-flagOptional">Optional</code> <span>ad<wbr/>Configuration</span><a href="#adConfiguration" aria-label="Permalink" class="tsd-anchor-icon"><svg class="icon icon-tabler icon-tabler-link" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none" id="icon-anchor-a"></path><path d="M10 14a3.5 3.5 0 0 0 5 0l4 -4a3.5 3.5 0 0 0 -5 -5l-.5 .5" id="icon-anchor-b"></path><path d="M14 10a3.5 3.5 0 0 0 -5 0l-4 4a3.5 3.5 0 0 0 5 5l.5 -.5" id="icon-anchor-c"></path></svg></a></h3>
 <div class="tsd-signature">ad<wbr/>Configuration<span class="tsd-signature-symbol">?:</span> <a href="AdConfiguration.html" class="tsd-signature-type" data-tsd-kind="Interface">AdConfiguration</a></div>
-<div class="tsd-comment tsd-typography"><p>Ad configuration of the feed. Only supported on iOS.</p>
+<div class="tsd-comment tsd-typography"><p>Ad configuration of the feed.</p>
 </div></section>
 <section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface"><a id="channel" class="tsd-anchor"></a>
 <h3 class="tsd-anchor-link"><code class="tsd-tag ts-flagOptional">Optional</code> <span>channel</span><a href="#channel" aria-label="Permalink" class="tsd-anchor-icon"><svg class="icon icon-tabler icon-tabler-link" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><use href="#icon-anchor-a"></use><use href="#icon-anchor-b"></use><use href="#icon-anchor-c"></use></svg></a></h3>
@@ -126,6 +127,31 @@ Non-UTF-8 characters are not allowed. If using boolean predicates, the expressio
 <li>
 <h5><code class="tsd-tag ts-flagOptional">Optional</code> error: <a href="FWError.html" class="tsd-signature-type" data-tsd-kind="Interface">FWError</a></h5></li></ul></div>
 <h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">void</span></h4></li></ul></li></ul></div></section>
+<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface"><a id="onStoryBlockEmpty" class="tsd-anchor"></a>
+<h3 class="tsd-anchor-link"><code class="tsd-tag ts-flagOptional">Optional</code> <span>on<wbr/>Story<wbr/>Block<wbr/>Empty</span><a href="#onStoryBlockEmpty" aria-label="Permalink" class="tsd-anchor-icon"><svg class="icon icon-tabler icon-tabler-link" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><use href="#icon-anchor-a"></use><use href="#icon-anchor-b"></use><use href="#icon-anchor-c"></use></svg></a></h3>
+<div class="tsd-signature">on<wbr/>Story<wbr/>Block<wbr/>Empty<span class="tsd-signature-symbol">?:</span> <span class="tsd-signature-symbol">(</span><span class="tsd-signature-symbol">(</span>error<span class="tsd-signature-symbol">?: </span><a href="FWError.html" class="tsd-signature-type" data-tsd-kind="Interface">FWError</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol"> =&gt; </span><span class="tsd-signature-type">void</span><span class="tsd-signature-symbol">)</span></div>
+<div class="tsd-type-declaration">
+<h4>Type declaration</h4>
+<ul class="tsd-parameters">
+<li class="tsd-parameter-signature">
+<ul class="tsd-signatures tsd-kind-type-literal tsd-parent-kind-property">
+<li class="tsd-signature" id="onStoryBlockEmpty.__type-5.__type-6"><span class="tsd-signature-symbol">(</span>error<span class="tsd-signature-symbol">?: </span><a href="FWError.html" class="tsd-signature-type" data-tsd-kind="Interface">FWError</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">void</span></li>
+<li class="tsd-description">
+<div class="tsd-comment tsd-typography"><p>The callback is triggered when there are no items in the story block.
+The callback is triggered in the following cases:</p>
+<ol>
+<li>Loading successfully but the back end returns an empty list.</li>
+<li>The load failed and list is empty.
+onStoryBlockLoadFinished will also be triggered when onStoryBlockEmpty is triggered.
+Only supported on Android.</li>
+</ol>
+</div>
+<div class="tsd-parameters">
+<h4 class="tsd-parameters-title">Parameters</h4>
+<ul class="tsd-parameter-list">
+<li>
+<h5><code class="tsd-tag ts-flagOptional">Optional</code> error: <a href="FWError.html" class="tsd-signature-type" data-tsd-kind="Interface">FWError</a></h5></li></ul></div>
+<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">void</span></h4></li></ul></li></ul></div></section>
 <section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface"><a id="onStoryBlockLoadFinished" class="tsd-anchor"></a>
 <h3 class="tsd-anchor-link"><code class="tsd-tag ts-flagOptional">Optional</code> <span>on<wbr/>Story<wbr/>Block<wbr/>Load<wbr/>Finished</span><a href="#onStoryBlockLoadFinished" aria-label="Permalink" class="tsd-anchor-icon"><svg class="icon icon-tabler icon-tabler-link" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><use href="#icon-anchor-a"></use><use href="#icon-anchor-b"></use><use href="#icon-anchor-c"></use></svg></a></h3>
 <div class="tsd-signature">on<wbr/>Story<wbr/>Block<wbr/>Load<wbr/>Finished<span class="tsd-signature-symbol">?:</span> <span class="tsd-signature-symbol">(</span><span class="tsd-signature-symbol">(</span>error<span class="tsd-signature-symbol">?: </span><a href="FWError.html" class="tsd-signature-type" data-tsd-kind="Interface">FWError</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol"> =&gt; </span><span class="tsd-signature-type">void</span><span class="tsd-signature-symbol">)</span></div>
@@ -134,7 +160,7 @@ Non-UTF-8 characters are not allowed. If using boolean predicates, the expressio
 <ul class="tsd-parameters">
 <li class="tsd-parameter-signature">
 <ul class="tsd-signatures tsd-kind-type-literal tsd-parent-kind-property">
-<li class="tsd-signature" id="onStoryBlockLoadFinished.__type-5.__type-6"><span class="tsd-signature-symbol">(</span>error<span class="tsd-signature-symbol">?: </span><a href="FWError.html" class="tsd-signature-type" data-tsd-kind="Interface">FWError</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">void</span></li>
+<li class="tsd-signature" id="onStoryBlockLoadFinished.__type-7.__type-8"><span class="tsd-signature-symbol">(</span>error<span class="tsd-signature-symbol">?: </span><a href="FWError.html" class="tsd-signature-type" data-tsd-kind="Interface">FWError</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">void</span></li>
 <li class="tsd-description">
 <div class="tsd-comment tsd-typography"><p>The feed loading result callback. It means loading successfully when error equals to undefined.</p>
 </div>
@@ -161,9 +187,7 @@ Non-UTF-8 characters are not allowed. If using boolean predicates, the expressio
 </div></section>
 <section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface"><a id="storyBlockConfiguration" class="tsd-anchor"></a>
 <h3 class="tsd-anchor-link"><code class="tsd-tag ts-flagOptional">Optional</code> <span>story<wbr/>Block<wbr/>Configuration</span><a href="#storyBlockConfiguration" aria-label="Permalink" class="tsd-anchor-icon"><svg class="icon icon-tabler icon-tabler-link" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><use href="#icon-anchor-a"></use><use href="#icon-anchor-b"></use><use href="#icon-anchor-c"></use></svg></a></h3>
-<div class="tsd-signature">story<wbr/>Block<wbr/>Configuration<span class="tsd-signature-symbol">?:</span> <a href="StoryBlockConfiguration.html" class="tsd-signature-type" data-tsd-kind="Interface">StoryBlockConfiguration</a></div>
-<div class="tsd-comment tsd-typography"><p>The configuration of the story block.</p>
-</div></section>
+<div class="tsd-signature">story<wbr/>Block<wbr/>Configuration<span class="tsd-signature-symbol">?:</span> <a href="StoryBlockConfiguration.html" class="tsd-signature-type" data-tsd-kind="Interface">StoryBlockConfiguration</a></div></section>
 <section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface"><a id="style" class="tsd-anchor"></a>
 <h3 class="tsd-anchor-link"><code class="tsd-tag ts-flagOptional">Optional</code> <span>style</span><a href="#style" aria-label="Permalink" class="tsd-anchor-icon"><svg class="icon icon-tabler icon-tabler-link" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><use href="#icon-anchor-a"></use><use href="#icon-anchor-b"></use><use href="#icon-anchor-c"></use></svg></a></h3>
 <div class="tsd-signature">style<span class="tsd-signature-symbol">?:</span> <span class="tsd-signature-type">StyleProp</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">ViewStyle</span><span class="tsd-signature-symbol">&gt;</span></div>
@@ -201,6 +225,7 @@ Non-UTF-8 characters are not allowed. If using boolean predicates, the expressio
 <li class="tsd-kind-property tsd-parent-kind-interface"><a href="IStoryBlockProps.html#hashtagFilterExpression" class="tsd-index-link"><svg class="tsd-kind-icon" width="24" height="24" viewBox="0 0 24 24"><use href="#icon-1024-path"></use><use href="#icon-1024-text"></use></svg>hashtag<wbr/>Filter<wbr/>Expression?</a></li>
 <li class="tsd-kind-property tsd-parent-kind-interface"><a href="IStoryBlockProps.html#onStoryBlockDidStartPictureInPicture" class="tsd-index-link"><svg class="tsd-kind-icon" width="24" height="24" viewBox="0 0 24 24"><use href="#icon-1024-path"></use><use href="#icon-1024-text"></use></svg>on<wbr/>Story<wbr/>Block<wbr/>Did<wbr/>Start<wbr/>Picture<wbr/>In<wbr/>Picture?</a></li>
 <li class="tsd-kind-property tsd-parent-kind-interface"><a href="IStoryBlockProps.html#onStoryBlockDidStopPictureInPicture" class="tsd-index-link"><svg class="tsd-kind-icon" width="24" height="24" viewBox="0 0 24 24"><use href="#icon-1024-path"></use><use href="#icon-1024-text"></use></svg>on<wbr/>Story<wbr/>Block<wbr/>Did<wbr/>Stop<wbr/>Picture<wbr/>In<wbr/>Picture?</a></li>
+<li class="tsd-kind-property tsd-parent-kind-interface"><a href="IStoryBlockProps.html#onStoryBlockEmpty" class="tsd-index-link"><svg class="tsd-kind-icon" width="24" height="24" viewBox="0 0 24 24"><use href="#icon-1024-path"></use><use href="#icon-1024-text"></use></svg>on<wbr/>Story<wbr/>Block<wbr/>Empty?</a></li>
 <li class="tsd-kind-property tsd-parent-kind-interface"><a href="IStoryBlockProps.html#onStoryBlockLoadFinished" class="tsd-index-link"><svg class="tsd-kind-icon" width="24" height="24" viewBox="0 0 24 24"><use href="#icon-1024-path"></use><use href="#icon-1024-text"></use></svg>on<wbr/>Story<wbr/>Block<wbr/>Load<wbr/>Finished?</a></li>
 <li class="tsd-kind-property tsd-parent-kind-interface"><a href="IStoryBlockProps.html#playlist" class="tsd-index-link"><svg class="tsd-kind-icon" width="24" height="24" viewBox="0 0 24 24"><use href="#icon-1024-path"></use><use href="#icon-1024-text"></use></svg>playlist?</a></li>
 <li class="tsd-kind-property tsd-parent-kind-interface"><a href="IStoryBlockProps.html#productIds" class="tsd-index-link"><svg class="tsd-kind-icon" width="24" height="24" viewBox="0 0 24 24"><use href="#icon-1024-path"></use><use href="#icon-1024-text"></use></svg>product<wbr/>Ids?</a></li>

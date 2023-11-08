@@ -1,5 +1,5 @@
 export type TabParamsList = {
-  Shopping: undefined;
+  Home: undefined;
   Cart: undefined;
   FeedLayouts: undefined;
   More: undefined;

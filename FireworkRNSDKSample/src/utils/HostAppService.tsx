@@ -6,6 +6,7 @@ import type {
   CustomCTAClickCallback,
   ShoppingCTACallback,
   ShoppingCTAEvent,
+  CustomTapProductCardCallback,
 } from 'react-native-firework-sdk';
 import FireworkSDK from 'react-native-firework-sdk';
 import * as RootNavigation from '../RootNavigation';
@@ -123,6 +124,23 @@ export default class HostAppService {
         });
       });
     }
+  };
+
+  public onCustomTapProductCard?: CustomTapProductCardCallback = async (
+    event
+  ) => {
+    console.log('[example] onCustomTapProductCard event', event);
+
+    if (store.getState().navigation.enablePausePlayer) {
+      if (Platform.OS === 'ios') {
+        event.playerHandler?.pause();
+      }
+    }
+    HostAppService.getInstance().closePlayerOrStartFloatingPlayer();
+    HostAppService.getInstance().navigate('LinkContent', {
+      url: event.url,
+      playerHandler: event.playerHandler,
+    });
   };
 
   public onUpdateProductDetails: UpdateProductDetailsCallback = async (

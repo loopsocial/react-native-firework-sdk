@@ -73,6 +73,9 @@ const FWNavigationContainer = () => {
       <StackNavigator.Navigator
         initialRouteName={'Tab'}
         screenOptions={({ route, navigation }) => ({
+          animation: (route.params as any)?.isFromNativeNavigation
+            ? 'none'
+            : 'slide_from_right',
           headerTitleAlign: 'center',
           headerBackTitleVisible: false,
           headerBackButtonMenuEnabled: false,

@@ -1,5 +1,17 @@
 # CHANGELOG
 
+## [2.9.0]
+
+### Added
+
+- [Android] Show "Tap to enter livestream" in the story block collapsed mode
+- [Android] Support multiple pinned products
+- [Android] Update the UI for replays Product Highlight (key moments)
+
+### Changed
+
+- [Android] Upgrade Firework Android SDK to V6.8.1
+
 ## [2.8.6]
 
 ### Changed
@@ -74,7 +86,7 @@
 ### Changed
 
 - [iOS] Upgrade Firework iOS SDK to V1.13.0
-- [iOS] Dropped support for iOS 12.0 and below.
+- [iOS] Dropped support for iOS 12.0 and below
 
 ## [2.6.0]
 
