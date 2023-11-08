@@ -38,6 +38,7 @@
 <a href="IVideoFeedProps.html#mode" class="tsd-index-link tsd-kind-property tsd-parent-kind-interface"><svg class="tsd-kind-icon" width="24" height="24" viewBox="0 0 24 24"><use href="#icon-1024-path"></use><use href="#icon-1024-text"></use></svg><span>mode?</span></a>
 <a href="IVideoFeedProps.html#onVideoFeedDidStartPictureInPicture" class="tsd-index-link tsd-kind-property tsd-parent-kind-interface"><svg class="tsd-kind-icon" width="24" height="24" viewBox="0 0 24 24"><use href="#icon-1024-path"></use><use href="#icon-1024-text"></use></svg><span>on<wbr/>Video<wbr/>Feed<wbr/>Did<wbr/>Start<wbr/>Picture<wbr/>In<wbr/>Picture?</span></a>
 <a href="IVideoFeedProps.html#onVideoFeedDidStopPictureInPicture" class="tsd-index-link tsd-kind-property tsd-parent-kind-interface"><svg class="tsd-kind-icon" width="24" height="24" viewBox="0 0 24 24"><use href="#icon-1024-path"></use><use href="#icon-1024-text"></use></svg><span>on<wbr/>Video<wbr/>Feed<wbr/>Did<wbr/>Stop<wbr/>Picture<wbr/>In<wbr/>Picture?</span></a>
+<a href="IVideoFeedProps.html#onVideoFeedEmpty" class="tsd-index-link tsd-kind-property tsd-parent-kind-interface"><svg class="tsd-kind-icon" width="24" height="24" viewBox="0 0 24 24"><use href="#icon-1024-path"></use><use href="#icon-1024-text"></use></svg><span>on<wbr/>Video<wbr/>Feed<wbr/>Empty?</span></a>
 <a href="IVideoFeedProps.html#onVideoFeedLoadFinished" class="tsd-index-link tsd-kind-property tsd-parent-kind-interface"><svg class="tsd-kind-icon" width="24" height="24" viewBox="0 0 24 24"><use href="#icon-1024-path"></use><use href="#icon-1024-text"></use></svg><span>on<wbr/>Video<wbr/>Feed<wbr/>Load<wbr/>Finished?</span></a>
 <a href="IVideoFeedProps.html#playlist" class="tsd-index-link tsd-kind-property tsd-parent-kind-interface"><svg class="tsd-kind-icon" width="24" height="24" viewBox="0 0 24 24"><use href="#icon-1024-path"></use><use href="#icon-1024-text"></use></svg><span>playlist?</span></a>
 <a href="IVideoFeedProps.html#playlistGroup" class="tsd-index-link tsd-kind-property tsd-parent-kind-interface"><svg class="tsd-kind-icon" width="24" height="24" viewBox="0 0 24 24"><use href="#icon-1024-path"></use><use href="#icon-1024-text"></use></svg><span>playlist<wbr/>Group?</span></a>
@@ -52,7 +53,7 @@
 <section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface"><a id="adConfiguration" class="tsd-anchor"></a>
 <h3 class="tsd-anchor-link"><code class="tsd-tag ts-flagOptional">Optional</code> <span>ad<wbr/>Configuration</span><a href="#adConfiguration" aria-label="Permalink" class="tsd-anchor-icon"><svg class="icon icon-tabler icon-tabler-link" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none" id="icon-anchor-a"></path><path d="M10 14a3.5 3.5 0 0 0 5 0l4 -4a3.5 3.5 0 0 0 -5 -5l-.5 .5" id="icon-anchor-b"></path><path d="M14 10a3.5 3.5 0 0 0 -5 0l-4 4a3.5 3.5 0 0 0 5 5l.5 -.5" id="icon-anchor-c"></path></svg></a></h3>
 <div class="tsd-signature">ad<wbr/>Configuration<span class="tsd-signature-symbol">?:</span> <a href="AdConfiguration.html" class="tsd-signature-type" data-tsd-kind="Interface">AdConfiguration</a></div>
-<div class="tsd-comment tsd-typography"><p>Ad configuration of the feed. Only supported on iOS.</p>
+<div class="tsd-comment tsd-typography"><p>Ad configuration of the feed.</p>
 </div></section>
 <section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface"><a id="channel" class="tsd-anchor"></a>
 <h3 class="tsd-anchor-link"><code class="tsd-tag ts-flagOptional">Optional</code> <span>channel</span><a href="#channel" aria-label="Permalink" class="tsd-anchor-icon"><svg class="icon icon-tabler icon-tabler-link" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><use href="#icon-anchor-a"></use><use href="#icon-anchor-b"></use><use href="#icon-anchor-c"></use></svg></a></h3>
@@ -129,6 +130,31 @@ Required when the source is set as hashtagPlaylist.</p>
 <li>
 <h5><code class="tsd-tag ts-flagOptional">Optional</code> error: <a href="FWError.html" class="tsd-signature-type" data-tsd-kind="Interface">FWError</a></h5></li></ul></div>
 <h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">void</span></h4></li></ul></li></ul></div></section>
+<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface"><a id="onVideoFeedEmpty" class="tsd-anchor"></a>
+<h3 class="tsd-anchor-link"><code class="tsd-tag ts-flagOptional">Optional</code> <span>on<wbr/>Video<wbr/>Feed<wbr/>Empty</span><a href="#onVideoFeedEmpty" aria-label="Permalink" class="tsd-anchor-icon"><svg class="icon icon-tabler icon-tabler-link" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><use href="#icon-anchor-a"></use><use href="#icon-anchor-b"></use><use href="#icon-anchor-c"></use></svg></a></h3>
+<div class="tsd-signature">on<wbr/>Video<wbr/>Feed<wbr/>Empty<span class="tsd-signature-symbol">?:</span> <span class="tsd-signature-symbol">(</span><span class="tsd-signature-symbol">(</span>error<span class="tsd-signature-symbol">?: </span><a href="FWError.html" class="tsd-signature-type" data-tsd-kind="Interface">FWError</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol"> =&gt; </span><span class="tsd-signature-type">void</span><span class="tsd-signature-symbol">)</span></div>
+<div class="tsd-type-declaration">
+<h4>Type declaration</h4>
+<ul class="tsd-parameters">
+<li class="tsd-parameter-signature">
+<ul class="tsd-signatures tsd-kind-type-literal tsd-parent-kind-property">
+<li class="tsd-signature" id="onVideoFeedEmpty.__type-5.__type-6"><span class="tsd-signature-symbol">(</span>error<span class="tsd-signature-symbol">?: </span><a href="FWError.html" class="tsd-signature-type" data-tsd-kind="Interface">FWError</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">void</span></li>
+<li class="tsd-description">
+<div class="tsd-comment tsd-typography"><p>The callback is triggered when there are no items in the story block.
+The callback is triggered in the following cases:</p>
+<ol>
+<li>Loading successfully but the back end returns an empty list.</li>
+<li>The load failed and list is empty.
+onVideoFeedLoadFinished will also be triggered when onVideoFeedEmpty is triggered.
+Only supported on Android.</li>
+</ol>
+</div>
+<div class="tsd-parameters">
+<h4 class="tsd-parameters-title">Parameters</h4>
+<ul class="tsd-parameter-list">
+<li>
+<h5><code class="tsd-tag ts-flagOptional">Optional</code> error: <a href="FWError.html" class="tsd-signature-type" data-tsd-kind="Interface">FWError</a></h5></li></ul></div>
+<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">void</span></h4></li></ul></li></ul></div></section>
 <section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface"><a id="onVideoFeedLoadFinished" class="tsd-anchor"></a>
 <h3 class="tsd-anchor-link"><code class="tsd-tag ts-flagOptional">Optional</code> <span>on<wbr/>Video<wbr/>Feed<wbr/>Load<wbr/>Finished</span><a href="#onVideoFeedLoadFinished" aria-label="Permalink" class="tsd-anchor-icon"><svg class="icon icon-tabler icon-tabler-link" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><use href="#icon-anchor-a"></use><use href="#icon-anchor-b"></use><use href="#icon-anchor-c"></use></svg></a></h3>
 <div class="tsd-signature">on<wbr/>Video<wbr/>Feed<wbr/>Load<wbr/>Finished<span class="tsd-signature-symbol">?:</span> <span class="tsd-signature-symbol">(</span><span class="tsd-signature-symbol">(</span>error<span class="tsd-signature-symbol">?: </span><a href="FWError.html" class="tsd-signature-type" data-tsd-kind="Interface">FWError</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol"> =&gt; </span><span class="tsd-signature-type">void</span><span class="tsd-signature-symbol">)</span></div>
@@ -137,7 +163,7 @@ Required when the source is set as hashtagPlaylist.</p>
 <ul class="tsd-parameters">
 <li class="tsd-parameter-signature">
 <ul class="tsd-signatures tsd-kind-type-literal tsd-parent-kind-property">
-<li class="tsd-signature" id="onVideoFeedLoadFinished.__type-5.__type-6"><span class="tsd-signature-symbol">(</span>error<span class="tsd-signature-symbol">?: </span><a href="FWError.html" class="tsd-signature-type" data-tsd-kind="Interface">FWError</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">void</span></li>
+<li class="tsd-signature" id="onVideoFeedLoadFinished.__type-7.__type-8"><span class="tsd-signature-symbol">(</span>error<span class="tsd-signature-symbol">?: </span><a href="FWError.html" class="tsd-signature-type" data-tsd-kind="Interface">FWError</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">void</span></li>
 <li class="tsd-description">
 <div class="tsd-comment tsd-typography"><p>The feed loading result callback. It means loading successfully when error equals to undefined.</p>
 </div>
@@ -215,6 +241,7 @@ Defaults to discover.</p>
 <li class="tsd-kind-property tsd-parent-kind-interface"><a href="IVideoFeedProps.html#mode" class="tsd-index-link"><svg class="tsd-kind-icon" width="24" height="24" viewBox="0 0 24 24"><use href="#icon-1024-path"></use><use href="#icon-1024-text"></use></svg>mode?</a></li>
 <li class="tsd-kind-property tsd-parent-kind-interface"><a href="IVideoFeedProps.html#onVideoFeedDidStartPictureInPicture" class="tsd-index-link"><svg class="tsd-kind-icon" width="24" height="24" viewBox="0 0 24 24"><use href="#icon-1024-path"></use><use href="#icon-1024-text"></use></svg>on<wbr/>Video<wbr/>Feed<wbr/>Did<wbr/>Start<wbr/>Picture<wbr/>In<wbr/>Picture?</a></li>
 <li class="tsd-kind-property tsd-parent-kind-interface"><a href="IVideoFeedProps.html#onVideoFeedDidStopPictureInPicture" class="tsd-index-link"><svg class="tsd-kind-icon" width="24" height="24" viewBox="0 0 24 24"><use href="#icon-1024-path"></use><use href="#icon-1024-text"></use></svg>on<wbr/>Video<wbr/>Feed<wbr/>Did<wbr/>Stop<wbr/>Picture<wbr/>In<wbr/>Picture?</a></li>
+<li class="tsd-kind-property tsd-parent-kind-interface"><a href="IVideoFeedProps.html#onVideoFeedEmpty" class="tsd-index-link"><svg class="tsd-kind-icon" width="24" height="24" viewBox="0 0 24 24"><use href="#icon-1024-path"></use><use href="#icon-1024-text"></use></svg>on<wbr/>Video<wbr/>Feed<wbr/>Empty?</a></li>
 <li class="tsd-kind-property tsd-parent-kind-interface"><a href="IVideoFeedProps.html#onVideoFeedLoadFinished" class="tsd-index-link"><svg class="tsd-kind-icon" width="24" height="24" viewBox="0 0 24 24"><use href="#icon-1024-path"></use><use href="#icon-1024-text"></use></svg>on<wbr/>Video<wbr/>Feed<wbr/>Load<wbr/>Finished?</a></li>
 <li class="tsd-kind-property tsd-parent-kind-interface"><a href="IVideoFeedProps.html#playlist" class="tsd-index-link"><svg class="tsd-kind-icon" width="24" height="24" viewBox="0 0 24 24"><use href="#icon-1024-path"></use><use href="#icon-1024-text"></use></svg>playlist?</a></li>
 <li class="tsd-kind-property tsd-parent-kind-interface"><a href="IVideoFeedProps.html#playlistGroup" class="tsd-index-link"><svg class="tsd-kind-icon" width="24" height="24" viewBox="0 0 24 24"><use href="#icon-1024-path"></use><use href="#icon-1024-text"></use></svg>playlist<wbr/>Group?</a></li>
