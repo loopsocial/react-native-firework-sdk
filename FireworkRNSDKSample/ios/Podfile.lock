@@ -210,11 +210,11 @@ PODS:
   - React-jsinspector (0.66.4)
   - React-logger (0.66.4):
     - glog
-  - react-native-firework-sdk (2.10.0):
+  - react-native-firework-sdk (2.10.1):
     - FireworkVideo (= 1.16.0)
     - React-Core
-    - react-native-firework-sdk/Development (= 2.10.0)
-  - react-native-firework-sdk/Development (2.10.0):
+    - react-native-firework-sdk/Development (= 2.10.1)
+  - react-native-firework-sdk/Development (2.10.1):
     - FireworkVideo (= 1.16.0)
     - React-Core
   - react-native-restart (0.0.24):
@@ -439,7 +439,7 @@ SPEC CHECKSUMS:
   React-jsiexecutor: 94ce921e1d8ce7023366873ec371f3441383b396
   React-jsinspector: d0374f7509d407d2264168b6d0fad0b54e300b85
   React-logger: 933f80c97c633ee8965d609876848148e3fef438
-  react-native-firework-sdk: 13b6c4851966a4e2eeff89df15c84831e59a82c3
+  react-native-firework-sdk: 19ac80f3d4a8bae7a806a2e7ba120f6f24ffa040
   react-native-restart: 45c8dca02491980f2958595333cbccd6877cb57e
   react-native-safe-area-context: 584dc04881deb49474363f3be89e4ca0e854c057
   react-native-webview: 9f111dfbcfc826084d6c507f569e5e03342ee1c1
@@ -462,4 +462,4 @@ SPEC CHECKSUMS:
 
 PODFILE CHECKSUM: 538fe2b427e633cbf2f23c09ca61976e7ab760ba
 
-COCOAPODS: 1.12.0
+COCOAPODS: 1.14.3

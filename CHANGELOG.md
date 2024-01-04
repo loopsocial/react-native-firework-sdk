@@ -1,5 +1,11 @@
 # CHANGELOG
 
+## [2.10.1]
+
+### Fixed
+
+- [Android] Some event callbacks don't work
+
 ## [2.10.0]
 
 ### Changed
