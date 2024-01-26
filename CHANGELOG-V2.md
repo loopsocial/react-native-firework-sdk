@@ -1,5 +1,22 @@
 # CHANGELOG
 
+## [2.11.0]
+
+### Added
+
+- Support initializing SDK on the native side
+- Support getting feed id from VideoFeed and StoryBlock components
+- Expose onViewportEntered and onViewportLeft API in StoryBlock component
+- Add video model including feed id to some event models
+- Support video feed and story block empty callback
+- [Android] Support displaying custom logo instead of ellipsis on the player
+- [Android] Add `trackPurchase` API
+
+### Changed
+
+- [iOS] Upgrade Firework iOS SDK to V1.18.0
+- [Android] Upgrade Firework Android SDK to V6.9.1
+
 ## [2.10.1]
 
 ### Fixed
