@@ -101,8 +101,10 @@ export default class HostAppService {
     }
   };
 
-  public onCustomClickCartIcon?: CustomClickCartIconCallback = async () => {
-    console.log('[example] onCustomClickCartIcon');
+  public onCustomClickCartIcon?: CustomClickCartIconCallback = async (
+    event
+  ) => {
+    console.log('[example] onCustomClickCartIcon event', event);
     await this.closePlayerOrStartFloatingPlayer();
     if (this.shouldShowCart()) {
       this.navigate('Cart');

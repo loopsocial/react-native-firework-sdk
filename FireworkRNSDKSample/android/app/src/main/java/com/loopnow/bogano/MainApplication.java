@@ -11,8 +11,11 @@ import com.facebook.soloader.SoLoader;
 import java.lang.reflect.InvocationTargetException;
 import java.util.List;
 
+import com.firework.imageloading.glide.GlideImageLoaderFactory;
 import com.firework.livestream.multihost.MultiHostLivestreamPlayerInitializer;
 import com.firework.livestream.singlehost.SingleHostLivestreamPlayerInitializer;
+import com.fireworksdk.bridge.models.FWSDKInitOptionsModel;
+import com.fireworksdk.bridge.models.enums.FWPlayerLaunchBehavior;
 import com.fireworksdk.bridge.reactnative.FWReactNativeSDK;
 
 public class MainApplication extends Application implements ReactApplication {
@@ -52,6 +55,13 @@ public class MainApplication extends Application implements ReactApplication {
 
     FWReactNativeSDK.INSTANCE.addLivestreamPlayerInitializer(new SingleHostLivestreamPlayerInitializer());
     FWReactNativeSDK.INSTANCE.addLivestreamPlayerInitializer(new MultiHostLivestreamPlayerInitializer());
+
+    FWReactNativeSDK.INSTANCE.setImageLoader(GlideImageLoaderFactory.INSTANCE.createInstance(this));
+
+    FWReactNativeSDK.INSTANCE.init(
+      this,
+      new FWSDKInitOptionsModel(null, FWPlayerLaunchBehavior.MuteOnFirstLaunch)
+    );
   }
 
   /**

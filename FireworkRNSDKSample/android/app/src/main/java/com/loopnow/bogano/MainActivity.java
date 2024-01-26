@@ -31,4 +31,11 @@ public class MainActivity extends ReactActivity {
   public void onBackPressed() {
     super.onBackPressed();
   }
+
+  @Override
+  protected void onDestroy() {
+    super.onDestroy();
+    // for android 11
+    FWReactNativeSDK.INSTANCE.closePip();
+  }
 }

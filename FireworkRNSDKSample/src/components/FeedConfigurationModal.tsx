@@ -56,6 +56,7 @@ type FeedConfigurationFormData = {
   enablePictureInPicture?: boolean;
   gridColumns?: string;
   titleNumberOfLines?: string;
+  showReplayBadge?: boolean;
 };
 
 const TitlePositionList: VideoFeedTitlePosition[] = ['stacked', 'nested'];
@@ -194,6 +195,7 @@ const FeedConfigurationModal = ({
       } else {
         setValue('vastAttributes', '');
       }
+      setValue('showReplayBadge', !configuration?.replayBadge?.isHidden);
     },
     [setValue]
   );
@@ -272,6 +274,10 @@ const FeedConfigurationModal = ({
         adConfiguration.vastAttributes = vastAttributes;
       }
       console.log('adConfiguration', adConfiguration);
+      configuration.replayBadge = {
+        isHidden: data.showReplayBadge ? false : true,
+      };
+
       onSubmit(
         configuration,
         adConfiguration,
@@ -775,6 +781,27 @@ const FeedConfigurationModal = ({
       </View>
     </View>
   );
+
+  const showReplayBadgeRow = (
+    <View style={styles.formItemRow}>
+      <View style={styles.formItem}>
+        <Controller
+          control={control}
+          render={({ field: { onChange, value } }) => {
+            return (
+              <CheckBox
+                center
+                title="Show Replay Badge"
+                checked={value}
+                onPress={() => onChange(!value)}
+              />
+            );
+          }}
+          name="showReplayBadge"
+        />
+      </View>
+    </View>
+  );
   return (
     <Modal
       animationType="fade"
@@ -817,6 +844,7 @@ const FeedConfigurationModal = ({
                   {titleConfiguration}
                   {playIconConfiguration}
                   {gridColumnsConfiguration}
+                  {showReplayBadgeRow}
                 </View>
               )}
               {configurationIndex === 1 && (

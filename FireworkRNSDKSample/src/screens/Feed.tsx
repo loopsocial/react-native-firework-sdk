@@ -66,6 +66,7 @@ const Feed = () => {
     title: { hidden: false, fontSize: 14 },
     titlePosition: 'nested',
     showAdBadge: true,
+    replayBadge: { isHidden: false },
   };
   const [feedConfiguration, setFeedConfiguration] =
     useState<VideoFeedConfiguration>(defaultFeedConfiguration);
@@ -105,6 +106,9 @@ const Feed = () => {
     videoPlayerLogoConfiguration: {
       option: 'disabled',
     },
+    replayBadgeConfiguration: {
+      isHidden: false,
+    },
   };
   const [playerConfiguration, setPlayerConfiguration] = useState<
     VideoPlayerConfiguration | undefined
@@ -127,6 +131,9 @@ const Feed = () => {
     ctaWidth: 'fullWidth',
     videoPlayerLogoConfiguration: {
       option: 'disabled',
+    },
+    replayBadgeConfiguration: {
+      isHidden: false,
     },
   };
   const [storyBlockConfiguration, setStoryBlockConfiguration] = useState<
@@ -260,6 +267,9 @@ const Feed = () => {
               error
             );
           }}
+          onVideoFeedGetFeedId={(feedId: string) => {
+            console.log('[example] onVideoFeedGetFeedId feedId', feedId);
+          }}
           ref={feedRef}
         />
         {feedError && (
@@ -323,6 +333,9 @@ const Feed = () => {
                 '[example] onStoryBlockDidStopPictureInPicture error',
                 error
               );
+            }}
+            onStoryBlockGetFeedId={(feedId: string) => {
+              console.log('[example] onStoryBlockGetFeedId feedId', feedId);
             }}
           />
           {feedError && (

@@ -49,6 +49,4 @@ FireworkSDK.getInstance().shopping.cartIconVisible =
   HostAppService.getInstance().shouldShowCart();
 
 // init FireworkSDK
-FireworkSDK.getInstance().init({
-  videoLaunchBehavior: 'muteOnFirstLaunch',
-});
+FireworkSDK.getInstance().markInitCalled();

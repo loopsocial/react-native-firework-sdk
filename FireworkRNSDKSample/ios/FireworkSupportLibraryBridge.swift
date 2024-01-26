@@ -10,12 +10,14 @@ import FireworkVideo
 // import FireworkVideoIVSSupport
 // import FireworkVideoAgoraSupport
 
-#if canImport(FireworkVideoUI)
 import FireworkVideoUI
-#endif
+import react_native_firework_sdk
 
 @objc
 public class FireworkSupportLibraryBridge: NSObject {
+    @objc public static func initSDK() {
+      FWReactNativeSDK.initializeSDK(SDKInitOptions(videoLaunchBehavior: .muteOnFirstLaunch))
+    }
 //  @objc public static func enableVideoGAM() {
 //    FireworkVideoGAMSupportSDK.initializeSDK()
 //  }

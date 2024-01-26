@@ -1,14 +1,20 @@
 import type { NativeStackNavigationProp } from '@react-navigation/native-stack';
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { FlatList, ScrollView, StyleSheet, Text, View } from 'react-native';
 import { ButtonGroup } from 'react-native-elements';
-import { StoryBlock, VideoFeed } from 'react-native-firework-sdk';
+import {
+  IStoryBlockMethods,
+  StoryBlock,
+  VideoFeed,
+} from 'react-native-firework-sdk';
 import type { RootStackParamList } from './paramList/RootStackParamList';
 import { useNavigation } from '@react-navigation/native';
 import {
   defaultHomeVideoFeedPlaylistInfoArray,
   defaultHomeStoryBlockPlaylistInfoArray,
 } from '../config/Feed.json';
+import { VisibilityAwareView } from 'react-native-visibility-aware-view';
+import { useAppSelector } from '../hooks/reduxHooks';
 
 type MultiFeedsScreenNavigationProp =
   NativeStackNavigationProp<RootStackParamList>;
@@ -20,7 +26,39 @@ type FeedPlaylistInfo = {
   key: string;
 };
 
+function StoryBlockWrapper({ item }: { item: FeedPlaylistInfo }) {
+  const ref = useRef<IStoryBlockMethods>(null);
+  const enablePictureInPicture = useAppSelector(
+    (state) => state.feed.enablePictureInPicture
+  );
+  return (
+    <VisibilityAwareView
+      minVisibleArea={0.01}
+      onBecomeVisible={() => {
+        ref.current?.onViewportEntered();
+      }}
+      onBecomeInvisible={() => {
+        ref.current?.onViewportLeft();
+      }}
+      style={styles.storyBlockWrapper}
+      key={item.key}
+    >
+      <StoryBlock
+        ref={ref}
+        style={styles.storyBlock}
+        source={'playlist'}
+        channel={item.channelId}
+        playlist={item.playlistId}
+        enablePictureInPicture={enablePictureInPicture}
+      />
+    </VisibilityAwareView>
+  );
+}
+
 function MultiFeeds() {
+  const enablePictureInPicture = useAppSelector(
+    (state) => state.feed.enablePictureInPicture
+  );
   const navigation = useNavigation<MultiFeedsScreenNavigationProp>();
   const buttons = ['FlatList', 'ScrollView'];
   const [selectedIndex, setSelectedIndex] = useState(0);
@@ -80,30 +118,29 @@ function MultiFeeds() {
     });
   }, [navigation]);
 
-  const renderItem = ({ item }: { item: FeedPlaylistInfo }) =>
-    item.type === 'storyBlock' ? (
-      <View style={styles.storyBlockWrapper} key={item.key}>
-        <StoryBlock
-          style={styles.storyBlock}
-          source={'playlist'}
-          channel={item.channelId}
-          playlist={item.playlistId}
-        />
-      </View>
-    ) : item.type === 'feed' ? (
-      <View style={styles.feedWrapper} key={item.key}>
-        <VideoFeed
-          style={styles.feed}
-          source={'playlist'}
-          channel={item.channelId}
-          playlist={item.playlistId}
-        />
-      </View>
-    ) : (
-      <View style={styles.placeholderWrapper} key={item.key}>
-        <Text style={styles.placeholder}>List item placeholder</Text>
-      </View>
-    );
+  const renderItem = ({ item }: { item: FeedPlaylistInfo }) => {
+    if (item.type === 'storyBlock') {
+      return <StoryBlockWrapper key={item.key} item={item} />;
+    } else if (item.type === 'feed') {
+      return (
+        <View style={styles.feedWrapper} key={item.key}>
+          <VideoFeed
+            style={styles.feed}
+            source={'playlist'}
+            channel={item.channelId}
+            playlist={item.playlistId}
+            enablePictureInPicture={enablePictureInPicture}
+          />
+        </View>
+      );
+    } else {
+      return (
+        <View style={styles.placeholderWrapper} key={item.key}>
+          <Text style={styles.placeholder}>List item placeholder</Text>
+        </View>
+      );
+    }
+  };
 
   return (
     <View style={styles.container}>

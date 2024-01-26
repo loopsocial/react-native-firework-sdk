@@ -59,6 +59,7 @@ type PlayerConfigurationFormData = {
   showVideoDetailTitle?: boolean;
   videoPlayerLogoOption?: number;
   videoPlayerLogoEncodeID?: string;
+  showReplayBadge?: boolean;
 };
 
 const PlayStyleList: VideoPlayerStyle[] = ['full', 'fit'];
@@ -238,6 +239,10 @@ const PlayerConfigurationModal = ({
         } else {
           setValue('ctaWidth', undefined);
         }
+        setValue(
+          'showReplayBadge',
+          !configuration?.replayBadgeConfiguration?.isHidden
+        );
       } else {
         reset();
       }
@@ -328,10 +333,32 @@ const PlayerConfigurationModal = ({
       }
       configuration.videoPlayerLogoConfiguration = videoPlayerLogoConfiguration;
       console.log('configuration', configuration);
+      configuration.replayBadgeConfiguration = {
+        isHidden: data.showReplayBadge ? false : true,
+      };
       onSubmit(configuration);
     }
   };
-
+  const showReplayBadgeRow = (
+    <View style={styles.formItemRow}>
+      <View style={styles.formItem}>
+        <Controller
+          control={control}
+          render={({ field: { onChange, value } }) => {
+            return (
+              <CheckBox
+                center
+                title="Show Replay Badge"
+                checked={value}
+                onPress={() => onChange(!value)}
+              />
+            );
+          }}
+          name="showReplayBadge"
+        />
+      </View>
+    </View>
+  );
   const config1 = (
     <>
       <View style={styles.formItemRow}>
@@ -539,6 +566,7 @@ const PlayerConfigurationModal = ({
           />
         </View>
       </View>
+      {showReplayBadgeRow}
     </>
   );
 
