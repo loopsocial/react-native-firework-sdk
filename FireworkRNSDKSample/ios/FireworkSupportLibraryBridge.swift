@@ -12,11 +12,14 @@ import FireworkVideo
 
 import FireworkVideoUI
 import react_native_firework_sdk
+import FireworkVideo
 
 @objc
 public class FireworkSupportLibraryBridge: NSObject {
-    @objc public static func initSDK() {
-      FWReactNativeSDK.initializeSDK(SDKInitOptions(videoLaunchBehavior: .muteOnFirstLaunch))
+    @objc public static func initFireworkSDK() {
+      FWReactNativeSDK.initializeSDK(
+        SDKInitOptions(videoLaunchBehavior: .muteOnFirstLaunch)
+      )
     }
 //  @objc public static func enableVideoGAM() {
 //    FireworkVideoGAMSupportSDK.initializeSDK()
@@ -33,4 +36,14 @@ public class FireworkSupportLibraryBridge: NSObject {
 //  @objc public static func enableIVSPlayback() {
 //    FireworkVideoSDK.enableIVSPlayback()
 //  }
+}
+
+class CustomProductView: UIView, ProductCardViewRepresentable {
+  func prepareForReuse() {
+    
+  }
+  
+  func updateViewForProduct(_ product: ProductCardDetails, associatedTo video: VideoDetails) {
+    
+  }
 }

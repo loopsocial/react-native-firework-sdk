@@ -1,5 +1,11 @@
 # CHANGELOG
 
+## [2.11.1]
+
+### Added
+
+- Support showing countdown timer for the livestream trailer
+
 ## [2.11.0]
 
 ### Added

@@ -109,6 +109,10 @@ const Feed = () => {
     replayBadgeConfiguration: {
       isHidden: false,
     },
+    countdownTimerConfiguration: {
+      isHidden: false,
+      appearance: 'light',
+    },
   };
   const [playerConfiguration, setPlayerConfiguration] = useState<
     VideoPlayerConfiguration | undefined
@@ -134,6 +138,10 @@ const Feed = () => {
     },
     replayBadgeConfiguration: {
       isHidden: false,
+    },
+    countdownTimerConfiguration: {
+      isHidden: false,
+      appearance: 'light',
     },
   };
   const [storyBlockConfiguration, setStoryBlockConfiguration] = useState<
