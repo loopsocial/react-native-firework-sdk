@@ -10,8 +10,8 @@ buildscript {
   }
   repositories {
     google()
-    mavenCentral()
     mavenLocal()
+    mavenCentral()
   }
   dependencies {
     // NOTE: Do not place your application dependencies here; they belong
@@ -37,8 +37,8 @@ allprojects {
     }
 
     google()
-    mavenCentral()
     mavenLocal()
+    mavenCentral()
 
     maven {
       setUrl("https://s01.oss.sonatype.org/content/repositories/snapshots/")

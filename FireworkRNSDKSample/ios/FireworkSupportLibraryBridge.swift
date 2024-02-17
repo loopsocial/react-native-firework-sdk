@@ -12,7 +12,6 @@ import FireworkVideo
 
 import FireworkVideoUI
 import react_native_firework_sdk
-import FireworkVideo
 
 @objc
 public class FireworkSupportLibraryBridge: NSObject {
@@ -40,10 +39,10 @@ public class FireworkSupportLibraryBridge: NSObject {
 
 class CustomProductView: UIView, ProductCardViewRepresentable {
   func prepareForReuse() {
-    
+
   }
-  
+
   func updateViewForProduct(_ product: ProductCardDetails, associatedTo video: VideoDetails) {
-    
+
   }
 }

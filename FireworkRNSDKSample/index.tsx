@@ -26,7 +26,7 @@ FireworkSDK.getInstance().onVideoFeedClick = (event) => {
 };
 
 FireworkSDK.getInstance().shopping.onShoppingCTA =
-  HostAppService.getInstance().onAddToCart;
+  HostAppService.getInstance().onShopNow;
 
 FireworkSDK.getInstance().shopping.onCustomClickCartIcon =
   HostAppService.getInstance().onCustomClickCartIcon;
@@ -45,6 +45,9 @@ FireworkSDK.getInstance().liveStream.onLiveStreamChatEvent = (event) => {
   console.log('[example] onLiveStreamChatEvent', event);
 };
 
+FireworkSDK.getInstance().shopping.productInfoViewConfiguration = {
+  ctaButton: { text: 'shopNow' },
+};
 FireworkSDK.getInstance().shopping.cartIconVisible =
   HostAppService.getInstance().shouldShowCart();
 
