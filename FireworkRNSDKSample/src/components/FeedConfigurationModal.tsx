@@ -57,6 +57,10 @@ type FeedConfigurationFormData = {
   gridColumns?: string;
   titleNumberOfLines?: string;
   showReplayBadge?: boolean;
+  shadowOpacity?: string;
+  shadowColor?: string;
+  shadowWidth?: string;
+  shadowHeight?: string;
 };
 
 const TitlePositionList: VideoFeedTitlePosition[] = ['stacked', 'nested'];
@@ -146,6 +150,18 @@ const FeedConfigurationModal = ({
     vastAttributesErrorMessage = 'Please enter correct vast attributes';
   }
 
+  let shadowOpacityErrorMessage: string | undefined;
+  if (errors.shadowOpacity) {
+    if (
+      errors.shadowOpacity.type === 'max' ||
+      errors.shadowOpacity.type === 'min'
+    ) {
+      shadowOpacityErrorMessage = 'Please enter opacity in [0, 1]';
+    } else {
+      shadowOpacityErrorMessage = 'Please enter correct opacity';
+    }
+  }
+
   const syncFormValuesFromConfiguration = useCallback(
     (
       configuration?: VideoFeedConfiguration,
@@ -196,6 +212,10 @@ const FeedConfigurationModal = ({
         setValue('vastAttributes', '');
       }
       setValue('showReplayBadge', !configuration?.replayBadge?.isHidden);
+      setValue('shadowOpacity', configuration?.shadow?.opacity?.toString());
+      setValue('shadowColor', configuration?.shadow?.color);
+      setValue('shadowWidth', configuration?.shadow?.width?.toString());
+      setValue('shadowHeight', configuration?.shadow?.height?.toString());
     },
     [setValue]
   );
@@ -225,11 +245,11 @@ const FeedConfigurationModal = ({
         hidden: data.hideTitle ? true : false,
         textColor: data.titleColor,
         fontSize:
-          typeof data.titleFontSize === 'string'
+          typeof data.titleFontSize === 'string' && data.titleFontSize
             ? parseInt(data.titleFontSize!)
             : undefined,
         numberOfLines:
-          typeof data.titleNumberOfLines === 'string'
+          typeof data.titleNumberOfLines === 'string' && data.titleNumberOfLines
             ? parseInt(data.titleNumberOfLines!)
             : undefined,
         iOSFontInfo: {
@@ -247,12 +267,12 @@ const FeedConfigurationModal = ({
       configuration.playIcon = {
         hidden: data.hidePlayIcon ? true : false,
         iconWidth:
-          typeof data.playIconWidth === 'string'
+          typeof data.playIconWidth === 'string' && data.playIconWidth
             ? parseInt(data.playIconWidth!)
             : undefined,
       };
       configuration.gridColumns =
-        typeof data.gridColumns === 'string'
+        typeof data.gridColumns === 'string' && data.gridColumns
           ? parseInt(data.gridColumns!)
           : undefined;
       configuration.showAdBadge = data.showAdBadge;
@@ -276,6 +296,21 @@ const FeedConfigurationModal = ({
       console.log('adConfiguration', adConfiguration);
       configuration.replayBadge = {
         isHidden: data.showReplayBadge ? false : true,
+      };
+      configuration.shadow = {
+        opacity:
+          typeof data.shadowOpacity === 'string' && data.shadowOpacity
+            ? parseFloat(data.shadowOpacity)
+            : undefined,
+        color: data.shadowColor,
+        width:
+          typeof data.shadowWidth === 'string' && data.shadowWidth
+            ? parseFloat(data.shadowWidth)
+            : undefined,
+        height:
+          typeof data.shadowHeight === 'string' && data.shadowHeight
+            ? parseFloat(data.shadowHeight)
+            : undefined,
       };
 
       onSubmit(
@@ -802,6 +837,144 @@ const FeedConfigurationModal = ({
       </View>
     </View>
   );
+
+  const shadowConfiguration = (
+    <>
+      <View style={styles.formItemRow}>
+        <View style={{ ...styles.formItem }}>
+          <Controller
+            control={control}
+            render={({ field: { onChange, onBlur, value } }) => (
+              <Input
+                label="Shadow opacity"
+                placeholder="e.g. 0.6"
+                onBlur={onBlur}
+                onChangeText={(newValue) => onChange(newValue)}
+                value={value}
+                errorMessage={shadowOpacityErrorMessage}
+                rightIcon={
+                  <TouchableOpacity
+                    onPress={() => {
+                      setValue('shadowOpacity', undefined);
+                    }}
+                  >
+                    <Ionicons name="close" size={24} />
+                  </TouchableOpacity>
+                }
+                autoCompleteType={undefined}
+              />
+            )}
+            name="shadowOpacity"
+            rules={{
+              pattern: Patterns.float,
+              max: 1,
+              min: 0,
+            }}
+          />
+        </View>
+      </View>
+      <View style={styles.formItemRow}>
+        <View style={{ ...styles.formItem }}>
+          <Controller
+            control={control}
+            render={({ field: { onChange, onBlur, value } }) => (
+              <Input
+                label="Shadow color"
+                placeholder="e.g. #000000"
+                onBlur={onBlur}
+                onChangeText={(newValue) => onChange(newValue)}
+                value={value}
+                errorMessage={
+                  errors.shadowColor ? 'Please enter correct color' : undefined
+                }
+                rightIcon={
+                  <TouchableOpacity
+                    onPress={() => {
+                      setValue('shadowColor', undefined);
+                    }}
+                  >
+                    <Ionicons name="close" size={24} />
+                  </TouchableOpacity>
+                }
+                autoCompleteType={undefined}
+              />
+            )}
+            name="shadowColor"
+            rules={{
+              pattern: Patterns.hexColor,
+            }}
+          />
+        </View>
+      </View>
+      <View style={styles.formItemRow}>
+        <View style={{ ...styles.formItem }}>
+          <Controller
+            control={control}
+            render={({ field: { onChange, onBlur, value } }) => (
+              <Input
+                label="Shadow width"
+                placeholder="e.g. 0"
+                onBlur={onBlur}
+                onChangeText={(newValue) => onChange(newValue)}
+                value={value}
+                errorMessage={
+                  errors.shadowWidth ? 'Please enter width' : undefined
+                }
+                rightIcon={
+                  <TouchableOpacity
+                    onPress={() => {
+                      setValue('shadowWidth', undefined);
+                    }}
+                  >
+                    <Ionicons name="close" size={24} />
+                  </TouchableOpacity>
+                }
+                autoCompleteType={undefined}
+              />
+            )}
+            name="shadowWidth"
+            rules={{
+              pattern: Patterns.number,
+            }}
+          />
+        </View>
+      </View>
+      <View style={styles.formItemRow}>
+        <View style={{ ...styles.formItem }}>
+          <Controller
+            control={control}
+            render={({ field: { onChange, onBlur, value } }) => (
+              <Input
+                label="Shadow height"
+                placeholder="e.g. 0"
+                onBlur={onBlur}
+                onChangeText={(newValue) => onChange(newValue)}
+                value={value}
+                errorMessage={
+                  errors.shadowHeight ? 'Please enter height' : undefined
+                }
+                rightIcon={
+                  <TouchableOpacity
+                    onPress={() => {
+                      setValue('shadowHeight', undefined);
+                    }}
+                  >
+                    <Ionicons name="close" size={24} />
+                  </TouchableOpacity>
+                }
+                autoCompleteType={undefined}
+              />
+            )}
+            name="shadowHeight"
+            rules={{
+              pattern: Patterns.number,
+            }}
+          />
+        </View>
+      </View>
+    </>
+  );
+
   return (
     <Modal
       animationType="fade"
@@ -845,6 +1018,7 @@ const FeedConfigurationModal = ({
                   {playIconConfiguration}
                   {gridColumnsConfiguration}
                   {showReplayBadgeRow}
+                  {shadowConfiguration}
                 </View>
               )}
               {configurationIndex === 1 && (

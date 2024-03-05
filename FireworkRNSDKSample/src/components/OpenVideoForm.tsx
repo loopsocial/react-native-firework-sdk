@@ -43,6 +43,7 @@ export function OpenVideoForm() {
     showVideoDetailTitle: true,
     videoPlayerLogoConfiguration: {
       option: 'disabled',
+      isClickable: true,
     },
   };
   const [playerConfiguration, setPlayerConfiguration] = useState<

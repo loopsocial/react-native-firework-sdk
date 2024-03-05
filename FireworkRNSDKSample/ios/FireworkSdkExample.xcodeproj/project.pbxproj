@@ -15,10 +15,11 @@
 		2D02E4BD1E0B4A84006451C7 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 13B07FB51A68108700A75B9A /* Images.xcassets */; };
 		2D02E4BF1E0B4AB3006451C7 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB71A68108700A75B9A /* main.m */; };
 		2DCD954D1E0B4F2C00145EB5 /* FireworkSdkExampleTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 00E356F21AD99517003FC87E /* FireworkSdkExampleTests.m */; };
+		46D7EA022B6F2BE1002F0D38 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 46D7EA012B6F2BE1002F0D38 /* GoogleService-Info.plist */; };
 		8948DC5F287FC09700C5A348 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 8948DC61287FC09700C5A348 /* LaunchScreen.storyboard */; };
 		89E986F429E1214E00FD0F9C /* FireworkSupportLibraryBridge.swift in Sources */ = {isa = PBXBuildFile; fileRef = 89FB382C29DA943D00D583F5 /* FireworkSupportLibraryBridge.swift */; };
 		89FB382E29DA943D00D583F5 /* FireworkSupportLibraryBridge.swift in Sources */ = {isa = PBXBuildFile; fileRef = 89FB382C29DA943D00D583F5 /* FireworkSupportLibraryBridge.swift */; };
-		9D731874757196DE1A9E6A88 /* libPods-FireworkSdkExample.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 5D3467848A00B99B04331A61 /* libPods-FireworkSdkExample.a */; };
+		C4FC5E433357E5C120594023 /* Pods_FireworkSdkExample.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 76C8C08888803A0C7B1020FD /* Pods_FireworkSdkExample.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -53,7 +54,8 @@
 		2D02E47B1E0B4A5D006451C7 /* FireworkSdkExample-tvOS.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "FireworkSdkExample-tvOS.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		2D02E4901E0B4A5D006451C7 /* FireworkSdkExample-tvOSTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "FireworkSdkExample-tvOSTests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
 		30B66069687EB63673DEE443 /* Pods-FireworkSdkExample.staging.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-FireworkSdkExample.staging.xcconfig"; path = "Target Support Files/Pods-FireworkSdkExample/Pods-FireworkSdkExample.staging.xcconfig"; sourceTree = "<group>"; };
-		5D3467848A00B99B04331A61 /* libPods-FireworkSdkExample.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-FireworkSdkExample.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		46D7EA012B6F2BE1002F0D38 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
+		76C8C08888803A0C7B1020FD /* Pods_FireworkSdkExample.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_FireworkSdkExample.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		8938F69E28F6F8060050FE64 /* Debug.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = Debug.xcconfig; sourceTree = "<group>"; };
 		8938F69F28F6F8120050FE64 /* Staging.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = Staging.xcconfig; sourceTree = "<group>"; };
 		8938F6A028F6F8220050FE64 /* Release.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = Release.xcconfig; sourceTree = "<group>"; };
@@ -80,7 +82,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				9D731874757196DE1A9E6A88 /* libPods-FireworkSdkExample.a in Frameworks */,
+				C4FC5E433357E5C120594023 /* Pods_FireworkSdkExample.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -126,6 +128,7 @@
 				13B07FB01A68108700A75B9A /* AppDelegate.m */,
 				13B07FB51A68108700A75B9A /* Images.xcassets */,
 				13B07FB61A68108700A75B9A /* Info.plist */,
+				46D7EA012B6F2BE1002F0D38 /* GoogleService-Info.plist */,
 				8948DC61287FC09700C5A348 /* LaunchScreen.storyboard */,
 				13B07FB71A68108700A75B9A /* main.m */,
 				898B200929D68CAB00C57D96 /* FireworkSdkExample-Bridging-Header.h */,
@@ -139,7 +142,7 @@
 			children = (
 				ED297162215061F000B7C4FE /* JavaScriptCore.framework */,
 				ED2971642150620600B7C4FE /* JavaScriptCore.framework */,
-				5D3467848A00B99B04331A61 /* libPods-FireworkSdkExample.a */,
+				76C8C08888803A0C7B1020FD /* Pods_FireworkSdkExample.framework */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -240,6 +243,7 @@
 				70D989DB54C6AA3646124505 /* [CP] Embed Pods Frameworks */,
 				EB753228A5BBCF60BAD9630D /* [CP] Copy Pods Resources */,
 				4608F7A42A68D451007535DC /* Swiftlint */,
+				46D7EA032B6F2C00002F0D38 /* FirebaseCrashlytics */,
 			);
 			buildRules = (
 			);
@@ -354,6 +358,7 @@
 			files = (
 				8948DC5F287FC09700C5A348 /* LaunchScreen.storyboard in Resources */,
 				13B07FBF1A68108700A75B9A /* Images.xcassets in Resources */,
+				46D7EA022B6F2BE1002F0D38 /* GoogleService-Info.plist in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -421,6 +426,24 @@
 			shellPath = /bin/sh;
 			shellScript = "# Type a script or drag a script file from your workspace to insert its path.\nexport PATH=$PATH:/opt/homebrew/bin\nif which swiftlint >/dev/null; then\n# CameraKitSample project is not located at the root of the repo. This means we need to tell swiftlint to go to the project root to get the swiftlint file.\n  swiftlint ../../ios/\nelse\n  echo \"warning: SwiftLint not installed, download from https://github.com/realm/SwiftLint\"\nfi\n\n\n";
 		};
+		46D7EA032B6F2C00002F0D38 /* FirebaseCrashlytics */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+			);
+			name = FirebaseCrashlytics;
+			outputFileListPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "# Type a script or drag a script file from your workspace to insert its path.\n\"${PODS_ROOT}/FirebaseCrashlytics/run\"\n";
+		};
 		70D989DB54C6AA3646124505 /* [CP] Embed Pods Frameworks */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
@@ -468,6 +491,8 @@
 			);
 			inputPaths = (
 				"${PODS_ROOT}/Target Support Files/Pods-FireworkSdkExample/Pods-FireworkSdkExample-resources.sh",
+				"${PODS_CONFIGURATION_BUILD_DIR}/PromisesObjC/FBLPromises_Privacy.bundle",
+				"${PODS_CONFIGURATION_BUILD_DIR}/PromisesSwift/Promises_Privacy.bundle",
 				"${PODS_ROOT}/../../node_modules/react-native-vector-icons/Fonts/AntDesign.ttf",
 				"${PODS_ROOT}/../../node_modules/react-native-vector-icons/Fonts/Entypo.ttf",
 				"${PODS_ROOT}/../../node_modules/react-native-vector-icons/Fonts/EvilIcons.ttf",
@@ -488,6 +513,8 @@
 			);
 			name = "[CP] Copy Pods Resources";
 			outputPaths = (
+				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/FBLPromises_Privacy.bundle",
+				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/Promises_Privacy.bundle",
 				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/AntDesign.ttf",
 				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/Entypo.ttf",
 				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/EvilIcons.ttf",
@@ -681,7 +708,7 @@
 				INFOPLIST_FILE = FireworkSdkExample/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				MARKETING_VERSION = 2.11.0;
+				MARKETING_VERSION = 2.12.0;
 				ONLY_ACTIVE_ARCH = YES;
 				OTHER_LDFLAGS = (
 					"$(inherited)",
@@ -717,7 +744,7 @@
 				INFOPLIST_FILE = FireworkSdkExample/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				MARKETING_VERSION = 2.11.0;
+				MARKETING_VERSION = 2.12.0;
 				OTHER_LDFLAGS = (
 					"$(inherited)",
 					"-ObjC",
@@ -1034,7 +1061,7 @@
 				INFOPLIST_FILE = FireworkSdkExample/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				MARKETING_VERSION = 2.11.0;
+				MARKETING_VERSION = 2.12.0;
 				OTHER_LDFLAGS = (
 					"$(inherited)",
 					"-ObjC",

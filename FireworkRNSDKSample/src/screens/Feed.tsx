@@ -105,6 +105,7 @@ const Feed = () => {
     showVideoDetailTitle: true,
     videoPlayerLogoConfiguration: {
       option: 'disabled',
+      isClickable: true,
     },
     replayBadgeConfiguration: {
       isHidden: false,
@@ -135,6 +136,7 @@ const Feed = () => {
     ctaWidth: 'fullWidth',
     videoPlayerLogoConfiguration: {
       option: 'disabled',
+      isClickable: true,
     },
     replayBadgeConfiguration: {
       isHidden: false,

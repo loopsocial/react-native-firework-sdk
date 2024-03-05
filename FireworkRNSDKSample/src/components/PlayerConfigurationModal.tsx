@@ -59,6 +59,7 @@ type PlayerConfigurationFormData = {
   showVideoDetailTitle?: boolean;
   videoPlayerLogoOption?: number;
   videoPlayerLogoEncodeID?: string;
+  videoPlayerLogoIsClickable?: boolean;
   showReplayBadge?: boolean;
 };
 
@@ -228,6 +229,10 @@ const PlayerConfigurationModal = ({
             ? ''
             : configuration.videoPlayerLogoConfiguration?.encodedId
         );
+        setValue(
+          'videoPlayerLogoIsClickable',
+          configuration.videoPlayerLogoConfiguration?.isClickable ?? false
+        );
 
         if (configuration.ctaWidth) {
           const ctaWidthIndex = CTAWidthList.indexOf(configuration.ctaWidth);
@@ -283,7 +288,7 @@ const PlayerConfigurationModal = ({
         backgroundColor: data.ctaBackgroundColor,
         textColor: data.ctaTextColor,
         fontSize:
-          typeof data.ctaFontSize === 'string'
+          typeof data.ctaFontSize === 'string' && data.ctaFontSize
             ? parseInt(data.ctaFontSize)
             : undefined,
         iOSFontInfo: {
@@ -319,15 +324,16 @@ const PlayerConfigurationModal = ({
         typeof data.ctaWidth === 'number'
           ? CTAWidthList[data.ctaWidth]
           : undefined;
-
       var videoPlayerLogoConfiguration: VideoPlayerLogoConfiguration = {
         option: 'disabled',
+        isClickable: data.videoPlayerLogoIsClickable,
       };
       if (typeof data.videoPlayerLogoOption === 'number') {
         if (data.videoPlayerLogoOption > 0) {
           videoPlayerLogoConfiguration = {
             option: VideoPlayerLogoOptionList[data.videoPlayerLogoOption],
             encodedId: data.videoPlayerLogoEncodeID ?? '',
+            isClickable: data.videoPlayerLogoIsClickable,
           };
         }
       }
@@ -339,6 +345,26 @@ const PlayerConfigurationModal = ({
       onSubmit(configuration);
     }
   };
+  const logoEnableTap = (
+    <View style={styles.formItemRow}>
+      <View style={styles.formItem}>
+        <Controller
+          control={control}
+          render={({ field: { onChange, value } }) => {
+            return (
+              <CheckBox
+                center
+                title="Logo Enabled Tap"
+                checked={value}
+                onPress={() => onChange(!value)}
+              />
+            );
+          }}
+          name="videoPlayerLogoIsClickable"
+        />
+      </View>
+    </View>
+  );
   const showReplayBadgeRow = (
     <View style={styles.formItemRow}>
       <View style={styles.formItem}>
@@ -566,6 +592,7 @@ const PlayerConfigurationModal = ({
           />
         </View>
       </View>
+      {logoEnableTap}
       {showReplayBadgeRow}
     </>
   );

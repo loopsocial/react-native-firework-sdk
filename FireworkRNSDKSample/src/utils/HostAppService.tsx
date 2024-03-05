@@ -78,7 +78,7 @@ export default class HostAppService {
         unitId: event.unitId,
         name: shopifyProduct.title,
         price: {
-          amount: parseFloat(amount),
+          amount: amount ? parseFloat(amount) : 0,
           currencyCode,
         },
         description: variant.title,
@@ -172,7 +172,10 @@ export default class HostAppService {
           return {
             unitId,
             name: shopifyProductVariant.title,
-            price: { amount: parseFloat(amount), currencyCode },
+            price: {
+              amount: amount ? parseFloat(amount) : 0,
+              currencyCode,
+            },
           };
         });
         productList.push(product);

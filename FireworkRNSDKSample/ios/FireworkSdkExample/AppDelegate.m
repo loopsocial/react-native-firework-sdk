@@ -11,6 +11,7 @@
 #import <React/RCTBundleURLProvider.h>
 #import <React/RCTRootView.h>
 #import "FireworkSdkExample-Swift.h"
+@import FirebaseCore;
 
 #ifdef FB_SONARKIT_ENABLED
 #import <FlipperKit/FlipperClient.h>
@@ -34,6 +35,7 @@ static void InitializeFlipper(UIApplication *application) {
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
+  [FIRApp configure];
   [FireworkSupportLibraryBridge initFireworkSDK];
 //  [FireworkSupportLibraryBridge enableIVSPlayback];
 //  [FireworkSupportLibraryBridge enableMultiHostPlayback];

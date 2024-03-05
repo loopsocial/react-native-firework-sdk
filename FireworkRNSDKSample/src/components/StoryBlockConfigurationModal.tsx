@@ -61,7 +61,9 @@ type StoryBlockConfigurationFormData = {
   showVideoDetailTitle?: boolean;
   videoPlayerLogoOption?: number;
   videoPlayerLogoEncodeID?: string;
+  videoPlayerLogoIsClickable?: boolean;
   showReplayBadge?: boolean;
+  showCountdownTimer?: boolean;
 };
 
 const PlayStyleList: VideoPlayerStyle[] = ['full', 'fit'];
@@ -241,8 +243,16 @@ const StoryBlockConfigurationModal = ({
             : configuration.videoPlayerLogoConfiguration?.encodedId
         );
         setValue(
+          'videoPlayerLogoIsClickable',
+          configuration.videoPlayerLogoConfiguration?.isClickable ?? false
+        );
+        setValue(
           'showReplayBadge',
           !configuration?.replayBadgeConfiguration?.isHidden
+        );
+        setValue(
+          'showCountdownTimer',
+          !configuration?.countdownTimerConfiguration?.isHidden
         );
       } else {
         reset();
@@ -284,7 +294,7 @@ const StoryBlockConfigurationModal = ({
         backgroundColor: data.ctaBackgroundColor,
         textColor: data.ctaTextColor,
         fontSize:
-          typeof data.ctaFontSize === 'string'
+          typeof data.ctaFontSize === 'string' && data.ctaFontSize
             ? parseInt(data.ctaFontSize)
             : undefined,
         iOSFontInfo: {
@@ -322,12 +332,14 @@ const StoryBlockConfigurationModal = ({
           : undefined;
       var videoPlayerLogoConfiguration: VideoPlayerLogoConfiguration = {
         option: 'disabled',
+        isClickable: data.videoPlayerLogoIsClickable,
       };
       if (typeof data.videoPlayerLogoOption === 'number') {
         if (data.videoPlayerLogoOption > 0) {
           videoPlayerLogoConfiguration = {
             option: VideoPlayerLogoOptionList[data.videoPlayerLogoOption],
             encodedId: data.videoPlayerLogoEncodeID ?? '',
+            isClickable: data.videoPlayerLogoIsClickable,
           };
         }
       }
@@ -336,9 +348,32 @@ const StoryBlockConfigurationModal = ({
       configuration.replayBadgeConfiguration = {
         isHidden: data.showReplayBadge ? false : true,
       };
+      configuration.countdownTimerConfiguration = {
+        isHidden: data.showCountdownTimer ? false : true,
+      };
       onSubmit(configuration);
     }
   };
+  const logoEnableTap = (
+    <View style={styles.formItemRow}>
+      <View style={styles.formItem}>
+        <Controller
+          control={control}
+          render={({ field: { onChange, value } }) => {
+            return (
+              <CheckBox
+                center
+                title="Logo Enabled Tap"
+                checked={value}
+                onPress={() => onChange(!value)}
+              />
+            );
+          }}
+          name="videoPlayerLogoIsClickable"
+        />
+      </View>
+    </View>
+  );
   const showReplayBadgeRow = (
     <View style={styles.formItemRow}>
       <View style={styles.formItem}>
@@ -355,6 +390,26 @@ const StoryBlockConfigurationModal = ({
             );
           }}
           name="showReplayBadge"
+        />
+      </View>
+    </View>
+  );
+  const showCountdownTimerRow = (
+    <View style={styles.formItemRow}>
+      <View style={styles.formItem}>
+        <Controller
+          control={control}
+          render={({ field: { onChange, value } }) => {
+            return (
+              <CheckBox
+                center
+                title="Show countdown timers"
+                checked={value}
+                onPress={() => onChange(!value)}
+              />
+            );
+          }}
+          name="showCountdownTimer"
         />
       </View>
     </View>
@@ -578,7 +633,9 @@ const StoryBlockConfigurationModal = ({
           />
         </View>
       </View>
+      {logoEnableTap}
       {showReplayBadgeRow}
+      {showCountdownTimerRow}
     </>
   );
 

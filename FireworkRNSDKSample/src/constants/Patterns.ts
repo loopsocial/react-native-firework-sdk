@@ -6,4 +6,5 @@ export default {
   playlistId: /^\S+$/gi,
   playlistGroupId: /^\S+$/gi,
   contentId: /^\S+$/gi,
+  float: /^(0(\.\d{0,1})?|1(\.0{0,1})?)$/gi,
 };
