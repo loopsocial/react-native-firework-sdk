@@ -19,7 +19,7 @@
     "@reduxjs/toolkit": "^1.7.1",
     "react": "17.0.2",
     "react-hook-form": "^7.22.2",
-    "react-native": "0.66.4",
+    "react-native": "0.73.6",
     "react-native-base64": "^0.2.1",
     "react-native-elements": "^3.4.2",
     "react-native-restart": "0.0.24",
@@ -40,7 +40,7 @@
     "@types/react-native-base64": "^0.2.0",
     "@types/redux-logger": "^3.0.9",
     "@types/shopify-buy": "^2.10.9",
-    "babel-plugin-module-resolver": "^4.0.0",
+    "babel-plugin-module-resolver": "^5.0.0",
     "metro-react-native-babel-preset": "^0.66.2",
     "pod-install": "^0.1.38",
     "prettier": "2.7.1"
