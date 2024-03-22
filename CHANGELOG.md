@@ -1,5 +1,11 @@
 # CHANGELOG
 
+## [2.12.1]
+
+### Fixed
+
+- [iOS] The full-screen player can't be launched on debug mode
+
 ## [2.12.0]
 
 ### Added

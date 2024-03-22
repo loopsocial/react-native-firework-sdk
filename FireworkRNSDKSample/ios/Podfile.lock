@@ -260,7 +260,7 @@ PODS:
   - React-jsinspector (0.66.4)
   - React-logger (0.66.4):
     - glog
-  - react-native-firework-sdk (2.12.0):
+  - react-native-firework-sdk (2.12.1):
     - FireworkVideo (= 1.19.0)
     - FireworkVideoUI (= 0.1.0)
     - React-Core
@@ -516,7 +516,7 @@ SPEC CHECKSUMS:
   React-jsiexecutor: 94ce921e1d8ce7023366873ec371f3441383b396
   React-jsinspector: d0374f7509d407d2264168b6d0fad0b54e300b85
   React-logger: 933f80c97c633ee8965d609876848148e3fef438
-  react-native-firework-sdk: dd84544f23f17fdf40710787c2076995fe002e33
+  react-native-firework-sdk: b3390c8976236004a48bd68146665c49274822fc
   react-native-restart: 45c8dca02491980f2958595333cbccd6877cb57e
   react-native-safe-area-context: 584dc04881deb49474363f3be89e4ca0e854c057
   react-native-visibility-aware-view: 330a2fe055103592d728b8b77a38e0f02d342184
@@ -540,4 +540,4 @@ SPEC CHECKSUMS:
 
 PODFILE CHECKSUM: 6ca0be83ba5599752d8e63f1f33e135782dc97a8
 
-COCOAPODS: 1.14.3
+COCOAPODS: 1.15.2
