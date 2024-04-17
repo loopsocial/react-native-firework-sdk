@@ -66,7 +66,6 @@ const Feed = () => {
     title: { hidden: false, fontSize: 14 },
     titlePosition: 'nested',
     showAdBadge: true,
-    replayBadge: { isHidden: false },
   };
   const [feedConfiguration, setFeedConfiguration] =
     useState<VideoFeedConfiguration>(defaultFeedConfiguration);
@@ -107,12 +106,9 @@ const Feed = () => {
       option: 'disabled',
       isClickable: true,
     },
-    replayBadgeConfiguration: {
-      isHidden: false,
-    },
     countdownTimerConfiguration: {
       isHidden: false,
-      appearance: 'light',
+      appearance: 'dark',
     },
   };
   const [playerConfiguration, setPlayerConfiguration] = useState<
@@ -138,12 +134,9 @@ const Feed = () => {
       option: 'disabled',
       isClickable: true,
     },
-    replayBadgeConfiguration: {
-      isHidden: false,
-    },
     countdownTimerConfiguration: {
       isHidden: false,
-      appearance: 'light',
+      appearance: 'dark',
     },
   };
   const [storyBlockConfiguration, setStoryBlockConfiguration] = useState<

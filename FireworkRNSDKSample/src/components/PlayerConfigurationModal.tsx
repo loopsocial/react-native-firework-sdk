@@ -25,6 +25,7 @@ import type {
   VideoPlayerConfiguration,
   VideoPlayerStyle,
   VideoPlayerCompleteAction,
+  VideoPlayerLivestreamCountdownTimerTheme,
   VideoPlayerCTADelayType,
   VideoPlayerCTAWidth,
   VideoPlayerLogoConfiguration,
@@ -42,6 +43,7 @@ export interface IPlayerConfigurationModalProps {
 type PlayerConfigurationFormData = {
   playerStyle?: number;
   videoCompleteAction?: number;
+  livestreamCountdownTimerTheme?: number;
   showShareButton?: boolean;
   ctaBackgroundColor?: string;
   ctaTextColor?: string;
@@ -57,6 +59,7 @@ type PlayerConfigurationFormData = {
   ctaWidth?: number;
   enableCustomButtons?: boolean;
   showVideoDetailTitle?: boolean;
+  hideLivestreamCountdownTimer?: boolean;
   videoPlayerLogoOption?: number;
   videoPlayerLogoEncodeID?: string;
   videoPlayerLogoIsClickable?: boolean;
@@ -68,6 +71,9 @@ const VideoCompleteActionList: VideoPlayerCompleteAction[] = [
   'loop',
   'advanceToNext',
 ];
+
+const LivestreamCountdownTimerThemeList: VideoPlayerLivestreamCountdownTimerTheme[] =
+  ['dark', 'light'];
 
 const CTADelayTypeList: VideoPlayerCTADelayType[] = ['constant', 'percentage'];
 const CTAWidthList: VideoPlayerCTAWidth[] = [
@@ -159,6 +165,29 @@ const PlayerConfigurationModal = ({
         } else {
           setValue('videoCompleteAction', undefined);
         }
+
+        if (configuration.countdownTimerConfiguration) {
+          const livestreamCountdownTimerIndex =
+            LivestreamCountdownTimerThemeList.findIndex(
+              (value, _index, _obj) => {
+                return (
+                  configuration.countdownTimerConfiguration?.appearance ===
+                  value
+                );
+              }
+            );
+          if (livestreamCountdownTimerIndex >= 0) {
+            setValue(
+              'livestreamCountdownTimerTheme',
+              livestreamCountdownTimerIndex
+            );
+          } else {
+            setValue('livestreamCountdownTimerTheme', undefined);
+          }
+        } else {
+          setValue('livestreamCountdownTimerTheme', undefined);
+        }
+
         setValue('enableCustomButtons', !!configuration.buttonConfiguration);
         setValue('showShareButton', configuration.showShareButton);
         setValue(
@@ -177,6 +206,10 @@ const PlayerConfigurationModal = ({
         setValue('showPlaybackButton', configuration.showPlaybackButton);
         setValue('showMuteButton', configuration.showMuteButton);
         setValue('showVideoDetailTitle', configuration.showVideoDetailTitle);
+        setValue(
+          'hideLivestreamCountdownTimer',
+          configuration.countdownTimerConfiguration?.isHidden
+        );
 
         if (configuration.ctaDelay) {
           const typeIndex = CTADelayTypeList.indexOf(
@@ -246,7 +279,7 @@ const PlayerConfigurationModal = ({
         }
         setValue(
           'showReplayBadge',
-          !configuration?.replayBadgeConfiguration?.isHidden
+          configuration?.replayBadgeConfiguration?.isHidden === false
         );
       } else {
         reset();
@@ -271,6 +304,19 @@ const PlayerConfigurationModal = ({
         typeof data.videoCompleteAction === 'number'
           ? VideoCompleteActionList[data.videoCompleteAction]
           : undefined;
+
+      if (
+        typeof data.livestreamCountdownTimerTheme === 'number' &&
+        typeof data.hideLivestreamCountdownTimer === 'boolean'
+      ) {
+        configuration.countdownTimerConfiguration = {
+          appearance:
+            LivestreamCountdownTimerThemeList[
+              data.livestreamCountdownTimerTheme
+            ],
+          isHidden: data.hideLivestreamCountdownTimer,
+        };
+      }
       if (data.enableCustomButtons) {
         configuration.buttonConfiguration = {
           videoDetailButton: { imageName: 'custom_more' },
@@ -340,7 +386,7 @@ const PlayerConfigurationModal = ({
       configuration.videoPlayerLogoConfiguration = videoPlayerLogoConfiguration;
       console.log('configuration', configuration);
       configuration.replayBadgeConfiguration = {
-        isHidden: data.showReplayBadge ? false : true,
+        isHidden: data.showReplayBadge === true ? false : true,
       };
       onSubmit(configuration);
     }
@@ -424,6 +470,26 @@ const PlayerConfigurationModal = ({
         </View>
       </View>
       <View style={styles.formItemRow}>
+        <View style={styles.formItem}>
+          <Text style={styles.formItemLabel}>
+            Livestream countdown timer theme
+          </Text>
+          <Controller
+            control={control}
+            render={({ field: { onChange, value } }) => (
+              <ButtonGroup
+                buttons={LivestreamCountdownTimerThemeList}
+                selectedIndex={value}
+                onPress={(newValue) => {
+                  onChange(newValue);
+                }}
+              />
+            )}
+            name="livestreamCountdownTimerTheme"
+          />
+        </View>
+      </View>
+      <View style={styles.formItemRow}>
         <View style={{ ...styles.formItem, marginRight: 10 }}>
           <Controller
             control={control}
@@ -491,21 +557,39 @@ const PlayerConfigurationModal = ({
           />
         </View>
       </View>
-      <View style={styles.formItem}>
-        <Controller
-          control={control}
-          render={({ field: { onChange, value } }) => {
-            return (
-              <CheckBox
-                center
-                title={`Show video${'\n'}detail title`}
-                checked={value}
-                onPress={() => onChange(!value)}
-              />
-            );
-          }}
-          name="showVideoDetailTitle"
-        />
+      <View style={styles.formItemRow}>
+        <View style={{ ...styles.formItem, marginRight: 10 }}>
+          <Controller
+            control={control}
+            render={({ field: { onChange, value } }) => {
+              return (
+                <CheckBox
+                  center
+                  title={`Show video${'\n'}detail title`}
+                  checked={value}
+                  onPress={() => onChange(!value)}
+                />
+              );
+            }}
+            name="showVideoDetailTitle"
+          />
+        </View>
+        <View style={styles.formItem}>
+          <Controller
+            control={control}
+            render={({ field: { onChange, value } }) => {
+              return (
+                <CheckBox
+                  center
+                  title={`Hide countdown${'\n'}timer`}
+                  checked={value}
+                  onPress={() => onChange(!value)}
+                />
+              );
+            }}
+            name="hideLivestreamCountdownTimer"
+          />
+        </View>
       </View>
       <View style={styles.formItemRow}>
         <View style={{ ...styles.formItem }}>

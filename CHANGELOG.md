@@ -1,5 +1,23 @@
 # CHANGELOG
 
+## [2.13.0]
+
+### Added
+
+- Support Digital Showroom
+- [iOS] Add privacy manifest configuration on the iOS SDK to ensure compliance with Apple privacy guidelines and regulations
+
+### Changed
+
+- Replace livestream id with video id for event callbacks
+- Change behaviour of product availability in Livestream Replay. The product availability is based on the last state of the product in the Livestream
+- [Android] Upgrade the Android SDK's Kotlin version to 1.8.x
+
+### Fixed
+
+- [Android] Unmuting muted active livestream when user goes from PIP to fullscreen
+- [Android] [SingleTask Activity is launched in their own affinities](https://groups.google.com/g/ima-sdk/c/PfAnye3Hhww/m/08N6YyFsBAAJ), which is caused by [the Google IMA SDK v3.32.0](https://developers.google.com/interactive-media-ads/docs/sdks/android/client-side/history)
+
 ## [2.12.1]
 
 ### Fixed

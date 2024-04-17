@@ -127,17 +127,17 @@ def nativeArchitectures = project.getProperties().get("reactNativeDebugArchitect
  * production env
  */
 def fw_appid_production = ""
-def fw_base_url_production = "https://api.fw.tv"
+def fw_base_url_production = "https://api.firework.com"
 def fw_pixel_base_url_production = "https://p2.fwpixel.com/"
-def fw_web_socket_production = "wss://api.firework.tv/socket/websocket"
+def fw_web_socket_production = "wss://api.firework.com/socket/websocket"
 
 /**
  * staging env
  */
 def fw_appid_staging = ""
-def fw_base_url_staging = ""
+def fw_base_url_staging = "https://api.firework-staging.com"
 def fw_pixel_base_url_staging = ""
-def fw_web_socket_staging = ""
+def fw_web_socket_staging = "wss://api.firework-staging.com/socket/websocket"
 
 
 android {
@@ -148,7 +148,7 @@ android {
     minSdkVersion rootProject.ext.minSdkVersion
     targetSdkVersion rootProject.ext.targetSdkVersion
     versionCode 1
-    versionName "2.11.1"
+    versionName "2.13.0"
   }
   splits {
     abi {

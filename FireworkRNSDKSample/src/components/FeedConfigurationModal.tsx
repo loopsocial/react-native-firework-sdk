@@ -211,7 +211,10 @@ const FeedConfigurationModal = ({
       } else {
         setValue('vastAttributes', '');
       }
-      setValue('showReplayBadge', !configuration?.replayBadge?.isHidden);
+      setValue(
+        'showReplayBadge',
+        configuration?.replayBadge?.isHidden === false
+      );
       setValue('shadowOpacity', configuration?.shadow?.opacity?.toString());
       setValue('shadowColor', configuration?.shadow?.color);
       setValue('shadowWidth', configuration?.shadow?.width?.toString());
@@ -295,7 +298,7 @@ const FeedConfigurationModal = ({
       }
       console.log('adConfiguration', adConfiguration);
       configuration.replayBadge = {
-        isHidden: data.showReplayBadge ? false : true,
+        isHidden: data.showReplayBadge === true ? false : true,
       };
       configuration.shadow = {
         opacity:

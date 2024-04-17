@@ -37,7 +37,11 @@ static void InitializeFlipper(UIApplication *application) {
 {
   [FIRApp configure];
   [FireworkSupportLibraryBridge initFireworkSDK];
-//  [FireworkSupportLibraryBridge enableIVSPlayback];
+  [FireworkSupportLibraryBridge enableIVSPlayback];
+
+  dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(2 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+    [FireworkSupportLibraryBridge requestIDFAPermision];
+  });
 //  [FireworkSupportLibraryBridge enableMultiHostPlayback];
   #ifdef FB_SONARKIT_ENABLED
     InitializeFlipper(application);
