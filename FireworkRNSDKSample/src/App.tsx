@@ -32,6 +32,7 @@ import SetShareBaseURL from './screens/SetShareBaseURL';
 import EnablePushingRNContainer from './screens/EnablePushingRNContainer';
 import EnableNativeNavigation from './screens/EnableNativeNavigation';
 import EnablePausePlayer from './screens/EnablePausePlayer';
+import Log from './screens/Log';
 
 const StackNavigator = createNativeStackNavigator<RootStackParamList>();
 
@@ -165,6 +166,11 @@ const FWNavigationContainer = () => {
           name: 'EnablePausePlayer',
           component: EnablePausePlayer,
           options: { title: 'Enable Pause Player' },
+        })}
+        {renderScreen({
+          name: 'Log',
+          component: Log,
+          options: { title: 'Log' },
         })}
       </StackNavigator.Navigator>
     </NavigationContainer>

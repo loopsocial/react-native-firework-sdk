@@ -17,6 +17,7 @@ import com.firework.livestream.singlehost.SingleHostLivestreamPlayerInitializer;
 import com.fireworksdk.bridge.models.FWSDKInitOptionsModel;
 import com.fireworksdk.bridge.models.enums.FWPlayerLaunchBehavior;
 import com.fireworksdk.bridge.reactnative.FWReactNativeSDK;
+import com.fireworksdk.bridge.utils.FWGlobalDataUtil;
 
 public class MainApplication extends Application implements ReactApplication {
 
@@ -34,6 +35,12 @@ public class MainApplication extends Application implements ReactApplication {
           // Packages that cannot be autolinked yet can be added manually here, for FireworkSDKExample:
           // packages.add(new MyReactNativePackage());
           return packages;
+        }
+
+        @Override
+        public void clear() {
+          super.clear();
+          FWGlobalDataUtil.INSTANCE.setInitCompletedListener(null);
         }
 
         @Override
@@ -62,6 +69,13 @@ public class MainApplication extends Application implements ReactApplication {
       this,
       new FWSDKInitOptionsModel(null, FWPlayerLaunchBehavior.MuteOnFirstLaunch)
     );
+  }
+
+  @Override
+  protected void attachBaseContext(Context base) {
+    // Optional, setup language if you already have language setting in your app
+    // FWReactNativeSDK.INSTANCE.changeLanguage("en", base);
+    super.attachBaseContext(FWReactNativeSDK.INSTANCE.updateBaseContextLocale(base));
   }
 
   /**

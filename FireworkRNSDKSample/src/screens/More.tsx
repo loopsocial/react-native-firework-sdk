@@ -16,11 +16,11 @@ import type { CompositeNavigationProp } from '@react-navigation/native';
 import type { RootStackParamList } from './paramList/RootStackParamList';
 import { useActionSheet } from '@expo/react-native-action-sheet';
 import RNRestart from 'react-native-restart';
-import FireworkSDK from 'react-native-firework-sdk';
+import FireworkSDK, { DataTrackingLevel } from 'react-native-firework-sdk';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import StorageKey from '../constants/StorageKey';
 
-const fwNativeVersionOfAndroid = '6.10.2';
+const fwNativeVersionOfAndroid = '6.11.0';
 
 type MoreScreenNavigationProp = CompositeNavigationProp<
   BottomTabNavigationProp<TabParamsList, 'More'>,
@@ -37,23 +37,65 @@ function More() {
   const [currentDisplayLanguage, setCurrentDisplayLanguage] = useState<
     string | null
   >(null);
+  const [currentDataTrackingLevel, setCurrentDataTrackingLevel] =
+    useState<DataTrackingLevel | null>(null);
 
   const { showActionSheetWithOptions } = useActionSheet();
   const getDisplayLanguage = (language: string) => {
+    if (language === 'en') {
+      return 'English';
+    }
+
     if (language === 'ar') {
       return 'Arabic';
     }
 
-    if (language === 'en') {
-      return 'English';
+    if (language === 'ar-SA') {
+      return 'Arabic (Saudi Arabia)';
+    }
+
+    if (language === 'ar-AE') {
+      return 'Arabic (United Arab Emirates)';
+    }
+
+    if (language === 'de') {
+      return 'German';
+    }
+
+    if (language === 'it') {
+      return 'Italian';
     }
 
     if (language === 'ja') {
       return 'Japanese';
     }
 
+    if (language === 'pl') {
+      return 'Polish';
+    }
+
     if (language === 'pt-BR') {
       return 'Portuguese (Brazil)';
+    }
+
+    if (language === 'ru') {
+      return 'Russian';
+    }
+
+    if (language === 'es') {
+      return 'Spanish';
+    }
+
+    if (language === 'es-MX') {
+      return 'Spanish (Mexico)';
+    }
+
+    if (language === 'es-CO') {
+      return 'Spanish (Colombia)';
+    }
+
+    if (language === 'vi') {
+      return 'Vietnamese';
     }
 
     return 'System';
@@ -84,6 +126,15 @@ function More() {
       RNRestart.Restart();
     } catch (e) {
       console.log('handleChangeAppLanguage e', e);
+    }
+  };
+  const handleChangeDataTrackingLevel = async (level: DataTrackingLevel) => {
+    try {
+      await AsyncStorage.setItem(StorageKey.dataTrackingLevel, level);
+      FireworkSDK.getInstance().dataTrackingLevel = level;
+      setCurrentDataTrackingLevel(level);
+    } catch (e) {
+      console.log('handleChangeDataTrackingLevel e', e);
     }
   };
 
@@ -126,12 +177,38 @@ function More() {
         const options = [
           'English',
           'Arabic',
+          'Arabic (Saudi Arabia)',
+          'Arabic (United Arab Emirates)',
+          'German',
+          'Italian',
           'Japanese',
+          'Polish',
           'Portuguese (Brazil)',
+          'Russian',
+          'Spanish',
+          'Spanish (Mexico)',
+          'Spanish (Colombia)',
+          'Vietnamese',
           'System',
           'Cancel',
         ];
-        const languageCodeList = ['en', 'ar', 'ja', 'pt-BR', 'system'];
+        const languageCodeList = [
+          'en',
+          'ar',
+          'ar-SA',
+          'ar-AE',
+          'de',
+          'it',
+          'ja',
+          'pl',
+          'pt-BR',
+          'ru',
+          'es',
+          'es-MX',
+          'es-CO',
+          'vi',
+          'system',
+        ];
 
         const cancelButtonIndex = options.length - 1;
 
@@ -148,6 +225,34 @@ function More() {
               buttonIndex < options.length
             ) {
               handleChangeAppLanguage(languageCodeList[buttonIndex]);
+            }
+          }
+        );
+      },
+    },
+    {
+      title: currentDataTrackingLevel
+        ? `Change Data Tracking Level(${currentDataTrackingLevel})`
+        : 'Change Data Tracking Level',
+      pressCallback: (_) => {
+        const options = ['all', 'essentialOnly', 'none', 'Cancel'];
+
+        const cancelButtonIndex = options.length - 1;
+
+        showActionSheetWithOptions(
+          {
+            title: 'Select data tracking level',
+            options,
+            cancelButtonIndex,
+          },
+          (buttonIndex) => {
+            if (
+              typeof buttonIndex === 'number' &&
+              buttonIndex < options.length - 1
+            ) {
+              handleChangeDataTrackingLevel(
+                options[buttonIndex] as DataTrackingLevel
+              );
             }
           }
         );
@@ -198,6 +303,21 @@ function More() {
     };
 
     sycnCurrentDisplayLanguageFromStorage();
+  }, []);
+
+  useEffect(() => {
+    const sycnCurrentDataTrackingLevel = async () => {
+      try {
+        const level = (await AsyncStorage.getItem(
+          StorageKey.dataTrackingLevel
+        )) as DataTrackingLevel;
+        if (level) {
+          setCurrentDataTrackingLevel(level);
+        }
+      } catch (_) {}
+    };
+
+    sycnCurrentDataTrackingLevel();
   }, []);
 
   return (

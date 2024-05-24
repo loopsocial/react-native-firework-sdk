@@ -7,6 +7,11 @@ import type {
   ShoppingCTACallback,
   ShoppingCTAEvent,
   CustomTapProductCardCallback,
+  VideoFeedClickCallback,
+  onLiveStreamEventCallback,
+  onLiveStreamChatEventCallback,
+  ClickProductCallback,
+  SDKInitCallback,
 } from 'react-native-firework-sdk';
 import FireworkSDK from 'react-native-firework-sdk';
 import * as RootNavigation from '../RootNavigation';
@@ -18,12 +23,23 @@ import { shopifyDomain } from '../config/Shopify.json';
 import type { RootStackParamList } from '../screens/paramList/RootStackParamList';
 import { topName as topAppName } from '../../app.json';
 import { Platform } from 'react-native';
+import FWExampleLoggerUtil from './FWExampleLoggerUtil';
 
 export default class HostAppService {
   private static _instance?: HostAppService;
 
+  public onSDKInit?: SDKInitCallback = (event) => {
+    FWExampleLoggerUtil.log({ shouldCache: true }, 'onSDKInit', event);
+  };
+
   public onShopNow?: ShoppingCTACallback = async (event: ShoppingCTAEvent) => {
-    console.log('onShopNow event', event);
+    FWExampleLoggerUtil.log(
+      { shouldCache: true },
+      'onShopNow event',
+      event,
+      'component type',
+      FireworkSDK.getInstance().getComponentType(event.video.feedId ?? '')
+    );
 
     await this.closePlayerOrStartFloatingPlayer();
     this.navigate('LinkContent', { url: event.url });
@@ -36,7 +52,13 @@ export default class HostAppService {
   public onAddToCart?: ShoppingCTACallback = async (
     event: ShoppingCTAEvent
   ) => {
-    console.log('onAddToCart event', event);
+    FWExampleLoggerUtil.log(
+      { shouldCache: true },
+      'onAddToCart event',
+      event,
+      'component type',
+      FireworkSDK.getInstance().getComponentType(event.video.feedId ?? '')
+    );
     if (!this.shouldShowCart()) {
       await this.closePlayerOrStartFloatingPlayer();
       this.navigate('LinkContent', { url: event.url });
@@ -50,7 +72,10 @@ export default class HostAppService {
         event.productId
       );
       if (!shopifyProduct) {
-        console.log('[example] fetchProduct error: product is empty.');
+        FWExampleLoggerUtil.log(
+          { shouldCache: true },
+          'fetchProduct error: product is empty.'
+        );
         await this.closePlayerOrStartFloatingPlayer();
         this.navigate('LinkContent', { url: event.url });
         return {
@@ -62,7 +87,10 @@ export default class HostAppService {
         (v) => ShopifyClient.getInstance().parseId(`${v.id}`) === event.unitId
       );
       if (!variant) {
-        console.log('[example] fetchProduct error: variant is empty.');
+        FWExampleLoggerUtil.log(
+          { shouldCache: true },
+          'fetchProduct error: variant is empty.'
+        );
         await this.closePlayerOrStartFloatingPlayer();
         this.navigate('LinkContent', { url: event.url });
         return {
@@ -86,13 +114,19 @@ export default class HostAppService {
       };
       store.dispatch(addCartItem(cartItem));
       const cartItemCount = store.getState().shopping.cartItems.length;
-      console.log('cartItemCount', cartItemCount, 'type', typeof cartItemCount);
+      FWExampleLoggerUtil.log(
+        { shouldCache: true },
+        'cartItemCount',
+        cartItemCount,
+        'type',
+        typeof cartItemCount
+      );
       return {
         res: 'success',
         tips: 'Added to cart',
       };
     } catch (e) {
-      console.log('[example] fetchProduct error', e);
+      FWExampleLoggerUtil.log({ shouldCache: true }, 'fetchProduct error', e);
       await this.closePlayerOrStartFloatingPlayer();
       this.navigate('LinkContent', { url: event.url });
       return {
@@ -104,7 +138,13 @@ export default class HostAppService {
   public onCustomClickCartIcon?: CustomClickCartIconCallback = async (
     event
   ) => {
-    console.log('[example] onCustomClickCartIcon event', event);
+    FWExampleLoggerUtil.log(
+      {},
+      'onCustomClickCartIcon event',
+      event,
+      'component type',
+      FireworkSDK.getInstance().getComponentType(event.video.feedId ?? '')
+    );
     await this.closePlayerOrStartFloatingPlayer();
     if (this.shouldShowCart()) {
       this.navigate('Cart');
@@ -113,7 +153,13 @@ export default class HostAppService {
 
   public onCustomCTAClick?: CustomCTAClickCallback = (event) => {
     if (event.url) {
-      console.log('[example] onCustomCTAClick event', event);
+      FWExampleLoggerUtil.log(
+        { shouldCache: true },
+        'onCustomCTAClick event',
+        event,
+        'component type',
+        FireworkSDK.getInstance().getComponentType(event.video.feedId ?? '')
+      );
       if (store.getState().navigation.enablePausePlayer) {
         if (Platform.OS === 'ios') {
           event.playerHandler?.pause();
@@ -131,7 +177,13 @@ export default class HostAppService {
   public onCustomTapProductCard?: CustomTapProductCardCallback = async (
     event
   ) => {
-    console.log('[example] onCustomTapProductCard event', event);
+    FWExampleLoggerUtil.log(
+      { shouldCache: true },
+      'onCustomTapProductCard event',
+      event,
+      'component type',
+      FireworkSDK.getInstance().getComponentType(event.video.feedId ?? '')
+    );
 
     if (store.getState().navigation.enablePausePlayer) {
       if (Platform.OS === 'ios') {
@@ -148,7 +200,13 @@ export default class HostAppService {
   public onUpdateProductDetails: UpdateProductDetailsCallback = async (
     event: UpdateProductDetailsEvent
   ) => {
-    console.log('[example] onUpdateProductDetails event', event);
+    FWExampleLoggerUtil.log(
+      { shouldCache: true },
+      'onUpdateProductDetails event',
+      event,
+      'component type',
+      FireworkSDK.getInstance().getComponentType(event.video.feedId ?? '')
+    );
     let productList: Product[] = [];
     const productIds = event.productIds ?? [];
     try {
@@ -183,6 +241,38 @@ export default class HostAppService {
       return productList;
     } catch (e) {}
     return [];
+  };
+
+  public onVideoFeedClick?: VideoFeedClickCallback = async (event) => {
+    FWExampleLoggerUtil.log(
+      { shouldCache: true },
+      'onVideoFeedClick event',
+      event,
+      'component type',
+      FireworkSDK.getInstance().getComponentType(event.info.feedId ?? '')
+    );
+  };
+
+  public onLiveStreamEvent?: onLiveStreamEventCallback = async (event) => {
+    FWExampleLoggerUtil.log({ shouldCache: true }, 'onLiveStreamEvent', event);
+  };
+
+  public onLiveStreamChatEvent?: onLiveStreamChatEventCallback = async (
+    event
+  ) => {
+    FWExampleLoggerUtil.log(
+      { shouldCache: true },
+      'onLiveStreamChatEvent',
+      event
+    );
+  };
+
+  public onClickProduct?: ClickProductCallback = async (event) => {
+    FWExampleLoggerUtil.log(
+      { shouldCache: true },
+      'onClickProduct event',
+      event
+    );
   };
 
   public static getInstance() {

@@ -31,4 +31,5 @@ export type RootStackParamList = {
   EnablePushingRNContainer: undefined;
   EnableNativeNavigation: undefined;
   EnablePausePlayer: undefined;
+  Log: undefined;
 };

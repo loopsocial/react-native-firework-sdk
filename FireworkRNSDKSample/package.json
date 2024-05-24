@@ -7,21 +7,31 @@
     "ios_pod_install": "pod-install",
     "android": "react-native run-android",
     "ios": "react-native run-ios",
-    "start": "react-native start"
+    "start": "react-native start",
+    "postinstall": "patch-package"
+  },
+  "overrides": {
+    "@react-native-clipboard/clipboard": {
+      "react-native-macos": "0.66.4",
+      "react-native-windows": "0.66.4"
+    }
   },
   "dependencies": {
-    "react-native-firework-sdk": "2.13.0",
+    "react-native-firework-sdk": "2.14.0",
     "@expo/react-native-action-sheet": "^3.12.0",
     "@react-native-async-storage/async-storage": "^1.18.1",
     "@react-navigation/bottom-tabs": "^6.0.9",
     "@react-navigation/native": "^6.0.6",
     "@react-navigation/native-stack": "^6.2.5",
     "@reduxjs/toolkit": "^1.7.1",
+    "@react-native-clipboard/clipboard": "1.14.1",
+    "patch-package": "^8.0.0",
     "react": "17.0.2",
     "react-hook-form": "^7.22.2",
     "react-native": "0.66.4",
     "react-native-base64": "^0.2.1",
     "react-native-elements": "^3.4.2",
+    "react-native-floating-action": "^1.22.0",
     "react-native-restart": "0.0.24",
     "react-native-root-toast": "3.3.0",
     "react-native-safe-area-context": "^3.3.2",

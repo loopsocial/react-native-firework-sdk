@@ -13,17 +13,14 @@ FireworkSDK.getInstance().debugLogsEnabled = true;
 
 FireworkSDK.getInstance().adBadgeConfiguration = { badgeTextType: 'ad' };
 
-FireworkSDK.getInstance().onSDKInit = (event) => {
-  console.log('[example] onSDKInit', event);
-};
+FireworkSDK.getInstance().onSDKInit = HostAppService.getInstance().onSDKInit;
 
 // FireworkSDK.getInstance().onVideoPlayback = (event) => {
 //   console.log('[example] onVideoPlayback', event);
 // };
 
-FireworkSDK.getInstance().onVideoFeedClick = (event) => {
-  console.log('[example] onVideoFeedClick', event);
-};
+FireworkSDK.getInstance().onVideoFeedClick =
+  HostAppService.getInstance().onVideoFeedClick;
 
 FireworkSDK.getInstance().shopping.onShoppingCTA =
   HostAppService.getInstance().onShopNow;
@@ -34,16 +31,17 @@ FireworkSDK.getInstance().shopping.onCustomClickCartIcon =
 FireworkSDK.getInstance().shopping.onUpdateProductDetails =
   HostAppService.getInstance().onUpdateProductDetails;
 
+FireworkSDK.getInstance().shopping.onClickProduct =
+  HostAppService.getInstance().onClickProduct;
+
 FireworkSDK.getInstance().onCustomCTAClick =
   HostAppService.getInstance().onCustomCTAClick;
 
-FireworkSDK.getInstance().liveStream.onLiveStreamEvent = (event) => {
-  console.log('[example] onLiveStreamEvent', event);
-};
+FireworkSDK.getInstance().liveStream.onLiveStreamEvent =
+  HostAppService.getInstance().onLiveStreamEvent;
 
-FireworkSDK.getInstance().liveStream.onLiveStreamChatEvent = (event) => {
-  console.log('[example] onLiveStreamChatEvent', event);
-};
+FireworkSDK.getInstance().liveStream.onLiveStreamChatEvent =
+  HostAppService.getInstance().onLiveStreamChatEvent;
 
 FireworkSDK.getInstance().shopping.productInfoViewConfiguration = {
   ctaButton: { text: 'shopNow' },
