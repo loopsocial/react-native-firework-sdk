@@ -1,5 +1,28 @@
 # CHANGELOG
 
+## [2.14.1]
+
+### Added
+
+- Make the copies for main entries consistent with Android.
+- Display forward and backward arrows for the full-screen player.
+- Hide or show the chat message when it's deleted or undeleted in business portal
+- [Android] Display cta and product cards for short videos on story block
+
+### Changed
+
+- [iOS] Hide the product icon when the product list is empty
+- [iOS] Show poll title when the user selects the poll option
+- [Android] Show the mini-size icon when the short video/replay pauses
+- [Android] Expand chat messages by default
+
+### Fixed
+
+- Keep product impression/click event reporting consistent with Web
+- [iOS] Touchscreen is not working when video is playing in PIP mode on iPad
+- [Android] Ensure that the PIP video remains unmuted even when another video is opened for playback
+- [Android] Ensure that the product is displayed at the top when adding a new product to livestream
+
 ## [2.14.0]
 
 ### Added
