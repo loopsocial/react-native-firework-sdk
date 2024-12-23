@@ -1,5 +1,11 @@
 # CHANGELOG
 
+## [2.14.2]
+
+### Changed
+
+- [iOS] Disable bitcode
+
 ## [2.14.1]
 
 ### Added
