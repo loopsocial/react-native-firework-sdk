@@ -42,7 +42,7 @@ PODS:
     - GoogleUtilities/UserDefaults (~> 8.0)
     - nanopb (~> 3.30910.0)
     - PromisesSwift (~> 2.1)
-  - FireworkVideo (1.23.2)
+  - FireworkVideo (1.23.3)
   - FireworkVideoIVSSupport (0.4.0):
     - AmazonIVSPlayer (~> 1.8.3)
   - FireworkVideoUI (0.1.4):
@@ -269,8 +269,8 @@ PODS:
   - React-jsinspector (0.66.4)
   - React-logger (0.66.4):
     - glog
-  - react-native-firework-sdk (2.14.1):
-    - FireworkVideo (= 1.23.2)
+  - react-native-firework-sdk (2.14.2):
+    - FireworkVideo (= 1.23.3)
     - FireworkVideoUI (= 0.1.4)
     - React-Core
   - react-native-restart (0.0.24):
@@ -515,7 +515,7 @@ SPEC CHECKSUMS:
   FirebaseInstallations: 833536e8ff1dfadd4b5f80e8dfef69e8edbd071d
   FirebaseRemoteConfigInterop: 1ee07f85eafa4e44ba70acb921f77154282ef584
   FirebaseSessions: a98d41828920e2f11cd617ee36bf2b089e6bbe8f
-  FireworkVideo: e5b47be610da7a449a9b6672ddb65d3e41b44f57
+  FireworkVideo: 30a747000c840ad7eae3ec88dbb649d353a532a5
   FireworkVideoIVSSupport: c75d204e55afab922899e2ff90242a5ec6d4ad20
   FireworkVideoUI: d7cca300f31dcb3ba3315d9cee6439c2ec0189a9
   fmt: ff9d55029c625d3757ed641535fd4a75fedc7ce9
@@ -537,7 +537,7 @@ SPEC CHECKSUMS:
   React-jsiexecutor: 94ce921e1d8ce7023366873ec371f3441383b396
   React-jsinspector: d0374f7509d407d2264168b6d0fad0b54e300b85
   React-logger: 933f80c97c633ee8965d609876848148e3fef438
-  react-native-firework-sdk: fb714bc70db15bbc7de280f20b19a37afb92a585
+  react-native-firework-sdk: 925d2e150ade07b6b660ac0e6cb0d489a496798a
   react-native-restart: 45c8dca02491980f2958595333cbccd6877cb57e
   react-native-safe-area-context: 584dc04881deb49474363f3be89e4ca0e854c057
   react-native-visibility-aware-view: 330a2fe055103592d728b8b77a38e0f02d342184
@@ -562,4 +562,4 @@ SPEC CHECKSUMS:
 
 PODFILE CHECKSUM: 81ed154dadb4aaa1f25f45873c8d685c9b7ee93c
 
-COCOAPODS: 1.15.2
+COCOAPODS: 1.16.2
