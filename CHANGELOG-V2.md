@@ -1,5 +1,12 @@
 # CHANGELOG
 
+## [2.15.0]
+
+### Added
+
+- New livestream player design
+- Add `livestreamPlayerDesignVersion` property in `FireworkSDK` class
+
 ## [2.14.2]
 
 ### Changed
