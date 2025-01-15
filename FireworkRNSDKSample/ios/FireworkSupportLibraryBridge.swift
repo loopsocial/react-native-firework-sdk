@@ -17,9 +17,9 @@ import AppTrackingTransparency
 @objc
 public class FireworkSupportLibraryBridge: NSObject {
     @objc public static func initFireworkSDK() {
-      FWReactNativeSDK.initializeSDK(
-        SDKInitOptions(videoLaunchBehavior: .muteOnFirstLaunch)
-      )
+        FWReactNativeSDK.initializeSDK(
+            SDKInitOptions(videoLaunchBehavior: .muteOnFirstLaunch)
+        )
     }
 //  @objc public static func enableVideoGAM() {
 //    FireworkVideoGAMSupportSDK.initializeSDK()

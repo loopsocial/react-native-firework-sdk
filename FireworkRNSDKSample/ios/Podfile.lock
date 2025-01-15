@@ -10,16 +10,16 @@ PODS:
     - React-Core (= 0.66.4)
     - React-jsi (= 0.66.4)
     - ReactCommon/turbomodule/core (= 0.66.4)
-  - FirebaseCore (11.0.0):
-    - FirebaseCoreInternal (~> 11.0)
+  - FirebaseCore (11.6.0):
+    - FirebaseCoreInternal (~> 11.6.0)
     - GoogleUtilities/Environment (~> 8.0)
     - GoogleUtilities/Logger (~> 8.0)
-  - FirebaseCoreExtension (11.0.0):
-    - FirebaseCore (~> 11.0)
-  - FirebaseCoreInternal (11.0.0):
+  - FirebaseCoreExtension (11.6.0):
+    - FirebaseCore (~> 11.6.0)
+  - FirebaseCoreInternal (11.6.0):
     - "GoogleUtilities/NSData+zlib (~> 8.0)"
-  - FirebaseCrashlytics (11.0.0):
-    - FirebaseCore (~> 11.0)
+  - FirebaseCrashlytics (11.6.0):
+    - FirebaseCore (~> 11.6.0)
     - FirebaseInstallations (~> 11.0)
     - FirebaseRemoteConfigInterop (~> 11.0)
     - FirebaseSessions (~> 11.0)
@@ -27,40 +27,40 @@ PODS:
     - GoogleUtilities/Environment (~> 8.0)
     - nanopb (~> 3.30910.0)
     - PromisesObjC (~> 2.4)
-  - FirebaseInstallations (11.0.0):
-    - FirebaseCore (~> 11.0)
+  - FirebaseInstallations (11.6.0):
+    - FirebaseCore (~> 11.6.0)
     - GoogleUtilities/Environment (~> 8.0)
     - GoogleUtilities/UserDefaults (~> 8.0)
     - PromisesObjC (~> 2.4)
-  - FirebaseRemoteConfigInterop (11.0.0)
-  - FirebaseSessions (11.0.0):
-    - FirebaseCore (~> 11.0)
-    - FirebaseCoreExtension (~> 11.0)
+  - FirebaseRemoteConfigInterop (11.6.0)
+  - FirebaseSessions (11.6.0):
+    - FirebaseCore (~> 11.6.0)
+    - FirebaseCoreExtension (~> 11.6.0)
     - FirebaseInstallations (~> 11.0)
     - GoogleDataTransport (~> 10.0)
     - GoogleUtilities/Environment (~> 8.0)
     - GoogleUtilities/UserDefaults (~> 8.0)
     - nanopb (~> 3.30910.0)
     - PromisesSwift (~> 2.1)
-  - FireworkVideo (1.23.3)
+  - FireworkVideo (1.27.3)
   - FireworkVideoIVSSupport (0.4.0):
     - AmazonIVSPlayer (~> 1.8.3)
-  - FireworkVideoUI (0.1.4):
-    - FireworkVideo
+  - FireworkVideoUI (0.2.11):
+    - FireworkVideo (~> 1.27.1)
   - fmt (6.2.1)
   - glog (0.3.5)
   - GoogleDataTransport (10.1.0):
     - nanopb (~> 3.30910.0)
     - PromisesObjC (~> 2.4)
-  - GoogleUtilities/Environment (8.0.1):
+  - GoogleUtilities/Environment (8.0.2):
     - GoogleUtilities/Privacy
-  - GoogleUtilities/Logger (8.0.1):
+  - GoogleUtilities/Logger (8.0.2):
     - GoogleUtilities/Environment
     - GoogleUtilities/Privacy
-  - "GoogleUtilities/NSData+zlib (8.0.1)":
+  - "GoogleUtilities/NSData+zlib (8.0.2)":
     - GoogleUtilities/Privacy
-  - GoogleUtilities/Privacy (8.0.1)
-  - GoogleUtilities/UserDefaults (8.0.1):
+  - GoogleUtilities/Privacy (8.0.2)
+  - GoogleUtilities/UserDefaults (8.0.2):
     - GoogleUtilities/Logger
     - GoogleUtilities/Privacy
   - nanopb (3.30910.0):
@@ -269,9 +269,9 @@ PODS:
   - React-jsinspector (0.66.4)
   - React-logger (0.66.4):
     - glog
-  - react-native-firework-sdk (2.14.2):
-    - FireworkVideo (= 1.23.3)
-    - FireworkVideoUI (= 0.1.4)
+  - react-native-firework-sdk (2.15.0):
+    - FireworkVideo (= 1.27.3)
+    - FireworkVideoUI (= 0.2.11)
     - React-Core
   - react-native-restart (0.0.24):
     - React-Core
@@ -508,20 +508,20 @@ SPEC CHECKSUMS:
   DoubleConversion: 831926d9b8bf8166fd87886c4abab286c2422662
   FBLazyVector: e5569e42a1c79ca00521846c223173a57aca1fe1
   FBReactNativeSpec: fe08c1cd7e2e205718d77ad14b34957cce949b58
-  FirebaseCore: 3cf438f431f18c12cdf2aaf64434648b63f7e383
-  FirebaseCoreExtension: 6928a0a34219af2bfe853810d7e6ba785ffb9ed6
-  FirebaseCoreInternal: cac45dbc4824e152fe93cdd5dd46bd503c3fdffb
-  FirebaseCrashlytics: 745d8f0221fe49c62865391d1bf56f5a12eeec0b
-  FirebaseInstallations: 833536e8ff1dfadd4b5f80e8dfef69e8edbd071d
-  FirebaseRemoteConfigInterop: 1ee07f85eafa4e44ba70acb921f77154282ef584
-  FirebaseSessions: a98d41828920e2f11cd617ee36bf2b089e6bbe8f
-  FireworkVideo: 30a747000c840ad7eae3ec88dbb649d353a532a5
+  FirebaseCore: 48b0dd707581cf9c1a1220da68223fb0a562afaa
+  FirebaseCoreExtension: 2d77d6430c16cf43ca2b04608302ed02b3598361
+  FirebaseCoreInternal: d98ab91e2d80a56d7b246856a8885443b302c0c2
+  FirebaseCrashlytics: b21c665fb50138766480bce73ebdb1aa30f7f300
+  FirebaseInstallations: efc0946fc756e4d22d8113f7c761948120322e8c
+  FirebaseRemoteConfigInterop: e75e348953352a000331eb77caf01e424248e176
+  FirebaseSessions: 9529d14180868e29a8da164b3a729c036204918b
+  FireworkVideo: b791cc797c9900c73ccf94fe92acc76ff511e8e6
   FireworkVideoIVSSupport: c75d204e55afab922899e2ff90242a5ec6d4ad20
-  FireworkVideoUI: d7cca300f31dcb3ba3315d9cee6439c2ec0189a9
+  FireworkVideoUI: 786c0373e59af6cca467a2a2e12ba80bf6416ba4
   fmt: ff9d55029c625d3757ed641535fd4a75fedc7ce9
   glog: 5337263514dd6f09803962437687240c5dc39aa4
   GoogleDataTransport: aae35b7ea0c09004c3797d53c8c41f66f219d6a7
-  GoogleUtilities: 52f677b52b0d2bed24e7b9c94455b1f7353a09f8
+  GoogleUtilities: 26a3abef001b6533cf678d3eb38fd3f614b7872d
   nanopb: fad817b59e0457d11a5dfbde799381cd727c1275
   PromisesObjC: f5707f49cb48b9636751c5b2e7d227e43fba9f47
   PromisesSwift: 9d77319bbe72ebf6d872900551f7eeba9bce2851
@@ -537,7 +537,7 @@ SPEC CHECKSUMS:
   React-jsiexecutor: 94ce921e1d8ce7023366873ec371f3441383b396
   React-jsinspector: d0374f7509d407d2264168b6d0fad0b54e300b85
   React-logger: 933f80c97c633ee8965d609876848148e3fef438
-  react-native-firework-sdk: 925d2e150ade07b6b660ac0e6cb0d489a496798a
+  react-native-firework-sdk: 200eae5811ee55464af100712816c57fc79fb1a2
   react-native-restart: 45c8dca02491980f2958595333cbccd6877cb57e
   react-native-safe-area-context: 584dc04881deb49474363f3be89e4ca0e854c057
   react-native-visibility-aware-view: 330a2fe055103592d728b8b77a38e0f02d342184

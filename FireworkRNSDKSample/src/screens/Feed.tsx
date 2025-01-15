@@ -247,6 +247,7 @@ const Feed = () => {
                 ? { top: 8, right: 8, bottom: 0, left: 8 }
                 : undefined,
             itemSpacing: 10,
+            enableAutoplay: true,
           }}
           videoPlayerConfiguration={playerConfiguration}
           adConfiguration={feedAdConfiguration}

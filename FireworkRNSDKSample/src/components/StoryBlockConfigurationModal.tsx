@@ -434,11 +434,7 @@ const StoryBlockConfigurationModal = ({
     <>
       <View style={styles.formItemRow}>
         <View style={{ ...styles.formItem }}>
-          <Text style={styles.formItemLabel}>
-            {Platform.OS === 'android'
-              ? 'Player style'
-              : 'Player style(full-screen)'}
-          </Text>
+          <Text style={styles.formItemLabel}>{'Player style'}</Text>
           <Controller
             control={control}
             render={({ field: { onChange, value } }) => (

@@ -256,7 +256,7 @@
 				00DD1BFF1BD5951E006B06BC /* Bundle React Native code and images */,
 				70D989DB54C6AA3646124505 /* [CP] Embed Pods Frameworks */,
 				EB753228A5BBCF60BAD9630D /* [CP] Copy Pods Resources */,
-				4608F7A42A68D451007535DC /* Swiftlint */,
+				4608F7A42A68D451007535DC /* SwiftLint */,
 				46D7EA032B6F2C00002F0D38 /* FirebaseCrashlytics */,
 			);
 			buildRules = (
@@ -432,7 +432,7 @@
 			shellPath = /bin/sh;
 			shellScript = "export NODE_BINARY=node\n../node_modules/react-native/scripts/react-native-xcode.sh";
 		};
-		4608F7A42A68D451007535DC /* Swiftlint */ = {
+		4608F7A42A68D451007535DC /* SwiftLint */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -441,14 +441,14 @@
 			);
 			inputPaths = (
 			);
-			name = Swiftlint;
+			name = SwiftLint;
 			outputFileListPaths = (
 			);
 			outputPaths = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "# Type a script or drag a script file from your workspace to insert its path.\nexport PATH=$PATH:/opt/homebrew/bin\nif which swiftlint >/dev/null; then\n# CameraKitSample project is not located at the root of the repo. This means we need to tell swiftlint to go to the project root to get the swiftlint file.\n  swiftlint ../../ios/\nelse\n  echo \"warning: SwiftLint not installed, download from https://github.com/realm/SwiftLint\"\nfi\n\n\n";
+			shellScript = "if which swiftlint >/dev/null; then\n  swiftlint ../../ios/\nelse\n  echo \"warning: SwiftLint not installed, download from https://github.com/realm/SwiftLint\"\nfi\n\n\n";
 		};
 		46D7EA032B6F2C00002F0D38 /* FirebaseCrashlytics */ = {
 			isa = PBXShellScriptBuildPhase;
@@ -762,7 +762,7 @@
 				INFOPLIST_FILE = FireworkSdkExample/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				MARKETING_VERSION = 2.14.1;
+				MARKETING_VERSION = 2.15.0;
 				ONLY_ACTIVE_ARCH = YES;
 				OTHER_LDFLAGS = (
 					"$(inherited)",
@@ -798,7 +798,7 @@
 				INFOPLIST_FILE = FireworkSdkExample/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				MARKETING_VERSION = 2.14.1;
+				MARKETING_VERSION = 2.15.0;
 				OTHER_LDFLAGS = (
 					"$(inherited)",
 					"-ObjC",
@@ -1115,7 +1115,7 @@
 				INFOPLIST_FILE = FireworkSdkExample/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				MARKETING_VERSION = 2.14.1;
+				MARKETING_VERSION = 2.15.0;
 				OTHER_LDFLAGS = (
 					"$(inherited)",
 					"-ObjC",

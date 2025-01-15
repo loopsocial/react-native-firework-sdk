@@ -1,7 +1,10 @@
 import React, { useEffect } from 'react';
 
 import { ThemeProvider } from 'react-native-elements';
-import FireworkSDK from 'react-native-firework-sdk';
+import FireworkSDK, {
+  DataTrackingLevel,
+  LivestreamPlayerDesignVersion,
+} from 'react-native-firework-sdk';
 import { RootSiblingParent } from 'react-native-root-siblings';
 import { Provider } from 'react-redux';
 
@@ -49,6 +52,30 @@ const FWNavigationContainer = () => {
       } catch (_) {}
     };
     sycnCurrentLanguageFromStorage();
+
+    const sycnCurrentDataTrackingLevel = async () => {
+      try {
+        const level = await AsyncStorage.getItem(StorageKey.dataTrackingLevel);
+        if (level) {
+          FireworkSDK.getInstance().dataTrackingLevel =
+            level as DataTrackingLevel;
+        }
+      } catch (_) {}
+    };
+
+    sycnCurrentDataTrackingLevel();
+
+    const sycnCurrentLivestreamPlayerDesignVersion = async () => {
+      const version = await AsyncStorage.getItem(
+        StorageKey.livestreamPlayerDesignVersion
+      );
+      if (version) {
+        FireworkSDK.getInstance().livestreamPlayerDesignVersion =
+          version as LivestreamPlayerDesignVersion;
+      }
+    };
+
+    sycnCurrentLivestreamPlayerDesignVersion();
   }, []);
 
   const renderScreen = ({

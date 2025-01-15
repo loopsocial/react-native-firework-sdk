@@ -16,11 +16,14 @@ import type { CompositeNavigationProp } from '@react-navigation/native';
 import type { RootStackParamList } from './paramList/RootStackParamList';
 import { useActionSheet } from '@expo/react-native-action-sheet';
 import RNRestart from 'react-native-restart';
-import FireworkSDK, { DataTrackingLevel } from 'react-native-firework-sdk';
+import FireworkSDK, {
+  DataTrackingLevel,
+  LivestreamPlayerDesignVersion,
+} from 'react-native-firework-sdk';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import StorageKey from '../constants/StorageKey';
 
-const fwNativeVersionOfAndroid = '6.13.1';
+const fwNativeVersionOfAndroid = '6.16.4';
 
 type MoreScreenNavigationProp = CompositeNavigationProp<
   BottomTabNavigationProp<TabParamsList, 'More'>,
@@ -39,6 +42,10 @@ function More() {
   >(null);
   const [currentDataTrackingLevel, setCurrentDataTrackingLevel] =
     useState<DataTrackingLevel | null>(null);
+  const [
+    currentLivestreamPlayerDesignVersion,
+    setCurrentLivestreamPlayerDesignVersion,
+  ] = useState<LivestreamPlayerDesignVersion | null>(null);
 
   const { showActionSheetWithOptions } = useActionSheet();
   const getDisplayLanguage = (language: string) => {
@@ -136,6 +143,17 @@ function More() {
     } catch (e) {
       console.log('handleChangeDataTrackingLevel e', e);
     }
+  };
+
+  const handleChangeLivestreamPlayerDesignVersion = async (
+    version: LivestreamPlayerDesignVersion
+  ) => {
+    await AsyncStorage.setItem(
+      StorageKey.livestreamPlayerDesignVersion,
+      version
+    );
+    setCurrentLivestreamPlayerDesignVersion(version);
+    FireworkSDK.getInstance().livestreamPlayerDesignVersion = version;
   };
 
   let dataList: MoreListItemData[] = [
@@ -259,6 +277,34 @@ function More() {
       },
     },
     {
+      title: currentLivestreamPlayerDesignVersion
+        ? `Change Livestream Player Design Version(${currentLivestreamPlayerDesignVersion})`
+        : 'Change Livestream Player Design Version',
+      pressCallback: (_) => {
+        const options = ['v1', 'v2', 'Cancel'];
+
+        const cancelButtonIndex = options.length - 1;
+
+        showActionSheetWithOptions(
+          {
+            title: 'Select livestream player design version',
+            options,
+            cancelButtonIndex,
+          },
+          (buttonIndex) => {
+            if (
+              typeof buttonIndex === 'number' &&
+              buttonIndex < options.length - 1
+            ) {
+              handleChangeLivestreamPlayerDesignVersion(
+                options[buttonIndex] as LivestreamPlayerDesignVersion
+              );
+            }
+          }
+        );
+      },
+    },
+    {
       title: 'Stop Floating Player',
       pressCallback: (_) => {
         FireworkSDK.getInstance().navigator.stopFloatingPlayer();
@@ -308,16 +354,35 @@ function More() {
   useEffect(() => {
     const sycnCurrentDataTrackingLevel = async () => {
       try {
-        const level = (await AsyncStorage.getItem(
-          StorageKey.dataTrackingLevel
-        )) as DataTrackingLevel;
+        const level = await AsyncStorage.getItem(StorageKey.dataTrackingLevel);
         if (level) {
-          setCurrentDataTrackingLevel(level);
+          setCurrentDataTrackingLevel(level as DataTrackingLevel);
+        } else {
+          setCurrentDataTrackingLevel('all');
         }
       } catch (_) {}
     };
 
     sycnCurrentDataTrackingLevel();
+  }, []);
+
+  useEffect(() => {
+    const sycnCurrentLivestreamPlayerDesignVersion = async () => {
+      const version = await AsyncStorage.getItem(
+        StorageKey.livestreamPlayerDesignVersion
+      );
+      if (version) {
+        setCurrentLivestreamPlayerDesignVersion(
+          version as LivestreamPlayerDesignVersion
+        );
+      } else {
+        setCurrentLivestreamPlayerDesignVersion(
+          LivestreamPlayerDesignVersion.v1
+        );
+      }
+    };
+
+    sycnCurrentLivestreamPlayerDesignVersion();
   }, []);
 
   return (
