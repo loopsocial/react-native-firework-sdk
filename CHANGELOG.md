@@ -1,5 +1,9 @@
 # CHANGELOG
 
+## [2.15.2]
+
+- Bug fixes and improvements
+
 ## [2.15.1]
 
 - Bug fixes and improvements
