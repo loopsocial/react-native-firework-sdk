@@ -284,18 +284,15 @@ The <a href="../interfaces/VideoPlayerConfiguration.html#shareBaseURL">shareBase
 <section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class"><a id="markInitCalled" class="tsd-anchor"></a>
 <h3 class="tsd-anchor-link"><span>mark<wbr/>Init<wbr/>Called</span><a href="#markInitCalled" aria-label="Permalink" class="tsd-anchor-icon"><svg class="icon icon-tabler icon-tabler-link" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><use href="#icon-anchor-a"></use><use href="#icon-anchor-b"></use><use href="#icon-anchor-c"></use></svg></a></h3>
 <ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
-<li class="tsd-signature tsd-anchor-link" id="markInitCalled.markInitCalled-1">mark<wbr/>Init<wbr/>Called<span class="tsd-signature-symbol">(</span>nativeLazyInit<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">boolean</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">void</span><span class="tsd-signature-symbol">&gt;</span><a href="#markInitCalled.markInitCalled-1" aria-label="Permalink" class="tsd-anchor-icon"><svg class="icon icon-tabler icon-tabler-link" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><use href="#icon-anchor-a"></use><use href="#icon-anchor-b"></use><use href="#icon-anchor-c"></use></svg></a></li>
+<li class="tsd-signature tsd-anchor-link" id="markInitCalled.markInitCalled-1">mark<wbr/>Init<wbr/>Called<span class="tsd-signature-symbol">(</span>options<span class="tsd-signature-symbol">?: </span><a href="../interfaces/MarkInitCalledOptions.html" class="tsd-signature-type" data-tsd-kind="Interface">MarkInitCalledOptions</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">void</span><span class="tsd-signature-symbol">&gt;</span><a href="#markInitCalled.markInitCalled-1" aria-label="Permalink" class="tsd-anchor-icon"><svg class="icon icon-tabler icon-tabler-link" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><use href="#icon-anchor-a"></use><use href="#icon-anchor-b"></use><use href="#icon-anchor-c"></use></svg></a></li>
 <li class="tsd-description">
-<div class="tsd-comment tsd-typography"><p>You need to call this method when you call init method in native side.</p>
+<div class="tsd-comment tsd-typography"><p>Mark the initialization method as being called on the JS side.</p>
 </div>
 <div class="tsd-parameters">
 <h4 class="tsd-parameters-title">Parameters</h4>
 <ul class="tsd-parameter-list">
 <li>
-<h5>nativeLazyInit: <span class="tsd-signature-type">boolean</span><span class="tsd-signature-symbol"> = false</span></h5>
-<div class="tsd-comment tsd-typography"><p>Genenally, you should call naitve init in application(:, didFinishLaunchingWithOptions:) -&gt; Bool on iOS
-and MainApplication.onCreate on Android. If not, you should pass nativeLazyInit as true.</p>
-</div></li></ul></div>
+<h5>options: <a href="../interfaces/MarkInitCalledOptions.html" class="tsd-signature-type" data-tsd-kind="Interface">MarkInitCalledOptions</a><span class="tsd-signature-symbol"> = ...</span></h5></li></ul></div>
 <h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">void</span><span class="tsd-signature-symbol">&gt;</span></h4></li></ul></section>
 <section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class"><a id="openVideoPlayer" class="tsd-anchor"></a>
 <h3 class="tsd-anchor-link"><span>open<wbr/>Video<wbr/>Player</span><a href="#openVideoPlayer" aria-label="Permalink" class="tsd-anchor-icon"><svg class="icon icon-tabler icon-tabler-link" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><use href="#icon-anchor-a"></use><use href="#icon-anchor-b"></use><use href="#icon-anchor-c"></use></svg></a></h3>
