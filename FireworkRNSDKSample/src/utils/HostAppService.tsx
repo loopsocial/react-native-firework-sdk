@@ -38,7 +38,9 @@ export default class HostAppService {
       'onShopNow event',
       event,
       'component type',
-      FireworkSDK.getInstance().getComponentType(event.video.feedId ?? '')
+      FireworkSDK.getInstance().getComponentType(event.video.feedId ?? ''),
+      'customCTA',
+      event.customCTA ?? 'none'
     );
 
     await this.closePlayerOrStartFloatingPlayer();
@@ -57,7 +59,9 @@ export default class HostAppService {
       'onAddToCart event',
       event,
       'component type',
-      FireworkSDK.getInstance().getComponentType(event.video.feedId ?? '')
+      FireworkSDK.getInstance().getComponentType(event.video.feedId ?? ''),
+      'customCTA',
+      event.customCTA ?? 'none'
     );
     if (!this.shouldShowCart()) {
       await this.closePlayerOrStartFloatingPlayer();

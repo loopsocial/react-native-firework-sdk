@@ -1,5 +1,5 @@
 PODS:
-  - AmazonIVSPlayer (1.8.3)
+  - AmazonIVSPlayer (1.38.0)
   - boost (1.76.0)
   - DoubleConversion (1.1.6)
   - FBLazyVector (0.66.4)
@@ -10,16 +10,16 @@ PODS:
     - React-Core (= 0.66.4)
     - React-jsi (= 0.66.4)
     - ReactCommon/turbomodule/core (= 0.66.4)
-  - FirebaseCore (11.8.1):
-    - FirebaseCoreInternal (~> 11.8.0)
+  - FirebaseCore (11.11.0):
+    - FirebaseCoreInternal (~> 11.11.0)
     - GoogleUtilities/Environment (~> 8.0)
     - GoogleUtilities/Logger (~> 8.0)
-  - FirebaseCoreExtension (11.8.0):
-    - FirebaseCore (~> 11.8.0)
-  - FirebaseCoreInternal (11.8.0):
+  - FirebaseCoreExtension (11.11.0):
+    - FirebaseCore (~> 11.11.0)
+  - FirebaseCoreInternal (11.11.0):
     - "GoogleUtilities/NSData+zlib (~> 8.0)"
-  - FirebaseCrashlytics (11.8.0):
-    - FirebaseCore (~> 11.8.0)
+  - FirebaseCrashlytics (11.11.0):
+    - FirebaseCore (~> 11.11.0)
     - FirebaseInstallations (~> 11.0)
     - FirebaseRemoteConfigInterop (~> 11.0)
     - FirebaseSessions (~> 11.0)
@@ -27,26 +27,26 @@ PODS:
     - GoogleUtilities/Environment (~> 8.0)
     - nanopb (~> 3.30910.0)
     - PromisesObjC (~> 2.4)
-  - FirebaseInstallations (11.8.0):
-    - FirebaseCore (~> 11.8.0)
+  - FirebaseInstallations (11.11.0):
+    - FirebaseCore (~> 11.11.0)
     - GoogleUtilities/Environment (~> 8.0)
     - GoogleUtilities/UserDefaults (~> 8.0)
     - PromisesObjC (~> 2.4)
-  - FirebaseRemoteConfigInterop (11.8.0)
-  - FirebaseSessions (11.8.0):
-    - FirebaseCore (~> 11.8.0)
-    - FirebaseCoreExtension (~> 11.8.0)
+  - FirebaseRemoteConfigInterop (11.11.0)
+  - FirebaseSessions (11.11.0):
+    - FirebaseCore (~> 11.11.0)
+    - FirebaseCoreExtension (~> 11.11.0)
     - FirebaseInstallations (~> 11.0)
     - GoogleDataTransport (~> 10.0)
     - GoogleUtilities/Environment (~> 8.0)
     - GoogleUtilities/UserDefaults (~> 8.0)
     - nanopb (~> 3.30910.0)
     - PromisesSwift (~> 2.1)
-  - FireworkVideo (1.28.3)
-  - FireworkVideoIVSSupport (0.4.0):
-    - AmazonIVSPlayer (~> 1.8.3)
-  - FireworkVideoUI (0.2.14):
-    - FireworkVideo (>= 1.27.1)
+  - FireworkVideo (1.30.0)
+  - FireworkVideoIVSSupport (0.9.0):
+    - AmazonIVSPlayer (= 1.38.0)
+  - FireworkVideoUI (0.2.15):
+    - FireworkVideo (>= 1.29.1)
   - fmt (6.2.1)
   - glog (0.3.5)
   - GoogleDataTransport (10.1.0):
@@ -269,9 +269,9 @@ PODS:
   - React-jsinspector (0.66.4)
   - React-logger (0.66.4):
     - glog
-  - react-native-firework-sdk (2.15.3):
-    - FireworkVideo (= 1.28.3)
-    - FireworkVideoUI (= 0.2.14)
+  - react-native-firework-sdk (2.16.0):
+    - FireworkVideo (= 1.30.0)
+    - FireworkVideoUI (= 0.2.15)
     - React-Core
   - react-native-restart (0.0.24):
     - React-Core
@@ -363,7 +363,7 @@ DEPENDENCIES:
   - FBLazyVector (from `../node_modules/react-native/Libraries/FBLazyVector`)
   - FBReactNativeSpec (from `../node_modules/react-native/React/FBReactNativeSpec`)
   - FirebaseCrashlytics
-  - FireworkVideoIVSSupport (= 0.4.0)
+  - FireworkVideoIVSSupport (= 0.9.0)
   - glog (from `../node_modules/react-native/third-party-podspecs/glog.podspec`)
   - RCT-Folly (from `../node_modules/react-native/third-party-podspecs/RCT-Folly.podspec`)
   - RCTRequired (from `../node_modules/react-native/Libraries/RCTRequired`)
@@ -503,23 +503,23 @@ EXTERNAL SOURCES:
     :path: "../node_modules/react-native/ReactCommon/yoga"
 
 SPEC CHECKSUMS:
-  AmazonIVSPlayer: ce792b427a4fe466d6ea32b3ce8abe391d9242d0
+  AmazonIVSPlayer: a0814406d75cca65998039f63ff9057ab3492b91
   boost: aa35e27b639bf67de7573b279486f84a3c6546c2
-  DoubleConversion: 831926d9b8bf8166fd87886c4abab286c2422662
+  DoubleConversion: cb417026b2400c8f53ae97020b2be961b59470cb
   FBLazyVector: e5569e42a1c79ca00521846c223173a57aca1fe1
   FBReactNativeSpec: fe08c1cd7e2e205718d77ad14b34957cce949b58
-  FirebaseCore: 99fe0c4b44a39f37d99e6404e02009d2db5d718d
-  FirebaseCoreExtension: 3d3f2017a00d06e09ab4ebe065391b0bb642565e
-  FirebaseCoreInternal: df24ce5af28864660ecbd13596fc8dd3a8c34629
-  FirebaseCrashlytics: a1102c035f18d5dd94a5969ee439c526d0c9e313
-  FirebaseInstallations: 6c963bd2a86aca0481eef4f48f5a4df783ae5917
-  FirebaseRemoteConfigInterop: 98897a64aa372eac3c5b3fe2816594ccfaac55ef
-  FirebaseSessions: c4d40a97f88f9eaff2834d61b4fea0a522d62123
-  FireworkVideo: 75b1751ef686b0aae67e65ac4ef31242bd632a3c
-  FireworkVideoIVSSupport: c75d204e55afab922899e2ff90242a5ec6d4ad20
-  FireworkVideoUI: f1e71480b035e4b21a2842f271e5b489e8b5d928
+  FirebaseCore: 2321536f9c423b1f857e047a82b8a42abc6d9e2c
+  FirebaseCoreExtension: 3a64994969dd05f4bcb7e6896c654eded238e75b
+  FirebaseCoreInternal: 31ee350d87b30a9349e907f84bf49ef8e6791e5a
+  FirebaseCrashlytics: 5058c465e10782f54337b394c37254e0595174e9
+  FirebaseInstallations: 781e0e37aa0e1c92b44d00e739aba79ad31b2dba
+  FirebaseRemoteConfigInterop: 85bdce8babed7814816496bb6f082bc05b0a45e1
+  FirebaseSessions: f5c6bfeb66a7202deaf33352017bb6365e395820
+  FireworkVideo: 3666a2f164ddfeadb99da5dd93213d3256a82dd5
+  FireworkVideoIVSSupport: 04df9642ad79ead5fddaece08f98da005bfa2451
+  FireworkVideoUI: c4cc4c5a8a405881ce9d8e15b3fe36d5ae9fabdb
   fmt: ff9d55029c625d3757ed641535fd4a75fedc7ce9
-  glog: 5337263514dd6f09803962437687240c5dc39aa4
+  glog: 5683914934d5b6e4240e497e0f4a3b42d1854183
   GoogleDataTransport: aae35b7ea0c09004c3797d53c8c41f66f219d6a7
   GoogleUtilities: 26a3abef001b6533cf678d3eb38fd3f614b7872d
   nanopb: fad817b59e0457d11a5dfbde799381cd727c1275
@@ -537,7 +537,7 @@ SPEC CHECKSUMS:
   React-jsiexecutor: 94ce921e1d8ce7023366873ec371f3441383b396
   React-jsinspector: d0374f7509d407d2264168b6d0fad0b54e300b85
   React-logger: 933f80c97c633ee8965d609876848148e3fef438
-  react-native-firework-sdk: d68d7234e1c789239d13a69d048ce0f43a666cea
+  react-native-firework-sdk: 0e0e8eef2abc0026f3b84ffbf12d75290bba8145
   react-native-restart: 45c8dca02491980f2958595333cbccd6877cb57e
   react-native-safe-area-context: 584dc04881deb49474363f3be89e4ca0e854c057
   react-native-visibility-aware-view: 330a2fe055103592d728b8b77a38e0f02d342184
@@ -560,6 +560,6 @@ SPEC CHECKSUMS:
   RNVectorIcons: 4143ba35feebab8fdbe6bc43d1e776b393d47ac8
   Yoga: e7dc4e71caba6472ff48ad7d234389b91dadc280
 
-PODFILE CHECKSUM: 81ed154dadb4aaa1f25f45873c8d685c9b7ee93c
+PODFILE CHECKSUM: 9a194be4f13260bf6588c02000960b158afec418
 
 COCOAPODS: 1.16.2

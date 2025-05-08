@@ -13,7 +13,7 @@ target 'FireworkSdkExample' do
   use_react_native!(path: config['reactNativePath'])
   
   pod 'FirebaseCrashlytics'
-  pod 'FireworkVideoIVSSupport', '0.4.0'
+  pod 'FireworkVideoIVSSupport', '0.9.0'
   # admob
   # pod 'FireworkVideoGAMSupport', '0.1.0'
   # pod 'Google-Mobile-Ads-SDK', '8.13.0'
