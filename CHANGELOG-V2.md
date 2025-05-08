@@ -1,5 +1,17 @@
 # CHANGELOG
 
+## [2.16.0]
+
+### Added
+
+- Add `customCTA` property to `ShoppingCTAEvent` interface
+- Support French
+- Support Portuguese
+
+### Changed
+
+- Handle iOS and Android modern player differences
+
 ## [2.15.3]
 
 - Bug fixes and improvements
