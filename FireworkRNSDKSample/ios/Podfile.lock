@@ -42,7 +42,7 @@ PODS:
     - GoogleUtilities/UserDefaults (~> 8.0)
     - nanopb (~> 3.30910.0)
     - PromisesSwift (~> 2.1)
-  - FireworkVideo (1.30.0)
+  - FireworkVideo (1.30.2)
   - FireworkVideoIVSSupport (0.9.0):
     - AmazonIVSPlayer (= 1.38.0)
   - FireworkVideoUI (0.2.15):
@@ -269,8 +269,8 @@ PODS:
   - React-jsinspector (0.66.4)
   - React-logger (0.66.4):
     - glog
-  - react-native-firework-sdk (2.16.0):
-    - FireworkVideo (= 1.30.0)
+  - react-native-firework-sdk (2.16.1):
+    - FireworkVideo (= 1.30.2)
     - FireworkVideoUI (= 0.2.15)
     - React-Core
   - react-native-restart (0.0.24):
@@ -515,33 +515,33 @@ SPEC CHECKSUMS:
   FirebaseInstallations: 781e0e37aa0e1c92b44d00e739aba79ad31b2dba
   FirebaseRemoteConfigInterop: 85bdce8babed7814816496bb6f082bc05b0a45e1
   FirebaseSessions: f5c6bfeb66a7202deaf33352017bb6365e395820
-  FireworkVideo: 3666a2f164ddfeadb99da5dd93213d3256a82dd5
+  FireworkVideo: 21b7ecb701e2cec144af20dd7fa335efa7ab3c31
   FireworkVideoIVSSupport: 04df9642ad79ead5fddaece08f98da005bfa2451
   FireworkVideoUI: c4cc4c5a8a405881ce9d8e15b3fe36d5ae9fabdb
   fmt: ff9d55029c625d3757ed641535fd4a75fedc7ce9
-  glog: 5683914934d5b6e4240e497e0f4a3b42d1854183
+  glog: eb93e2f488219332457c3c4eafd2738ddc7e80b8
   GoogleDataTransport: aae35b7ea0c09004c3797d53c8c41f66f219d6a7
   GoogleUtilities: 26a3abef001b6533cf678d3eb38fd3f614b7872d
   nanopb: fad817b59e0457d11a5dfbde799381cd727c1275
   PromisesObjC: f5707f49cb48b9636751c5b2e7d227e43fba9f47
   PromisesSwift: 9d77319bbe72ebf6d872900551f7eeba9bce2851
-  RCT-Folly: a21c126816d8025b547704b777a2ba552f3d9fa9
+  RCT-Folly: d493960cebd31fc7918c0574a30a0d3235a7d2e6
   RCTRequired: 4bf86c70714490bca4bf2696148638284622644b
   RCTTypeSafety: c475a7059eb77935fa53d2c17db299893f057d5d
   React: f64af14e3f2c50f6f2c91a5fd250e4ff1b3c3459
   React-callinvoker: b74e4ae80287780dcdf0cab262bcb581eeef56e7
-  React-Core: 3eb7432bad96ff1d25aebc1defbae013fee2fd0e
+  React-Core: a56f8d616a46434aa3a3d712dbb32d69aba8fa5f
   React-CoreModules: ad9e1fd5650e16666c57a08328df86fd7e480cb9
-  React-cxxreact: 02633ff398cf7e91a2c1e12590d323c4a4b8668a
-  React-jsi: 805c41a927d6499fb811772acb971467d9204633
-  React-jsiexecutor: 94ce921e1d8ce7023366873ec371f3441383b396
+  React-cxxreact: 85a52c8f263a91133007ac756ddcc6ae6405d9b3
+  React-jsi: 0409f5f36a7f6f15a850c81f5e3ae54de03eec5b
+  React-jsiexecutor: 1a5cf123b4d15d2aeb8b5b7b28890d23ceb609db
   React-jsinspector: d0374f7509d407d2264168b6d0fad0b54e300b85
-  React-logger: 933f80c97c633ee8965d609876848148e3fef438
-  react-native-firework-sdk: 0e0e8eef2abc0026f3b84ffbf12d75290bba8145
-  react-native-restart: 45c8dca02491980f2958595333cbccd6877cb57e
-  react-native-safe-area-context: 584dc04881deb49474363f3be89e4ca0e854c057
-  react-native-visibility-aware-view: 330a2fe055103592d728b8b77a38e0f02d342184
-  react-native-webview: 9f111dfbcfc826084d6c507f569e5e03342ee1c1
+  React-logger: c53054c6b1903783ee9b9dbc9569c5be7b11473e
+  react-native-firework-sdk: 3841cb01a6f6bf5984d5e69248e6e5999b3d4e38
+  react-native-restart: df7caae89026a8ab2ecdd82839978f657701f51d
+  react-native-safe-area-context: 1c298d1cee1e333d3f44ea6dc8dfca086bd06242
+  react-native-visibility-aware-view: 7c3f595dd1031225a9ccc195e65b13f3c7b2c26a
+  react-native-webview: ec195db71ebf55705d7b46a7da5f1b1746bb7efd
   React-perflogger: 93075d8931c32cd1fce8a98c15d2d5ccc4d891bd
   React-RCTActionSheet: 7d3041e6761b4f3044a37079ddcb156575fb6d89
   React-RCTAnimation: 743e88b55ac62511ae5c2e22803d4f503f2a3a13
@@ -553,11 +553,11 @@ SPEC CHECKSUMS:
   React-RCTText: f8a21c3499ab322326290fa9b701ae29aa093aa5
   React-RCTVibration: e3ffca672dd3772536cb844274094b0e2c31b187
   React-runtimeexecutor: dec32ee6f2e2a26e13e58152271535fadff5455a
-  ReactCommon: 57b69f6383eafcbd7da625bfa6003810332313c4
-  RNCAsyncStorage: b90b71f45b8b97be43bc4284e71a6af48ac9f547
-  RNCClipboard: 0a720adef5ec193aa0e3de24c3977222c7e52a37
-  RNScreens: 34cc502acf1b916c582c60003dc3089fa01dc66d
-  RNVectorIcons: 4143ba35feebab8fdbe6bc43d1e776b393d47ac8
+  ReactCommon: f39022bb54fc20ee99ab1ef3f5001c929df8448a
+  RNCAsyncStorage: 01062b75ce749e3a18091a9ad7749effdf09ea43
+  RNCClipboard: 4598dae0fe33e2aa130d9d213e2007be78310266
+  RNScreens: 10cefd0dd5c6ccd8651c6ca8b276790ea10a7f20
+  RNVectorIcons: 58e1f696a44687c64b0165d892b74e0843b5db4c
   Yoga: e7dc4e71caba6472ff48ad7d234389b91dadc280
 
 PODFILE CHECKSUM: 9a194be4f13260bf6588c02000960b158afec418
