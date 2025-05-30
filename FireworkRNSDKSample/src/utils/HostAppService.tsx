@@ -21,9 +21,9 @@ import { store } from '../store';
 import ShopifyClient from './ShopifyClient';
 import { shopifyDomain } from '../config/Shopify.json';
 import type { RootStackParamList } from '../screens/paramList/RootStackParamList';
-import { topName as topAppName } from '../../app.json';
 import { Platform } from 'react-native';
 import FWExampleLoggerUtil from './FWExampleLoggerUtil';
+import { topName as topAppName } from '../../app.json';
 
 export default class HostAppService {
   private static _instance?: HostAppService;
@@ -215,9 +215,8 @@ export default class HostAppService {
     const productIds = event.productIds ?? [];
     try {
       for (let productId of productIds) {
-        const shopifyProduct = await ShopifyClient.getInstance().fetchProduct(
-          productId
-        );
+        const shopifyProduct =
+          await ShopifyClient.getInstance().fetchProduct(productId);
         let product: Product = { productId: productId };
         product.name = shopifyProduct.title;
         product.description = (shopifyProduct as any).descriptionHtml;

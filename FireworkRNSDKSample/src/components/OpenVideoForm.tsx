@@ -1,11 +1,11 @@
 import CommonStyles from './CommonStyles';
 import FireworkSDK, {
-  VideoPlayerConfiguration,
+  type VideoPlayerConfiguration,
 } from 'react-native-firework-sdk';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import Patterns from '../constants/Patterns';
 import PlayerConfigurationModal from './PlayerConfigurationModal';
-import React, { useState } from 'react';
+import { useState } from 'react';
 import { Button, Input } from 'react-native-elements';
 import { Controller, useForm } from 'react-hook-form';
 import { Text, TouchableOpacity, View } from 'react-native';
@@ -88,7 +88,7 @@ export function OpenVideoForm() {
                     : 'Please enter correct Video URL'
                   : undefined
               }
-              autoCompleteType={undefined}
+              autoComplete={undefined}
             />
           )}
           name="videoURL"

@@ -1,5 +1,4 @@
 import { View, StyleSheet } from 'react-native';
-import React from 'react';
 import SetAdBadgeConfigurationForm from '../components/SetAdBadgeConfigurationForm';
 
 const SetAdBadgeConfiguration = () => {

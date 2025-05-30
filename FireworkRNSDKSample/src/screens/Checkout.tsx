@@ -1,4 +1,3 @@
-import React from 'react';
 import { useForm, Controller } from 'react-hook-form';
 import { Text, Divider, Input, Button } from 'react-native-elements';
 import { View, StyleSheet, ScrollView, TouchableOpacity } from 'react-native';
@@ -62,7 +61,7 @@ const Checkout = () => {
                 <Ionicons name="close" size={24} />
               </TouchableOpacity>
             }
-            autoCompleteType={undefined}
+            autoComplete={undefined}
           />
         )}
         name="cardNumber"
@@ -87,7 +86,7 @@ const Checkout = () => {
                   <Ionicons name="close" size={24} />
                 </TouchableOpacity>
               }
-              autoCompleteType={undefined}
+              autoComplete={undefined}
             />
           )}
           name="cardMonth"
@@ -111,7 +110,7 @@ const Checkout = () => {
                   <Ionicons name="close" size={24} />
                 </TouchableOpacity>
               }
-              autoCompleteType={undefined}
+              autoComplete={undefined}
             />
           )}
           name="cardYear"
@@ -135,7 +134,7 @@ const Checkout = () => {
                   <Ionicons name="close" size={24} />
                 </TouchableOpacity>
               }
-              autoCompleteType={undefined}
+              autoComplete={undefined}
             />
           )}
           name="cardCVC"
@@ -159,7 +158,7 @@ const Checkout = () => {
                 <Ionicons name="close" size={24} />
               </TouchableOpacity>
             }
-            autoCompleteType={undefined}
+            autoComplete={undefined}
           />
         )}
         name="nameOnCard"
@@ -187,7 +186,7 @@ const Checkout = () => {
                 <Ionicons name="close" size={24} />
               </TouchableOpacity>
             }
-            autoCompleteType={undefined}
+            autoComplete={undefined}
           />
         )}
         name="name"
@@ -209,7 +208,7 @@ const Checkout = () => {
                 <Ionicons name="close" size={24} />
               </TouchableOpacity>
             }
-            autoCompleteType={undefined}
+            autoComplete={undefined}
           />
         )}
         name="street"
@@ -234,7 +233,7 @@ const Checkout = () => {
                   <Ionicons name="close" size={24} />
                 </TouchableOpacity>
               }
-              autoCompleteType={undefined}
+              autoComplete={undefined}
             />
           )}
           name="city"
@@ -258,7 +257,7 @@ const Checkout = () => {
                   <Ionicons name="close" size={24} />
                 </TouchableOpacity>
               }
-              autoCompleteType={undefined}
+              autoComplete={undefined}
             />
           )}
           name="state"
@@ -281,7 +280,7 @@ const Checkout = () => {
                 <Ionicons name="close" size={24} />
               </TouchableOpacity>
             }
-            autoCompleteType={undefined}
+            autoComplete={undefined}
           />
         )}
         name="zipCode"

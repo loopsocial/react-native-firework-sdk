@@ -1,5 +1,3 @@
-import React from 'react';
-
 import { Controller, useForm } from 'react-hook-form';
 import { StyleSheet, View } from 'react-native';
 import { Button, CheckBox } from 'react-native-elements';

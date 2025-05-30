@@ -1,6 +1,5 @@
 import CommonStyles from './CommonStyles';
 import Ionicons from 'react-native-vector-icons/Ionicons';
-import React from 'react';
 import { Button, Input } from 'react-native-elements';
 import { Controller, useForm } from 'react-hook-form';
 import {
@@ -103,7 +102,7 @@ const SkuInputModal = ({
                       </TouchableOpacity>
                     }
                     errorMessage={channelIdErrorMessage}
-                    autoCompleteType={undefined}
+                    autoComplete={undefined}
                   />
                 )}
                 name="channelId"
@@ -134,7 +133,7 @@ const SkuInputModal = ({
                       </TouchableOpacity>
                     }
                     errorMessage={productIdsErrorMessage}
-                    autoCompleteType={undefined}
+                    autoComplete={undefined}
                   />
                 )}
                 name="productIds"

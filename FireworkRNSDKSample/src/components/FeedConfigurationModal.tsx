@@ -1,7 +1,7 @@
 import CommonStyles from './CommonStyles';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import Patterns from '../constants/Patterns';
-import React, { useCallback, useEffect, useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 import { Button, ButtonGroup, CheckBox, Input } from 'react-native-elements';
 import { Controller, useForm } from 'react-hook-form';
 import {
@@ -350,7 +350,7 @@ const FeedConfigurationModal = ({
                   <Ionicons name="close" size={24} />
                 </TouchableOpacity>
               }
-              autoCompleteType={undefined}
+              autoComplete={undefined}
             />
           )}
           name="backgroundColor"
@@ -379,7 +379,7 @@ const FeedConfigurationModal = ({
                   <Ionicons name="close" size={24} />
                 </TouchableOpacity>
               }
-              autoCompleteType={undefined}
+              autoComplete={undefined}
             />
           )}
           name="cornerRadius"
@@ -434,7 +434,7 @@ const FeedConfigurationModal = ({
                     <Ionicons name="close" size={24} />
                   </TouchableOpacity>
                 }
-                autoCompleteType={undefined}
+                autoComplete={undefined}
               />
             )}
             name="titleColor"
@@ -465,7 +465,7 @@ const FeedConfigurationModal = ({
                     <Ionicons name="close" size={24} />
                   </TouchableOpacity>
                 }
-                autoCompleteType={undefined}
+                autoComplete={undefined}
               />
             )}
             name="titleFontSize"
@@ -514,7 +514,7 @@ const FeedConfigurationModal = ({
                     <Ionicons name="close" size={24} />
                   </TouchableOpacity>
                 }
-                autoCompleteType={undefined}
+                autoComplete={undefined}
               />
             )}
             name="titleNumberOfLines"
@@ -546,7 +546,7 @@ const FeedConfigurationModal = ({
                     <Ionicons name="close" size={24} />
                   </TouchableOpacity>
                 }
-                autoCompleteType={undefined}
+                autoComplete={undefined}
               />
             )}
             name="titleIOSFontName"
@@ -573,7 +573,7 @@ const FeedConfigurationModal = ({
                     <Ionicons name="close" size={24} />
                   </TouchableOpacity>
                 }
-                autoCompleteType={undefined}
+                autoComplete={undefined}
               />
             )}
             name="titleAndroidFontName"
@@ -621,7 +621,7 @@ const FeedConfigurationModal = ({
                   <Ionicons name="close" size={24} />
                 </TouchableOpacity>
               }
-              autoCompleteType={undefined}
+              autoComplete={undefined}
             />
           )}
           name="playIconWidth"
@@ -657,7 +657,7 @@ const FeedConfigurationModal = ({
                   <Ionicons name="close" size={24} />
                 </TouchableOpacity>
               }
-              autoCompleteType={undefined}
+              autoComplete={undefined}
             />
           )}
           name="gridColumns"
@@ -717,7 +717,7 @@ const FeedConfigurationModal = ({
                 </TouchableOpacity>
               }
               errorMessage={vastAttributesErrorMessage}
-              autoCompleteType={undefined}
+              autoComplete={undefined}
             />
           )}
           name="vastAttributes"
@@ -864,7 +864,7 @@ const FeedConfigurationModal = ({
                     <Ionicons name="close" size={24} />
                   </TouchableOpacity>
                 }
-                autoCompleteType={undefined}
+                autoComplete={undefined}
               />
             )}
             name="shadowOpacity"
@@ -899,7 +899,7 @@ const FeedConfigurationModal = ({
                     <Ionicons name="close" size={24} />
                   </TouchableOpacity>
                 }
-                autoCompleteType={undefined}
+                autoComplete={undefined}
               />
             )}
             name="shadowColor"
@@ -932,7 +932,7 @@ const FeedConfigurationModal = ({
                     <Ionicons name="close" size={24} />
                   </TouchableOpacity>
                 }
-                autoCompleteType={undefined}
+                autoComplete={undefined}
               />
             )}
             name="shadowWidth"
@@ -965,7 +965,7 @@ const FeedConfigurationModal = ({
                     <Ionicons name="close" size={24} />
                   </TouchableOpacity>
                 }
-                autoCompleteType={undefined}
+                autoComplete={undefined}
               />
             )}
             name="shadowHeight"

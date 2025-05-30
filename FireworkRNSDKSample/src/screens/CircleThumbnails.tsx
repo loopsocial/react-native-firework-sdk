@@ -1,8 +1,6 @@
-import React from 'react';
-
 import { StyleSheet, View } from 'react-native';
 import type { VideoFeedConfiguration } from 'react-native-firework-sdk';
-import { VideoFeed, VideoFeedPadding } from 'react-native-firework-sdk';
+import { VideoFeed, type VideoFeedPadding } from 'react-native-firework-sdk';
 
 const CircleThumbnails = () => {
   const feedHeight = 200;

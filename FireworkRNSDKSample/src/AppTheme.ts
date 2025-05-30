@@ -1,4 +1,6 @@
-const AppTheme = {
+import type { FullTheme } from 'react-native-elements';
+
+const AppTheme: Partial<FullTheme> = {
   CheckBox: {
     containerStyle: {
       marginLeft: 0,

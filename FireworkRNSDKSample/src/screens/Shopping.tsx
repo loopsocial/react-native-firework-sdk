@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 
 import {
   ScrollView,
@@ -8,7 +8,7 @@ import {
   View,
 } from 'react-native';
 import { Button, ListItem } from 'react-native-elements';
-import { FWError, VideoFeed } from 'react-native-firework-sdk';
+import { type FWError, VideoFeed } from 'react-native-firework-sdk';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 
 import { useNavigation } from '@react-navigation/native';
@@ -125,22 +125,13 @@ function Shopping() {
             </View>
           )}
         </View>
-        <ListItem
-          containerStyle={styles.listItemContainer}
-          topDivider
-          hasTVPreferredFocus={undefined}
-          tvParallaxProperties={undefined}
-        >
+        <ListItem containerStyle={styles.listItemContainer} topDivider>
           <ListItem.Title style={styles.title}>Channel Id:</ListItem.Title>
           <ListItem.Subtitle style={styles.subTitle}>
             {channelId}
           </ListItem.Subtitle>
         </ListItem>
-        <ListItem
-          containerStyle={styles.listItemContainer}
-          hasTVPreferredFocus={undefined}
-          tvParallaxProperties={undefined}
-        >
+        <ListItem containerStyle={styles.listItemContainer}>
           <ListItem.Title style={styles.title}>Playlist Id:</ListItem.Title>
           <ListItem.Subtitle style={styles.subTitle}>
             {playlistId}
@@ -149,16 +140,10 @@ function Shopping() {
         <ListItem
           containerStyle={{ ...styles.listItemContainer, marginTop: 15 }}
           topDivider
-          hasTVPreferredFocus={undefined}
-          tvParallaxProperties={undefined}
         >
           <Text style={styles.title}>Store Details:</Text>
         </ListItem>
-        <ListItem
-          containerStyle={styles.listItemContainer}
-          hasTVPreferredFocus={undefined}
-          tvParallaxProperties={undefined}
-        >
+        <ListItem containerStyle={styles.listItemContainer}>
           <ListItem.Title style={styles.title}>Integration:</ListItem.Title>
           <ListItem.Subtitle style={styles.subTitle}>Shopify</ListItem.Subtitle>
         </ListItem>
@@ -168,8 +153,6 @@ function Shopping() {
             marginTop: 15,
           }}
           topDivider
-          hasTVPreferredFocus={undefined}
-          tvParallaxProperties={undefined}
         >
           <View style={styles.cartConfigButtonWrapper}>
             <Button

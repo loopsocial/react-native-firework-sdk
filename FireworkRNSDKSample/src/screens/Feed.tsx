@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 
 import {
   Platform,
@@ -9,16 +9,16 @@ import {
 } from 'react-native';
 import { Button, ButtonGroup } from 'react-native-elements';
 import {
-  FWError,
+  type FWError,
   StoryBlock,
-  StoryBlockSource,
+  type StoryBlockSource,
   VideoFeed,
-  AdConfiguration,
-  VideoFeedConfiguration,
-  VideoFeedMode,
-  VideoPlayerConfiguration,
-  IStoryBlockMethods,
-  StoryBlockConfiguration,
+  type AdConfiguration,
+  type VideoFeedConfiguration,
+  type VideoFeedMode,
+  type VideoPlayerConfiguration,
+  type IStoryBlockMethods,
+  type StoryBlockConfiguration,
 } from 'react-native-firework-sdk';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 

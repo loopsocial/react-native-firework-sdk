@@ -1,7 +1,6 @@
 import React, { useEffect, useMemo } from 'react';
 
 import { BackHandler, Platform } from 'react-native';
-import { ThemeProvider } from 'react-native-elements';
 import FireworkSDK from 'react-native-firework-sdk';
 import { RootSiblingParent } from 'react-native-root-siblings';
 import { Provider } from 'react-redux';
@@ -20,6 +19,7 @@ import Checkout from './screens/Checkout';
 import LinkContent from './screens/LinkContent';
 import type { TopParamList } from './screens/paramList/TopParamList';
 import { store } from './store';
+import CustomThemeProvider from './components/CustomThemeProvider';
 
 const StackNavigator = createNativeStackNavigator<TopParamList>();
 
@@ -148,13 +148,13 @@ export interface ITopAppProps {
 export default function TopApp(props: ITopAppProps) {
   return (
     <Provider store={store}>
-      <ThemeProvider theme={AppTheme}>
+      <CustomThemeProvider theme={AppTheme}>
         <ActionSheetProvider>
           <RootSiblingParent>
             <FWTopNavigationContainer {...props} />
           </RootSiblingParent>
         </ActionSheetProvider>
-      </ThemeProvider>
+      </CustomThemeProvider>
     </Provider>
   );
 }

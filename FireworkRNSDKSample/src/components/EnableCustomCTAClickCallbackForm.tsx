@@ -1,5 +1,4 @@
 import { View } from 'react-native';
-import React from 'react';
 import CommonStyles from './CommonStyles';
 import { Controller, useForm } from 'react-hook-form';
 import FireworkSDK from 'react-native-firework-sdk';

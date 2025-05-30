@@ -1,8 +1,14 @@
 # CHANGELOG
 
-## [2.16.1]
+## [2.17.0-beta.2]
 
-- Bug fixes and improvements
+- Beta release
+
+## [2.17.0-beta.1]
+
+### Changed
+
+- Upgrade the versions of `react-native` and `react` used for building the library
 
 ## [2.16.0]
 

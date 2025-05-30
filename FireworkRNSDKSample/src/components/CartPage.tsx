@@ -1,4 +1,3 @@
-import React from 'react';
 import { View, ScrollView, StyleSheet, Platform } from 'react-native';
 import { ListItem, Image, Button } from 'react-native-elements';
 import { useAppSelector } from '../hooks/reduxHooks';
@@ -18,8 +17,6 @@ const CartPage = ({ onCheckout }: ICartPageProps) => {
         {cartItems.map((cartItem) => (
           <ListItem
             key={`${cartItem.productId}_${cartItem.unitId}`}
-            hasTVPreferredFocus={undefined}
-            tvParallaxProperties={undefined}
             bottomDivider
             onPress={() => {}}
           >

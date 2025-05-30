@@ -7,26 +7,43 @@ android.sourceSets.main.assets.srcDirs += file("$buildDir/intermediates/ReactNat
  * Task to copy icon font files
  */
 afterEvaluate {
-  def config = project.hasProperty("vectoricons") ? project.vectoricons : [];
-  def iconFontsDir = config.iconFontsDir ?: "../../node_modules/react-native-vector-icons/Fonts";
-  def iconFontNames = config.iconFontNames ?: [ "*.ttf" ];
+    def config = project.hasProperty("vectoricons") ? project.vectoricons : [];
+    def iconFontsDir = config.iconFontsDir ?: "../../node_modules/react-native-vector-icons/Fonts";
+    def iconFontNames = config.iconFontNames ?: [ "*.ttf" ];
 
-  def fontCopyTask = tasks.create(
-    name: "copyReactNativeVectorIconFonts",
-    type: Copy) {
-    description = "copy vector icon fonts."
-    into "$buildDir/intermediates/ReactNativeVectorIcons/fonts"
+    def fontCopyTask = tasks.create(
+        name: "copyReactNativeVectorIconFonts",
+        type: Copy) {
+        description = "copy vector icon fonts."
+        into "$buildDir/intermediates/ReactNativeVectorIcons/fonts"
 
-    iconFontNames.each { fontName ->
-      from(iconFontsDir) {
-        include(fontName)
-      }
+        iconFontNames.each { fontName ->
+            from(iconFontsDir) {
+                include(fontName)
+            }
+        }
     }
-  }
 
-  android.applicationVariants.all { def variant ->
-    def targetName = variant.name.capitalize()
-    def generateAssetsTask = tasks.findByName("generate${targetName}Assets")
-    generateAssetsTask.dependsOn(fontCopyTask)
-  }
+    android.applicationVariants.all { def variant ->
+        def targetName = variant.name.capitalize()
+        def lintVitalAnalyzeTask = tasks.findByName("lintVitalAnalyze${targetName}")
+
+        if (lintVitalAnalyzeTask) {
+        lintVitalAnalyzeTask.dependsOn(fontCopyTask)
+        }
+
+        def generateReportTask = tasks.findByName("generate${targetName}LintVitalReportModel")
+        if (generateReportTask) {
+            generateReportTask.dependsOn(fontCopyTask)
+        }
+
+        def generateAssetsTask = tasks.findByName("generate${targetName}Assets")
+        generateAssetsTask.dependsOn(fontCopyTask)
+
+        def generateLintReportModelTask = tasks.findByName("generate${targetName}LintReportModel")
+        generateLintReportModelTask.dependsOn(fontCopyTask)
+
+        def lintAnalyzeTask = tasks.findByName("lintAnalyze${targetName}")
+        lintAnalyzeTask.dependsOn(fontCopyTask)
+      }
 }

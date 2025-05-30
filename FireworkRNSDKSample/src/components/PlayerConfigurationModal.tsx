@@ -1,7 +1,7 @@
 import CommonStyles from './CommonStyles';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import Patterns from '../constants/Patterns';
-import React, { useCallback, useEffect, useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 import {
   Button,
   ButtonGroup,
@@ -351,7 +351,7 @@ const PlayerConfigurationModal = ({
         typeof data.ctaDelayValue === 'number'
       ) {
         configuration.ctaDelay = {
-          type: CTADelayTypeList[data.ctaDelayType],
+          type: CTADelayTypeList[data.ctaDelayType] ?? 'constant',
           value: data.ctaDelayValue,
         };
       }
@@ -361,7 +361,7 @@ const PlayerConfigurationModal = ({
         typeof data.ctaHighlightDelayValue === 'number'
       ) {
         configuration.ctaHighlightDelay = {
-          type: CTADelayTypeList[data.ctaHighlightDelayType],
+          type: CTADelayTypeList[data.ctaHighlightDelayType] ?? 'constant',
           value: data.ctaHighlightDelayValue,
         };
       }
@@ -377,7 +377,9 @@ const PlayerConfigurationModal = ({
       if (typeof data.videoPlayerLogoOption === 'number') {
         if (data.videoPlayerLogoOption > 0) {
           videoPlayerLogoConfiguration = {
-            option: VideoPlayerLogoOptionList[data.videoPlayerLogoOption],
+            option:
+              VideoPlayerLogoOptionList[data.videoPlayerLogoOption] ??
+              'disabled',
             encodedId: data.videoPlayerLogoEncodeID ?? '',
             isClickable: data.videoPlayerLogoIsClickable,
           };
@@ -614,7 +616,7 @@ const PlayerConfigurationModal = ({
                     <Ionicons name="close" size={24} />
                   </TouchableOpacity>
                 }
-                autoCompleteType={undefined}
+                autoComplete={undefined}
               />
             )}
             name="shareBaseURL"
@@ -669,7 +671,7 @@ const PlayerConfigurationModal = ({
                     <Ionicons name="close" size={24} />
                   </TouchableOpacity>
                 }
-                autoCompleteType={undefined}
+                autoComplete={undefined}
               />
             )}
             name="videoPlayerLogoEncodeID"
@@ -820,7 +822,7 @@ const PlayerConfigurationModal = ({
                     <Ionicons name="close" size={24} />
                   </TouchableOpacity>
                 }
-                autoCompleteType={undefined}
+                autoComplete={undefined}
               />
             )}
             name="ctaBackgroundColor"
@@ -851,7 +853,7 @@ const PlayerConfigurationModal = ({
                     <Ionicons name="close" size={24} />
                   </TouchableOpacity>
                 }
-                autoCompleteType={undefined}
+                autoComplete={undefined}
               />
             )}
             name="ctaTextColor"
@@ -882,7 +884,7 @@ const PlayerConfigurationModal = ({
                     <Ionicons name="close" size={24} />
                   </TouchableOpacity>
                 }
-                autoCompleteType={undefined}
+                autoComplete={undefined}
               />
             )}
             name="ctaFontSize"
@@ -912,7 +914,7 @@ const PlayerConfigurationModal = ({
                     <Ionicons name="close" size={24} />
                   </TouchableOpacity>
                 }
-                autoCompleteType={undefined}
+                autoComplete={undefined}
               />
             )}
             name="ctaIOSFontName"

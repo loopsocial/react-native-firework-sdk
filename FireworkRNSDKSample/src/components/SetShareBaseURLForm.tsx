@@ -2,7 +2,7 @@ import CommonStyles from './CommonStyles';
 import FireworkSDK from 'react-native-firework-sdk';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import Patterns from '../constants/Patterns';
-import React, { useState } from 'react';
+import { useState } from 'react';
 import { Button, Input } from 'react-native-elements';
 import { Controller, useForm } from 'react-hook-form';
 import { Text, TouchableOpacity, View, StyleSheet } from 'react-native';
@@ -62,7 +62,7 @@ export default function SetShareBaseURLForm() {
               errorMessage={
                 errors.shareBaseURL ? 'Please enter correct URL' : undefined
               }
-              autoCompleteType={undefined}
+              autoComplete={undefined}
             />
           )}
           name="shareBaseURL"

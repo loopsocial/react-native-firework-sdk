@@ -1,5 +1,4 @@
 import CommonStyles from './CommonStyles';
-import React from 'react';
 import { Button, ButtonGroup } from 'react-native-elements';
 import { StyleSheet, Text, View } from 'react-native';
 import type { VideoFeedMode } from 'react-native-firework-sdk';

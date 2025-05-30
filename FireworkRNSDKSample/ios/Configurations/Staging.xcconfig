@@ -8,3 +8,5 @@
 // Configuration settings file format documentation can be found at:
 // https://help.apple.com/xcode/#/dev745c5c974
 #include? "Pods/Target Support Files/Pods-FireworkSdkExample/Pods-FireworkSdkExample.staging.xcconfig"
+FIREWORK_APP_ID=d32d2f79d1ee44f4e82b8ce011038075b36d5f089d00ba0d5c12f55cb5791ef5
+FIREWORK_ENVIRONMENT=staging

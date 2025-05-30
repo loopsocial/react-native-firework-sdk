@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect, useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 
 import { Controller, useForm, useWatch } from 'react-hook-form';
 import {
@@ -350,7 +350,7 @@ const StoryBlockConfigurationModal = ({
         typeof data.ctaDelayValue === 'number'
       ) {
         configuration.ctaDelay = {
-          type: CTADelayTypeList[data.ctaDelayType],
+          type: CTADelayTypeList[data.ctaDelayType] ?? 'constant',
           value: data.ctaDelayValue,
         };
       }
@@ -360,7 +360,7 @@ const StoryBlockConfigurationModal = ({
         typeof data.ctaHighlightDelayValue === 'number'
       ) {
         configuration.ctaHighlightDelay = {
-          type: CTADelayTypeList[data.ctaHighlightDelayType],
+          type: CTADelayTypeList[data.ctaHighlightDelayType] ?? 'constant',
           value: data.ctaHighlightDelayValue,
         };
       }
@@ -376,7 +376,9 @@ const StoryBlockConfigurationModal = ({
       if (typeof data.videoPlayerLogoOption === 'number') {
         if (data.videoPlayerLogoOption > 0) {
           videoPlayerLogoConfiguration = {
-            option: VideoPlayerLogoOptionList[data.videoPlayerLogoOption],
+            option:
+              VideoPlayerLogoOptionList[data.videoPlayerLogoOption] ??
+              'disabled',
             encodedId: data.videoPlayerLogoEncodeID ?? '',
             isClickable: data.videoPlayerLogoIsClickable,
           };
@@ -619,7 +621,7 @@ const StoryBlockConfigurationModal = ({
                     <Ionicons name="close" size={24} />
                   </TouchableOpacity>
                 }
-                autoCompleteType={undefined}
+                autoComplete={undefined}
               />
             )}
             name="shareBaseURL"
@@ -674,7 +676,7 @@ const StoryBlockConfigurationModal = ({
                     <Ionicons name="close" size={24} />
                   </TouchableOpacity>
                 }
-                autoCompleteType={undefined}
+                autoComplete={undefined}
               />
             )}
             name="videoPlayerLogoEncodeID"
@@ -825,7 +827,7 @@ const StoryBlockConfigurationModal = ({
                     <Ionicons name="close" size={24} />
                   </TouchableOpacity>
                 }
-                autoCompleteType={undefined}
+                autoComplete={undefined}
               />
             )}
             name="ctaBackgroundColor"
@@ -856,7 +858,7 @@ const StoryBlockConfigurationModal = ({
                     <Ionicons name="close" size={24} />
                   </TouchableOpacity>
                 }
-                autoCompleteType={undefined}
+                autoComplete={undefined}
               />
             )}
             name="ctaTextColor"
@@ -887,7 +889,7 @@ const StoryBlockConfigurationModal = ({
                     <Ionicons name="close" size={24} />
                   </TouchableOpacity>
                 }
-                autoCompleteType={undefined}
+                autoComplete={undefined}
               />
             )}
             name="ctaFontSize"
@@ -917,7 +919,7 @@ const StoryBlockConfigurationModal = ({
                     <Ionicons name="close" size={24} />
                   </TouchableOpacity>
                 }
-                autoCompleteType={undefined}
+                autoComplete={undefined}
               />
             )}
             name="ctaIOSFontName"

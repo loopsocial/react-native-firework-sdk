@@ -1,5 +1,3 @@
-import React from 'react';
-
 import { Platform, StyleSheet, TouchableOpacity, View } from 'react-native';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 

@@ -1,7 +1,7 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 
 import {
-  GestureResponderEvent,
+  type GestureResponderEvent,
   ScrollView,
   StyleSheet,
   View,
@@ -119,8 +119,8 @@ export default function FeedLayouts() {
                 const playlistInfo = defaultPlaylistInfoArray[buttonIndex];
                 navigation.navigate('Feed', {
                   source: 'playlist',
-                  channel: playlistInfo.channelId,
-                  playlist: playlistInfo.playlistId,
+                  channel: playlistInfo?.channelId ?? '',
+                  playlist: playlistInfo?.playlistId ?? '',
                 });
               } else if (buttonIndex === customButtonIndex) {
                 setPlaylistInputModalVisible(true);
@@ -155,7 +155,7 @@ export default function FeedLayouts() {
                   defaultPlaylistGroupInfoArray[buttonIndex];
                 navigation.navigate('Feed', {
                   source: 'playlistGroup',
-                  playlistGroup: playlistGroupInfo.playlistGroupId,
+                  playlistGroup: playlistGroupInfo?.playlistGroupId ?? '',
                 });
               } else if (buttonIndex === customButtonIndex) {
                 setPlaylistGroupInputModalVisible(true);
@@ -188,8 +188,8 @@ export default function FeedLayouts() {
                   defaultDynamicContentInfoArray[buttonIndex];
                 navigation.navigate('Feed', {
                   source: 'dynamicContent',
-                  channel: dynamicContentInfo.channelId,
-                  dynamicContentParameters: dynamicContentInfo.parameters,
+                  channel: dynamicContentInfo?.channelId ?? '',
+                  dynamicContentParameters: dynamicContentInfo?.parameters,
                 });
               } else if (buttonIndex === customButtonIndex) {
                 setDynamicContentInputModalVisible(true);
@@ -223,13 +223,7 @@ export default function FeedLayouts() {
     <View style={styles.container}>
       <ScrollView style={styles.scrollView}>
         {dataList.map((data) => (
-          <ListItem
-            key={data.title}
-            bottomDivider
-            onPress={data.pressCallback}
-            hasTVPreferredFocus={undefined}
-            tvParallaxProperties={undefined}
-          >
+          <ListItem key={data.title} bottomDivider onPress={data.pressCallback}>
             <ListItem.Content>
               <ListItem.Title>{data.title}</ListItem.Title>
             </ListItem.Content>

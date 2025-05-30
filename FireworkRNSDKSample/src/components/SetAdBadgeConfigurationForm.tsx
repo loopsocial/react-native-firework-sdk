@@ -1,5 +1,5 @@
 import FireworkSDK from 'react-native-firework-sdk';
-import React, { useCallback, useEffect } from 'react';
+import { useCallback, useEffect } from 'react';
 
 import { Controller, useForm } from 'react-hook-form';
 import { TouchableOpacity, View } from 'react-native';
@@ -110,7 +110,7 @@ const SetAdBadgeConfigurationForm = () => {
                   <Ionicons name="close" size={24} />
                 </TouchableOpacity>
               }
-              autoCompleteType={undefined}
+              autoComplete={undefined}
             />
           )}
           name="backgroundColor"
@@ -141,7 +141,7 @@ const SetAdBadgeConfigurationForm = () => {
                   <Ionicons name="close" size={24} />
                 </TouchableOpacity>
               }
-              autoCompleteType={undefined}
+              autoComplete={undefined}
             />
           )}
           name="textColor"
@@ -174,7 +174,7 @@ const SetAdBadgeConfigurationForm = () => {
                   <Ionicons name="close" size={24} />
                 </TouchableOpacity>
               }
-              autoCompleteType={undefined}
+              autoComplete={undefined}
             />
           )}
           name="androidFontName"

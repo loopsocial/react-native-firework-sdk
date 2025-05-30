@@ -1,10 +1,10 @@
-import React, { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { ListItem } from 'react-native-elements';
 import {
   View,
   ScrollView,
   StyleSheet,
-  GestureResponderEvent,
+  type GestureResponderEvent,
   I18nManager,
   Platform,
 } from 'react-native';
@@ -17,7 +17,7 @@ import type { RootStackParamList } from './paramList/RootStackParamList';
 import { useActionSheet } from '@expo/react-native-action-sheet';
 import RNRestart from 'react-native-restart';
 import FireworkSDK, {
-  DataTrackingLevel,
+  type DataTrackingLevel,
   LivestreamPlayerDesignVersion,
 } from 'react-native-firework-sdk';
 import AsyncStorage from '@react-native-async-storage/async-storage';
@@ -242,7 +242,7 @@ function More() {
               buttonIndex < languageCodeList.length &&
               buttonIndex < options.length
             ) {
-              handleChangeAppLanguage(languageCodeList[buttonIndex]);
+              handleChangeAppLanguage(languageCodeList[buttonIndex] ?? '');
             }
           }
         );
@@ -389,13 +389,7 @@ function More() {
     <View style={styles.container}>
       <ScrollView style={styles.scrollView}>
         {dataList.map((data) => (
-          <ListItem
-            key={data.title}
-            bottomDivider
-            onPress={data.pressCallback}
-            hasTVPreferredFocus={undefined}
-            tvParallaxProperties={undefined}
-          >
+          <ListItem key={data.title} bottomDivider onPress={data.pressCallback}>
             <ListItem.Content>
               <ListItem.Title>{data.title}</ListItem.Title>
             </ListItem.Content>

@@ -1,8 +1,7 @@
 import React, { useEffect } from 'react';
 
-import { ThemeProvider } from 'react-native-elements';
 import FireworkSDK, {
-  DataTrackingLevel,
+  type DataTrackingLevel,
   LivestreamPlayerDesignVersion,
 } from 'react-native-firework-sdk';
 import { RootSiblingParent } from 'react-native-root-siblings';
@@ -36,6 +35,7 @@ import EnablePushingRNContainer from './screens/EnablePushingRNContainer';
 import EnableNativeNavigation from './screens/EnableNativeNavigation';
 import EnablePausePlayer from './screens/EnablePausePlayer';
 import Log from './screens/Log';
+import CustomThemeProvider from './components/CustomThemeProvider';
 
 const StackNavigator = createNativeStackNavigator<RootStackParamList>();
 
@@ -208,13 +208,13 @@ export interface IAppProps {}
 export default function App(props: IAppProps) {
   return (
     <Provider store={store}>
-      <ThemeProvider theme={AppTheme}>
+      <CustomThemeProvider theme={AppTheme}>
         <ActionSheetProvider>
           <RootSiblingParent>
             <FWNavigationContainer {...props} />
           </RootSiblingParent>
         </ActionSheetProvider>
-      </ThemeProvider>
+      </CustomThemeProvider>
     </Provider>
   );
 }

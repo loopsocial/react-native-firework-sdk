@@ -2,16 +2,12 @@
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
-	<key>NSUserTrackingUsageDescription</key>
-	<string>We need your data for analytics</string>
 	<key>CFBundleDevelopmentRegion</key>
 	<string>en</string>
 	<key>CFBundleDisplayName</key>
-	<string>fw.bogano</string>
+	<string>FireworkSdkExample</string>
 	<key>CFBundleExecutable</key>
 	<string>$(EXECUTABLE_NAME)</string>
-	<key>CFBundleIconName</key>
-	<string>AppIcon</string>
 	<key>CFBundleIdentifier</key>
 	<string>$(PRODUCT_BUNDLE_IDENTIFIER)</string>
 	<key>CFBundleInfoDictionaryVersion</key>
@@ -28,29 +24,19 @@
 	<string>$(CURRENT_PROJECT_VERSION)</string>
 	<key>FireworkVideoAppID</key>
 	<string></string>
-	<key>ITSAppUsesNonExemptEncryption</key>
-	<false/>
 	<key>LSRequiresIPhoneOS</key>
 	<true/>
 	<key>NSAppTransportSecurity</key>
 	<dict>
 		<key>NSAllowsArbitraryLoads</key>
+		<false/>
+		<key>NSAllowsLocalNetworking</key>
 		<true/>
-		<key>NSExceptionDomains</key>
-		<dict>
-			<key>localhost</key>
-			<dict>
-				<key>NSExceptionAllowsInsecureHTTPLoads</key>
-				<true/>
-			</dict>
-		</dict>
 	</dict>
-	<key>NSCameraUsageDescription</key>
-	<string></string>
 	<key>NSLocationWhenInUseUsageDescription</key>
 	<string></string>
-	<key>NSMicrophoneUsageDescription</key>
-	<string></string>
+	<key>NSUserTrackingUsageDescription</key>
+	<string>We need your data for analytics</string>
 	<key>UIAppFonts</key>
 	<array>
 		<string>AntDesign.ttf</string>
@@ -61,14 +47,17 @@
 		<string>FontAwesome5_Brands.ttf</string>
 		<string>FontAwesome5_Regular.ttf</string>
 		<string>FontAwesome5_Solid.ttf</string>
-		<string>Fontisto.ttf</string>
+		<string>FontAwesome6_Brands.ttf</string>
+		<string>FontAwesome6_Regular.ttf</string>
+		<string>FontAwesome6_Solid.ttf</string>
 		<string>Foundation.ttf</string>
 		<string>Ionicons.ttf</string>
-		<string>MaterialCommunityIcons.ttf</string>
 		<string>MaterialIcons.ttf</string>
-		<string>Octicons.ttf</string>
+		<string>MaterialCommunityIcons.ttf</string>
 		<string>SimpleLineIcons.ttf</string>
+		<string>Octicons.ttf</string>
 		<string>Zocial.ttf</string>
+		<string>Fontisto.ttf</string>
 	</array>
 	<key>UIBackgroundModes</key>
 	<array>
@@ -78,7 +67,7 @@
 	<string>LaunchScreen</string>
 	<key>UIRequiredDeviceCapabilities</key>
 	<array>
-		<string>armv7</string>
+		<string>arm64</string>
 	</array>
 	<key>UISupportedInterfaceOrientations</key>
 	<array>

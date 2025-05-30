@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect } from 'react';
+import { useCallback, useEffect } from 'react';
 
 import { Controller, useForm } from 'react-hook-form';
 import {
@@ -768,7 +768,7 @@ const ShoppingConfigurationModal = ({
                     <Ionicons name="close" size={24} />
                   </TouchableOpacity>
                 }
-                autoCompleteType={undefined}
+                autoComplete={undefined}
               />
             )}
             name="ctaButtonBackgroundColor"
@@ -803,7 +803,7 @@ const ShoppingConfigurationModal = ({
                     <Ionicons name="close" size={24} />
                   </TouchableOpacity>
                 }
-                autoCompleteType={undefined}
+                autoComplete={undefined}
               />
             )}
             name="ctaButtonTextColor"
@@ -834,7 +834,7 @@ const ShoppingConfigurationModal = ({
                     <Ionicons name="close" size={24} />
                   </TouchableOpacity>
                 }
-                autoCompleteType={undefined}
+                autoComplete={undefined}
               />
             )}
             name="ctaButtonFontSize"
@@ -866,7 +866,7 @@ const ShoppingConfigurationModal = ({
                     <Ionicons name="close" size={24} />
                   </TouchableOpacity>
                 }
-                autoCompleteType={undefined}
+                autoComplete={undefined}
               />
             )}
             name="ctaButtonIOSFontName"
@@ -988,7 +988,7 @@ const ShoppingConfigurationModal = ({
                     <Ionicons name="close" size={24} />
                   </TouchableOpacity>
                 }
-                autoCompleteType={undefined}
+                autoComplete={undefined}
               />
             )}
             name="productCardCornerRadius"
@@ -1059,7 +1059,7 @@ const ShoppingConfigurationModal = ({
                     <Ionicons name="close" size={24} />
                   </TouchableOpacity>
                 }
-                autoCompleteType={undefined}
+                autoComplete={undefined}
               />
             )}
             name="productCardCTAButtonTextColor"
@@ -1090,7 +1090,7 @@ const ShoppingConfigurationModal = ({
                     <Ionicons name="close" size={24} />
                   </TouchableOpacity>
                 }
-                autoCompleteType={undefined}
+                autoComplete={undefined}
               />
             )}
             name="productCardCTAButtonFontSize"
@@ -1163,7 +1163,7 @@ const ShoppingConfigurationModal = ({
                     <Ionicons name="close" size={24} />
                   </TouchableOpacity>
                 }
-                autoCompleteType={undefined}
+                autoComplete={undefined}
               />
             )}
             name="productCardPriceLabelTextColor"
@@ -1194,7 +1194,7 @@ const ShoppingConfigurationModal = ({
                     <Ionicons name="close" size={24} />
                   </TouchableOpacity>
                 }
-                autoCompleteType={undefined}
+                autoComplete={undefined}
               />
             )}
             name="productCardPriceLabelFontSize"
@@ -1231,7 +1231,7 @@ const ShoppingConfigurationModal = ({
                     <Ionicons name="close" size={24} />
                   </TouchableOpacity>
                 }
-                autoCompleteType={undefined}
+                autoComplete={undefined}
               />
             )}
             name="productCardPriceLabelNumberOfLines"
@@ -1269,7 +1269,7 @@ const ShoppingConfigurationModal = ({
                     <Ionicons name="close" size={24} />
                   </TouchableOpacity>
                 }
-                autoCompleteType={undefined}
+                autoComplete={undefined}
               />
             )}
             name="productCardOriginalPriceLabelTextColor"
@@ -1303,7 +1303,7 @@ const ShoppingConfigurationModal = ({
                     <Ionicons name="close" size={24} />
                   </TouchableOpacity>
                 }
-                autoCompleteType={undefined}
+                autoComplete={undefined}
               />
             )}
             name="productCardOriginalPriceLabelFontSize"
@@ -1345,7 +1345,7 @@ const ShoppingConfigurationModal = ({
                     <Ionicons name="close" size={24} />
                   </TouchableOpacity>
                 }
-                autoCompleteType={undefined}
+                autoComplete={undefined}
               />
             )}
             name="productCardOriginalPriceLabelNumberOfLines"
@@ -1394,7 +1394,7 @@ const ShoppingConfigurationModal = ({
                     <Ionicons name="close" size={24} />
                   </TouchableOpacity>
                 }
-                autoCompleteType={undefined}
+                autoComplete={undefined}
               />
             )}
             name="productCardWidth"
@@ -1427,7 +1427,7 @@ const ShoppingConfigurationModal = ({
                     <Ionicons name="close" size={24} />
                   </TouchableOpacity>
                 }
-                autoCompleteType={undefined}
+                autoComplete={undefined}
               />
             )}
             name="productCardHeight"
@@ -1464,7 +1464,7 @@ const ShoppingConfigurationModal = ({
                     <Ionicons name="close" size={24} />
                   </TouchableOpacity>
                 }
-                autoCompleteType={undefined}
+                autoComplete={undefined}
               />
             )}
             name="productCardBackgroundColor"
@@ -1499,7 +1499,7 @@ const ShoppingConfigurationModal = ({
                     <Ionicons name="close" size={24} />
                   </TouchableOpacity>
                 }
-                autoCompleteType={undefined}
+                autoComplete={undefined}
               />
             )}
             name="productCardIconCornerRadius"
@@ -1534,7 +1534,7 @@ const ShoppingConfigurationModal = ({
                     <Ionicons name="close" size={24} />
                   </TouchableOpacity>
                 }
-                autoCompleteType={undefined}
+                autoComplete={undefined}
               />
             )}
             name="productCardNameLabelTextColor"
@@ -1565,7 +1565,7 @@ const ShoppingConfigurationModal = ({
                     <Ionicons name="close" size={24} />
                   </TouchableOpacity>
                 }
-                autoCompleteType={undefined}
+                autoComplete={undefined}
               />
             )}
             name="productCardNameLabelFontSize"
@@ -1602,7 +1602,7 @@ const ShoppingConfigurationModal = ({
                     <Ionicons name="close" size={24} />
                   </TouchableOpacity>
                 }
-                autoCompleteType={undefined}
+                autoComplete={undefined}
               />
             )}
             name="productCardNameLabelNumberOfLines"

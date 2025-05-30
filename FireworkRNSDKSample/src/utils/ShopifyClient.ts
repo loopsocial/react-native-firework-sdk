@@ -7,7 +7,7 @@ import {
 
 export default class ShopifyClient {
   private static _instance?: ShopifyClient;
-  private _client: ShopifyBuy.Client;
+  private _client: ShopifyBuy;
 
   public static getInstance() {
     if (!ShopifyClient._instance) {
@@ -21,6 +21,7 @@ export default class ShopifyClient {
     this._client = ShopifyBuy.buildClient({
       domain: shopifyDomain,
       storefrontAccessToken: shopifyStorefrontAccessToken,
+      apiVersion: '2025-04',
     });
   }
 
@@ -39,7 +40,7 @@ export default class ShopifyClient {
     } catch (e) {}
     const splitArray = rDecodedGid.split('/');
     if (splitArray.length > 0) {
-      return splitArray[splitArray.length - 1];
+      return splitArray[splitArray.length - 1] ?? '';
     }
     return '';
   }

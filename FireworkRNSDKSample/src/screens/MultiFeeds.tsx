@@ -1,9 +1,9 @@
 import type { NativeStackNavigationProp } from '@react-navigation/native-stack';
-import React, { useEffect, useRef, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { FlatList, ScrollView, StyleSheet, Text, View } from 'react-native';
 import { ButtonGroup } from 'react-native-elements';
 import {
-  IStoryBlockMethods,
+  type IStoryBlockMethods,
   StoryBlock,
   VideoFeed,
 } from 'react-native-firework-sdk';

@@ -1,4 +1,3 @@
-import React from 'react';
 import { OpenVideoForm } from '../components/OpenVideoForm';
 import { StyleSheet, View } from 'react-native';
 

@@ -1,82 +1,35 @@
-require_relative '../node_modules/react-native/scripts/react_native_pods'
-require_relative '../node_modules/@react-native-community/cli-platform-ios/native_modules'
+# Resolve react_native_pods.rb with node to allow for hoisting
+require Pod::Executable.execute_command('node', ['-p',
+  'require.resolve(
+    "react-native/scripts/react_native_pods.rb",
+    {paths: [process.argv[1]]},
+  )', __dir__]).strip
 
-platform :ios, '13.0'
-#use_frameworks!
+platform :ios, min_ios_version_supported
+prepare_react_native_project!
 
-# cocoapods >= 1.9.0
 use_frameworks! :linkage => :static
 
 target 'FireworkSdkExample' do
   config = use_native_modules!
 
-  use_react_native!(path: config['reactNativePath'])
-  
-  pod 'FirebaseCrashlytics'
+  use_react_native!(
+    :path => config[:reactNativePath],
+    # An absolute path to your application root.
+    :app_path => "#{Pod::Config.instance.installation_root}/.."
+  )
   pod 'FireworkVideoIVSSupport', '0.9.0'
-  # admob
-  # pod 'FireworkVideoGAMSupport', '0.1.0'
-  # pod 'Google-Mobile-Ads-SDK', '8.13.0'
-
-  # ima
-  # pod 'FireworkVideoGIMASupport', '0.1.0'
-  # pod 'GoogleAds-IMA-iOS-SDK', '~> 3.14.5'
-  # Enables Flipper.
-  #
-  # Note that if you have use_frameworks! enabled, Flipper will not work and
-  # you should disable the next line.
-  #  use_flipper!()
 
   post_install do |installer|
-    react_native_post_install(installer)
-    __apply_Xcode_12_5_M1_post_install_workaround(installer)
-    __apply_Xcode_15_3_post_install_workaround(installer)
-    installer.pods_project.build_configurations.each do |configurations|
-      configurations.build_settings["EXCLUDED_ARCHS[sdk=iphonesimulator*]"] = "arm64"
+    # https://github.com/facebook/react-native/blob/main/packages/react-native/scripts/react_native_pods.rb#L197-L202
+    react_native_post_install(
+      installer,
+      config[:reactNativePath],
+      :mac_catalyst_enabled => false,
+      # :ccache_enabled => true
+    )
+    installer.pods_project.build_configurations.each do |config|
+      config.build_settings['ENABLE_USER_SCRIPT_SANDBOXING'] = 'NO'
     end
-  end
-end
-
-def __apply_Xcode_15_3_post_install_workaround(installer)
-  fix_library_search_paths(installer)
-  installer.pods_project.targets.each do |target|
-    target.build_configurations.each do |config|
-      config.build_settings['GCC_PREPROCESSOR_DEFINITIONS'] ||= ['$(inherited)', '_LIBCPP_ENABLE_CXX17_REMOVED_UNARY_BINARY_FUNCTION']
-    end
-  end
-end
-
-def fix_library_search_paths(installer)
-  def fix_config(config)
-    lib_search_paths = config.build_settings["LIBRARY_SEARCH_PATHS"]
-    if lib_search_paths
-      if lib_search_paths.include?("$(TOOLCHAIN_DIR)/usr/lib/swift-5.0/$(PLATFORM_NAME)") || lib_search_paths.include?("\"$(TOOLCHAIN_DIR)/usr/lib/swift-5.0/$(PLATFORM_NAME)\"")
-        # $(TOOLCHAIN_DIR)/usr/lib/swift-5.0/$(PLATFORM_NAME) causes problem with Xcode 12.5   arm64 (Apple M1)
-        # since the libraries there are only built for x86_64 and i386.
-        lib_search_paths.delete("$(TOOLCHAIN_DIR)/usr/lib/swift-5.0/$(PLATFORM_NAME)")
-        lib_search_paths.delete("\"$(TOOLCHAIN_DIR)/usr/lib/swift-5.0/$(PLATFORM_NAME)\"")
-        if !(lib_search_paths.include?("$(SDKROOT)/usr/lib/swift") || lib_search_paths.include?("\"$(SDKROOT)/usr/lib/swift\""))
-          # however, $(SDKROOT)/usr/lib/swift is required, at least if user is not running CocoaPods 1.11
-          lib_search_paths.insert(0, "$(SDKROOT)/usr/lib/swift")
-        end
-      end
-    end
-  end
-
-  projects = installer.aggregate_targets
-    .map{ |t| t.user_project }
-    .uniq{ |p| p.path }
-    .push(installer.pods_project)
-
-  projects.each do |project|
-    project.build_configurations.each do |config|
-      fix_config(config)
-    end
-    project.native_targets.each do |target|
-      target.build_configurations.each do |config|
-        fix_config(config)
-      end
-    end
-    project.save()
   end
 end

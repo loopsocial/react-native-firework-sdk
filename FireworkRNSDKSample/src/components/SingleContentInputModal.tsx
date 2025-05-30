@@ -1,6 +1,5 @@
 import CommonStyles from './CommonStyles';
 import Ionicons from 'react-native-vector-icons/Ionicons';
-import React from 'react';
 import { Button, Input } from 'react-native-elements';
 import { Controller, useForm } from 'react-hook-form';
 import {
@@ -92,7 +91,7 @@ const SingleContentInputModal = ({
                       </TouchableOpacity>
                     }
                     errorMessage={contentIdErrorMessage}
-                    autoCompleteType={undefined}
+                    autoComplete={undefined}
                   />
                 )}
                 name="contentId"

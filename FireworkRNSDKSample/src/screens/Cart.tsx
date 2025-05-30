@@ -1,5 +1,3 @@
-import React from 'react';
-
 import { StyleSheet, View } from 'react-native';
 
 import type { BottomTabNavigationProp } from '@react-navigation/bottom-tabs';
