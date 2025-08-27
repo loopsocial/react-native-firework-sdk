@@ -4,7 +4,7 @@ PODS:
   - DoubleConversion (1.1.6)
   - fast_float (6.1.4)
   - FBLazyVector (0.78.2)
-  - FireworkVideo (1.30.0)
+  - FireworkVideo (1.35.0-beta.6)
   - FireworkVideoIVSSupport (0.9.0):
     - AmazonIVSPlayer (= 1.38.0)
   - FireworkVideoUI (0.2.15):
@@ -1575,9 +1575,9 @@ PODS:
     - RCT-Folly (= 2024.11.18.00)
     - React-debug
     - React-jsi (= 0.78.2)
-  - react_native_firework_sdk (2.17.0-beta.2):
+  - react_native_firework_sdk (2.17.0-beta.3):
     - DoubleConversion
-    - FireworkVideo (= 1.30.0)
+    - FireworkVideo (= 1.35.0-beta.6)
     - FireworkVideoUI (= 0.2.15)
     - glog
     - hermes-engine
@@ -2022,7 +2022,7 @@ SPEC CHECKSUMS:
   DoubleConversion: cb417026b2400c8f53ae97020b2be961b59470cb
   fast_float: 06eeec4fe712a76acc9376682e4808b05ce978b6
   FBLazyVector: e32d34492c519a2194ec9d7f5e7a79d11b73f91c
-  FireworkVideo: 3666a2f164ddfeadb99da5dd93213d3256a82dd5
+  FireworkVideo: 6a3e72c0ac1cc2a68f95f0c5cad261b617f3e2a7
   FireworkVideoIVSSupport: 04df9642ad79ead5fddaece08f98da005bfa2451
   FireworkVideoUI: c4cc4c5a8a405881ce9d8e15b3fe36d5ae9fabdb
   fmt: a40bb5bd0294ea969aaaba240a927bd33d878cdd
@@ -2087,7 +2087,7 @@ SPEC CHECKSUMS:
   React-runtimescheduler: 9957105c1d7f068a1c00760a9c332167634f945a
   React-timing: 96e060d0d0bf18522d363716623ed2c61f7107c7
   React-utils: 93529ff7b4baa71aea1f42a48e9d3d06db398618
-  react_native_firework_sdk: ad90fe8b9f6cd7fdc11fef71e93df3881a66e05e
+  react_native_firework_sdk: 89a6f3e0166956081124044429676d08aaa6d367
   ReactAppDependencyProvider: 4893bde33952f997a323eb1a1ee87a72764018ff
   ReactCodegen: 31f8d982d351eb4dbf3af220f363c7398ae667c8
   ReactCommon: 0adf8f24a3415b6815613bad362d390726b33fc7
