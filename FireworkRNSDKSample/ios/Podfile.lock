@@ -1312,27 +1312,6 @@ PODS:
     - ReactCommon/turbomodule/bridging
     - ReactCommon/turbomodule/core
     - Yoga
-  - react-native-visibility-aware-view (0.4.1):
-    - DoubleConversion
-    - glog
-    - hermes-engine
-    - RCT-Folly (= 2024.11.18.00)
-    - RCTRequired
-    - RCTTypeSafety
-    - React-Core
-    - React-debug
-    - React-Fabric
-    - React-featureflags
-    - React-graphics
-    - React-ImageManager
-    - React-NativeModulesApple
-    - React-RCTFabric
-    - React-rendererdebug
-    - React-utils
-    - ReactCodegen
-    - ReactCommon/turbomodule/bridging
-    - ReactCommon/turbomodule/core
-    - Yoga
   - react-native-webview (13.13.5):
     - DoubleConversion
     - glog
@@ -1575,7 +1554,7 @@ PODS:
     - RCT-Folly (= 2024.11.18.00)
     - React-debug
     - React-jsi (= 0.78.2)
-  - react_native_firework_sdk (2.17.0-beta.13):
+  - react_native_firework_sdk (2.17.0):
     - DoubleConversion
     - FireworkVideo (= 1.35.0)
     - FireworkVideoUI (= 0.2.15)
@@ -1818,7 +1797,6 @@ DEPENDENCIES:
   - React-microtasksnativemodule (from `../node_modules/react-native/ReactCommon/react/nativemodule/microtasks`)
   - react-native-restart (from `../node_modules/react-native-restart`)
   - react-native-safe-area-context (from `../node_modules/react-native-safe-area-context`)
-  - react-native-visibility-aware-view (from `../node_modules/react-native-visibility-aware-view`)
   - react-native-webview (from `../node_modules/react-native-webview`)
   - React-NativeModulesApple (from `../node_modules/react-native/ReactCommon/react/nativemodule/core/platform/ios`)
   - React-perflogger (from `../node_modules/react-native/ReactCommon/reactperflogger`)
@@ -1943,8 +1921,6 @@ EXTERNAL SOURCES:
     :path: "../node_modules/react-native-restart"
   react-native-safe-area-context:
     :path: "../node_modules/react-native-safe-area-context"
-  react-native-visibility-aware-view:
-    :path: "../node_modules/react-native-visibility-aware-view"
   react-native-webview:
     :path: "../node_modules/react-native-webview"
   React-NativeModulesApple:
@@ -2019,14 +1995,14 @@ EXTERNAL SOURCES:
 SPEC CHECKSUMS:
   AmazonIVSPlayer: a0814406d75cca65998039f63ff9057ab3492b91
   boost: 7e761d76ca2ce687f7cc98e698152abd03a18f90
-  DoubleConversion: 831926d9b8bf8166fd87886c4abab286c2422662
+  DoubleConversion: cb417026b2400c8f53ae97020b2be961b59470cb
   fast_float: 06eeec4fe712a76acc9376682e4808b05ce978b6
   FBLazyVector: e32d34492c519a2194ec9d7f5e7a79d11b73f91c
   FireworkVideo: 2bb009e7b9c585eda0282be1546fdaf9490b1cf2
   FireworkVideoIVSSupport: 04df9642ad79ead5fddaece08f98da005bfa2451
   FireworkVideoUI: c4cc4c5a8a405881ce9d8e15b3fe36d5ae9fabdb
   fmt: a40bb5bd0294ea969aaaba240a927bd33d878cdd
-  glog: 5337263514dd6f09803962437687240c5dc39aa4
+  glog: eb93e2f488219332457c3c4eafd2738ddc7e80b8
   hermes-engine: 2771b98fb813fdc6f92edd7c9c0035ecabf9fee7
   RCT-Folly: e78785aa9ba2ed998ea4151e314036f6c49e6d82
   RCTDeprecation: be794de7dc6ed8f9f7fbf525f86e7651b8b68746
@@ -2060,7 +2036,6 @@ SPEC CHECKSUMS:
   React-microtasksnativemodule: fd98e3e44af51599576705ec7a85a36e35978913
   react-native-restart: 0bc732f4461709022a742bb29bcccf6bbc5b4863
   react-native-safe-area-context: 0472f170cbc594668dc7923724f679b066ac75b7
-  react-native-visibility-aware-view: 7f99bcdd724c0760e12782b99b3ae0f35c3a6978
   react-native-webview: 005cf4cfde4e2688d222e1fe962d638bc2acc07d
   React-NativeModulesApple: 5c61cef9e7f0e1d6216ff0af41a3b882806a5cec
   React-perflogger: 5f8fa36a8e168fb355efe72099efe77213bc2ac6
@@ -2087,7 +2062,7 @@ SPEC CHECKSUMS:
   React-runtimescheduler: 9957105c1d7f068a1c00760a9c332167634f945a
   React-timing: 96e060d0d0bf18522d363716623ed2c61f7107c7
   React-utils: 93529ff7b4baa71aea1f42a48e9d3d06db398618
-  react_native_firework_sdk: 9a9b5f5de27f894f658662969af8d0740882cc1f
+  react_native_firework_sdk: 988b49797ed3095d53b650bff446788a69a919ef
   ReactAppDependencyProvider: 4893bde33952f997a323eb1a1ee87a72764018ff
   ReactCodegen: 31f8d982d351eb4dbf3af220f363c7398ae667c8
   ReactCommon: 0adf8f24a3415b6815613bad362d390726b33fc7
@@ -2096,7 +2071,7 @@ SPEC CHECKSUMS:
   RNScreens: 04304337930029a5d0db297b22eb0f07adc31a2c
   RNVectorIcons: 1743deffb9c4b70f253704075dbac432cc802e74
   SocketRocket: d4aabe649be1e368d1318fdf28a022d714d65748
-  Yoga: 6eb60fc2c0eef63e7d2ef4a56e0a3353534143a2
+  Yoga: 0c521d2eddeeff54ba1126068140b6e970a77fc0
 
 PODFILE CHECKSUM: 9fab191c66894467fdcb717f32b66abf5b684045
 

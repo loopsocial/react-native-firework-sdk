@@ -13,7 +13,6 @@ import {
   defaultHomeVideoFeedPlaylistInfoArray,
   defaultHomeStoryBlockPlaylistInfoArray,
 } from '../config/Feed.json';
-import { VisibilityAwareView } from 'react-native-visibility-aware-view';
 import { useAppSelector } from '../hooks/reduxHooks';
 
 type MultiFeedsScreenNavigationProp =
@@ -26,23 +25,26 @@ type FeedPlaylistInfo = {
   key: string;
 };
 
-function StoryBlockWrapper({ item }: { item: FeedPlaylistInfo }) {
+function StoryBlockWrapper({
+  item,
+  isViewable,
+}: {
+  item: FeedPlaylistInfo;
+  isViewable: boolean;
+}) {
   const ref = useRef<IStoryBlockMethods>(null);
   const enablePictureInPicture = useAppSelector(
     (state) => state.feed.enablePictureInPicture
   );
+  useEffect(() => {
+    if (isViewable) {
+      ref.current?.onViewportEntered();
+    } else {
+      ref.current?.onViewportLeft();
+    }
+  }, [isViewable]);
   return (
-    <VisibilityAwareView
-      minVisibleArea={0.01}
-      onBecomeVisible={() => {
-        ref.current?.onViewportEntered();
-      }}
-      onBecomeInvisible={() => {
-        ref.current?.onViewportLeft();
-      }}
-      style={styles.storyBlockWrapper}
-      key={item.key}
-    >
+    <View style={styles.storyBlockWrapper}>
       <StoryBlock
         ref={ref}
         style={styles.storyBlock}
@@ -51,7 +53,7 @@ function StoryBlockWrapper({ item }: { item: FeedPlaylistInfo }) {
         playlist={item.playlistId}
         enablePictureInPicture={enablePictureInPicture}
       />
-    </VisibilityAwareView>
+    </View>
   );
 }
 
@@ -62,6 +64,7 @@ function MultiFeeds() {
   const navigation = useNavigation<MultiFeedsScreenNavigationProp>();
   const buttons = ['FlatList', 'ScrollView'];
   const [selectedIndex, setSelectedIndex] = useState(0);
+  const [viewableKeys, setViewableKeys] = useState<string[]>([]);
 
   let data: FeedPlaylistInfo[] = [];
   defaultHomeStoryBlockPlaylistInfoArray.forEach((item) => {
@@ -120,10 +123,15 @@ function MultiFeeds() {
 
   const renderItem = ({ item }: { item: FeedPlaylistInfo }) => {
     if (item.type === 'storyBlock') {
-      return <StoryBlockWrapper key={item.key} item={item} />;
+      return (
+        <StoryBlockWrapper
+          item={item}
+          isViewable={viewableKeys.includes(item.key)}
+        />
+      );
     } else if (item.type === 'feed') {
       return (
-        <View style={styles.feedWrapper} key={item.key}>
+        <View style={styles.feedWrapper}>
           <VideoFeed
             style={styles.feed}
             source={'playlist'}
@@ -135,7 +143,7 @@ function MultiFeeds() {
       );
     } else {
       return (
-        <View style={styles.placeholderWrapper} key={item.key}>
+        <View style={styles.placeholderWrapper}>
           <Text style={styles.placeholder}>List item placeholder</Text>
         </View>
       );
@@ -148,7 +156,12 @@ function MultiFeeds() {
         <ButtonGroup
           buttons={buttons}
           selectedIndex={selectedIndex}
-          onPress={(index) => setSelectedIndex(index)}
+          onPress={(index) => {
+            setSelectedIndex(index);
+            if (index === 1) {
+              setViewableKeys([]);
+            }
+          }}
         />
       </View>
       {selectedIndex === 0 ? (
@@ -157,10 +170,18 @@ function MultiFeeds() {
           renderItem={renderItem}
           keyExtractor={(item) => item.key}
           removeClippedSubviews={true}
+          viewabilityConfig={{ itemVisiblePercentThreshold: 50 }}
+          onViewableItemsChanged={(info) => {
+            const { viewableItems } = info;
+            setViewableKeys(viewableItems.map((item) => item.key));
+            console.log('FlatList onViewableItemsChanged', info);
+          }}
         />
       ) : (
         <ScrollView removeClippedSubviews={true}>
-          {data.map((item) => renderItem({ item }))}
+          {data.map((item) => (
+            <View key={item.key}>{renderItem({ item })}</View>
+          ))}
         </ScrollView>
       )}
     </View>

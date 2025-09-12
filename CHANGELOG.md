@@ -1,5 +1,16 @@
 # CHANGELOG
 
+## [2.17.0]
+
+### Added
+
+- Show carousel slider below pinned products on livestream
+- Support Trivia Giveaway
+- Support coupon code message
+- Support multiple winners for Giveaway and Trivia Giveaway
+- AI Copilot support
+- Adapt re-stream
+
 ## [2.17.0-beta.2]
 
 - Beta release
