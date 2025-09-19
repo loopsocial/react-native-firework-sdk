@@ -1,5 +1,14 @@
 # CHANGELOG
 
+## [2.17.1]
+
+### Added
+
+- Customize additional controls top inset for story block
+- Support extending media outside the safe area in the full-screen player
+- Add `tryStartFloatingOrCloseFullScreen` method in `FWNavigator` class
+- Add additional parameters for `trackPurchase` method in `FireworkSDK` class
+
 ## [2.17.0]
 
 ### Added
