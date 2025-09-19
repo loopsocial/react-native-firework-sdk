@@ -25,6 +25,7 @@ const CommonStyles = StyleSheet.create({
   },
   mainButtonContainer: {
     height: 40,
+    marginBottom: 100,
   },
 });
 

@@ -293,11 +293,8 @@ export default class HostAppService {
     if (store.getState().navigation.enableNativeNavigation) {
       return;
     }
-    const result =
-      await FireworkSDK.getInstance().navigator.startFloatingPlayer();
-    if (!result) {
-      await FireworkSDK.getInstance().navigator.popNativeContainer();
-    }
+
+    await FireworkSDK.getInstance().navigator.tryStartFloatingOrCloseFullScreen();
   }
 
   public async navigate(routeName: keyof RootStackParamList, params?: any) {

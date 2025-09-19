@@ -32,6 +32,15 @@ const Checkout = () => {
       value: Math.floor(Math.random() * 100 + 1),
       currencyCode: 'USD',
       countryCode: 'US',
+      shippingPrice: Math.floor(Math.random() * 10 + 1),
+      subtotal: Math.floor(Math.random() * 100 + 1),
+      products: [
+        {
+          extProductId: 'product1',
+          price: Math.floor(Math.random() * 100 + 1),
+          quantity: Math.floor(Math.random() * 10 + 1),
+        },
+      ],
       additionalInfo: {
         additionalKey1: 'additionalValue1',
         additionalKey2: 'additionalValue2',

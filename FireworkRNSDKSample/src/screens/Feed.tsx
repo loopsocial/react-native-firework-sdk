@@ -110,6 +110,9 @@ const Feed = () => {
       isHidden: false,
       appearance: 'dark',
     },
+    shouldExtendMediaOutsideSafeArea: false,
+    statusBarHidden: false,
+    statusBarStyle: 'light',
   };
   const [playerConfiguration, setPlayerConfiguration] = useState<
     VideoPlayerConfiguration | undefined
@@ -138,6 +141,12 @@ const Feed = () => {
       isHidden: false,
       appearance: 'dark',
     },
+    additionalControlsInset: {
+      top: 0,
+    },
+    shouldExtendMediaOutsideSafeArea: false,
+    statusBarHidden: false,
+    statusBarStyle: 'light',
   };
   const [storyBlockConfiguration, setStoryBlockConfiguration] = useState<
     StoryBlockConfiguration | undefined
@@ -454,6 +463,7 @@ const styles = StyleSheet.create({
     backgroundColor: 'white',
   },
   headerRight: {
+    width: 160,
     flexDirection: 'row',
     justifyContent: 'flex-start',
   },

@@ -64,6 +64,9 @@ type PlayerConfigurationFormData = {
   videoPlayerLogoEncodeID?: string;
   videoPlayerLogoIsClickable?: boolean;
   showReplayBadge?: boolean;
+  shouldExtendMediaOutsideSafeArea?: boolean;
+  statusBarHidden?: boolean;
+  statusBarStyle?: number;
 };
 
 const PlayStyleList: VideoPlayerStyle[] = ['full', 'fit'];
@@ -87,6 +90,8 @@ const VideoPlayerLogoOptionList: VideoPlayerLogoOption[] = [
   'creator',
   'channelAggregator',
 ];
+
+const StatusBarStyleList: string[] = ['light', 'dark'];
 
 const PlayerConfigurationModal = ({
   visible,
@@ -281,6 +286,19 @@ const PlayerConfigurationModal = ({
           'showReplayBadge',
           configuration?.replayBadgeConfiguration?.isHidden === false
         );
+        setValue(
+          'shouldExtendMediaOutsideSafeArea',
+          configuration.shouldExtendMediaOutsideSafeArea
+        );
+        setValue('statusBarHidden', configuration.statusBarHidden);
+        const statusBarStyleIndex = configuration.statusBarStyle
+          ? StatusBarStyleList.indexOf(configuration.statusBarStyle as string)
+          : -1;
+        if (statusBarStyleIndex >= 0) {
+          setValue('statusBarStyle', statusBarStyleIndex);
+        } else {
+          setValue('statusBarStyle', 0); // default style is 'light'
+        }
       } else {
         reset();
       }
@@ -390,6 +408,13 @@ const PlayerConfigurationModal = ({
       configuration.replayBadgeConfiguration = {
         isHidden: data.showReplayBadge === true ? false : true,
       };
+      configuration.shouldExtendMediaOutsideSafeArea =
+        data.shouldExtendMediaOutsideSafeArea;
+      configuration.statusBarHidden = data.statusBarHidden;
+      configuration.statusBarStyle =
+        typeof data.statusBarStyle === 'number'
+          ? (StatusBarStyleList[data.statusBarStyle] as any)
+          : undefined;
       onSubmit(configuration);
     }
   };
@@ -680,6 +705,60 @@ const PlayerConfigurationModal = ({
       </View>
       {logoEnableTap}
       {showReplayBadgeRow}
+      <View style={styles.formItemRow}>
+        <View style={styles.formItem}>
+          <Controller
+            control={control}
+            render={({ field: { onChange, value } }) => {
+              return (
+                <CheckBox
+                  center
+                  title={`Extend Media${'\n'}Outside Safe Area`}
+                  checked={value}
+                  onPress={() => onChange(!value)}
+                />
+              );
+            }}
+            name="shouldExtendMediaOutsideSafeArea"
+          />
+        </View>
+      </View>
+      <View style={styles.formItemRow}>
+        <View style={styles.formItem}>
+          <Controller
+            control={control}
+            render={({ field: { onChange, value } }) => {
+              return (
+                <CheckBox
+                  center
+                  title={`Status Bar${'\n'}Hidden`}
+                  checked={value}
+                  onPress={() => onChange(!value)}
+                />
+              );
+            }}
+            name="statusBarHidden"
+          />
+        </View>
+      </View>
+      <View style={styles.formItemRow}>
+        <View style={{ ...styles.formItem }}>
+          <Text style={styles.formItemLabel}>Status Bar Style</Text>
+          <Controller
+            control={control}
+            render={({ field: { onChange, value } }) => (
+              <ButtonGroup
+                buttons={StatusBarStyleList}
+                selectedIndex={value}
+                onPress={(newValue) => {
+                  onChange(newValue);
+                }}
+              />
+            )}
+            name="statusBarStyle"
+          />
+        </View>
+      </View>
     </>
   );
 

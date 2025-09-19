@@ -1,5 +1,32 @@
-pluginManagement { includeBuild("../node_modules/@react-native/gradle-plugin") }
+pluginManagement { 
+  repositories {
+    mavenLocal()
+    google()
+    mavenCentral()
+    maven {
+      setUrl("https://central.sonatype.com/repository/maven-snapshots/")
+      mavenContent {
+        snapshotsOnly()
+      }
+    }
+  }
+  includeBuild("../node_modules/@react-native/gradle-plugin") 
+}
 plugins { id("com.facebook.react.settings") }
+
+dependencyResolutionManagement {
+  repositories {
+    mavenLocal()
+    google()
+    mavenCentral()
+    maven {
+      setUrl("https://central.sonatype.com/repository/maven-snapshots/")
+      mavenContent {
+        snapshotsOnly()
+      }
+    }
+  }
+}
 extensions.configure(com.facebook.react.ReactSettingsExtension){ ex -> ex.autolinkLibrariesFromCommand() }
 //rootProject.name = 'fireworksdk.example'
 rootProject.name = 'FireworkSDKExample'

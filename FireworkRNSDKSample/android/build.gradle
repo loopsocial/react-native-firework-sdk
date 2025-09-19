@@ -8,8 +8,15 @@ buildscript {
     kotlinVersion = "2.0.21"
   }
   repositories {
+    mavenLocal()
     google()
     mavenCentral()
+    maven {
+      setUrl("https://central.sonatype.com/repository/maven-snapshots/")
+      mavenContent {
+        snapshotsOnly()
+      }
+    }
   }
   dependencies {
     classpath("com.android.tools.build:gradle")

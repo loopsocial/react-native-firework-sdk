@@ -66,6 +66,10 @@ type StoryBlockConfigurationFormData = {
   videoPlayerLogoEncodeID?: string;
   videoPlayerLogoIsClickable?: boolean;
   showReplayBadge?: boolean;
+  additionalControlsInsetTop?: string;
+  shouldExtendMediaOutsideSafeArea?: boolean;
+  statusBarHidden?: boolean;
+  statusBarStyle?: number;
 };
 
 const PlayStyleList: VideoPlayerStyle[] = ['full', 'fit'];
@@ -89,6 +93,8 @@ const VideoPlayerLogoOptionList: VideoPlayerLogoOption[] = [
   'creator',
   'channelAggregator',
 ];
+
+const StatusBarStyleList: string[] = ['light', 'dark'];
 
 const StoryBlockConfigurationModal = ({
   visible,
@@ -281,6 +287,23 @@ const StoryBlockConfigurationModal = ({
           'showReplayBadge',
           configuration?.replayBadgeConfiguration?.isHidden === false
         );
+        setValue(
+          'additionalControlsInsetTop',
+          configuration.additionalControlsInset?.top?.toString()
+        );
+        setValue(
+          'shouldExtendMediaOutsideSafeArea',
+          configuration.shouldExtendMediaOutsideSafeArea
+        );
+        setValue('statusBarHidden', configuration.statusBarHidden);
+        const statusBarStyleIndex = configuration.statusBarStyle
+          ? StatusBarStyleList.indexOf(configuration.statusBarStyle)
+          : -1;
+        if (statusBarStyleIndex >= 0) {
+          setValue('statusBarStyle', statusBarStyleIndex);
+        } else {
+          setValue('statusBarStyle', 0); // default style is 'light'
+        }
       } else {
         reset();
       }
@@ -389,6 +412,24 @@ const StoryBlockConfigurationModal = ({
       configuration.replayBadgeConfiguration = {
         isHidden: data.showReplayBadge === true ? false : true,
       };
+
+      // Handle additionalControlsInset
+      if (data.additionalControlsInsetTop) {
+        configuration.additionalControlsInset = {
+          top: data.additionalControlsInsetTop
+            ? parseFloat(data.additionalControlsInsetTop)
+            : 0,
+        };
+      }
+
+      configuration.shouldExtendMediaOutsideSafeArea =
+        data.shouldExtendMediaOutsideSafeArea;
+      configuration.statusBarHidden = data.statusBarHidden;
+      configuration.statusBarStyle =
+        typeof data.statusBarStyle === 'number'
+          ? (StatusBarStyleList[data.statusBarStyle] as any)
+          : undefined;
+
       onSubmit(configuration);
     }
   };
@@ -685,6 +726,91 @@ const StoryBlockConfigurationModal = ({
       </View>
       {logoEnableTap}
       {showReplayBadgeRow}
+      <View style={styles.formItemRow}>
+        <View style={styles.formItem}>
+          <Controller
+            control={control}
+            render={({ field: { onChange, value } }) => {
+              return (
+                <CheckBox
+                  center
+                  title={`Extend Media${'\n'}Outside Safe Area`}
+                  checked={value}
+                  onPress={() => onChange(!value)}
+                />
+              );
+            }}
+            name="shouldExtendMediaOutsideSafeArea"
+          />
+        </View>
+      </View>
+      <View style={styles.formItemRow}>
+        <View style={styles.formItem}>
+          <Controller
+            control={control}
+            render={({ field: { onChange, value } }) => {
+              return (
+                <CheckBox
+                  center
+                  title={`Status Bar${'\n'}Hidden`}
+                  checked={value}
+                  onPress={() => onChange(!value)}
+                />
+              );
+            }}
+            name="statusBarHidden"
+          />
+        </View>
+      </View>
+      <View style={styles.formItemRow}>
+        <View style={{ ...styles.formItem }}>
+          <Text style={styles.formItemLabel}>Status Bar Style</Text>
+          <Controller
+            control={control}
+            render={({ field: { onChange, value } }) => (
+              <ButtonGroup
+                buttons={StatusBarStyleList}
+                selectedIndex={value}
+                onPress={(newValue) => {
+                  onChange(newValue);
+                }}
+              />
+            )}
+            name="statusBarStyle"
+          />
+        </View>
+      </View>
+      <View style={styles.formItemRow}>
+        <Text style={styles.formItemLabel}>Additional Controls Inset</Text>
+      </View>
+      <View style={styles.formItemRow}>
+        <View style={{ ...styles.formItem, marginRight: 10 }}>
+          <Controller
+            control={control}
+            render={({ field: { onChange, onBlur, value } }) => (
+              <Input
+                label="Top"
+                placeholder="e.g. 10"
+                onBlur={onBlur}
+                onChangeText={(newValue) => onChange(newValue)}
+                value={value}
+                keyboardType="numeric"
+                rightIcon={
+                  <TouchableOpacity
+                    onPress={() => {
+                      setValue('additionalControlsInsetTop', undefined);
+                    }}
+                  >
+                    <Ionicons name="close" size={24} />
+                  </TouchableOpacity>
+                }
+                autoComplete={undefined}
+              />
+            )}
+            name="additionalControlsInsetTop"
+          />
+        </View>
+      </View>
     </>
   );
 
