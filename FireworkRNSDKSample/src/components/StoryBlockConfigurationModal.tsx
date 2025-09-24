@@ -29,6 +29,7 @@ import type {
   VideoPlayerLogoOption,
   VideoPlayerStyle,
 } from 'react-native-firework-sdk';
+import { PipPlacement } from 'react-native-firework-sdk';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 
 import Patterns from '../constants/Patterns';
@@ -70,6 +71,7 @@ type StoryBlockConfigurationFormData = {
   shouldExtendMediaOutsideSafeArea?: boolean;
   statusBarHidden?: boolean;
   statusBarStyle?: number;
+  pipPlacement?: number;
 };
 
 const PlayStyleList: VideoPlayerStyle[] = ['full', 'fit'];
@@ -95,6 +97,13 @@ const VideoPlayerLogoOptionList: VideoPlayerLogoOption[] = [
 ];
 
 const StatusBarStyleList: string[] = ['light', 'dark'];
+
+const PipPlacementList: PipPlacement[] = [
+  PipPlacement.TopLeft,
+  PipPlacement.TopRight,
+  PipPlacement.BottomLeft,
+  PipPlacement.BottomRight,
+];
 
 const StoryBlockConfigurationModal = ({
   visible,
@@ -304,6 +313,15 @@ const StoryBlockConfigurationModal = ({
         } else {
           setValue('statusBarStyle', 0); // default style is 'light'
         }
+
+        const pipPlacementIndex = configuration.pipPlacement
+          ? PipPlacementList.indexOf(configuration.pipPlacement)
+          : -1;
+        if (pipPlacementIndex >= 0) {
+          setValue('pipPlacement', pipPlacementIndex);
+        } else {
+          setValue('pipPlacement', 3); // default placement is 'bottomRight'
+        }
       } else {
         reset();
       }
@@ -428,6 +446,10 @@ const StoryBlockConfigurationModal = ({
       configuration.statusBarStyle =
         typeof data.statusBarStyle === 'number'
           ? (StatusBarStyleList[data.statusBarStyle] as any)
+          : undefined;
+      configuration.pipPlacement =
+        typeof data.pipPlacement === 'number'
+          ? PipPlacementList[data.pipPlacement]
           : undefined;
 
       onSubmit(configuration);
@@ -777,6 +799,38 @@ const StoryBlockConfigurationModal = ({
               />
             )}
             name="statusBarStyle"
+          />
+        </View>
+      </View>
+      <View style={styles.formItemRow}>
+        <View style={{ ...styles.formItem }}>
+          <Text style={styles.formItemLabel}>
+            PIP Placement (iOS only, for in-app PiP only)
+          </Text>
+          <Controller
+            control={control}
+            render={({ field: { onChange, value } }) => (
+              <View>
+                <ButtonGroup
+                  buttons={['Top Left', 'Top Right']}
+                  selectedIndex={value !== undefined && value < 2 ? value : -1}
+                  onPress={(newValue) => {
+                    onChange(newValue);
+                  }}
+                  containerStyle={{ marginBottom: 10 }}
+                />
+                <ButtonGroup
+                  buttons={['Bottom Left', 'Bottom Right']}
+                  selectedIndex={
+                    value !== undefined && value >= 2 ? value - 2 : -1
+                  }
+                  onPress={(newValue) => {
+                    onChange(newValue + 2);
+                  }}
+                />
+              </View>
+            )}
+            name="pipPlacement"
           />
         </View>
       </View>

@@ -19,6 +19,7 @@ import {
   type VideoPlayerConfiguration,
   type IStoryBlockMethods,
   type StoryBlockConfiguration,
+  PipPlacement,
 } from 'react-native-firework-sdk';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 
@@ -113,6 +114,7 @@ const Feed = () => {
     shouldExtendMediaOutsideSafeArea: false,
     statusBarHidden: false,
     statusBarStyle: 'light',
+    pipPlacement: PipPlacement.BottomRight,
   };
   const [playerConfiguration, setPlayerConfiguration] = useState<
     VideoPlayerConfiguration | undefined
@@ -147,6 +149,7 @@ const Feed = () => {
     shouldExtendMediaOutsideSafeArea: false,
     statusBarHidden: false,
     statusBarStyle: 'light',
+    pipPlacement: PipPlacement.BottomRight,
   };
   const [storyBlockConfiguration, setStoryBlockConfiguration] = useState<
     StoryBlockConfiguration | undefined

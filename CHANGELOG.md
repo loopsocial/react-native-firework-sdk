@@ -1,5 +1,11 @@
 # CHANGELOG
 
+## [2.17.2]
+
+### Added
+
+- Support customizing iOS in-app PiP position
+
 ## [2.17.1]
 
 ### Added
