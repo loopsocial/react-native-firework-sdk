@@ -23,7 +23,7 @@ import FireworkSDK, {
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import StorageKey from '../constants/StorageKey';
 
-const fwNativeVersionOfAndroid = '6.24.3';
+const fwNativeVersionOfAndroid = '6.24.4';
 
 type MoreScreenNavigationProp = CompositeNavigationProp<
   BottomTabNavigationProp<TabParamsList, 'More'>,
