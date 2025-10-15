@@ -12,6 +12,7 @@ import type {
   onLiveStreamChatEventCallback,
   ClickProductCallback,
   SDKInitCallback,
+  CustomLinkInteractionClickCallback,
 } from 'react-native-firework-sdk';
 import FireworkSDK from 'react-native-firework-sdk';
 import * as RootNavigation from '../RootNavigation';
@@ -269,6 +270,17 @@ export default class HostAppService {
       event
     );
   };
+
+  public onCustomLinkInteractionClick?: CustomLinkInteractionClickCallback =
+    async (event) => {
+      FWExampleLoggerUtil.log(
+        { shouldCache: true },
+        'onCustomLinkInteractionClick',
+        event
+      );
+      await this.closePlayerOrStartFloatingPlayer();
+      this.navigate('LinkContent', { url: event.url });
+    };
 
   public onClickProduct?: ClickProductCallback = async (event) => {
     FWExampleLoggerUtil.log(

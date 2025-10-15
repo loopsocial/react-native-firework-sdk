@@ -1,5 +1,11 @@
 # CHANGELOG
 
+## [2.17.5]
+
+### Added
+
+- Support customizing link interaction click behavior
+
 ## [2.17.4]
 
 ### Fixed

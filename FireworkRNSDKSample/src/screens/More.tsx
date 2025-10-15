@@ -340,6 +340,13 @@ function More() {
     },
   });
 
+  dataList.push({
+    title: 'Enable Link Interaction Click Callback',
+    pressCallback: (_) => {
+      navigation.push('EnableLinkInteractionClickCallback');
+    },
+  });
+
   useEffect(() => {
     const sycnCurrentDisplayLanguageFromStorage = async () => {
       try {

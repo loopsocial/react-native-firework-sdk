@@ -34,6 +34,7 @@ import SetShareBaseURL from './screens/SetShareBaseURL';
 import EnablePushingRNContainer from './screens/EnablePushingRNContainer';
 import EnableNativeNavigation from './screens/EnableNativeNavigation';
 import EnablePausePlayer from './screens/EnablePausePlayer';
+import EnableLinkInteractionClickCallback from './screens/EnableLinkInteractionClickCallback';
 import Log from './screens/Log';
 import CustomThemeProvider from './components/CustomThemeProvider';
 
@@ -193,6 +194,11 @@ const FWNavigationContainer = () => {
           name: 'EnablePausePlayer',
           component: EnablePausePlayer,
           options: { title: 'Enable Pause Player' },
+        })}
+        {renderScreen({
+          name: 'EnableLinkInteractionClickCallback',
+          component: EnableLinkInteractionClickCallback,
+          options: { title: 'Enable Link Interaction Click Callback' },
         })}
         {renderScreen({
           name: 'Log',
