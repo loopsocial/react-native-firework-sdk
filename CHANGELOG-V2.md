@@ -1,5 +1,11 @@
 # CHANGELOG
 
+## [2.18.0]
+
+### Added
+
+- Support vertical scroll player
+
 ## [2.17.5]
 
 ### Added
