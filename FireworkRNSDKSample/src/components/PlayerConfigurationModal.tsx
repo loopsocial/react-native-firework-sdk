@@ -30,6 +30,7 @@ import type {
   VideoPlayerCTAWidth,
   VideoPlayerLogoConfiguration,
   VideoPlayerLogoOption,
+  ScrollDirection,
 } from 'react-native-firework-sdk';
 import { PipPlacement } from 'react-native-firework-sdk';
 
@@ -69,6 +70,7 @@ type PlayerConfigurationFormData = {
   statusBarHidden?: boolean;
   statusBarStyle?: number;
   pipPlacement?: number;
+  scrollDirection?: number;
 };
 
 const PlayStyleList: VideoPlayerStyle[] = ['full', 'fit'];
@@ -101,6 +103,9 @@ const PipPlacementList: PipPlacement[] = [
   PipPlacement.BottomLeft,
   PipPlacement.BottomRight,
 ];
+
+const ScrollDirectionList: ScrollDirection[] = ['horizontal', 'vertical'];
+const ScrollDirectionDisplayList: string[] = ['Horizontal', 'Vertical'];
 
 const PlayerConfigurationModal = ({
   visible,
@@ -317,6 +322,15 @@ const PlayerConfigurationModal = ({
         } else {
           setValue('pipPlacement', 3); // default placement is 'bottomRight'
         }
+
+        const scrollDirectionIndex = configuration.scrollDirection
+          ? ScrollDirectionList.indexOf(configuration.scrollDirection)
+          : -1;
+        if (scrollDirectionIndex >= 0) {
+          setValue('scrollDirection', scrollDirectionIndex);
+        } else {
+          setValue('scrollDirection', undefined);
+        }
       } else {
         reset();
       }
@@ -437,6 +451,12 @@ const PlayerConfigurationModal = ({
         typeof data.pipPlacement === 'number'
           ? PipPlacementList[data.pipPlacement]
           : undefined;
+
+      configuration.scrollDirection =
+        typeof data.scrollDirection === 'number'
+          ? ScrollDirectionList[data.scrollDirection]
+          : undefined;
+
       onSubmit(configuration);
     }
   };
@@ -810,6 +830,24 @@ const PlayerConfigurationModal = ({
               </View>
             )}
             name="pipPlacement"
+          />
+        </View>
+      </View>
+      <View style={styles.formItemRow}>
+        <View style={{ ...styles.formItem }}>
+          <Text style={styles.formItemLabel}>Scroll Direction</Text>
+          <Controller
+            control={control}
+            render={({ field: { onChange, value } }) => (
+              <ButtonGroup
+                buttons={ScrollDirectionDisplayList}
+                selectedIndex={value}
+                onPress={(newValue) => {
+                  onChange(newValue);
+                }}
+              />
+            )}
+            name="scrollDirection"
           />
         </View>
       </View>

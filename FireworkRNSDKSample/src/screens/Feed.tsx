@@ -115,6 +115,7 @@ const Feed = () => {
     statusBarHidden: false,
     statusBarStyle: 'light',
     pipPlacement: PipPlacement.BottomRight,
+    scrollDirection: 'horizontal',
   };
   const [playerConfiguration, setPlayerConfiguration] = useState<
     VideoPlayerConfiguration | undefined
@@ -150,6 +151,7 @@ const Feed = () => {
     statusBarHidden: false,
     statusBarStyle: 'light',
     pipPlacement: PipPlacement.BottomRight,
+    scrollDirection: 'horizontal',
   };
   const [storyBlockConfiguration, setStoryBlockConfiguration] = useState<
     StoryBlockConfiguration | undefined

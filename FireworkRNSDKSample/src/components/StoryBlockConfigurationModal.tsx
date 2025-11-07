@@ -28,6 +28,7 @@ import type {
   VideoPlayerLogoConfiguration,
   VideoPlayerLogoOption,
   VideoPlayerStyle,
+  ScrollDirection,
 } from 'react-native-firework-sdk';
 import { PipPlacement } from 'react-native-firework-sdk';
 import Ionicons from 'react-native-vector-icons/Ionicons';
@@ -72,6 +73,8 @@ type StoryBlockConfigurationFormData = {
   statusBarHidden?: boolean;
   statusBarStyle?: number;
   pipPlacement?: number;
+  scrollDirection?: number;
+  enableScrollForVertical?: boolean;
 };
 
 const PlayStyleList: VideoPlayerStyle[] = ['full', 'fit'];
@@ -104,6 +107,9 @@ const PipPlacementList: PipPlacement[] = [
   PipPlacement.BottomLeft,
   PipPlacement.BottomRight,
 ];
+
+const ScrollDirectionList: ScrollDirection[] = ['horizontal', 'vertical'];
+const ScrollDirectionDisplayList: string[] = ['Horizontal', 'Vertical'];
 
 const StoryBlockConfigurationModal = ({
   visible,
@@ -322,6 +328,20 @@ const StoryBlockConfigurationModal = ({
         } else {
           setValue('pipPlacement', 3); // default placement is 'bottomRight'
         }
+
+        const scrollDirectionIndex = configuration.scrollDirection
+          ? ScrollDirectionList.indexOf(configuration.scrollDirection)
+          : -1;
+        if (scrollDirectionIndex >= 0) {
+          setValue('scrollDirection', scrollDirectionIndex);
+        } else {
+          setValue('scrollDirection', undefined);
+        }
+
+        setValue(
+          'enableScrollForVertical',
+          configuration.enableScrollForVertical
+        );
       } else {
         reset();
       }
@@ -451,6 +471,13 @@ const StoryBlockConfigurationModal = ({
         typeof data.pipPlacement === 'number'
           ? PipPlacementList[data.pipPlacement]
           : undefined;
+
+      configuration.scrollDirection =
+        typeof data.scrollDirection === 'number'
+          ? ScrollDirectionList[data.scrollDirection]
+          : undefined;
+
+      configuration.enableScrollForVertical = data.enableScrollForVertical;
 
       onSubmit(configuration);
     }
@@ -831,6 +858,42 @@ const StoryBlockConfigurationModal = ({
               </View>
             )}
             name="pipPlacement"
+          />
+        </View>
+      </View>
+      <View style={styles.formItemRow}>
+        <View style={{ ...styles.formItem }}>
+          <Text style={styles.formItemLabel}>Scroll Direction</Text>
+          <Controller
+            control={control}
+            render={({ field: { onChange, value } }) => (
+              <ButtonGroup
+                buttons={ScrollDirectionDisplayList}
+                selectedIndex={value}
+                onPress={(newValue) => {
+                  onChange(newValue);
+                }}
+              />
+            )}
+            name="scrollDirection"
+          />
+        </View>
+      </View>
+      <View style={styles.formItemRow}>
+        <View style={styles.formItem}>
+          <Controller
+            control={control}
+            render={({ field: { onChange, value } }) => {
+              return (
+                <CheckBox
+                  center
+                  title={`Enable Scroll${'\n'}For Vertical`}
+                  checked={value}
+                  onPress={() => onChange(!value)}
+                />
+              );
+            }}
+            name="enableScrollForVertical"
           />
         </View>
       </View>

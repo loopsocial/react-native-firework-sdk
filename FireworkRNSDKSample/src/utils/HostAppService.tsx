@@ -41,7 +41,11 @@ export default class HostAppService {
       'component type',
       FireworkSDK.getInstance().getComponentType(event.video.feedId ?? ''),
       'customCTA',
-      event.customCTA ?? 'none'
+      event.customCTA ?? 'none',
+      'videoType',
+      event.video.videoType ?? 'none',
+      'liveStreamStatus',
+      event.video.liveStreamStatus ?? 'none'
     );
 
     await this.closePlayerOrStartFloatingPlayer();
@@ -62,7 +66,11 @@ export default class HostAppService {
       'component type',
       FireworkSDK.getInstance().getComponentType(event.video.feedId ?? ''),
       'customCTA',
-      event.customCTA ?? 'none'
+      event.customCTA ?? 'none',
+      'videoType',
+      event.video.videoType ?? 'none',
+      'liveStreamStatus',
+      event.video.liveStreamStatus ?? 'none'
     );
     if (!this.shouldShowCart()) {
       await this.closePlayerOrStartFloatingPlayer();
@@ -163,7 +171,11 @@ export default class HostAppService {
         'onCustomCTAClick event',
         event,
         'component type',
-        FireworkSDK.getInstance().getComponentType(event.video.feedId ?? '')
+        FireworkSDK.getInstance().getComponentType(event.video.feedId ?? ''),
+        'videoType',
+        event.video.videoType ?? 'none',
+        'liveStreamStatus',
+        event.video.liveStreamStatus ?? 'none'
       );
       if (store.getState().navigation.enablePausePlayer) {
         if (Platform.OS === 'ios') {
@@ -187,7 +199,11 @@ export default class HostAppService {
       'onCustomTapProductCard event',
       event,
       'component type',
-      FireworkSDK.getInstance().getComponentType(event.video.feedId ?? '')
+      FireworkSDK.getInstance().getComponentType(event.video.feedId ?? ''),
+      'videoType',
+      event.video.videoType ?? 'none',
+      'liveStreamStatus',
+      event.video.liveStreamStatus ?? 'none'
     );
 
     if (store.getState().navigation.enablePausePlayer) {
@@ -210,7 +226,11 @@ export default class HostAppService {
       'onUpdateProductDetails event',
       event,
       'component type',
-      FireworkSDK.getInstance().getComponentType(event.video.feedId ?? '')
+      FireworkSDK.getInstance().getComponentType(event.video.feedId ?? ''),
+      'videoType',
+      event.video.videoType ?? 'none',
+      'liveStreamStatus',
+      event.video.liveStreamStatus ?? 'none'
     );
     let productList: Product[] = [];
     const productIds = event.productIds ?? [];
@@ -253,12 +273,24 @@ export default class HostAppService {
       'onVideoFeedClick event',
       event,
       'component type',
-      FireworkSDK.getInstance().getComponentType(event.info.feedId ?? '')
+      FireworkSDK.getInstance().getComponentType(event.info.feedId ?? ''),
+      'videoType',
+      event.info.videoType ?? 'none',
+      'liveStreamStatus',
+      event.info.liveStreamStatus ?? 'none'
     );
   };
 
   public onLiveStreamEvent?: onLiveStreamEventCallback = async (event) => {
-    FWExampleLoggerUtil.log({ shouldCache: true }, 'onLiveStreamEvent', event);
+    FWExampleLoggerUtil.log(
+      { shouldCache: true },
+      'onLiveStreamEvent',
+      event,
+      'videoType',
+      event.info.videoType ?? 'none',
+      'liveStreamStatus',
+      event.info.liveStreamStatus ?? 'none'
+    );
   };
 
   public onLiveStreamChatEvent?: onLiveStreamChatEventCallback = async (
@@ -267,7 +299,11 @@ export default class HostAppService {
     FWExampleLoggerUtil.log(
       { shouldCache: true },
       'onLiveStreamChatEvent',
-      event
+      event,
+      'videoType',
+      event.liveStream.videoType ?? 'none',
+      'liveStreamStatus',
+      event.liveStream.liveStreamStatus ?? 'none'
     );
   };
 
