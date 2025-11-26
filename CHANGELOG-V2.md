@@ -1,5 +1,11 @@
 # CHANGELOG
 
+## [2.18.1]
+
+### Breaking Changes
+
+- Remove `userId` from SDK initialization method
+
 ## [2.18.0]
 
 ### Added
