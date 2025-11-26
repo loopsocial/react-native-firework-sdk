@@ -122,7 +122,7 @@ public class MainApplication extends Application implements ReactApplication {
 
     FWReactNativeSDK.INSTANCE.init(
       this,
-      new FWSDKInitOptionsModel(null, FWPlayerLaunchBehavior.MuteOnFirstLaunch)
+      new FWSDKInitOptionsModel(FWPlayerLaunchBehavior.MuteOnFirstLaunch)
     );
   }
 
