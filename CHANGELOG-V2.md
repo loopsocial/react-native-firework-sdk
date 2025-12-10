@@ -1,5 +1,9 @@
 # CHANGELOG
 
+## [2.18.2-beta.1]
+
+- Beta release
+
 ## [2.18.1]
 
 ### Breaking Changes
