@@ -1,4 +1,3 @@
-import AppTrackingTransparency
 import FireworkVideo
 import FireworkVideoIVSSupport
 import React
@@ -24,9 +23,6 @@ class AppDelegate: RCTAppDelegate {
             SDKInitOptions(videoLaunchBehavior: .muteOnFirstLaunch)
         )
         FireworkVideoSDK.enableIVSPlayback()
-        DispatchQueue.main.asyncAfter(wallDeadline: .now() + 2) {
-            self.requestIDFAPermision()
-        }
 
         return super.application(application, didFinishLaunchingWithOptions: launchOptions)
     }
@@ -41,25 +37,5 @@ class AppDelegate: RCTAppDelegate {
         #else
             Bundle.main.url(forResource: "main", withExtension: "jsbundle")
         #endif
-    }
-
-    private func requestIDFAPermision() {
-        if #available(iOS 14.5, *) {
-            ATTrackingManager.requestTrackingAuthorization { status in
-                switch status {
-                case .authorized:
-                    debugPrint("ATT permission authorized")
-                case .denied:
-                    debugPrint("ATT permission denied")
-                case .notDetermined:
-                    debugPrint("ATT permission notDetermined")
-                case .restricted:
-                    debugPrint("ATT permission restricted")
-                @unknown default:
-                    break
-                }
-            }
-        } else {
-        }
     }
 }
