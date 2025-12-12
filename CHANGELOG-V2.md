@@ -1,5 +1,9 @@
 # CHANGELOG
 
+## [2.18.2-beta.3]
+
+- Beta release
+
 ## [2.18.2-beta.2]
 
 - Beta release
