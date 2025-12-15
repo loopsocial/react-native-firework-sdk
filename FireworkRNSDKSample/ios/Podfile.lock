@@ -1554,7 +1554,7 @@ PODS:
     - RCT-Folly (= 2024.11.18.00)
     - React-debug
     - React-jsi (= 0.78.2)
-  - react_native_firework_sdk (2.18.2):
+  - react_native_firework_sdk (2.18.3):
     - DoubleConversion
     - FireworkVideo (= 1.37.5)
     - FireworkVideoUI (= 0.2.15)
@@ -2062,7 +2062,7 @@ SPEC CHECKSUMS:
   React-runtimescheduler: 9957105c1d7f068a1c00760a9c332167634f945a
   React-timing: 96e060d0d0bf18522d363716623ed2c61f7107c7
   React-utils: 93529ff7b4baa71aea1f42a48e9d3d06db398618
-  react_native_firework_sdk: f1a86985f078e60fd80103eea9f9ab91edf24b46
+  react_native_firework_sdk: 2789fc7b55f79dc6a3c9b3bdf8b00b15541cbc48
   ReactAppDependencyProvider: 4893bde33952f997a323eb1a1ee87a72764018ff
   ReactCodegen: 31f8d982d351eb4dbf3af220f363c7398ae667c8
   ReactCommon: 0adf8f24a3415b6815613bad362d390726b33fc7
