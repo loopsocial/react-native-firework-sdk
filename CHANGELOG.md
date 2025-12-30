@@ -1,5 +1,11 @@
 # CHANGELOG
 
+## [2.18.7]
+
+### Fixed
+
+- Bug fixes and improvements
+
 ## [2.18.6]
 
 ### Fixed
