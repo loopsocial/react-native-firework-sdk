@@ -1,4 +1,4 @@
-import { StyleSheet, View } from 'react-native';
+import { Platform, StyleSheet, View } from 'react-native';
 import type { VideoFeedConfiguration } from 'react-native-firework-sdk';
 import { VideoFeed, type VideoFeedPadding } from 'react-native-firework-sdk';
 
@@ -16,11 +16,16 @@ const CircleThumbnails = () => {
     left: paddingLeft,
   };
   const aspectRatio = 1.0;
-  const thumbnailHeight = feedHeight - paddingTop - paddingBottom;
+  let thumbnailHeight = feedHeight - paddingTop - paddingBottom;
+  if (Platform.OS === 'android') {
+    // We don't support content padding on Android now.
+    // Hence, we use the feed height as the thumbnail height on Android.
+    thumbnailHeight = feedHeight;
+  }
 
   const videoFeedConfiguration: VideoFeedConfiguration = {
     aspectRatio: aspectRatio,
-    contentPadding: contentPadding,
+    contentPadding: Platform.OS === 'android' ? undefined : contentPadding, // We don't support content padding on Android now.
     cornerRadius: thumbnailHeight / 2,
     title: { hidden: true },
   };
