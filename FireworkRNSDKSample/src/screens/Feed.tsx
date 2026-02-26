@@ -67,6 +67,7 @@ const Feed = () => {
     title: { hidden: false, fontSize: 14 },
     titlePosition: 'nested',
     showAdBadge: true,
+    itemSpacing: 10,
   };
   const [feedConfiguration, setFeedConfiguration] =
     useState<VideoFeedConfiguration>(defaultFeedConfiguration);
@@ -260,7 +261,6 @@ const Feed = () => {
               feedConfiguration.titlePosition === 'stacked'
                 ? { top: 8, right: 8, bottom: 0, left: 8 }
                 : undefined,
-            itemSpacing: 10,
           }}
           videoPlayerConfiguration={playerConfiguration}
           adConfiguration={feedAdConfiguration}

@@ -1,9 +1,9 @@
-import { Platform, StyleSheet, View } from 'react-native';
+import { StyleSheet, View } from 'react-native';
 import type { VideoFeedConfiguration } from 'react-native-firework-sdk';
 import { VideoFeed, type VideoFeedPadding } from 'react-native-firework-sdk';
 
 const CircleThumbnails = () => {
-  const feedHeight = 200;
+  const feedHeight = 250;
   const paddingTop = 10;
   const paddingRight = 10;
   const paddingBottom = 10;
@@ -16,24 +16,21 @@ const CircleThumbnails = () => {
     left: paddingLeft,
   };
   const aspectRatio = 1.0;
-  let thumbnailHeight = feedHeight - paddingTop - paddingBottom;
-  if (Platform.OS === 'android') {
-    // We don't support content padding on Android now.
-    // Hence, we use the feed height as the thumbnail height on Android.
-    thumbnailHeight = feedHeight;
-  }
+  const thumbnailHeight = feedHeight - paddingTop - paddingBottom;
 
   const videoFeedConfiguration: VideoFeedConfiguration = {
     aspectRatio: aspectRatio,
-    contentPadding: Platform.OS === 'android' ? undefined : contentPadding, // We don't support content padding on Android now.
+    contentPadding: contentPadding,
     cornerRadius: thumbnailHeight / 2,
     title: { hidden: true },
   };
   return (
     <View style={styles.container}>
       <VideoFeed
-        style={{ height: feedHeight }}
-        source="discover"
+        style={{ height: feedHeight, backgroundColor: '#ff0000' }}
+        source="playlist"
+        channel="m08mZk9"
+        playlist="oPNeKr"
         mode="row"
         videoFeedConfiguration={videoFeedConfiguration}
       />
@@ -46,7 +43,7 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: 'center',
     alignItems: 'stretch',
-    backgroundColor: 'white',
+    backgroundColor: '#e8f5e9',
   },
 });
 
