@@ -234,6 +234,52 @@ export default class HostAppService {
     );
     let productList: Product[] = [];
     const productIds = event.productIds ?? [];
+    // Umcomment if need test
+    // try {
+    //   for (let index = 0; index < productIds.length; index++) {
+    //     const productId = productIds[index]!;
+    //     // const shopifyProduct =
+    //     //   await ShopifyClient.getInstance().fetchProduct(productId);
+    //     const imageId = 10 + index * 10;
+    //     let product: Product = { productId: productId };
+    //     product.name = `[Hydrated] ${productId} - Flash Sale`;
+    //     product.subtitle = 'Save up to 50% today';
+    //     product.currency = 'EUR';
+    //     product.description = `[Hydrated] Limited time offer on ${productId}. Get it before it's gone!`;
+    //     product.isAvailable = true;
+    //     product.mainProductImage = `https://picsum.photos/id/${imageId}/600/600`;
+    //     product.hidePrice = false;
+    //     product.customCTATitleTranslation = 'Shop Now';
+    //     product.hidePrimaryCTA = false;
+    //     product.customCTATarget = '_blank';
+    //     product.customCTAUrl = `https://www.firework.com/shop/${productId}`;
+    //     product.customCTATitle = 'Add to Cart';
+    //     product.hidden = false;
+    //     product.units = [0, 1, 2].map((unitIndex) => {
+    //       const unitId = `unit-${index}-${unitIndex}`;
+    //       const unitImageId = imageId + unitIndex + 1;
+    //       const variantPrice = 19.99 + unitIndex * 15;
+    //       const variantOriginalPrice = variantPrice * 2.5;
+    //       return {
+    //         unitId,
+    //         name: `[Hydrated] Unit ${unitIndex + 1} - Limited Edition`,
+    //         price: {
+    //           amount: variantPrice,
+    //           currencyCode: 'EUR',
+    //         },
+    //         originalPrice: {
+    //           amount: variantOriginalPrice,
+    //           currencyCode: 'EUR',
+    //         },
+    //         url: `https://www.firework.com/shop/${productId}/units/${unitId}`,
+    //         imageUrl: `https://picsum.photos/id/${unitImageId}/400/400`,
+    //         isAvailable: unitIndex !== 2,
+    //       };
+    //     });
+    //     productList.push(product);
+    //   }
+    //   return productList;
+    // } catch (e) {}
     try {
       for (let productId of productIds) {
         const shopifyProduct =
