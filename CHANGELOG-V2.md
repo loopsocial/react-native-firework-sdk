@@ -1,5 +1,11 @@
 # CHANGELOG
 
+## [2.18.10]
+
+### Added
+
+- Support more product hydration parameters
+
 ## [2.18.9]
 
 ### Fixed
