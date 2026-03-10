@@ -3,6 +3,7 @@ import React, { useEffect } from 'react';
 import FireworkSDK, {
   type DataTrackingLevel,
   LivestreamPlayerDesignVersion,
+  ShortVideoPlayerDesignVersion,
 } from 'react-native-firework-sdk';
 import { RootSiblingParent } from 'react-native-root-siblings';
 import { Provider } from 'react-redux';
@@ -77,6 +78,18 @@ const FWNavigationContainer = () => {
     };
 
     sycnCurrentLivestreamPlayerDesignVersion();
+
+    const sycnCurrentShortVideoPlayerDesignVersion = async () => {
+      const version = await AsyncStorage.getItem(
+        StorageKey.shortVideoPlayerDesignVersion
+      );
+      if (version) {
+        FireworkSDK.getInstance().shortVideoPlayerDesignVersion =
+          version as ShortVideoPlayerDesignVersion;
+      }
+    };
+
+    sycnCurrentShortVideoPlayerDesignVersion();
   }, []);
 
   const renderScreen = ({

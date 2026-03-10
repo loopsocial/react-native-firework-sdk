@@ -134,9 +134,7 @@ export default function FeedLayouts() {
       title: 'Playlist Group Feed',
       pressCallback: () => {
         const options = [
-          ...defaultPlaylistGroupInfoArray.map(
-            (item) => `PlaylistGroupId: ${item.playlistGroupId}`
-          ),
+          ...defaultPlaylistGroupInfoArray.map((item) => item.playlistGroupId),
           'Custom',
           'Cancel',
         ];
