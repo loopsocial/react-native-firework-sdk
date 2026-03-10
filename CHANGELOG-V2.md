@@ -1,5 +1,12 @@
 # CHANGELOG
 
+## [2.18.11]
+
+### Added
+
+- Support switch short video design, V1 or V2
+- Support playlist group source for video feed
+
 ## [2.18.10]
 
 ### Added
