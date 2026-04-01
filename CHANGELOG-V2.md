@@ -1,5 +1,24 @@
 # CHANGELOG
 
+## [2.19.0]
+
+### Added
+
+- Support bottom padding for embed storyblock
+- Support merge product variants in hydration
+- Support hidden product in hydration
+- Support customizing CTA shape
+- Support hiding arrow buttons for fullscreen player
+- Support loop and dimiss mode in pip and full-screen mode
+
+### Changed
+
+- Optimize initialization flow
+
+### Fixed
+
+- Bug fixes and improvements
+
 ## [2.18.13]
 
 ### Fixed
