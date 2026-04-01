@@ -87,12 +87,14 @@ const Feed = () => {
   const defaultPlayerConfiguration: VideoPlayerConfiguration = {
     playerStyle: 'full',
     videoCompleteAction: 'advanceToNext',
+    feedCompleteAction: 'dismiss',
     showShareButton: true,
     showMuteButton: true,
     showPlaybackButton: true,
     ctaButtonStyle: {
       fontSize: 14,
       iOSFontInfo: { systemFontWeight: 'bold' },
+      shape: 'roundRectangle',
     },
     ctaDelay: {
       type: 'constant',
@@ -117,6 +119,7 @@ const Feed = () => {
     statusBarStyle: 'light',
     pipPlacement: PipPlacement.BottomRight,
     scrollDirection: 'horizontal',
+    isArrowButtonVisible: true,
   };
   const [playerConfiguration, setPlayerConfiguration] = useState<
     VideoPlayerConfiguration | undefined
@@ -124,6 +127,7 @@ const Feed = () => {
   const defaultStoryBlockConfiguration: StoryBlockConfiguration = {
     playerStyle: 'full',
     videoCompleteAction: 'advanceToNext',
+    feedCompleteAction: 'loop',
     showShareButton: true,
     showPlaybackButton: true,
     showMuteButton: true,
@@ -147,12 +151,15 @@ const Feed = () => {
     },
     additionalControlsInset: {
       top: 0,
+      bottom: 0,
     },
     shouldExtendMediaOutsideSafeArea: false,
     statusBarHidden: false,
     statusBarStyle: 'light',
     pipPlacement: PipPlacement.BottomRight,
     scrollDirection: 'horizontal',
+    isArrowButtonVisible: true,
+    isFullscreenArrowButtonVisible: true,
   };
   const [storyBlockConfiguration, setStoryBlockConfiguration] = useState<
     StoryBlockConfiguration | undefined

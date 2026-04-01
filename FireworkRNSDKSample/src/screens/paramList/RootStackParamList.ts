@@ -32,5 +32,6 @@ export type RootStackParamList = {
   EnableNativeNavigation: undefined;
   EnablePausePlayer: undefined;
   EnableLinkInteractionClickCallback: undefined;
+  EnableProductDetailsHydration: undefined;
   Log: undefined;
 };

@@ -24,7 +24,7 @@ import FireworkSDK, {
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import StorageKey from '../constants/StorageKey';
 
-const fwNativeVersionOfAndroid = '6.30.2';
+const fwNativeVersionOfAndroid = '6.30.6';
 
 type MoreScreenNavigationProp = CompositeNavigationProp<
   BottomTabNavigationProp<TabParamsList, 'More'>,
@@ -388,6 +388,13 @@ function More() {
     title: 'Enable Link Interaction Click Callback',
     pressCallback: (_) => {
       navigation.push('EnableLinkInteractionClickCallback');
+    },
+  });
+
+  dataList.push({
+    title: 'Enable Product Details Hydration',
+    pressCallback: (_) => {
+      navigation.push('EnableProductDetailsHydration');
     },
   });
 

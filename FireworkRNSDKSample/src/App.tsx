@@ -36,6 +36,7 @@ import EnablePushingRNContainer from './screens/EnablePushingRNContainer';
 import EnableNativeNavigation from './screens/EnableNativeNavigation';
 import EnablePausePlayer from './screens/EnablePausePlayer';
 import EnableLinkInteractionClickCallback from './screens/EnableLinkInteractionClickCallback';
+import EnableProductDetailsHydration from './screens/EnableProductDetailsHydration';
 import Log from './screens/Log';
 import CustomThemeProvider from './components/CustomThemeProvider';
 
@@ -212,6 +213,11 @@ const FWNavigationContainer = () => {
           name: 'EnableLinkInteractionClickCallback',
           component: EnableLinkInteractionClickCallback,
           options: { title: 'Enable Link Interaction Click Callback' },
+        })}
+        {renderScreen({
+          name: 'EnableProductDetailsHydration',
+          component: EnableProductDetailsHydration,
+          options: { title: 'Enable Product Details Hydration' },
         })}
         {renderScreen({
           name: 'Log',

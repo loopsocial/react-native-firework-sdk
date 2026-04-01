@@ -25,6 +25,7 @@ import type { RootStackParamList } from '../screens/paramList/RootStackParamList
 import { Platform } from 'react-native';
 import FWExampleLoggerUtil from './FWExampleLoggerUtil';
 import { topName as topAppName } from '../../app.json';
+import FWLoggerUtil from '../../../src/utils/FWLoggerUtil';
 
 export default class HostAppService {
   private static _instance?: HostAppService;
@@ -232,85 +233,146 @@ export default class HostAppService {
       'liveStreamStatus',
       event.video.liveStreamStatus ?? 'none'
     );
-    let productList: Product[] = [];
-    const productIds = event.productIds ?? [];
-    // Umcomment if need test
-    // try {
-    //   for (let index = 0; index < productIds.length; index++) {
-    //     const productId = productIds[index]!;
-    //     // const shopifyProduct =
-    //     //   await ShopifyClient.getInstance().fetchProduct(productId);
-    //     const imageId = 10 + index * 10;
-    //     let product: Product = { productId: productId };
-    //     product.name = `[Hydrated] ${productId} - Flash Sale`;
-    //     product.subtitle = 'Save up to 50% today';
-    //     product.currency = 'EUR';
-    //     product.description = `[Hydrated] Limited time offer on ${productId}. Get it before it's gone!`;
-    //     product.isAvailable = true;
-    //     product.mainProductImage = `https://picsum.photos/id/${imageId}/600/600`;
-    //     product.hidePrice = false;
-    //     product.customCTATitleTranslation = 'Shop Now';
-    //     product.hidePrimaryCTA = false;
-    //     product.customCTATarget = '_blank';
-    //     product.customCTAUrl = `https://www.firework.com/shop/${productId}`;
-    //     product.customCTATitle = 'Add to Cart';
-    //     product.hidden = false;
-    //     product.units = [0, 1, 2].map((unitIndex) => {
-    //       const unitId = `unit-${index}-${unitIndex}`;
-    //       const unitImageId = imageId + unitIndex + 1;
-    //       const variantPrice = 19.99 + unitIndex * 15;
-    //       const variantOriginalPrice = variantPrice * 2.5;
-    //       return {
-    //         unitId,
-    //         name: `[Hydrated] Unit ${unitIndex + 1} - Limited Edition`,
-    //         price: {
-    //           amount: variantPrice,
-    //           currencyCode: 'EUR',
-    //         },
-    //         originalPrice: {
-    //           amount: variantOriginalPrice,
-    //           currencyCode: 'EUR',
-    //         },
-    //         url: `https://www.firework.com/shop/${productId}/units/${unitId}`,
-    //         imageUrl: `https://picsum.photos/id/${unitImageId}/400/400`,
-    //         isAvailable: unitIndex !== 2,
-    //       };
-    //     });
-    //     productList.push(product);
-    //   }
-    //   return productList;
-    // } catch (e) {}
+
+    FWLoggerUtil.log(
+      `Host app receive onUpdateProductDetails callback productIds: ${event.productIds}`
+    );
+
     try {
-      for (let productId of productIds) {
-        const shopifyProduct =
-          await ShopifyClient.getInstance().fetchProduct(productId);
-        let product: Product = { productId: productId };
-        product.name = shopifyProduct.title;
-        product.description = (shopifyProduct as any).descriptionHtml;
-        product.units = shopifyProduct.variants.map((shopifyProductVariant) => {
-          const {
-            amount,
-            currencyCode,
-          }: { amount: string; currencyCode: string } = (
-            shopifyProductVariant as any
-          ).priceV2;
-          const unitId = ShopifyClient.getInstance().parseId(
-            `${shopifyProductVariant.id}`
-          );
-          return {
-            unitId,
-            name: shopifyProductVariant.title,
-            price: {
-              amount: amount ? parseFloat(amount) : 0,
-              currencyCode,
+      const updatedProducts: Product[] = [];
+
+      // NOTE: Do NOT use setTimeout here. React Native's setTimeout callback
+      // delivery relies on Choreographer frame callbacks, which are suspended
+      // when the RN Activity is paused (e.g. when the native PlayerActivity
+      // fullscreen is in the foreground). This causes the await to hang until
+      // the user exits fullscreen. Use Promise.resolve() for a non-blocking
+      // async yield, or fetch() for real network calls (fetch resolves through
+      // the bridge, not Choreographer).
+      await Promise.resolve();
+
+      FWExampleLoggerUtil.log(
+        { shouldCache: true },
+        'Simulated network request completed'
+      );
+
+      for (const [index, productId] of event.productIds.entries()) {
+        const isOnSale = Math.random() > 0.5;
+        const productIndex = index % 3;
+
+        // Product hidden: 1st product hidden, 2nd product explicitly not hidden, rest omit hidden
+        const hidden =
+          productIndex === 0 ? true : productIndex === 1 ? false : undefined;
+        // Product isAvailable: 1st product available, 2nd product unavailable, rest omit (SDK keeps its value)
+        const productIsAvailable =
+          productIndex === 0 ? true : productIndex === 1 ? false : undefined;
+
+        const product: Product = {
+          productId,
+          name: `Hydrated Product ${productId}`,
+          subtitle: 'Latest version',
+          description: `This is the hydrated product data for ${productId}. Updated at ${new Date().toLocaleTimeString()}`,
+          isAvailable: productIsAvailable,
+          mainProductImage:
+            'https://cdn4.fireworktv.com/medias/2022/9/6/1662493723-camvuesx/720_720/7197ThQPZFL._AC_UX500_.jpg',
+          currency: 'USD',
+          hidePrice: false,
+          hidden,
+          units: [
+            {
+              unitId: `${productId}-hydration-variant-1`,
+              name: 'Hydration variant 1',
+              url: 'https://www.amazon.com/Soda-Glove-Ankle-Elastic-Chunky/dp/B07VXKVZTR/ref=sr_1_4?crid=UB0LJITJD8FZ&keywords=womens+heel+boots&qid=1662493690&sprefix=womens+heel+boots%2Caps%2C160&sr=8-4',
+              imageUrl:
+                'https://cdn4.fireworktv.com/medias/2022/9/6/1662493723-camvuesx/720_720/7197ThQPZFL._AC_UX500_.jpg',
+              price: {
+                amount: 100,
+                currencyCode: 'USD',
+              },
+              originalPrice: isOnSale
+                ? {
+                    amount: 120,
+                    currencyCode: 'USD',
+                  }
+                : undefined,
+              isAvailable: true,
+              options: [
+                { name: 'Color', value: 'Black(hydrated)' },
+                { name: 'Size', value: 'L(hydrated)' },
+              ],
             },
-          };
-        });
-        productList.push(product);
+            {
+              // Unit with isAvailable explicitly false
+              unitId: `${productId}-hydration-variant-2`,
+              name: 'Hydration variant 2 (unavailable)',
+              url: 'https://www.amazon.com/Soda-Glove-Ankle-Elastic-Chunky/dp/B08L479F2J/ref=sr_1_4?crid=UB0LJITJD8FZ&keywords=womens%2Bheel%2Bboots&qid=1662493690&sprefix=womens%2Bheel%2Bboots%2Caps%2C160&sr=8-4&th=1',
+              imageUrl:
+                'https://cdn4.fireworktv.com/medias/2024/8/28/1724837216-crjnidhk/720_720/WechatIMG124.jpg',
+              price: {
+                amount: 110,
+                currencyCode: 'USD',
+              },
+              originalPrice: isOnSale
+                ? {
+                    amount: 130,
+                    currencyCode: 'USD',
+                  }
+                : undefined,
+              isAvailable: false,
+              options: [
+                { name: 'Color', value: 'White(hydrated)' },
+                { name: 'Size', value: 'M(hydrated)' },
+              ],
+            },
+            {
+              // Unit with isAvailable omitted — SDK should keep its original value
+              unitId: `${productId}-hydration-variant-3`,
+              name: 'Hydration variant 3 (isAvailable omitted)',
+              url: 'https://www.amazon.com/Soda-Glove-Ankle-Elastic-Chunky/dp/B07VXKVZTR/',
+              imageUrl:
+                'https://cdn4.fireworktv.com/medias/2022/9/6/1662493723-camvuesx/720_720/7197ThQPZFL._AC_UX500_.jpg',
+              price: {
+                amount: 95,
+                currencyCode: 'USD',
+              },
+              options: [
+                { name: 'Color', value: 'Red(hydrated)' },
+                { name: 'Size', value: 'S(hydrated)' },
+              ],
+            },
+          ],
+        };
+
+        updatedProducts.push(product);
+
+        const hiddenLabel =
+          hidden === true
+            ? ' (hidden)'
+            : hidden === false
+              ? ' (visible)'
+              : ' (hidden unchanged)';
+        const availLabel =
+          productIsAvailable === true
+            ? ' (available)'
+            : productIsAvailable === false
+              ? ' (unavailable)'
+              : ' (availability unchanged)';
+
+        FWExampleLoggerUtil.log(
+          { shouldCache: true },
+          `Successfully hydrated product ${productId}${hiddenLabel}${availLabel}`,
+          product
+        );
       }
-      return productList;
-    } catch (e) {}
-    return [];
+
+      return updatedProducts.length > 0 ? updatedProducts : null;
+    } catch (error) {
+      FWExampleLoggerUtil.log(
+        { shouldCache: true },
+        'Error in onUpdateProductDetails',
+        error
+      );
+      return null;
+    }
   };
 
   public onVideoFeedClick?: VideoFeedClickCallback = async (event) => {

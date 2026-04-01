@@ -20,6 +20,7 @@ import {
   Slider,
 } from 'react-native-elements';
 import type {
+  FeedCompleteAction,
   StoryBlockConfiguration,
   VideoPlayerCompleteAction,
   VideoPlayerLivestreamCountdownTimerTheme,
@@ -29,6 +30,7 @@ import type {
   VideoPlayerLogoOption,
   VideoPlayerStyle,
   ScrollDirection,
+  ButtonShape,
 } from 'react-native-firework-sdk';
 import { PipPlacement } from 'react-native-firework-sdk';
 import Ionicons from 'react-native-vector-icons/Ionicons';
@@ -47,6 +49,7 @@ export interface IStoryBlockConfigurationModalProps {
 type StoryBlockConfigurationFormData = {
   playerStyle?: number;
   videoCompleteAction?: number;
+  feedCompleteAction?: number;
   livestreamCountdownTimerTheme?: number;
   showShareButton?: boolean;
   ctaBackgroundColor?: string;
@@ -61,6 +64,7 @@ type StoryBlockConfigurationFormData = {
   ctaHighlightDelayValue?: number;
   shareBaseURL?: string;
   ctaWidth?: number;
+  ctaShape?: number;
   enableCustomButtons?: boolean;
   showVideoDetailTitle?: boolean;
   hideLivestreamCountdownTimer?: boolean;
@@ -69,12 +73,15 @@ type StoryBlockConfigurationFormData = {
   videoPlayerLogoIsClickable?: boolean;
   showReplayBadge?: boolean;
   additionalControlsInsetTop?: string;
+  additionalControlsInsetBottom?: string;
   shouldExtendMediaOutsideSafeArea?: boolean;
   statusBarHidden?: boolean;
   statusBarStyle?: number;
   pipPlacement?: number;
   scrollDirection?: number;
   enableScrollForVertical?: boolean;
+  isArrowButtonVisible?: boolean;
+  isFullscreenArrowButtonVisible?: boolean;
 };
 
 const PlayStyleList: VideoPlayerStyle[] = ['full', 'fit'];
@@ -93,6 +100,8 @@ const CTAWidthList: VideoPlayerCTAWidth[] = [
   'sizeToFit',
 ];
 
+const CTAShapeList: ButtonShape[] = ['roundRectangle', 'oval'];
+
 const VideoPlayerLogoOptionList: VideoPlayerLogoOption[] = [
   'disabled',
   'creator',
@@ -107,6 +116,8 @@ const PipPlacementList: PipPlacement[] = [
   PipPlacement.BottomLeft,
   PipPlacement.BottomRight,
 ];
+
+const FeedCompleteActionList: FeedCompleteAction[] = ['loop', 'dismiss'];
 
 const ScrollDirectionList: ScrollDirection[] = ['horizontal', 'vertical'];
 const ScrollDirectionDisplayList: string[] = ['Horizontal', 'Vertical'];
@@ -187,6 +198,19 @@ const StoryBlockConfigurationModal = ({
           setValue('videoCompleteAction', undefined);
         }
 
+        if (configuration.feedCompleteAction) {
+          const feedCompleteActionIndex = FeedCompleteActionList.indexOf(
+            configuration.feedCompleteAction
+          );
+          if (feedCompleteActionIndex >= 0) {
+            setValue('feedCompleteAction', feedCompleteActionIndex);
+          } else {
+            setValue('feedCompleteAction', undefined);
+          }
+        } else {
+          setValue('feedCompleteAction', undefined);
+        }
+
         if (configuration.countdownTimerConfiguration) {
           const livestreamCountdownTimerIndex =
             LivestreamCountdownTimerThemeList.findIndex(
@@ -253,6 +277,14 @@ const StoryBlockConfigurationModal = ({
           'ctaIOSFontName',
           configuration.ctaButtonStyle?.iOSFontInfo?.fontName
         );
+        if (configuration.ctaButtonStyle?.shape) {
+          const ctaShapeIndex = CTAShapeList.indexOf(
+            configuration.ctaButtonStyle.shape
+          );
+          setValue('ctaShape', ctaShapeIndex >= 0 ? ctaShapeIndex : undefined);
+        } else {
+          setValue('ctaShape', undefined);
+        }
         setValue('showVideoDetailTitle', configuration.showVideoDetailTitle);
         setValue(
           'hideLivestreamCountdownTimer',
@@ -307,6 +339,10 @@ const StoryBlockConfigurationModal = ({
           configuration.additionalControlsInset?.top?.toString()
         );
         setValue(
+          'additionalControlsInsetBottom',
+          configuration.additionalControlsInset?.bottom?.toString()
+        );
+        setValue(
           'shouldExtendMediaOutsideSafeArea',
           configuration.shouldExtendMediaOutsideSafeArea
         );
@@ -342,6 +378,12 @@ const StoryBlockConfigurationModal = ({
           'enableScrollForVertical',
           configuration.enableScrollForVertical
         );
+
+        setValue('isArrowButtonVisible', configuration.isArrowButtonVisible);
+        setValue(
+          'isFullscreenArrowButtonVisible',
+          configuration.isFullscreenArrowButtonVisible
+        );
       } else {
         reset();
       }
@@ -364,6 +406,10 @@ const StoryBlockConfigurationModal = ({
       configuration.videoCompleteAction =
         typeof data.videoCompleteAction === 'number'
           ? VideoCompleteActionList[data.videoCompleteAction]
+          : undefined;
+      configuration.feedCompleteAction =
+        typeof data.feedCompleteAction === 'number'
+          ? FeedCompleteActionList[data.feedCompleteAction]
           : undefined;
       if (
         typeof data.livestreamCountdownTimerTheme === 'number' &&
@@ -401,6 +447,10 @@ const StoryBlockConfigurationModal = ({
           fontName: data.ctaIOSFontName,
           systemFontWeight: 'bold',
         },
+        shape:
+          typeof data.ctaShape === 'number'
+            ? CTAShapeList[data.ctaShape]
+            : undefined,
       };
       configuration.showPlaybackButton = data.showPlaybackButton;
       configuration.showMuteButton = data.showMuteButton;
@@ -451,11 +501,16 @@ const StoryBlockConfigurationModal = ({
         isHidden: data.showReplayBadge === true ? false : true,
       };
 
-      // Handle additionalControlsInset
-      if (data.additionalControlsInsetTop) {
+      if (
+        data.additionalControlsInsetTop ||
+        data.additionalControlsInsetBottom
+      ) {
         configuration.additionalControlsInset = {
           top: data.additionalControlsInsetTop
             ? parseFloat(data.additionalControlsInsetTop)
+            : 0,
+          bottom: data.additionalControlsInsetBottom
+            ? parseFloat(data.additionalControlsInsetBottom)
             : 0,
         };
       }
@@ -478,6 +533,10 @@ const StoryBlockConfigurationModal = ({
           : undefined;
 
       configuration.enableScrollForVertical = data.enableScrollForVertical;
+
+      configuration.isArrowButtonVisible = data.isArrowButtonVisible;
+      configuration.isFullscreenArrowButtonVisible =
+        data.isFullscreenArrowButtonVisible;
 
       onSubmit(configuration);
     }
@@ -561,6 +620,28 @@ const StoryBlockConfigurationModal = ({
               />
             )}
             name="videoCompleteAction"
+          />
+        </View>
+      </View>
+      <View style={styles.formItemRow}>
+        <View style={styles.formItem}>
+          <Text style={styles.formItemLabel}>
+            {Platform.OS === 'android'
+              ? 'Feed complete action'
+              : 'Feed complete action(full-screen)'}
+          </Text>
+          <Controller
+            control={control}
+            render={({ field: { onChange, value } }) => (
+              <ButtonGroup
+                buttons={FeedCompleteActionList}
+                selectedIndex={value}
+                onPress={(newValue) => {
+                  onChange(newValue);
+                }}
+              />
+            )}
+            name="feedCompleteAction"
           />
         </View>
       </View>
@@ -898,6 +979,42 @@ const StoryBlockConfigurationModal = ({
         </View>
       </View>
       <View style={styles.formItemRow}>
+        <View style={styles.formItem}>
+          <Controller
+            control={control}
+            render={({ field: { onChange, value } }) => {
+              return (
+                <CheckBox
+                  center
+                  title={`Arrow Button${'\n'}Visible`}
+                  checked={value}
+                  onPress={() => onChange(!value)}
+                />
+              );
+            }}
+            name="isArrowButtonVisible"
+          />
+        </View>
+      </View>
+      <View style={styles.formItemRow}>
+        <View style={styles.formItem}>
+          <Controller
+            control={control}
+            render={({ field: { onChange, value } }) => {
+              return (
+                <CheckBox
+                  center
+                  title={`Fullscreen Arrow${'\n'}Button Visible`}
+                  checked={value}
+                  onPress={() => onChange(!value)}
+                />
+              );
+            }}
+            name="isFullscreenArrowButtonVisible"
+          />
+        </View>
+      </View>
+      <View style={styles.formItemRow}>
         <Text style={styles.formItemLabel}>Additional Controls Inset</Text>
       </View>
       <View style={styles.formItemRow}>
@@ -927,6 +1044,32 @@ const StoryBlockConfigurationModal = ({
             name="additionalControlsInsetTop"
           />
         </View>
+        <View style={{ ...styles.formItem, marginRight: 10 }}>
+          <Controller
+            control={control}
+            render={({ field: { onChange, onBlur, value } }) => (
+              <Input
+                label="Bottom"
+                placeholder="e.g. 10"
+                onBlur={onBlur}
+                onChangeText={(newValue) => onChange(newValue)}
+                value={value}
+                keyboardType="numeric"
+                rightIcon={
+                  <TouchableOpacity
+                    onPress={() => {
+                      setValue('additionalControlsInsetBottom', undefined);
+                    }}
+                  >
+                    <Ionicons name="close" size={24} />
+                  </TouchableOpacity>
+                }
+                autoComplete={undefined}
+              />
+            )}
+            name="additionalControlsInsetBottom"
+          />
+        </View>
       </View>
     </>
   );
@@ -948,6 +1091,24 @@ const StoryBlockConfigurationModal = ({
               />
             )}
             name="ctaWidth"
+          />
+        </View>
+      </View>
+      <View style={styles.formItemRow}>
+        <View style={{ ...styles.formItem }}>
+          <Text style={styles.formItemLabel}>CTA shape</Text>
+          <Controller
+            control={control}
+            render={({ field: { onChange, value } }) => (
+              <ButtonGroup
+                buttons={CTAShapeList}
+                selectedIndex={value}
+                onPress={(newValue) => {
+                  onChange(newValue);
+                }}
+              />
+            )}
+            name="ctaShape"
           />
         </View>
       </View>
