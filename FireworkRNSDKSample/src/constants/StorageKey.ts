@@ -7,5 +7,4 @@ export default {
     'firework_sdk_example_short_video_player_design_version_key',
   enableProductDetailsHydration:
     'firework_sdk_example_enable_product_details_hydration_key',
-  preventPipOnLeave: 'firework_sdk_example_prevent_pip_on_leave_key',
 };

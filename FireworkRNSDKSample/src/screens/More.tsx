@@ -24,7 +24,7 @@ import FireworkSDK, {
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import StorageKey from '../constants/StorageKey';
 
-const fwNativeVersionOfAndroid = '6.30.8';
+const fwNativeVersionOfAndroid = '6.30.7';
 
 type MoreScreenNavigationProp = CompositeNavigationProp<
   BottomTabNavigationProp<TabParamsList, 'More'>,
@@ -360,15 +360,6 @@ function More() {
     dataList.push({
       title: `Firework Android SDK Version: ${fwNativeVersionOfAndroid}`,
       pressCallback: (_) => {},
-    });
-  }
-
-  if (Platform.OS === 'android') {
-    dataList.push({
-      title: 'Prevent PiP on Leave (Android)',
-      pressCallback: (_) => {
-        navigation.push('PreventPipOnLeave');
-      },
     });
   }
 

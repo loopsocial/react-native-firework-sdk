@@ -22,7 +22,6 @@ import com.firework.livestream.multihost.MultiHostLivestreamPlayerInitializer;
 import com.firework.livestream.singlehost.SingleHostLivestreamPlayerInitializer;
 import com.fireworksdk.bridge.models.FWSDKInitOptionsModel;
 import com.fireworksdk.bridge.models.enums.FWPlayerLaunchBehavior;
-import com.fireworksdk.bridge.models.enums.FWSwitchLanguageBehavior;
 import com.fireworksdk.bridge.reactnative.FWReactNativeSDK;
 import com.fireworksdk.bridge.utils.FWGlobalDataUtil;
 
@@ -120,7 +119,6 @@ public class MainApplication extends Application implements ReactApplication {
     FWReactNativeSDK.INSTANCE.addLivestreamPlayerInitializer(new MultiHostLivestreamPlayerInitializer());
 
     FWReactNativeSDK.INSTANCE.setImageLoader(GlideImageLoaderFactory.INSTANCE.createInstance(this));
-    FWReactNativeSDK.INSTANCE.setLanguageSwitchingBehavior(FWSwitchLanguageBehavior.NotRestartingActivity);
 
     FWReactNativeSDK.INSTANCE.init(
       this,

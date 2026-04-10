@@ -1,4 +1,4 @@
-import React, { useEffect, useRef } from 'react';
+import React, { useEffect } from 'react';
 
 import FireworkSDK, {
   type DataTrackingLevel,
@@ -37,10 +37,8 @@ import EnableNativeNavigation from './screens/EnableNativeNavigation';
 import EnablePausePlayer from './screens/EnablePausePlayer';
 import EnableLinkInteractionClickCallback from './screens/EnableLinkInteractionClickCallback';
 import EnableProductDetailsHydration from './screens/EnableProductDetailsHydration';
-import PreventPipOnLeave from './screens/PreventPipOnLeave';
 import Log from './screens/Log';
 import CustomThemeProvider from './components/CustomThemeProvider';
-import { AppState, type AppStateStatus } from 'react-native';
 
 const StackNavigator = createNativeStackNavigator<RootStackParamList>();
 
@@ -49,36 +47,7 @@ type AppRouteName = keyof RootStackParamList;
 const FWNavigationContainer = () => {
   useCartIconVisibilityEffect();
   useCartItemCountEffect();
-
-  const appStateRef = useRef<AppStateStatus>(AppState.currentState);
   useEffect(() => {
-    const handleAppStateChange = (nextAppState: AppStateStatus) => {
-      if (
-        appStateRef.current === 'active' &&
-        nextAppState === 'background' &&
-        FireworkSDK.getInstance().preventPipOnLeave
-      ) {
-        FireworkSDK.getInstance().navigator.stopFloatingPlayer();
-      }
-      appStateRef.current = nextAppState;
-    };
-
-    const subscription = AppState.addEventListener(
-      'change',
-      handleAppStateChange
-    );
-    return () => subscription.remove();
-  }, []);
-
-  useEffect(() => {
-    const syncPreventPipOnLeave = async () => {
-      try {
-        const value = await AsyncStorage.getItem(StorageKey.preventPipOnLeave);
-        FireworkSDK.getInstance().preventPipOnLeave = value === 'true';
-      } catch (_) {}
-    };
-    syncPreventPipOnLeave();
-
     const sycnCurrentLanguageFromStorage = async () => {
       try {
         const language = await AsyncStorage.getItem(StorageKey.appLanguage);
@@ -249,11 +218,6 @@ const FWNavigationContainer = () => {
           name: 'EnableProductDetailsHydration',
           component: EnableProductDetailsHydration,
           options: { title: 'Enable Product Details Hydration' },
-        })}
-        {renderScreen({
-          name: 'PreventPipOnLeave',
-          component: PreventPipOnLeave,
-          options: { title: 'Prevent PiP on Leave' },
         })}
         {renderScreen({
           name: 'Log',
