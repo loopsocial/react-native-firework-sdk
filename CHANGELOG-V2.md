@@ -1,5 +1,11 @@
 # CHANGELOG
 
+## [2.19.4-beta.2]
+
+### Fixed
+
+- Beta release
+
 ## [2.19.4-beta.1]
 
 ### Fixed
