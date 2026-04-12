@@ -241,14 +241,7 @@ export default class HostAppService {
     try {
       const updatedProducts: Product[] = [];
 
-      // NOTE: Do NOT use setTimeout here. React Native's setTimeout callback
-      // delivery relies on Choreographer frame callbacks, which are suspended
-      // when the RN Activity is paused (e.g. when the native PlayerActivity
-      // fullscreen is in the foreground). This causes the await to hang until
-      // the user exits fullscreen. Use Promise.resolve() for a non-blocking
-      // async yield, or fetch() for real network calls (fetch resolves through
-      // the bridge, not Choreographer).
-      await Promise.resolve();
+      await new Promise<void>((resolve) => setTimeout(resolve, 2000));
 
       FWExampleLoggerUtil.log(
         { shouldCache: true },
