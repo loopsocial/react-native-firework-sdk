@@ -91,12 +91,6 @@ function Shopping() {
               showShareButton: true,
               showMuteButton: true,
               showPlaybackButton: true,
-              ctaButtonStyle: {
-                backgroundColor: '#800080',
-                textColor: '#ffffff',
-                fontSize: 14,
-                shape: 'oval',
-              },
             }}
             onVideoFeedLoadFinished={(error?: FWError) => {
               console.log('onVideoFeedLoadFinished error', error);
