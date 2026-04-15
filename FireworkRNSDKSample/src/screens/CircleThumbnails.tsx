@@ -3,7 +3,7 @@ import type { VideoFeedConfiguration } from 'react-native-firework-sdk';
 import { VideoFeed, type VideoFeedPadding } from 'react-native-firework-sdk';
 
 const CircleThumbnails = () => {
-  const feedHeight = 200;
+  const feedHeight = 250;
   const paddingTop = 10;
   const paddingRight = 10;
   const paddingBottom = 10;
@@ -27,8 +27,10 @@ const CircleThumbnails = () => {
   return (
     <View style={styles.container}>
       <VideoFeed
-        style={{ height: feedHeight }}
-        source="discover"
+        style={{ height: feedHeight, backgroundColor: '#ff0000' }}
+        source="playlist"
+        channel="m08mZk9"
+        playlist="oPNeKr"
         mode="row"
         videoFeedConfiguration={videoFeedConfiguration}
       />
@@ -41,7 +43,7 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: 'center',
     alignItems: 'stretch',
-    backgroundColor: 'white',
+    backgroundColor: '#e8f5e9',
   },
 });
 

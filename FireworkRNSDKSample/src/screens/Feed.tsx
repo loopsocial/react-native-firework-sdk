@@ -33,7 +33,10 @@ import VideoFeedForm from '../components/VideoFeedForm';
 import type { RootStackParamList } from './paramList/RootStackParamList';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { useAppDispatch, useAppSelector } from '../hooks/reduxHooks';
-import { updateEnablePictureInPicture } from '../slice/feedSlice';
+import {
+  updateEnablePictureInPicture,
+  updateEnableSystemPictureInPicture,
+} from '../slice/feedSlice';
 import StoryBlockConfigurationModal from '../components/StoryBlockConfigurationModal';
 
 type FeedScreenRouteProp = RouteProp<RootStackParamList, 'Feed'>;
@@ -67,6 +70,7 @@ const Feed = () => {
     title: { hidden: false, fontSize: 14 },
     titlePosition: 'nested',
     showAdBadge: true,
+    itemSpacing: 10,
   };
   const [feedConfiguration, setFeedConfiguration] =
     useState<VideoFeedConfiguration>(defaultFeedConfiguration);
@@ -78,6 +82,9 @@ const Feed = () => {
   const enablePictureInPicture = useAppSelector(
     (state) => state.feed.enablePictureInPicture
   );
+  const enableSystemPictureInPicture = useAppSelector(
+    (state) => state.feed.enableSystemPictureInPicture
+  );
   const dispatch = useAppDispatch();
 
   const [feedAdConfiguration, setFeedAdConfiguration] =
@@ -86,12 +93,14 @@ const Feed = () => {
   const defaultPlayerConfiguration: VideoPlayerConfiguration = {
     playerStyle: 'full',
     videoCompleteAction: 'advanceToNext',
+    feedCompleteAction: 'dismiss',
     showShareButton: true,
     showMuteButton: true,
     showPlaybackButton: true,
     ctaButtonStyle: {
       fontSize: 14,
       iOSFontInfo: { systemFontWeight: 'bold' },
+      shape: 'roundRectangle',
     },
     ctaDelay: {
       type: 'constant',
@@ -116,6 +125,8 @@ const Feed = () => {
     statusBarStyle: 'light',
     pipPlacement: PipPlacement.BottomRight,
     scrollDirection: 'horizontal',
+    isArrowButtonVisible: true,
+    showMoreButton: true,
   };
   const [playerConfiguration, setPlayerConfiguration] = useState<
     VideoPlayerConfiguration | undefined
@@ -123,6 +134,7 @@ const Feed = () => {
   const defaultStoryBlockConfiguration: StoryBlockConfiguration = {
     playerStyle: 'full',
     videoCompleteAction: 'advanceToNext',
+    feedCompleteAction: 'loop',
     showShareButton: true,
     showPlaybackButton: true,
     showMuteButton: true,
@@ -146,12 +158,16 @@ const Feed = () => {
     },
     additionalControlsInset: {
       top: 0,
+      bottom: 0,
     },
     shouldExtendMediaOutsideSafeArea: false,
     statusBarHidden: false,
     statusBarStyle: 'light',
     pipPlacement: PipPlacement.BottomRight,
     scrollDirection: 'horizontal',
+    isArrowButtonVisible: true,
+    isFullscreenArrowButtonVisible: true,
+    showMoreButton: true,
   };
   const [storyBlockConfiguration, setStoryBlockConfiguration] = useState<
     StoryBlockConfiguration | undefined
@@ -260,11 +276,11 @@ const Feed = () => {
               feedConfiguration.titlePosition === 'stacked'
                 ? { top: 8, right: 8, bottom: 0, left: 8 }
                 : undefined,
-            itemSpacing: 10,
           }}
           videoPlayerConfiguration={playerConfiguration}
           adConfiguration={feedAdConfiguration}
           enablePictureInPicture={enablePictureInPicture}
+          enableSystemPictureInPicture={enableSystemPictureInPicture}
           onVideoFeedLoadFinished={(error?: FWError) => {
             console.log('[example] onVideoFeedLoadFinished error', error);
             setFeedError(error);
@@ -329,6 +345,7 @@ const Feed = () => {
             productIds={productIds}
             contentId={contentId}
             enablePictureInPicture
+            enableSystemPictureInPicture={enableSystemPictureInPicture}
             cornerRadius={30}
             adConfiguration={{ requiresAds: false, adsFetchTimeout: 10 }}
             storyBlockConfiguration={storyBlockConfiguration}
@@ -416,13 +433,21 @@ const Feed = () => {
         defaultFeedAdConfiguration={defaultFeedAdConfiguration}
         enablePiP={enablePictureInPicture}
         defaultEnablePiP={true}
+        enableSystemPiP={enableSystemPictureInPicture}
+        defaultEnableSystemPiP={true}
         onRequestClose={() => {
           setShowFeedConfiguration(false);
         }}
-        onSubmit={(newFeedConfiguration, newFeedAdConfiguration, enablePiP) => {
+        onSubmit={(
+          newFeedConfiguration,
+          newFeedAdConfiguration,
+          enablePiP,
+          enableSystemPiP
+        ) => {
           setFeedConfiguration(newFeedConfiguration);
           setFeedAdConfiguration(newFeedAdConfiguration);
           dispatch(updateEnablePictureInPicture(enablePiP));
+          dispatch(updateEnableSystemPictureInPicture(enableSystemPiP));
           setTimeout(() => {
             setShowFeedConfiguration(false);
           }, 0);

@@ -19,11 +19,12 @@ import RNRestart from 'react-native-restart';
 import FireworkSDK, {
   type DataTrackingLevel,
   LivestreamPlayerDesignVersion,
+  ShortVideoPlayerDesignVersion,
 } from 'react-native-firework-sdk';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import StorageKey from '../constants/StorageKey';
 
-const fwNativeVersionOfAndroid = '6.26.0';
+const fwNativeVersionOfAndroid = '6.30.9';
 
 type MoreScreenNavigationProp = CompositeNavigationProp<
   BottomTabNavigationProp<TabParamsList, 'More'>,
@@ -46,6 +47,10 @@ function More() {
     currentLivestreamPlayerDesignVersion,
     setCurrentLivestreamPlayerDesignVersion,
   ] = useState<LivestreamPlayerDesignVersion | null>(null);
+  const [
+    currentShortVideoPlayerDesignVersion,
+    setCurrentShortVideoPlayerDesignVersion,
+  ] = useState<ShortVideoPlayerDesignVersion | null>(null);
 
   const { showActionSheetWithOptions } = useActionSheet();
   const getDisplayLanguage = (language: string) => {
@@ -154,6 +159,17 @@ function More() {
     );
     setCurrentLivestreamPlayerDesignVersion(version);
     FireworkSDK.getInstance().livestreamPlayerDesignVersion = version;
+  };
+
+  const handleChangeShortVideoPlayerDesignVersion = async (
+    version: ShortVideoPlayerDesignVersion
+  ) => {
+    await AsyncStorage.setItem(
+      StorageKey.shortVideoPlayerDesignVersion,
+      version
+    );
+    setCurrentShortVideoPlayerDesignVersion(version);
+    FireworkSDK.getInstance().shortVideoPlayerDesignVersion = version;
   };
 
   let dataList: MoreListItemData[] = [
@@ -305,6 +321,34 @@ function More() {
       },
     },
     {
+      title: currentShortVideoPlayerDesignVersion
+        ? `Change Short Video Player Design Version(${currentShortVideoPlayerDesignVersion})`
+        : 'Change Short Video Player Design Version',
+      pressCallback: (_) => {
+        const options = ['v1', 'v2', 'Cancel'];
+
+        const cancelButtonIndex = options.length - 1;
+
+        showActionSheetWithOptions(
+          {
+            title: 'Select short video player design version',
+            options,
+            cancelButtonIndex,
+          },
+          (buttonIndex) => {
+            if (
+              typeof buttonIndex === 'number' &&
+              buttonIndex < options.length - 1
+            ) {
+              handleChangeShortVideoPlayerDesignVersion(
+                options[buttonIndex] as ShortVideoPlayerDesignVersion
+              );
+            }
+          }
+        );
+      },
+    },
+    {
       title: 'Stop Floating Player',
       pressCallback: (_) => {
         FireworkSDK.getInstance().navigator.stopFloatingPlayer();
@@ -316,6 +360,15 @@ function More() {
     dataList.push({
       title: `Firework Android SDK Version: ${fwNativeVersionOfAndroid}`,
       pressCallback: (_) => {},
+    });
+  }
+
+  if (Platform.OS === 'android') {
+    dataList.push({
+      title: 'Prevent PiP on Leave (Android)',
+      pressCallback: (_) => {
+        navigation.push('PreventPipOnLeave');
+      },
     });
   }
 
@@ -344,6 +397,13 @@ function More() {
     title: 'Enable Link Interaction Click Callback',
     pressCallback: (_) => {
       navigation.push('EnableLinkInteractionClickCallback');
+    },
+  });
+
+  dataList.push({
+    title: 'Enable Product Details Hydration',
+    pressCallback: (_) => {
+      navigation.push('EnableProductDetailsHydration');
     },
   });
 
@@ -390,6 +450,25 @@ function More() {
     };
 
     sycnCurrentLivestreamPlayerDesignVersion();
+  }, []);
+
+  useEffect(() => {
+    const sycnCurrentShortVideoPlayerDesignVersion = async () => {
+      const version = await AsyncStorage.getItem(
+        StorageKey.shortVideoPlayerDesignVersion
+      );
+      if (version) {
+        setCurrentShortVideoPlayerDesignVersion(
+          version as ShortVideoPlayerDesignVersion
+        );
+      } else {
+        setCurrentShortVideoPlayerDesignVersion(
+          ShortVideoPlayerDesignVersion.v1
+        );
+      }
+    };
+
+    sycnCurrentShortVideoPlayerDesignVersion();
   }, []);
 
   return (

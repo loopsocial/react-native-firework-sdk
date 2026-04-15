@@ -22,6 +22,8 @@ import {
   Platform,
 } from 'react-native';
 import type {
+  FeedCompleteAction,
+  ShareButtonPosition,
   VideoPlayerConfiguration,
   VideoPlayerStyle,
   VideoPlayerCompleteAction,
@@ -31,6 +33,7 @@ import type {
   VideoPlayerLogoConfiguration,
   VideoPlayerLogoOption,
   ScrollDirection,
+  ButtonShape,
 } from 'react-native-firework-sdk';
 import { PipPlacement } from 'react-native-firework-sdk';
 
@@ -45,6 +48,7 @@ export interface IPlayerConfigurationModalProps {
 type PlayerConfigurationFormData = {
   playerStyle?: number;
   videoCompleteAction?: number;
+  feedCompleteAction?: number;
   livestreamCountdownTimerTheme?: number;
   showShareButton?: boolean;
   ctaBackgroundColor?: string;
@@ -59,6 +63,7 @@ type PlayerConfigurationFormData = {
   ctaHighlightDelayValue?: number;
   shareBaseURL?: string;
   ctaWidth?: number;
+  ctaShape?: number;
   enableCustomButtons?: boolean;
   showVideoDetailTitle?: boolean;
   hideLivestreamCountdownTimer?: boolean;
@@ -71,6 +76,9 @@ type PlayerConfigurationFormData = {
   statusBarStyle?: number;
   pipPlacement?: number;
   scrollDirection?: number;
+  isArrowButtonVisible?: boolean;
+  showMoreButton?: boolean;
+  shareButtonPosition?: number;
 };
 
 const PlayStyleList: VideoPlayerStyle[] = ['full', 'fit'];
@@ -89,6 +97,8 @@ const CTAWidthList: VideoPlayerCTAWidth[] = [
   'sizeToFit',
 ];
 
+const CTAShapeList: ButtonShape[] = ['roundRectangle', 'oval'];
+
 const VideoPlayerLogoOptionList: VideoPlayerLogoOption[] = [
   'disabled',
   'creator',
@@ -104,8 +114,19 @@ const PipPlacementList: PipPlacement[] = [
   PipPlacement.BottomRight,
 ];
 
+const FeedCompleteActionList: FeedCompleteAction[] = ['loop', 'dismiss'];
+
 const ScrollDirectionList: ScrollDirection[] = ['horizontal', 'vertical'];
 const ScrollDirectionDisplayList: string[] = ['Horizontal', 'Vertical'];
+
+const ShareButtonPositionList: ShareButtonPosition[] = [
+  'videoDetailPage',
+  'playerTopArea',
+];
+const ShareButtonPositionDisplayList: string[] = [
+  'Video Detail Page',
+  'Player Top Area',
+];
 
 const PlayerConfigurationModal = ({
   visible,
@@ -185,6 +206,19 @@ const PlayerConfigurationModal = ({
           setValue('videoCompleteAction', undefined);
         }
 
+        if (configuration.feedCompleteAction) {
+          const feedCompleteActionIndex = FeedCompleteActionList.indexOf(
+            configuration.feedCompleteAction
+          );
+          if (feedCompleteActionIndex >= 0) {
+            setValue('feedCompleteAction', feedCompleteActionIndex);
+          } else {
+            setValue('feedCompleteAction', undefined);
+          }
+        } else {
+          setValue('feedCompleteAction', undefined);
+        }
+
         if (configuration.countdownTimerConfiguration) {
           const livestreamCountdownTimerIndex =
             LivestreamCountdownTimerThemeList.findIndex(
@@ -222,6 +256,14 @@ const PlayerConfigurationModal = ({
           'ctaIOSFontName',
           configuration.ctaButtonStyle?.iOSFontInfo?.fontName
         );
+        if (configuration.ctaButtonStyle?.shape) {
+          const ctaShapeIndex = CTAShapeList.indexOf(
+            configuration.ctaButtonStyle.shape
+          );
+          setValue('ctaShape', ctaShapeIndex >= 0 ? ctaShapeIndex : undefined);
+        } else {
+          setValue('ctaShape', undefined);
+        }
         setValue('showPlaybackButton', configuration.showPlaybackButton);
         setValue('showMuteButton', configuration.showMuteButton);
         setValue('showVideoDetailTitle', configuration.showVideoDetailTitle);
@@ -331,6 +373,22 @@ const PlayerConfigurationModal = ({
         } else {
           setValue('scrollDirection', undefined);
         }
+
+        setValue('isArrowButtonVisible', configuration.isArrowButtonVisible);
+
+        setValue('showMoreButton', configuration.showMoreButton);
+        if (configuration.shareButtonPosition) {
+          const shareButtonPositionIndex = ShareButtonPositionList.indexOf(
+            configuration.shareButtonPosition
+          );
+          if (shareButtonPositionIndex >= 0) {
+            setValue('shareButtonPosition', shareButtonPositionIndex);
+          } else {
+            setValue('shareButtonPosition', 0);
+          }
+        } else {
+          setValue('shareButtonPosition', 0);
+        }
       } else {
         reset();
       }
@@ -353,6 +411,10 @@ const PlayerConfigurationModal = ({
       configuration.videoCompleteAction =
         typeof data.videoCompleteAction === 'number'
           ? VideoCompleteActionList[data.videoCompleteAction]
+          : undefined;
+      configuration.feedCompleteAction =
+        typeof data.feedCompleteAction === 'number'
+          ? FeedCompleteActionList[data.feedCompleteAction]
           : undefined;
 
       if (
@@ -391,6 +453,10 @@ const PlayerConfigurationModal = ({
           fontName: data.ctaIOSFontName,
           systemFontWeight: 'bold',
         },
+        shape:
+          typeof data.ctaShape === 'number'
+            ? CTAShapeList[data.ctaShape]
+            : undefined,
       };
       configuration.showPlaybackButton = data.showPlaybackButton;
       configuration.showMuteButton = data.showMuteButton;
@@ -455,6 +521,17 @@ const PlayerConfigurationModal = ({
       configuration.scrollDirection =
         typeof data.scrollDirection === 'number'
           ? ScrollDirectionList[data.scrollDirection]
+          : undefined;
+
+      configuration.isArrowButtonVisible = data.isArrowButtonVisible;
+
+      if (typeof data.showMoreButton === 'boolean') {
+        configuration.showMoreButton = data.showMoreButton;
+      }
+
+      configuration.shareButtonPosition =
+        typeof data.shareButtonPosition === 'number'
+          ? ShareButtonPositionList[data.shareButtonPosition]
           : undefined;
 
       onSubmit(configuration);
@@ -540,6 +617,24 @@ const PlayerConfigurationModal = ({
       </View>
       <View style={styles.formItemRow}>
         <View style={styles.formItem}>
+          <Text style={styles.formItemLabel}>Feed complete action</Text>
+          <Controller
+            control={control}
+            render={({ field: { onChange, value } }) => (
+              <ButtonGroup
+                buttons={FeedCompleteActionList}
+                selectedIndex={value}
+                onPress={(newValue) => {
+                  onChange(newValue);
+                }}
+              />
+            )}
+            name="feedCompleteAction"
+          />
+        </View>
+      </View>
+      <View style={styles.formItemRow}>
+        <View style={styles.formItem}>
           <Text style={styles.formItemLabel}>
             Livestream countdown timer theme
           </Text>
@@ -589,6 +684,42 @@ const PlayerConfigurationModal = ({
               );
             }}
             name="enableCustomButtons"
+          />
+        </View>
+      </View>
+      <View style={styles.formItemRow}>
+        <View style={{ ...styles.formItem }}>
+          <Controller
+            control={control}
+            render={({ field: { onChange, value } }) => {
+              return (
+                <CheckBox
+                  center
+                  title={`Show more${'\n'}button`}
+                  checked={value}
+                  onPress={() => onChange(!value)}
+                />
+              );
+            }}
+            name="showMoreButton"
+          />
+        </View>
+      </View>
+      <View style={styles.formItemRow}>
+        <View style={{ ...styles.formItem }}>
+          <Text style={styles.formItemLabel}>Share Button Position</Text>
+          <Controller
+            control={control}
+            render={({ field: { onChange, value } }) => (
+              <ButtonGroup
+                buttons={ShareButtonPositionDisplayList}
+                selectedIndex={value}
+                onPress={(newValue) => {
+                  onChange(newValue);
+                }}
+              />
+            )}
+            name="shareButtonPosition"
           />
         </View>
       </View>
@@ -851,6 +982,24 @@ const PlayerConfigurationModal = ({
           />
         </View>
       </View>
+      <View style={styles.formItemRow}>
+        <View style={styles.formItem}>
+          <Controller
+            control={control}
+            render={({ field: { onChange, value } }) => {
+              return (
+                <CheckBox
+                  center
+                  title={`Arrow Button${'\n'}Visible`}
+                  checked={value}
+                  onPress={() => onChange(!value)}
+                />
+              );
+            }}
+            name="isArrowButtonVisible"
+          />
+        </View>
+      </View>
     </>
   );
 
@@ -871,6 +1020,24 @@ const PlayerConfigurationModal = ({
               />
             )}
             name="ctaWidth"
+          />
+        </View>
+      </View>
+      <View style={styles.formItemRow}>
+        <View style={{ ...styles.formItem }}>
+          <Text style={styles.formItemLabel}>CTA shape</Text>
+          <Controller
+            control={control}
+            render={({ field: { onChange, value } }) => (
+              <ButtonGroup
+                buttons={CTAShapeList}
+                selectedIndex={value}
+                onPress={(newValue) => {
+                  onChange(newValue);
+                }}
+              />
+            )}
+            name="ctaShape"
           />
         </View>
       </View>
