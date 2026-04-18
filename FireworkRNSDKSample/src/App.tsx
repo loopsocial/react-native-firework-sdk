@@ -38,6 +38,7 @@ import EnablePausePlayer from './screens/EnablePausePlayer';
 import EnableLinkInteractionClickCallback from './screens/EnableLinkInteractionClickCallback';
 import EnableProductDetailsHydration from './screens/EnableProductDetailsHydration';
 import PreventPipOnLeave from './screens/PreventPipOnLeave';
+import VideoFeedAndStoryBlock from './screens/VideoFeedAndStoryBlock';
 import Log from './screens/Log';
 import CustomThemeProvider from './components/CustomThemeProvider';
 import { AppState, type AppStateStatus } from 'react-native';
@@ -254,6 +255,11 @@ const FWNavigationContainer = () => {
           name: 'PreventPipOnLeave',
           component: PreventPipOnLeave,
           options: { title: 'Prevent PiP on Leave' },
+        })}
+        {renderScreen({
+          name: 'VideoFeedAndStoryBlock',
+          component: VideoFeedAndStoryBlock,
+          options: { title: 'Video Feed & Story Block' },
         })}
         {renderScreen({
           name: 'Log',

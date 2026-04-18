@@ -34,5 +34,6 @@ export type RootStackParamList = {
   EnableLinkInteractionClickCallback: undefined;
   EnableProductDetailsHydration: undefined;
   PreventPipOnLeave: undefined;
+  VideoFeedAndStoryBlock: undefined;
   Log: undefined;
 };

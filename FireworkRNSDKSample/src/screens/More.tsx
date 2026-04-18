@@ -24,7 +24,7 @@ import FireworkSDK, {
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import StorageKey from '../constants/StorageKey';
 
-const fwNativeVersionOfAndroid = '6.31.3';
+const fwNativeVersionOfAndroid = '6.31.3.1';
 
 type MoreScreenNavigationProp = CompositeNavigationProp<
   BottomTabNavigationProp<TabParamsList, 'More'>,
@@ -404,6 +404,13 @@ function More() {
     title: 'Enable Product Details Hydration',
     pressCallback: (_) => {
       navigation.push('EnableProductDetailsHydration');
+    },
+  });
+
+  dataList.push({
+    title: 'Video Feed & Story Block',
+    pressCallback: (_) => {
+      navigation.push('VideoFeedAndStoryBlock');
     },
   });
 
