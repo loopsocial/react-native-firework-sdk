@@ -20,8 +20,6 @@ import type {
   ProductCardCTAButtonText,
   ProductCardTheme,
   ProductCardPriceLabelAxis,
-  ProductHydrationConfiguration,
-  VariantsHydrationStrategy,
 } from 'react-native-firework-sdk';
 import FireworkSDK from 'react-native-firework-sdk';
 import Ionicons from 'react-native-vector-icons/Ionicons';
@@ -35,7 +33,6 @@ import {
   setCTAButtonConfiguration,
   setProductCardConfiguration,
   updateEnableCustomTapProductCard,
-  setHydrationConfiguration,
 } from '../slice/shoppingSlice';
 import HostAppService from '../utils/HostAppService';
 import CommonStyles from './CommonStyles';
@@ -57,10 +54,6 @@ const productCardThemeList: ProductCardTheme[] = ['dark', 'light'];
 const productCardPriceAxisList: ProductCardPriceLabelAxis[] = [
   'horizontal',
   'vertical',
-];
-const variantsHydrationStrategyList: VariantsHydrationStrategy[] = [
-  'merge',
-  'replace',
 ];
 
 type ShoppingConfigurationFormData = {
@@ -95,7 +88,6 @@ type ShoppingConfigurationFormData = {
   linkButtonHidden?: boolean;
   enableCustomClickLinkButton?: boolean;
   enableCustomTapProductCard?: boolean;
-  variantsHydrationStrategyIndex?: number;
 };
 
 type ShoppingConfiguration = {
@@ -105,7 +97,6 @@ type ShoppingConfiguration = {
   enableCustomClickLinkButton: boolean;
   productCardConfiguration: ProductCardConfiguration;
   enableCustomTapProductCard: boolean;
-  hydrationConfiguration: ProductHydrationConfiguration;
 };
 
 const ShoppingConfigurationModal = ({
@@ -147,12 +138,6 @@ const ShoppingConfigurationModal = ({
   );
   const defaultEnableCustomTapProductCard = useAppSelector(
     (state) => state.shopping.defaultEnableCustomTapProductCard
-  );
-  const hydrationConfiguration = useAppSelector(
-    (state) => state.shopping.hydrationConfiguration
-  );
-  const defaultHydrationConfiguration = useAppSelector(
-    (state) => state.shopping.defaultHydrationConfiguration
   );
   const dispatch = useAppDispatch();
 
@@ -507,24 +492,6 @@ const ShoppingConfigurationModal = ({
       );
       setValue('showCartIcon', configuration.cartIconVisible);
       setValue('linkButtonHidden', configuration.linkButtonHidden);
-
-      if (
-        configuration &&
-        configuration.hydrationConfiguration.variantsHydrationStrategy
-      ) {
-        const variantsHydrationStrategyIndex =
-          variantsHydrationStrategyList.indexOf(
-            configuration.hydrationConfiguration.variantsHydrationStrategy!
-          );
-        setValue(
-          'variantsHydrationStrategyIndex',
-          variantsHydrationStrategyIndex >= 0
-            ? variantsHydrationStrategyIndex
-            : 0
-        );
-      } else {
-        setValue('variantsHydrationStrategyIndex', 0);
-      }
     },
     [setValue]
   );
@@ -537,7 +504,6 @@ const ShoppingConfigurationModal = ({
       enableCustomClickLinkButton,
       productCardConfiguration,
       enableCustomTapProductCard,
-      hydrationConfiguration,
     });
   }, [
     cartIconVisible,
@@ -547,7 +513,6 @@ const ShoppingConfigurationModal = ({
     productCardConfiguration,
     syncFormValuesFromConfiguration,
     enableCustomTapProductCard,
-    hydrationConfiguration,
   ]);
 
   const onSave = (data: ShoppingConfigurationFormData) => {
@@ -738,18 +703,10 @@ const ShoppingConfigurationModal = ({
       FireworkSDK.getInstance().shopping.onCustomTapProductCard = undefined;
     }
 
-    let resultHydrationConfiguration: ProductHydrationConfiguration = {};
-    resultHydrationConfiguration.variantsHydrationStrategy =
-      typeof data.variantsHydrationStrategyIndex === 'number'
-        ? variantsHydrationStrategyList[data.variantsHydrationStrategyIndex!]
-        : undefined;
-    dispatch(setHydrationConfiguration(resultHydrationConfiguration));
-
     FireworkSDK.getInstance().shopping.productInfoViewConfiguration = {
       ctaButton: resultCTAButtonConfiguration,
       linkButton: { isHidden: data.linkButtonHidden ?? false },
       productCard: resultProductCardConfiguration,
-      hydration: resultHydrationConfiguration,
     };
     if (resultCTAButtonConfiguration.text === 'shopNow') {
       FireworkSDK.getInstance().shopping.onShoppingCTA =
@@ -1655,24 +1612,6 @@ const ShoppingConfigurationModal = ({
           />
         </View>
       </View>
-      <View style={styles.formItemRow}>
-        <View style={styles.formItem}>
-          <Text style={styles.formItemLabel}>Variants hydration strategy</Text>
-          <Controller
-            control={control}
-            render={({ field: { onChange, value } }) => (
-              <ButtonGroup
-                buttons={variantsHydrationStrategyList}
-                selectedIndex={value}
-                onPress={(newValue) => {
-                  onChange(newValue);
-                }}
-              />
-            )}
-            name="variantsHydrationStrategyIndex"
-          />
-        </View>
-      </View>
     </>
   );
 
@@ -1689,7 +1628,6 @@ const ShoppingConfigurationModal = ({
           enableCustomClickLinkButton,
           productCardConfiguration,
           enableCustomTapProductCard,
-          hydrationConfiguration,
         });
         if (onRequestClose) {
           onRequestClose();
@@ -1727,7 +1665,6 @@ const ShoppingConfigurationModal = ({
                       enableCustomClickLinkButton,
                       productCardConfiguration,
                       enableCustomTapProductCard,
-                      hydrationConfiguration,
                     });
                     if (onRequestClose) {
                       onRequestClose();
@@ -1753,7 +1690,6 @@ const ShoppingConfigurationModal = ({
                       productCardConfiguration: defaultProductCardConfiguration,
                       enableCustomTapProductCard:
                         defaultEnableCustomTapProductCard,
-                      hydrationConfiguration: defaultHydrationConfiguration,
                     });
                   }}
                   title="Reset"

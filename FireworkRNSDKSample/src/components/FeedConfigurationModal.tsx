@@ -30,14 +30,11 @@ export interface IFeedConfigurationModalProps {
   defaultFeedAdConfiguration?: AdConfiguration;
   enablePiP?: boolean;
   defaultEnablePiP?: boolean;
-  enableSystemPiP?: boolean;
-  defaultEnableSystemPiP?: boolean;
   onRequestClose?: () => void;
   onSubmit?: (
     configuration: VideoFeedConfiguration,
     adConfiguration: AdConfiguration,
-    enablePiP: boolean,
-    enableSystemPiP: boolean
+    enablePiP: boolean
   ) => void;
 }
 
@@ -57,7 +54,6 @@ type FeedConfigurationFormData = {
   requiresAds?: boolean;
   vastAttributes?: string;
   enablePictureInPicture?: boolean;
-  enableSystemPictureInPicture?: boolean;
   gridColumns?: string;
   titleNumberOfLines?: string;
   showReplayBadge?: boolean;
@@ -65,11 +61,6 @@ type FeedConfigurationFormData = {
   shadowColor?: string;
   shadowWidth?: string;
   shadowHeight?: string;
-  contentPaddingTop?: string;
-  contentPaddingRight?: string;
-  contentPaddingBottom?: string;
-  contentPaddingLeft?: string;
-  itemSpacing?: string;
 };
 
 const TitlePositionList: VideoFeedTitlePosition[] = ['stacked', 'nested'];
@@ -82,8 +73,6 @@ const FeedConfigurationModal = ({
   defaultFeedAdConfiguration,
   enablePiP,
   defaultEnablePiP,
-  enableSystemPiP,
-  defaultEnableSystemPiP,
   onRequestClose,
   onSubmit,
 }: IFeedConfigurationModalProps) => {
@@ -177,8 +166,7 @@ const FeedConfigurationModal = ({
     (
       configuration?: VideoFeedConfiguration,
       adConfiguration?: AdConfiguration,
-      enablePictureInPicture?: boolean,
-      enableSystemPictureInPicture?: boolean
+      enablePictureInPicture?: boolean
     ) => {
       setValue('backgroundColor', configuration?.backgroundColor);
       setValue('cornerRadius', configuration?.cornerRadius?.toString());
@@ -211,7 +199,6 @@ const FeedConfigurationModal = ({
       setValue('showAdBadge', configuration?.showAdBadge);
       setValue('enableAutoplay', configuration?.enableAutoplay);
       setValue('enablePictureInPicture', enablePictureInPicture);
-      setValue('enableSystemPictureInPicture', enableSystemPictureInPicture);
       setValue('requiresAds', adConfiguration?.requiresAds);
       if (adConfiguration && adConfiguration.vastAttributes) {
         var vastAttributesJson: { [key: string]: string } = {};
@@ -232,23 +219,6 @@ const FeedConfigurationModal = ({
       setValue('shadowColor', configuration?.shadow?.color);
       setValue('shadowWidth', configuration?.shadow?.width?.toString());
       setValue('shadowHeight', configuration?.shadow?.height?.toString());
-      setValue(
-        'contentPaddingTop',
-        configuration?.contentPadding?.top?.toString()
-      );
-      setValue(
-        'contentPaddingRight',
-        configuration?.contentPadding?.right?.toString()
-      );
-      setValue(
-        'contentPaddingBottom',
-        configuration?.contentPadding?.bottom?.toString()
-      );
-      setValue(
-        'contentPaddingLeft',
-        configuration?.contentPadding?.left?.toString()
-      );
-      setValue('itemSpacing', configuration?.itemSpacing?.toString());
     },
     [setValue]
   );
@@ -257,14 +227,12 @@ const FeedConfigurationModal = ({
     syncFormValuesFromConfiguration(
       feedConfiguration,
       feedAdConfiguration,
-      enablePiP,
-      enableSystemPiP
+      enablePiP
     );
   }, [
     feedConfiguration,
     feedAdConfiguration,
     enablePiP,
-    enableSystemPiP,
     syncFormValuesFromConfiguration,
   ]);
 
@@ -348,47 +316,10 @@ const FeedConfigurationModal = ({
             : undefined,
       };
 
-      const paddingTop =
-        typeof data.contentPaddingTop === 'string' && data.contentPaddingTop
-          ? parseInt(data.contentPaddingTop)
-          : undefined;
-      const paddingRight =
-        typeof data.contentPaddingRight === 'string' && data.contentPaddingRight
-          ? parseInt(data.contentPaddingRight)
-          : undefined;
-      const paddingBottom =
-        typeof data.contentPaddingBottom === 'string' &&
-        data.contentPaddingBottom
-          ? parseInt(data.contentPaddingBottom)
-          : undefined;
-      const paddingLeft =
-        typeof data.contentPaddingLeft === 'string' && data.contentPaddingLeft
-          ? parseInt(data.contentPaddingLeft)
-          : undefined;
-      if (
-        paddingTop !== undefined ||
-        paddingRight !== undefined ||
-        paddingBottom !== undefined ||
-        paddingLeft !== undefined
-      ) {
-        configuration.contentPadding = {
-          top: paddingTop,
-          right: paddingRight,
-          bottom: paddingBottom,
-          left: paddingLeft,
-        };
-      }
-
-      configuration.itemSpacing =
-        typeof data.itemSpacing === 'string' && data.itemSpacing
-          ? parseInt(data.itemSpacing)
-          : undefined;
-
       onSubmit(
         configuration,
         adConfiguration,
-        data.enablePictureInPicture ?? false,
-        data.enableSystemPictureInPicture ?? true
+        data.enablePictureInPicture ?? false
       );
     }
   };
@@ -740,196 +671,6 @@ const FeedConfigurationModal = ({
     </View>
   );
 
-  const contentPaddingConfiguration = (
-    <>
-      <Text style={styles.formItemLabel}>Content Padding</Text>
-      <View style={styles.formItemRow}>
-        <View style={{ ...styles.formItem, marginRight: 10 }}>
-          <Controller
-            control={control}
-            render={({ field: { onChange, onBlur, value } }) => (
-              <Input
-                label="Top"
-                placeholder="e.g. 10"
-                onBlur={onBlur}
-                onChangeText={(newValue) => onChange(newValue)}
-                value={value}
-                errorMessage={
-                  errors.contentPaddingTop
-                    ? 'Please enter a value in [0, 100]'
-                    : undefined
-                }
-                rightIcon={
-                  <TouchableOpacity
-                    onPress={() => {
-                      setValue('contentPaddingTop', undefined);
-                    }}
-                  >
-                    <Ionicons name="close" size={24} />
-                  </TouchableOpacity>
-                }
-                autoComplete={undefined}
-              />
-            )}
-            name="contentPaddingTop"
-            rules={{
-              pattern: Patterns.number,
-              min: 0,
-              max: 100,
-            }}
-          />
-        </View>
-        <View style={styles.formItem}>
-          <Controller
-            control={control}
-            render={({ field: { onChange, onBlur, value } }) => (
-              <Input
-                label="Right"
-                placeholder="e.g. 10"
-                onBlur={onBlur}
-                onChangeText={(newValue) => onChange(newValue)}
-                value={value}
-                errorMessage={
-                  errors.contentPaddingRight
-                    ? 'Please enter a value in [0, 100]'
-                    : undefined
-                }
-                rightIcon={
-                  <TouchableOpacity
-                    onPress={() => {
-                      setValue('contentPaddingRight', undefined);
-                    }}
-                  >
-                    <Ionicons name="close" size={24} />
-                  </TouchableOpacity>
-                }
-                autoComplete={undefined}
-              />
-            )}
-            name="contentPaddingRight"
-            rules={{
-              pattern: Patterns.number,
-              min: 0,
-              max: 100,
-            }}
-          />
-        </View>
-      </View>
-      <View style={styles.formItemRow}>
-        <View style={{ ...styles.formItem, marginRight: 10 }}>
-          <Controller
-            control={control}
-            render={({ field: { onChange, onBlur, value } }) => (
-              <Input
-                label="Bottom"
-                placeholder="e.g. 10"
-                onBlur={onBlur}
-                onChangeText={(newValue) => onChange(newValue)}
-                value={value}
-                errorMessage={
-                  errors.contentPaddingBottom
-                    ? 'Please enter a value in [0, 100]'
-                    : undefined
-                }
-                rightIcon={
-                  <TouchableOpacity
-                    onPress={() => {
-                      setValue('contentPaddingBottom', undefined);
-                    }}
-                  >
-                    <Ionicons name="close" size={24} />
-                  </TouchableOpacity>
-                }
-                autoComplete={undefined}
-              />
-            )}
-            name="contentPaddingBottom"
-            rules={{
-              pattern: Patterns.number,
-              min: 0,
-              max: 100,
-            }}
-          />
-        </View>
-        <View style={styles.formItem}>
-          <Controller
-            control={control}
-            render={({ field: { onChange, onBlur, value } }) => (
-              <Input
-                label="Left"
-                placeholder="e.g. 10"
-                onBlur={onBlur}
-                onChangeText={(newValue) => onChange(newValue)}
-                value={value}
-                errorMessage={
-                  errors.contentPaddingLeft
-                    ? 'Please enter a value in [0, 100]'
-                    : undefined
-                }
-                rightIcon={
-                  <TouchableOpacity
-                    onPress={() => {
-                      setValue('contentPaddingLeft', undefined);
-                    }}
-                  >
-                    <Ionicons name="close" size={24} />
-                  </TouchableOpacity>
-                }
-                autoComplete={undefined}
-              />
-            )}
-            name="contentPaddingLeft"
-            rules={{
-              pattern: Patterns.number,
-              min: 0,
-              max: 100,
-            }}
-          />
-        </View>
-      </View>
-    </>
-  );
-
-  const itemSpacingConfiguration = (
-    <View style={styles.formItemRow}>
-      <View style={styles.formItem}>
-        <Controller
-          control={control}
-          render={({ field: { onChange, onBlur, value } }) => (
-            <Input
-              label="Item spacing"
-              placeholder="e.g. 10"
-              onBlur={onBlur}
-              onChangeText={(newValue) => onChange(newValue)}
-              value={value}
-              errorMessage={
-                errors.itemSpacing
-                  ? 'Please enter a value in [0, 100]'
-                  : undefined
-              }
-              rightIcon={
-                <TouchableOpacity
-                  onPress={() => {
-                    setValue('itemSpacing', undefined);
-                  }}
-                >
-                  <Ionicons name="close" size={24} />
-                </TouchableOpacity>
-              }
-              autoComplete={undefined}
-            />
-          )}
-          name="itemSpacing"
-          rules={{
-            pattern: Patterns.number,
-            min: 0,
-            max: 100,
-          }}
-        />
-      </View>
-    </View>
-  );
-
   const requiresAds = (
     <View style={styles.formItemRow}>
       <View style={styles.formItem}>
@@ -1078,28 +819,6 @@ const FeedConfigurationModal = ({
       </View>
     </View>
   );
-
-  const enableSystemPictureInPicture =
-    Platform.OS === 'ios' ? (
-      <View style={styles.formItemRow}>
-        <View style={styles.formItem}>
-          <Controller
-            control={control}
-            render={({ field: { onChange, value } }) => {
-              return (
-                <CheckBox
-                  center
-                  title="Enable System PiP (iOS)"
-                  checked={value}
-                  onPress={() => onChange(!value)}
-                />
-              );
-            }}
-            name="enableSystemPictureInPicture"
-          />
-        </View>
-      </View>
-    ) : null;
 
   const showReplayBadgeRow = (
     <View style={styles.formItemRow}>
@@ -1269,8 +988,7 @@ const FeedConfigurationModal = ({
         syncFormValuesFromConfiguration(
           feedConfiguration,
           feedAdConfiguration,
-          enablePiP,
-          enableSystemPiP
+          enablePiP
         );
         if (onRequestClose) {
           onRequestClose();
@@ -1302,8 +1020,6 @@ const FeedConfigurationModal = ({
                   {titleConfiguration}
                   {playIconConfiguration}
                   {gridColumnsConfiguration}
-                  {contentPaddingConfiguration}
-                  {itemSpacingConfiguration}
                   {showReplayBadgeRow}
                   {shadowConfiguration}
                 </View>
@@ -1315,7 +1031,6 @@ const FeedConfigurationModal = ({
                   {showAdBadgeRow}
                   {enableAutoplay}
                   {enablePictureInPicture}
-                  {enableSystemPictureInPicture}
                 </View>
               )}
               <View style={{ ...CommonStyles.formItem, ...styles.buttonList }}>
@@ -1331,8 +1046,7 @@ const FeedConfigurationModal = ({
                     syncFormValuesFromConfiguration(
                       feedConfiguration,
                       feedAdConfiguration,
-                      enablePiP,
-                      enableSystemPiP
+                      enablePiP
                     );
                     if (onRequestClose) {
                       onRequestClose();
@@ -1352,8 +1066,7 @@ const FeedConfigurationModal = ({
                     syncFormValuesFromConfiguration(
                       defaultFeedConfiguration,
                       defaultFeedAdConfiguration,
-                      defaultEnablePiP,
-                      defaultEnableSystemPiP
+                      defaultEnablePiP
                     );
                   }}
                   title="Reset"

@@ -36,9 +36,6 @@ function StoryBlockWrapper({
   const enablePictureInPicture = useAppSelector(
     (state) => state.feed.enablePictureInPicture
   );
-  const enableSystemPictureInPicture = useAppSelector(
-    (state) => state.feed.enableSystemPictureInPicture
-  );
   useEffect(() => {
     if (isViewable) {
       ref.current?.onViewportEntered();
@@ -55,7 +52,6 @@ function StoryBlockWrapper({
         channel={item.channelId}
         playlist={item.playlistId}
         enablePictureInPicture={enablePictureInPicture}
-        enableSystemPictureInPicture={enableSystemPictureInPicture}
       />
     </View>
   );
@@ -64,9 +60,6 @@ function StoryBlockWrapper({
 function MultiFeeds() {
   const enablePictureInPicture = useAppSelector(
     (state) => state.feed.enablePictureInPicture
-  );
-  const enableSystemPictureInPicture = useAppSelector(
-    (state) => state.feed.enableSystemPictureInPicture
   );
   const navigation = useNavigation<MultiFeedsScreenNavigationProp>();
   const buttons = ['FlatList', 'ScrollView'];
@@ -145,7 +138,6 @@ function MultiFeeds() {
             channel={item.channelId}
             playlist={item.playlistId}
             enablePictureInPicture={enablePictureInPicture}
-            enableSystemPictureInPicture={enableSystemPictureInPicture}
           />
         </View>
       );

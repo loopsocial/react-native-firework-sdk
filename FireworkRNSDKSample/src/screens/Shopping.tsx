@@ -42,9 +42,6 @@ function Shopping() {
   const enablePictureInPicture = useAppSelector(
     (state) => state.feed.enablePictureInPicture
   );
-  const enableSystemPictureInPicture = useAppSelector(
-    (state) => state.feed.enableSystemPictureInPicture
-  );
 
   useEffect(() => {
     navigation.setOptions({
@@ -82,7 +79,6 @@ function Shopping() {
             channel={channelId}
             playlist={playlistId}
             enablePictureInPicture={enablePictureInPicture}
-            enableSystemPictureInPicture={enableSystemPictureInPicture}
             videoFeedConfiguration={{
               title: { hidden: false },
               titlePosition: 'nested',
@@ -95,12 +91,6 @@ function Shopping() {
               showShareButton: true,
               showMuteButton: true,
               showPlaybackButton: true,
-              ctaButtonStyle: {
-                backgroundColor: '#800080',
-                textColor: '#ffffff',
-                fontSize: 14,
-                shape: 'oval',
-              },
             }}
             onVideoFeedLoadFinished={(error?: FWError) => {
               console.log('onVideoFeedLoadFinished error', error);

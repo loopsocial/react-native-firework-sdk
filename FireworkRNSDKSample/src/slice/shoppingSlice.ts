@@ -2,7 +2,6 @@ import { createSlice, type PayloadAction } from '@reduxjs/toolkit';
 import type {
   ShoppingCTAButtonConfiguration,
   ProductCardConfiguration,
-  ProductHydrationConfiguration,
 } from 'react-native-firework-sdk';
 import type CartItem from '../models/CartItem';
 
@@ -20,8 +19,6 @@ export interface CartState {
   defaultProductCardConfiguration: ProductCardConfiguration;
   enableCustomTapProductCard: boolean;
   defaultEnableCustomTapProductCard: boolean;
-  hydrationConfiguration: ProductHydrationConfiguration;
-  defaultHydrationConfiguration: ProductHydrationConfiguration;
 }
 
 const initialState: CartState = {
@@ -56,12 +53,6 @@ const initialState: CartState = {
   },
   enableCustomTapProductCard: false,
   defaultEnableCustomTapProductCard: false,
-  hydrationConfiguration: {
-    variantsHydrationStrategy: 'merge',
-  },
-  defaultHydrationConfiguration: {
-    variantsHydrationStrategy: 'merge',
-  },
 };
 
 export const shoppingSlice = createSlice({
@@ -117,12 +108,6 @@ export const shoppingSlice = createSlice({
     ) => {
       state.enableCustomTapProductCard = action.payload;
     },
-    setHydrationConfiguration: (
-      state,
-      action: PayloadAction<ProductHydrationConfiguration>
-    ) => {
-      state.hydrationConfiguration = action.payload;
-    },
   },
 });
 
@@ -135,7 +120,6 @@ export const {
   changeLinkButtonVisibility,
   updateEnableCustomClickLinkButton,
   updateEnableCustomTapProductCard,
-  setHydrationConfiguration,
 } = shoppingSlice.actions;
 
 export default shoppingSlice.reducer;
