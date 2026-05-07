@@ -11,7 +11,7 @@ import { ListItem } from 'react-native-elements';
 import { useActionSheet } from '@expo/react-native-action-sheet';
 import type { BottomTabNavigationProp } from '@react-navigation/bottom-tabs';
 import type { CompositeNavigationProp } from '@react-navigation/native';
-import { useNavigation } from '@react-navigation/native';
+import { useFocusEffect, useNavigation } from '@react-navigation/native';
 import type { NativeStackNavigationProp } from '@react-navigation/native-stack';
 
 import ChannelInputModal from '../components/ChannelInputModal';
@@ -58,6 +58,13 @@ export default function FeedLayouts() {
   const [skuInputModalVisible, setSkuInputModalVisible] = useState(false);
   const [singleContentInputModalVisible, setSingleContentInputModalVisible] =
     useState(false);
+
+  useFocusEffect(() => {
+    console.log('FeedLayouts useFocusEffect enter');
+    return () => {
+      console.log('FeedLayouts useFocusEffect return');
+    };
+  });
 
   let dataList: FeedListItemData[] = [
     {
@@ -134,9 +141,7 @@ export default function FeedLayouts() {
       title: 'Playlist Group Feed',
       pressCallback: () => {
         const options = [
-          ...defaultPlaylistGroupInfoArray.map(
-            (item) => `PlaylistGroupId: ${item.playlistGroupId}`
-          ),
+          ...defaultPlaylistGroupInfoArray.map((item) => item.playlistGroupId),
           'Custom',
           'Cancel',
         ];

@@ -1,7 +1,7 @@
 import type { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import { useEffect, useRef, useState } from 'react';
 import { FlatList, ScrollView, StyleSheet, Text, View } from 'react-native';
-import { ButtonGroup } from 'react-native-elements';
+import { ButtonGroup, CheckBox } from 'react-native-elements';
 import {
   type IStoryBlockMethods,
   StoryBlock,
@@ -28,13 +28,18 @@ type FeedPlaylistInfo = {
 function StoryBlockWrapper({
   item,
   isViewable,
+  handleAppearanceManually,
 }: {
   item: FeedPlaylistInfo;
   isViewable: boolean;
+  handleAppearanceManually: boolean;
 }) {
   const ref = useRef<IStoryBlockMethods>(null);
   const enablePictureInPicture = useAppSelector(
     (state) => state.feed.enablePictureInPicture
+  );
+  const enableSystemPictureInPicture = useAppSelector(
+    (state) => state.feed.enableSystemPictureInPicture
   );
   useEffect(() => {
     if (isViewable) {
@@ -52,6 +57,8 @@ function StoryBlockWrapper({
         channel={item.channelId}
         playlist={item.playlistId}
         enablePictureInPicture={enablePictureInPicture}
+        enableSystemPictureInPicture={enableSystemPictureInPicture}
+        storyBlockConfiguration={{ handleAppearanceManually }}
       />
     </View>
   );
@@ -61,10 +68,15 @@ function MultiFeeds() {
   const enablePictureInPicture = useAppSelector(
     (state) => state.feed.enablePictureInPicture
   );
+  const enableSystemPictureInPicture = useAppSelector(
+    (state) => state.feed.enableSystemPictureInPicture
+  );
   const navigation = useNavigation<MultiFeedsScreenNavigationProp>();
   const buttons = ['FlatList', 'ScrollView'];
   const [selectedIndex, setSelectedIndex] = useState(0);
   const [viewableKeys, setViewableKeys] = useState<string[]>([]);
+  const [handleAppearanceManually, setHandleAppearanceManually] =
+    useState<boolean>(true);
 
   let data: FeedPlaylistInfo[] = [];
   defaultHomeStoryBlockPlaylistInfoArray.forEach((item) => {
@@ -127,6 +139,7 @@ function MultiFeeds() {
         <StoryBlockWrapper
           item={item}
           isViewable={viewableKeys.includes(item.key)}
+          handleAppearanceManually={handleAppearanceManually}
         />
       );
     } else if (item.type === 'feed') {
@@ -138,6 +151,7 @@ function MultiFeeds() {
             channel={item.channelId}
             playlist={item.playlistId}
             enablePictureInPicture={enablePictureInPicture}
+            enableSystemPictureInPicture={enableSystemPictureInPicture}
           />
         </View>
       );
@@ -162,6 +176,13 @@ function MultiFeeds() {
               setViewableKeys([]);
             }
           }}
+        />
+        <CheckBox
+          center
+          title="Handle Appearance Manually"
+          checked={handleAppearanceManually}
+          onPress={() => setHandleAppearanceManually((v) => !v)}
+          containerStyle={styles.handleAppearanceCheckBox}
         />
       </View>
       {selectedIndex === 0 ? (
@@ -196,6 +217,13 @@ const styles = StyleSheet.create({
   },
   ButtonGroupWrapper: {
     margin: 10,
+  },
+  handleAppearanceCheckBox: {
+    marginTop: 10,
+    marginLeft: 0,
+    marginRight: 0,
+    marginBottom: 0,
+    paddingVertical: 6,
   },
   storyBlockWrapper: {
     flex: 1,

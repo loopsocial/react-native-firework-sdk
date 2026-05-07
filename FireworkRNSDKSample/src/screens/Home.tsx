@@ -49,7 +49,7 @@ const styles = StyleSheet.create({
   },
   homeComponentTypeButtonGroupWrapper: {
     paddingHorizontal: 10,
-    paddingVertical: 20,
+    paddingTop: 20,
   },
 });
 

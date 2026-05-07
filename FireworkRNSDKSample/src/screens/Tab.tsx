@@ -4,6 +4,7 @@ import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 
 import FeedLayouts from './FeedLayouts';
 import More from './More';
+import StoryBlockTab from './StoryBlockTab';
 import type { TabParamsList } from './paramList/TabParamsList';
 import Cart from './Cart';
 import { useAppSelector } from '../hooks/reduxHooks';
@@ -49,6 +50,9 @@ const Tab = () => {
               case 'FeedLayouts':
                 iconName = focused ? 'grid' : 'grid-outline';
                 break;
+              case 'StoryBlock':
+                iconName = focused ? 'play-circle' : 'play-circle-outline';
+                break;
               case 'More':
                 iconName = focused
                   ? 'ellipsis-horizontal'
@@ -78,6 +82,13 @@ const Tab = () => {
           component={FeedLayouts}
           options={{
             title: 'Feed Layouts',
+          }}
+        />
+        <TabNavigator.Screen
+          name="StoryBlock"
+          component={StoryBlockTab}
+          options={{
+            title: 'Story Block',
           }}
         />
         <TabNavigator.Screen name="More" component={More} />

@@ -1,8 +1,9 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useRef } from 'react';
 
 import FireworkSDK, {
   type DataTrackingLevel,
   LivestreamPlayerDesignVersion,
+  ShortVideoPlayerDesignVersion,
 } from 'react-native-firework-sdk';
 import { RootSiblingParent } from 'react-native-root-siblings';
 import { Provider } from 'react-redux';
@@ -12,7 +13,6 @@ import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { navigationRef } from './RootNavigation';
 import AppTheme from './AppTheme';
-import BackButton from './components/BackButton';
 import {
   useCartIconVisibilityEffect,
   useCartItemCountEffect,
@@ -35,8 +35,12 @@ import EnablePushingRNContainer from './screens/EnablePushingRNContainer';
 import EnableNativeNavigation from './screens/EnableNativeNavigation';
 import EnablePausePlayer from './screens/EnablePausePlayer';
 import EnableLinkInteractionClickCallback from './screens/EnableLinkInteractionClickCallback';
+import EnableProductDetailsHydration from './screens/EnableProductDetailsHydration';
+import PreventPipOnLeave from './screens/PreventPipOnLeave';
+import VideoFeedAndStoryBlock from './screens/VideoFeedAndStoryBlock';
 import Log from './screens/Log';
 import CustomThemeProvider from './components/CustomThemeProvider';
+import { AppState, type AppStateStatus } from 'react-native';
 
 const StackNavigator = createNativeStackNavigator<RootStackParamList>();
 
@@ -45,7 +49,36 @@ type AppRouteName = keyof RootStackParamList;
 const FWNavigationContainer = () => {
   useCartIconVisibilityEffect();
   useCartItemCountEffect();
+
+  const appStateRef = useRef<AppStateStatus>(AppState.currentState);
   useEffect(() => {
+    const handleAppStateChange = (nextAppState: AppStateStatus) => {
+      if (
+        appStateRef.current === 'active' &&
+        nextAppState === 'background' &&
+        FireworkSDK.getInstance().preventPipOnLeave
+      ) {
+        FireworkSDK.getInstance().navigator.stopFloatingPlayer();
+      }
+      appStateRef.current = nextAppState;
+    };
+
+    const subscription = AppState.addEventListener(
+      'change',
+      handleAppStateChange
+    );
+    return () => subscription.remove();
+  }, []);
+
+  useEffect(() => {
+    const syncPreventPipOnLeave = async () => {
+      try {
+        const value = await AsyncStorage.getItem(StorageKey.preventPipOnLeave);
+        FireworkSDK.getInstance().preventPipOnLeave = value === 'true';
+      } catch (_) {}
+    };
+    syncPreventPipOnLeave();
+
     const sycnCurrentLanguageFromStorage = async () => {
       try {
         const language = await AsyncStorage.getItem(StorageKey.appLanguage);
@@ -77,6 +110,18 @@ const FWNavigationContainer = () => {
     };
 
     sycnCurrentLivestreamPlayerDesignVersion();
+
+    const sycnCurrentShortVideoPlayerDesignVersion = async () => {
+      const version = await AsyncStorage.getItem(
+        StorageKey.shortVideoPlayerDesignVersion
+      );
+      if (version) {
+        FireworkSDK.getInstance().shortVideoPlayerDesignVersion =
+          version as ShortVideoPlayerDesignVersion;
+      }
+    };
+
+    sycnCurrentShortVideoPlayerDesignVersion();
   }, []);
 
   const renderScreen = ({
@@ -101,32 +146,12 @@ const FWNavigationContainer = () => {
     <NavigationContainer ref={navigationRef}>
       <StackNavigator.Navigator
         initialRouteName={'Tab'}
-        screenOptions={({ route, navigation }) => ({
+        screenOptions={({ route }) => ({
           animation: (route.params as any)?.isFromNativeNavigation
             ? 'none'
             : 'slide_from_right',
           headerTitleAlign: 'center',
           headerBackTitleVisible: false,
-          headerBackButtonMenuEnabled: false,
-          headerBackVisible: false,
-          headerLeft: ({ tintColor, canGoBack }) => {
-            return (
-              <BackButton
-                onBack={async () => {
-                  console.log('FWTopNavigationContainer canGoBack', canGoBack);
-                  if (canGoBack) {
-                    navigation.goBack();
-                  }
-                  if ((route.params as any)?.isFromNativeNavigation) {
-                    await FireworkSDK.getInstance().navigator.bringRNContainerToBottom();
-                    (route.params as any)?.playerHandler?.resume();
-                  }
-                }}
-                tintColor={tintColor}
-                size={30}
-              />
-            );
-          },
         })}
       >
         {renderScreen({
@@ -199,6 +224,21 @@ const FWNavigationContainer = () => {
           name: 'EnableLinkInteractionClickCallback',
           component: EnableLinkInteractionClickCallback,
           options: { title: 'Enable Link Interaction Click Callback' },
+        })}
+        {renderScreen({
+          name: 'EnableProductDetailsHydration',
+          component: EnableProductDetailsHydration,
+          options: { title: 'Enable Product Details Hydration' },
+        })}
+        {renderScreen({
+          name: 'PreventPipOnLeave',
+          component: PreventPipOnLeave,
+          options: { title: 'Prevent PiP on Leave' },
+        })}
+        {renderScreen({
+          name: 'VideoFeedAndStoryBlock',
+          component: VideoFeedAndStoryBlock,
+          options: { title: 'Video Feed & Story Block' },
         })}
         {renderScreen({
           name: 'Log',
