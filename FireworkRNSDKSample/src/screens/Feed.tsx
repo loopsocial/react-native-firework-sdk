@@ -197,40 +197,13 @@ const Feed = () => {
             <Ionicons name="refresh-sharp" size={24} color={tintColor} />
           </TouchableOpacity>
         ) : (
-          <View style={styles.headerRight}>
-            <TouchableOpacity
-              onPress={() => {
-                storyBlockRef.current?.play();
-              }}
-              style={styles.headerIconWrapper}
-            >
-              <Ionicons
-                name="play-circle-outline"
-                size={24}
-                color={tintColor}
-              />
-            </TouchableOpacity>
-            <TouchableOpacity
-              onPress={() => {
-                storyBlockRef.current?.pause();
-              }}
-              style={styles.headerIconWrapper}
-            >
-              <Ionicons
-                name="pause-circle-outline"
-                size={24}
-                color={tintColor}
-              />
-            </TouchableOpacity>
-            <TouchableOpacity
-              onPress={() => {
-                setShowStoryBlockConfiguration(true);
-              }}
-              style={styles.headerIconWrapper}
-            >
-              <Ionicons name="settings-outline" size={24} color={tintColor} />
-            </TouchableOpacity>
-          </View>
+          <TouchableOpacity
+            onPress={() => {
+              setShowStoryBlockConfiguration(true);
+            }}
+          >
+            <Ionicons name="settings-outline" size={24} color={tintColor} />
+          </TouchableOpacity>
         ),
     });
   }, [navigation, source, feedComponentType]);
@@ -422,6 +395,28 @@ const Feed = () => {
           />
         </View>
       )}
+      {feedComponentType === 'StoryBlock' && (
+        <View style={styles.storyBlockControlsWrapper}>
+          <TouchableOpacity
+            onPress={() => {
+              storyBlockRef.current?.play();
+            }}
+            style={styles.storyBlockControlButton}
+          >
+            <Ionicons name="play-circle-outline" size={28} color="#000" />
+            <Text style={styles.storyBlockControlLabel}>Play</Text>
+          </TouchableOpacity>
+          <TouchableOpacity
+            onPress={() => {
+              storyBlockRef.current?.pause();
+            }}
+            style={styles.storyBlockControlButton}
+          >
+            <Ionicons name="pause-circle-outline" size={28} color="#000" />
+            <Text style={styles.storyBlockControlLabel}>Pause</Text>
+          </TouchableOpacity>
+        </View>
+      )}
       {feedComponentType === 'VideoFeed'
         ? renderVideoFeed()
         : renderStoryBlock()}
@@ -492,12 +487,6 @@ const styles = StyleSheet.create({
     alignItems: 'stretch',
     backgroundColor: 'white',
   },
-  headerRight: {
-    width: 160,
-    flexDirection: 'row',
-    justifyContent: 'flex-start',
-  },
-  headerIconWrapper: { marginLeft: 10 },
   feedComponentTypeButtonGroupWrapper: {
     paddingHorizontal: 10,
     paddingVertical: 20,
@@ -505,6 +494,21 @@ const styles = StyleSheet.create({
   videoFormWrapper: {
     paddingHorizontal: 10,
     paddingVertical: 20,
+  },
+  storyBlockControlsWrapper: {
+    flexDirection: 'row',
+    paddingHorizontal: 10,
+    paddingVertical: 10,
+  },
+  storyBlockControlButton: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    marginRight: 16,
+  },
+  storyBlockControlLabel: {
+    marginLeft: 6,
+    fontSize: 14,
+    color: '#000',
   },
   videoFeed: {
     height: '100%',

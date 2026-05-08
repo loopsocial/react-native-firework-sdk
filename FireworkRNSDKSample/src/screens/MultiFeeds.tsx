@@ -1,14 +1,14 @@
 import type { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import { useEffect, useRef, useState } from 'react';
 import { FlatList, ScrollView, StyleSheet, Text, View } from 'react-native';
-import { ButtonGroup, CheckBox } from 'react-native-elements';
+import { ButtonGroup } from 'react-native-elements';
 import {
   type IStoryBlockMethods,
   StoryBlock,
   VideoFeed,
 } from 'react-native-firework-sdk';
 import type { RootStackParamList } from './paramList/RootStackParamList';
-import { useNavigation } from '@react-navigation/native';
+import { useIsFocused, useNavigation } from '@react-navigation/native';
 import {
   defaultHomeVideoFeedPlaylistInfoArray,
   defaultHomeStoryBlockPlaylistInfoArray,
@@ -28,26 +28,38 @@ type FeedPlaylistInfo = {
 function StoryBlockWrapper({
   item,
   isViewable,
-  handleAppearanceManually,
 }: {
   item: FeedPlaylistInfo;
   isViewable: boolean;
-  handleAppearanceManually: boolean;
 }) {
   const ref = useRef<IStoryBlockMethods>(null);
+  const isScreenFocused = useIsFocused();
   const enablePictureInPicture = useAppSelector(
     (state) => state.feed.enablePictureInPicture
   );
   const enableSystemPictureInPicture = useAppSelector(
     (state) => state.feed.enableSystemPictureInPicture
   );
+  const isVisible = isViewable && isScreenFocused;
+  console.log(
+    'MultiFeeds StoryBlockWrapper isViewable',
+    isViewable,
+    'isScreenFocused',
+    isScreenFocused,
+    'isVisible',
+    isVisible,
+    'item channelId',
+    item.channelId,
+    'item playlistId',
+    item.playlistId
+  );
   useEffect(() => {
-    if (isViewable) {
+    if (isVisible) {
       ref.current?.onViewportEntered();
     } else {
       ref.current?.onViewportLeft();
     }
-  }, [isViewable]);
+  }, [isVisible]);
   return (
     <View style={styles.storyBlockWrapper}>
       <StoryBlock
@@ -58,7 +70,7 @@ function StoryBlockWrapper({
         playlist={item.playlistId}
         enablePictureInPicture={enablePictureInPicture}
         enableSystemPictureInPicture={enableSystemPictureInPicture}
-        storyBlockConfiguration={{ handleAppearanceManually }}
+        storyBlockConfiguration={{ handleAppearanceManually: true }}
       />
     </View>
   );
@@ -75,8 +87,6 @@ function MultiFeeds() {
   const buttons = ['FlatList', 'ScrollView'];
   const [selectedIndex, setSelectedIndex] = useState(0);
   const [viewableKeys, setViewableKeys] = useState<string[]>([]);
-  const [handleAppearanceManually, setHandleAppearanceManually] =
-    useState<boolean>(true);
 
   let data: FeedPlaylistInfo[] = [];
   defaultHomeStoryBlockPlaylistInfoArray.forEach((item) => {
@@ -139,7 +149,6 @@ function MultiFeeds() {
         <StoryBlockWrapper
           item={item}
           isViewable={viewableKeys.includes(item.key)}
-          handleAppearanceManually={handleAppearanceManually}
         />
       );
     } else if (item.type === 'feed') {
@@ -177,13 +186,6 @@ function MultiFeeds() {
             }
           }}
         />
-        <CheckBox
-          center
-          title="Handle Appearance Manually"
-          checked={handleAppearanceManually}
-          onPress={() => setHandleAppearanceManually((v) => !v)}
-          containerStyle={styles.handleAppearanceCheckBox}
-        />
       </View>
       {selectedIndex === 0 ? (
         <FlatList
@@ -217,13 +219,6 @@ const styles = StyleSheet.create({
   },
   ButtonGroupWrapper: {
     margin: 10,
-  },
-  handleAppearanceCheckBox: {
-    marginTop: 10,
-    marginLeft: 0,
-    marginRight: 0,
-    marginBottom: 0,
-    paddingVertical: 6,
   },
   storyBlockWrapper: {
     flex: 1,
