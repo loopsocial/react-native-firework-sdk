@@ -39,6 +39,7 @@ import EnableProductDetailsHydration from './screens/EnableProductDetailsHydrati
 import PreventPipOnLeave from './screens/PreventPipOnLeave';
 import VideoFeedAndStoryBlock from './screens/VideoFeedAndStoryBlock';
 import Log from './screens/Log';
+import ListViewFeeds from './screens/ListViewFeeds';
 import CustomThemeProvider from './components/CustomThemeProvider';
 import { AppState, type AppStateStatus } from 'react-native';
 
@@ -244,6 +245,11 @@ const FWNavigationContainer = () => {
           name: 'Log',
           component: Log,
           options: { title: 'Log' },
+        })}
+        {renderScreen({
+          name: 'ListViewFeeds',
+          component: ListViewFeeds,
+          options: { title: 'ListView Feeds (Test)' },
         })}
       </StackNavigator.Navigator>
     </NavigationContainer>

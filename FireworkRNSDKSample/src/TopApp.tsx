@@ -39,7 +39,10 @@ const FWTopNavigationContainer = ({
     initialParams
   );
 
-  const navigationRef = useMemo(() => createNavigationContainerRef(), []);
+  const navigationRef = useMemo(
+    () => createNavigationContainerRef<TopParamList>(),
+    []
+  );
 
   const renderScreen = ({
     name,

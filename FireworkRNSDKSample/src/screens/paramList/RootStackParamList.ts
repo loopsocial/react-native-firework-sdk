@@ -36,4 +36,5 @@ export type RootStackParamList = {
   PreventPipOnLeave: undefined;
   VideoFeedAndStoryBlock: undefined;
   Log: undefined;
+  ListViewFeeds: undefined;
 };

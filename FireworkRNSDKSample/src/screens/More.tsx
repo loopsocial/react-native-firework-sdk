@@ -414,6 +414,13 @@ function More() {
     },
   });
 
+  dataList.push({
+    title: 'ListView Feeds (Test)',
+    pressCallback: (_) => {
+      navigation.push('ListViewFeeds');
+    },
+  });
+
   useEffect(() => {
     const sycnCurrentDisplayLanguageFromStorage = async () => {
       try {
