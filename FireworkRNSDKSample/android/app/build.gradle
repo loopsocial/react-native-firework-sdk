@@ -213,7 +213,7 @@ apply from: rootProject.file('lint.gradle')
 
 configurations.all {
   resolutionStrategy {
-    force 'androidx.appcompat:appcompat:1.1.0'
+    force 'androidx.appcompat:appcompat:1.6.1'
   }
 }
 
