@@ -121,6 +121,7 @@ public class MainApplication extends Application implements ReactApplication {
 
     FWReactNativeSDK.INSTANCE.setImageLoader(GlideImageLoaderFactory.INSTANCE.createInstance(this));
     FWReactNativeSDK.INSTANCE.setLanguageSwitchingBehavior(FWSwitchLanguageBehavior.NotRestartingActivity);
+    FWReactNativeSDK.INSTANCE.setAudioMutualExclusionEnabled(true);
 
     FWReactNativeSDK.INSTANCE.init(
       this,
