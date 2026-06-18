@@ -19,7 +19,7 @@ target 'FireworkSdkExample' do
     :app_path => "#{Pod::Config.instance.installation_root}/..",
     :new_arch_enabled => true
   )
-  pod 'FireworkVideoIVSSupport', '0.9.6'
+  pod 'FireworkVideoIVSSupport', '0.9.9'
 
   post_install do |installer|
     # https://github.com/facebook/react-native/blob/main/packages/react-native/scripts/react_native_pods.rb#L197-L202
@@ -31,6 +31,13 @@ target 'FireworkSdkExample' do
     )
     installer.pods_project.build_configurations.each do |config|
       config.build_settings['ENABLE_USER_SCRIPT_SANDBOXING'] = 'NO'
+    end
+    installer.pods_project.targets.each do |target|
+      target.build_configurations.each do |config|
+        if config.build_settings['IPHONEOS_DEPLOYMENT_TARGET'].to_f < 13.0
+          config.build_settings['IPHONEOS_DEPLOYMENT_TARGET'] = '13.0'
+        end
+      end
     end
   end
 end
