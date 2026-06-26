@@ -2,9 +2,9 @@ import { useCallback, useRef } from 'react';
 import { StyleSheet, Text, View } from 'react-native';
 import { Button } from 'react-native-elements';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
-import { createNativeStackNavigator } from '@react-navigation/native-stack';
+import { createStackNavigator } from '@react-navigation/stack';
 import { useFocusEffect, useNavigation } from '@react-navigation/native';
-import type { NativeStackNavigationProp } from '@react-navigation/native-stack';
+import type { StackNavigationProp } from '@react-navigation/stack';
 import {
   type IStoryBlockMethods,
   StoryBlock,
@@ -21,11 +21,11 @@ type VideoFeedStackParamList = {
 };
 
 const BottomTab = createBottomTabNavigator();
-const VideoFeedStack = createNativeStackNavigator<VideoFeedStackParamList>();
+const VideoFeedStack = createStackNavigator<VideoFeedStackParamList>();
 
 function VideoFeedHome() {
   const navigation =
-    useNavigation<NativeStackNavigationProp<VideoFeedStackParamList>>();
+    useNavigation<StackNavigationProp<VideoFeedStackParamList>>();
   const enablePictureInPicture = useAppSelector(
     (state) => state.feed.enablePictureInPicture
   );
@@ -63,7 +63,7 @@ function VideoFeedHome() {
 
 function VideoFeedDetailScreen() {
   const navigation =
-    useNavigation<NativeStackNavigationProp<VideoFeedStackParamList>>();
+    useNavigation<StackNavigationProp<VideoFeedStackParamList>>();
   return (
     <View style={styles.detailPage}>
       <Text style={styles.detailTitle}>Video Feed Detail Page</Text>

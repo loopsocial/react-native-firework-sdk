@@ -9,7 +9,7 @@ import {
   Platform,
 } from 'react-native';
 import type { BottomTabNavigationProp } from '@react-navigation/bottom-tabs';
-import type { NativeStackNavigationProp } from '@react-navigation/native-stack';
+import type { StackNavigationProp } from '@react-navigation/stack';
 import type { TabParamsList } from './paramList/TabParamsList';
 import { useNavigation } from '@react-navigation/native';
 import type { CompositeNavigationProp } from '@react-navigation/native';
@@ -28,7 +28,7 @@ const fwNativeVersionOfAndroid = '6.32.7';
 
 type MoreScreenNavigationProp = CompositeNavigationProp<
   BottomTabNavigationProp<TabParamsList, 'More'>,
-  NativeStackNavigationProp<RootStackParamList>
+  StackNavigationProp<RootStackParamList>
 >;
 
 interface MoreListItemData {
@@ -371,20 +371,6 @@ function More() {
       },
     });
   }
-
-  dataList.push({
-    title: 'Enable Pushing RN Container',
-    pressCallback: (_) => {
-      navigation.push('EnablePushingRNContainer');
-    },
-  });
-
-  dataList.push({
-    title: 'Enable Native Navigation',
-    pressCallback: (_) => {
-      navigation.push('EnableNativeNavigation');
-    },
-  });
 
   dataList.push({
     title: 'Enable Pause Player',

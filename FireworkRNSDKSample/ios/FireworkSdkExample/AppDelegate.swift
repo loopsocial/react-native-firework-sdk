@@ -20,9 +20,13 @@ class AppDelegate: RCTAppDelegate {
         self.initialProps = [:]
 
         FWReactNativeSDK.initializeSDK(
-            SDKInitOptions(videoLaunchBehavior: .muteOnFirstLaunch)
+            SDKInitOptions(videoLaunchBehavior: .default)
         )
         FireworkVideoSDK.enableIVSPlayback()
+        // Debug-only: swizzles UIViewController lifecycle methods to log when
+        // Firework-related view controllers appear/disappear. This is purely a
+        // debugging aid for the example app — host apps do NOT need to call this.
+        UIViewController.swizzleFireworkLifecycleLogging()
 
         return super.application(application, didFinishLaunchingWithOptions: launchOptions)
     }

@@ -2,14 +2,12 @@ import { AppRegistry } from 'react-native';
 import FireworkSDK from 'react-native-firework-sdk';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
-import { name as appName, topName as topAppName } from './app.json';
+import { name as appName } from './app.json';
 import App from './src/App';
 import HostAppService from './src/utils/HostAppService';
-import TopApp from './src/TopApp';
 import StorageKey from './src/constants/StorageKey';
 
 AppRegistry.registerComponent(appName, () => App);
-AppRegistry.registerComponent(topAppName, () => TopApp);
 
 FireworkSDK.getInstance().debugLogsEnabled = true;
 

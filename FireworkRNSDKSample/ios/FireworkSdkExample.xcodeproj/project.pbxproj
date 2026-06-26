@@ -15,6 +15,7 @@
 		894FD2722DE33D5F0082A32E /* Debug.xcconfig in Resources */ = {isa = PBXBuildFile; fileRef = 894FD26E2DE33D5F0082A32E /* Debug.xcconfig */; };
 		894FD2732DE33D5F0082A32E /* Staging.xcconfig in Resources */ = {isa = PBXBuildFile; fileRef = 894FD2702DE33D5F0082A32E /* Staging.xcconfig */; };
 		894FD2742DE33D5F0082A32E /* Release.xcconfig in Resources */ = {isa = PBXBuildFile; fileRef = 894FD26F2DE33D5F0082A32E /* Release.xcconfig */; };
+		89E1E1832FED1BAE003EC4BD /* UIViewController+FWLifecycleLogging.swift in Sources */ = {isa = PBXBuildFile; fileRef = 89E1E1822FED1BAE003EC4BD /* UIViewController+FWLifecycleLogging.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -49,6 +50,7 @@
 		894FD26F2DE33D5F0082A32E /* Release.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = Release.xcconfig; sourceTree = "<group>"; };
 		894FD2702DE33D5F0082A32E /* Staging.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = Staging.xcconfig; sourceTree = "<group>"; };
 		895C3464E4BA927C9EFB2F95 /* Pods_FireworkSdkExample.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_FireworkSdkExample.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		89E1E1822FED1BAE003EC4BD /* UIViewController+FWLifecycleLogging.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIViewController+FWLifecycleLogging.swift"; sourceTree = "<group>"; };
 		8D9B1B24CE7D49CEFBFCA111 /* Pods-FireworkSdkExample.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-FireworkSdkExample.release.xcconfig"; path = "Target Support Files/Pods-FireworkSdkExample/Pods-FireworkSdkExample.release.xcconfig"; sourceTree = "<group>"; };
 		96BF127978E867FFD08E8E14 /* Pods-FireworkSdkExample.staging.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-FireworkSdkExample.staging.xcconfig"; path = "Target Support Files/Pods-FireworkSdkExample/Pods-FireworkSdkExample.staging.xcconfig"; sourceTree = "<group>"; };
 		ED297162215061F000B7C4FE /* JavaScriptCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = JavaScriptCore.framework; path = System/Library/Frameworks/JavaScriptCore.framework; sourceTree = SDKROOT; };
@@ -71,6 +73,7 @@
 			children = (
 				894FD2712DE33D5F0082A32E /* Configurations */,
 				13B07FB51A68108700A75B9A /* Images.xcassets */,
+				89E1E1822FED1BAE003EC4BD /* UIViewController+FWLifecycleLogging.swift */,
 				761780EC2CA45674006654EE /* AppDelegate.swift */,
 				13B07FB61A68108700A75B9A /* Info.plist */,
 				89435DB42DE45606002DAA46 /* LaunchScreen.storyboard */,
@@ -307,6 +310,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				89E1E1832FED1BAE003EC4BD /* UIViewController+FWLifecycleLogging.swift in Sources */,
 				761780ED2CA45674006654EE /* AppDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

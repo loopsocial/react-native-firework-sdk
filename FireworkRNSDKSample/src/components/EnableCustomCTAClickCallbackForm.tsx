@@ -5,7 +5,7 @@ import FireworkSDK from 'react-native-firework-sdk';
 import { Button, CheckBox } from 'react-native-elements';
 import Toast from 'react-native-root-toast';
 import { useNavigation } from '@react-navigation/native';
-import type { NativeStackNavigationProp } from '@react-navigation/native-stack';
+import type { StackNavigationProp } from '@react-navigation/stack';
 import type { RootStackParamList } from '../screens/paramList/RootStackParamList';
 import HostAppService from '../utils/HostAppService';
 
@@ -22,8 +22,7 @@ const EnableCustomCTAClickCallbackForm = () => {
           : false,
       },
     });
-  const navigation =
-    useNavigation<NativeStackNavigationProp<RootStackParamList>>();
+  const navigation = useNavigation<StackNavigationProp<RootStackParamList>>();
 
   const onEnableCustomCTAClickCallback = (
     data: EnableCustomCTAClickCallbackFormData

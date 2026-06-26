@@ -10,7 +10,10 @@ import { Provider } from 'react-redux';
 
 import { ActionSheetProvider } from '@expo/react-native-action-sheet';
 import { NavigationContainer } from '@react-navigation/native';
-import { createNativeStackNavigator } from '@react-navigation/native-stack';
+import {
+  createStackNavigator,
+  TransitionPresets,
+} from '@react-navigation/stack';
 import { navigationRef } from './RootNavigation';
 import AppTheme from './AppTheme';
 import {
@@ -31,8 +34,6 @@ import { store } from './store';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import StorageKey from './constants/StorageKey';
 import SetShareBaseURL from './screens/SetShareBaseURL';
-import EnablePushingRNContainer from './screens/EnablePushingRNContainer';
-import EnableNativeNavigation from './screens/EnableNativeNavigation';
 import EnablePausePlayer from './screens/EnablePausePlayer';
 import EnableLinkInteractionClickCallback from './screens/EnableLinkInteractionClickCallback';
 import EnableProductDetailsHydration from './screens/EnableProductDetailsHydration';
@@ -40,10 +41,12 @@ import PreventPipOnLeave from './screens/PreventPipOnLeave';
 import VideoFeedAndStoryBlock from './screens/VideoFeedAndStoryBlock';
 import Log from './screens/Log';
 import ListViewFeeds from './screens/ListViewFeeds';
+import More from './screens/More';
 import CustomThemeProvider from './components/CustomThemeProvider';
 import { AppState, type AppStateStatus } from 'react-native';
+import { GestureHandlerRootView } from 'react-native-gesture-handler';
 
-const StackNavigator = createNativeStackNavigator<RootStackParamList>();
+const StackNavigator = createStackNavigator<RootStackParamList>();
 
 type AppRouteName = keyof RootStackParamList;
 
@@ -147,13 +150,11 @@ const FWNavigationContainer = () => {
     <NavigationContainer ref={navigationRef}>
       <StackNavigator.Navigator
         initialRouteName={'Tab'}
-        screenOptions={({ route }) => ({
-          animation: (route.params as any)?.isFromNativeNavigation
-            ? 'none'
-            : 'slide_from_right',
+        screenOptions={{
+          ...TransitionPresets.SlideFromRightIOS,
           headerTitleAlign: 'center',
-          headerBackTitleVisible: false,
-        })}
+          headerBackButtonDisplayMode: 'minimal',
+        }}
       >
         {renderScreen({
           name: 'Tab',
@@ -207,16 +208,6 @@ const FWNavigationContainer = () => {
           options: { title: 'Circle Thumbnails(iOS)' },
         })}
         {renderScreen({
-          name: 'EnablePushingRNContainer',
-          component: EnablePushingRNContainer,
-          options: { title: 'Enable Pushing RN Container' },
-        })}
-        {renderScreen({
-          name: 'EnableNativeNavigation',
-          component: EnableNativeNavigation,
-          options: { title: 'Enable Native Navigation' },
-        })}
-        {renderScreen({
           name: 'EnablePausePlayer',
           component: EnablePausePlayer,
           options: { title: 'Enable Pause Player' },
@@ -251,6 +242,11 @@ const FWNavigationContainer = () => {
           component: ListViewFeeds,
           options: { title: 'ListView Feeds (Test)' },
         })}
+        {renderScreen({
+          name: 'More',
+          component: More,
+          options: { title: 'More', detachPreviousScreen: false },
+        })}
       </StackNavigator.Navigator>
     </NavigationContainer>
   );
@@ -259,14 +255,16 @@ const FWNavigationContainer = () => {
 export interface IAppProps {}
 export default function App(props: IAppProps) {
   return (
-    <Provider store={store}>
-      <CustomThemeProvider theme={AppTheme}>
-        <ActionSheetProvider>
-          <RootSiblingParent>
-            <FWNavigationContainer {...props} />
-          </RootSiblingParent>
-        </ActionSheetProvider>
-      </CustomThemeProvider>
-    </Provider>
+    <GestureHandlerRootView style={{ flex: 1 }}>
+      <Provider store={store}>
+        <CustomThemeProvider theme={AppTheme}>
+          <ActionSheetProvider>
+            <RootSiblingParent>
+              <FWNavigationContainer {...props} />
+            </RootSiblingParent>
+          </ActionSheetProvider>
+        </CustomThemeProvider>
+      </Provider>
+    </GestureHandlerRootView>
   );
 }

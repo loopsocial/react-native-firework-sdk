@@ -6,7 +6,7 @@ import Toast from 'react-native-root-toast';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
 import { useNavigation } from '@react-navigation/native';
-import type { NativeStackNavigationProp } from '@react-navigation/native-stack';
+import type { StackNavigationProp } from '@react-navigation/stack';
 
 import FireworkSDK from 'react-native-firework-sdk';
 import CommonStyles from '../components/CommonStyles';
@@ -24,8 +24,7 @@ const PreventPipOnLeave = () => {
       preventPipOnLeave: false,
     },
   });
-  const navigation =
-    useNavigation<NativeStackNavigationProp<RootStackParamList>>();
+  const navigation = useNavigation<StackNavigationProp<RootStackParamList>>();
 
   useEffect(() => {
     const loadSetting = async () => {

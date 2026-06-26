@@ -24,7 +24,6 @@ import { shopifyDomain } from '../config/Shopify.json';
 import type { RootStackParamList } from '../screens/paramList/RootStackParamList';
 import { Platform } from 'react-native';
 import FWExampleLoggerUtil from './FWExampleLoggerUtil';
-import { topName as topAppName } from '../../app.json';
 import FWLoggerUtil from '../../../src/utils/FWLoggerUtil';
 
 export default class HostAppService {
@@ -440,34 +439,11 @@ export default class HostAppService {
   }
 
   public async closePlayerOrStartFloatingPlayer() {
-    if (store.getState().navigation.enablePushingRNContainer) {
-      return;
-    }
-    if (store.getState().navigation.enableNativeNavigation) {
-      return;
-    }
-
     await FireworkSDK.getInstance().navigator.tryStartFloatingOrCloseFullScreen();
   }
 
   public async navigate(routeName: keyof RootStackParamList, params?: any) {
-    if (store.getState().navigation.enablePushingRNContainer) {
-      FireworkSDK.getInstance().navigator.pushRNContainer({
-        appKey: topAppName,
-        appProps: {
-          initialRouteName: routeName,
-          initialParams: params,
-        },
-      });
-    } else if (store.getState().navigation.enableNativeNavigation) {
-      RootNavigation.navigate(routeName, {
-        ...params,
-        isFromNativeNavigation: true,
-      });
-      await FireworkSDK.getInstance().navigator.bringRNContainerToTop();
-    } else {
-      RootNavigation.navigate(routeName, params);
-    }
+    RootNavigation.navigate(routeName, params);
   }
 
   public shouldShowCart() {

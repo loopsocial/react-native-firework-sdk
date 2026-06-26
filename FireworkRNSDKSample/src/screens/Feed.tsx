@@ -25,7 +25,7 @@ import Ionicons from 'react-native-vector-icons/Ionicons';
 
 import type { RouteProp } from '@react-navigation/native';
 import { useNavigation, useRoute } from '@react-navigation/native';
-import type { NativeStackNavigationProp } from '@react-navigation/native-stack';
+import type { StackNavigationProp } from '@react-navigation/stack';
 
 import FeedConfigurationModal from '../components/FeedConfigurationModal';
 import PlayerConfigurationModal from '../components/PlayerConfigurationModal';
@@ -40,10 +40,7 @@ import {
 import StoryBlockConfigurationModal from '../components/StoryBlockConfigurationModal';
 
 type FeedScreenRouteProp = RouteProp<RootStackParamList, 'Feed'>;
-type FeedScreenNavigationProp = NativeStackNavigationProp<
-  RootStackParamList,
-  'Feed'
->;
+type FeedScreenNavigationProp = StackNavigationProp<RootStackParamList, 'Feed'>;
 
 type FeedComponentType = 'VideoFeed' | 'StoryBlock';
 const feedComponentTypeList = ['VideoFeed', 'StoryBlock'];

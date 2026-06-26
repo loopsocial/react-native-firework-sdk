@@ -12,7 +12,7 @@ import { type FWError, VideoFeed } from 'react-native-firework-sdk';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 
 import { useNavigation } from '@react-navigation/native';
-import type { NativeStackNavigationProp } from '@react-navigation/native-stack';
+import type { StackNavigationProp } from '@react-navigation/stack';
 
 import PlaylistInputModal from '../components/PlaylistInputModal';
 import { defaultShoppingPlaylist } from '../config/Feed.json';
@@ -20,8 +20,7 @@ import type { RootStackParamList } from './paramList/RootStackParamList';
 import ShoppingConfigurationModal from '../components/ShoppingConfigurationModal';
 import { useAppSelector } from '../hooks/reduxHooks';
 
-type ShoppingScreenNavigationProp =
-  NativeStackNavigationProp<RootStackParamList>;
+type ShoppingScreenNavigationProp = StackNavigationProp<RootStackParamList>;
 
 function Shopping() {
   const navigation = useNavigation<ShoppingScreenNavigationProp>();

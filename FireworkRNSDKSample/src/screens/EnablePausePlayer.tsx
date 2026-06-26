@@ -4,7 +4,7 @@ import { Button, CheckBox } from 'react-native-elements';
 import Toast from 'react-native-root-toast';
 
 import { useNavigation } from '@react-navigation/native';
-import type { NativeStackNavigationProp } from '@react-navigation/native-stack';
+import type { StackNavigationProp } from '@react-navigation/stack';
 
 import CommonStyles from '../components/CommonStyles';
 import { useAppDispatch, useAppSelector } from '../hooks/reduxHooks';
@@ -25,8 +25,7 @@ const EnablePausePlayer = () => {
       enablePausePlayer: enablePausePlayer,
     },
   });
-  const navigation =
-    useNavigation<NativeStackNavigationProp<RootStackParamList>>();
+  const navigation = useNavigation<StackNavigationProp<RootStackParamList>>();
 
   const onEnablePausePlayer = (data: EnablePausePlayerFormData) => {
     dispatch(updateEnablePausePlayer(data.enablePausePlayer ?? false));

@@ -8,15 +8,14 @@ import {
 } from 'react-native';
 import { Text } from 'react-native-elements';
 import FWExampleLoggerUtil from '../utils/FWExampleLoggerUtil';
-import type { NativeStackNavigationProp } from '@react-navigation/native-stack';
+import type { StackNavigationProp } from '@react-navigation/stack';
 import type { RootStackParamList } from './paramList/RootStackParamList';
 import { useNavigation } from '@react-navigation/native';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import Clipboard from '@react-native-clipboard/clipboard';
 
 const Log = () => {
-  const navigation =
-    useNavigation<NativeStackNavigationProp<RootStackParamList>>();
+  const navigation = useNavigation<StackNavigationProp<RootStackParamList>>();
 
   const [messages, setMessages] = useState<string[]>([]);
 

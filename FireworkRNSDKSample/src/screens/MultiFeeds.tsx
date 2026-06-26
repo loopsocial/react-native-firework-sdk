@@ -1,4 +1,4 @@
-import type { NativeStackNavigationProp } from '@react-navigation/native-stack';
+import type { StackNavigationProp } from '@react-navigation/stack';
 import { useEffect, useRef, useState } from 'react';
 import { FlatList, ScrollView, StyleSheet, Text, View } from 'react-native';
 import { ButtonGroup } from 'react-native-elements';
@@ -15,8 +15,7 @@ import {
 } from '../config/Feed.json';
 import { useAppSelector } from '../hooks/reduxHooks';
 
-type MultiFeedsScreenNavigationProp =
-  NativeStackNavigationProp<RootStackParamList>;
+type MultiFeedsScreenNavigationProp = StackNavigationProp<RootStackParamList>;
 
 type FeedPlaylistInfo = {
   channelId: string;

@@ -24,12 +24,9 @@ export type RootStackParamList = {
   EnableCustomCTAClickCallback: undefined;
   LinkContent: {
     url: string;
-    isFromNativeNavigation?: boolean;
     playerHandler?: PlayerHandler;
   };
   CircleThumbnails: undefined;
-  EnablePushingRNContainer: undefined;
-  EnableNativeNavigation: undefined;
   EnablePausePlayer: undefined;
   EnableLinkInteractionClickCallback: undefined;
   EnableProductDetailsHydration: undefined;
@@ -37,4 +34,5 @@ export type RootStackParamList = {
   VideoFeedAndStoryBlock: undefined;
   Log: undefined;
   ListViewFeeds: undefined;
+  More: undefined;
 };

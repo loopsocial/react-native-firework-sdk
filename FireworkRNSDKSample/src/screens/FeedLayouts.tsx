@@ -12,7 +12,7 @@ import { useActionSheet } from '@expo/react-native-action-sheet';
 import type { BottomTabNavigationProp } from '@react-navigation/bottom-tabs';
 import type { CompositeNavigationProp } from '@react-navigation/native';
 import { useFocusEffect, useNavigation } from '@react-navigation/native';
-import type { NativeStackNavigationProp } from '@react-navigation/native-stack';
+import type { StackNavigationProp } from '@react-navigation/stack';
 
 import ChannelInputModal from '../components/ChannelInputModal';
 import DynamicContentInputModal from '../components/DynamicContentInputModal';
@@ -32,7 +32,7 @@ import SingleContentInputModal from '../components/SingleContentInputModal';
 
 type FeedLayoutsScreenNavigationProp = CompositeNavigationProp<
   BottomTabNavigationProp<TabParamsList, 'FeedLayouts'>,
-  NativeStackNavigationProp<RootStackParamList>
+  StackNavigationProp<RootStackParamList>
 >;
 
 interface FeedListItemData {

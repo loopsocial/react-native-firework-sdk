@@ -15,7 +15,7 @@ import { View } from 'react-native';
 import Icon from 'react-native-vector-icons/Ionicons';
 import { useNavigation } from '@react-navigation/native';
 import type { RootStackParamList } from './paramList/RootStackParamList';
-import type { NativeStackNavigationProp } from '@react-navigation/native-stack';
+import type { StackNavigationProp } from '@react-navigation/stack';
 
 const TabNavigator = createBottomTabNavigator<TabParamsList>();
 
@@ -31,8 +31,7 @@ const Tab = () => {
     },
   ];
 
-  const navigation =
-    useNavigation<NativeStackNavigationProp<RootStackParamList>>();
+  const navigation = useNavigation<StackNavigationProp<RootStackParamList>>();
 
   return (
     <View style={{ flex: 1 }}>
@@ -91,7 +90,16 @@ const Tab = () => {
             title: 'Story Block',
           }}
         />
-        <TabNavigator.Screen name="More" component={More} />
+        <TabNavigator.Screen
+          name="More"
+          component={More}
+          listeners={() => ({
+            tabPress: (e) => {
+              e.preventDefault();
+              navigation.push('More');
+            },
+          })}
+        />
       </TabNavigator.Navigator>
       <FloatingAction
         actions={actions}
