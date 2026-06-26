@@ -1,5 +1,11 @@
 # CHANGELOG
 
+## [2.19.18]
+
+### Fixed
+
+- Bug fixes and improvements
+
 ## [2.19.17]
 
 ### Fixed
