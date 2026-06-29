@@ -1,6 +1,13 @@
 import type { StackNavigationProp } from '@react-navigation/stack';
 import { useEffect, useRef, useState } from 'react';
-import { FlatList, ScrollView, StyleSheet, Text, View } from 'react-native';
+import {
+  FlatList,
+  ScrollView,
+  StyleSheet,
+  Text,
+  useWindowDimensions,
+  View,
+} from 'react-native';
 import { ButtonGroup } from 'react-native-elements';
 import {
   type IStoryBlockMethods,
@@ -27,9 +34,11 @@ type FeedPlaylistInfo = {
 function StoryBlockWrapper({
   item,
   isViewable,
+  height,
 }: {
   item: FeedPlaylistInfo;
   isViewable: boolean;
+  height: number;
 }) {
   const ref = useRef<IStoryBlockMethods>(null);
   const isScreenFocused = useIsFocused();
@@ -60,7 +69,7 @@ function StoryBlockWrapper({
     }
   }, [isVisible]);
   return (
-    <View style={styles.storyBlockWrapper}>
+    <View style={[styles.storyBlockWrapper, { height }]}>
       <StoryBlock
         ref={ref}
         style={styles.storyBlock}
@@ -76,6 +85,7 @@ function StoryBlockWrapper({
 }
 
 function MultiFeeds() {
+  const { height: windowHeight } = useWindowDimensions();
   const enablePictureInPicture = useAppSelector(
     (state) => state.feed.enablePictureInPicture
   );
@@ -86,6 +96,14 @@ function MultiFeeds() {
   const buttons = ['FlatList', 'ScrollView'];
   const [selectedIndex, setSelectedIndex] = useState(0);
   const [viewableKeys, setViewableKeys] = useState<string[]>([]);
+  const storyBlockHeight = Math.max(
+    320,
+    Math.min(420, Math.round(windowHeight * 0.52))
+  );
+  const listItemHeight = Math.max(
+    120,
+    Math.min(160, Math.round(windowHeight * 0.18))
+  );
 
   let data: FeedPlaylistInfo[] = [];
   defaultHomeStoryBlockPlaylistInfoArray.forEach((item) => {
@@ -148,11 +166,12 @@ function MultiFeeds() {
         <StoryBlockWrapper
           item={item}
           isViewable={viewableKeys.includes(item.key)}
+          height={storyBlockHeight}
         />
       );
     } else if (item.type === 'feed') {
       return (
-        <View style={styles.feedWrapper}>
+        <View style={[styles.feedWrapper, { height: listItemHeight }]}>
           <VideoFeed
             style={styles.feed}
             source={'playlist'}
@@ -165,7 +184,7 @@ function MultiFeeds() {
       );
     } else {
       return (
-        <View style={styles.placeholderWrapper}>
+        <View style={[styles.placeholderWrapper, { height: listItemHeight }]}>
           <Text style={styles.placeholder}>List item placeholder</Text>
         </View>
       );
@@ -191,6 +210,7 @@ function MultiFeeds() {
           data={data}
           renderItem={renderItem}
           keyExtractor={(item) => item.key}
+          nestedScrollEnabled
           removeClippedSubviews={true}
           viewabilityConfig={{ itemVisiblePercentThreshold: 50 }}
           onViewableItemsChanged={(info) => {
@@ -200,7 +220,7 @@ function MultiFeeds() {
           }}
         />
       ) : (
-        <ScrollView removeClippedSubviews={true}>
+        <ScrollView nestedScrollEnabled removeClippedSubviews={true}>
           {data.map((item) => (
             <View key={item.key}>{renderItem({ item })}</View>
           ))}
@@ -223,7 +243,6 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: 'flex-start',
     alignItems: 'center',
-    height: 600,
     margin: 10,
   },
   storyBlock: {
@@ -235,7 +254,6 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: 'flex-start',
     alignItems: 'center',
-    height: 200,
     margin: 10,
   },
   feed: {
@@ -244,7 +262,6 @@ const styles = StyleSheet.create({
     width: '100%',
   },
   placeholderWrapper: {
-    height: 200,
     margin: 10,
     flex: 1,
     justifyContent: 'center',

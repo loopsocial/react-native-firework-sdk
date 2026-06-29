@@ -1,3 +1,5 @@
+// Must be the first import (react-native-gesture-handler requirement).
+import 'react-native-gesture-handler';
 import { AppRegistry } from 'react-native';
 import FireworkSDK from 'react-native-firework-sdk';
 import AsyncStorage from '@react-native-async-storage/async-storage';
