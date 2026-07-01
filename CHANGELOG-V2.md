@@ -1,5 +1,11 @@
 # CHANGELOG
 
+## [2.20.0]
+
+### Added
+
+- Add `PlayerDeck` component
+
 ## [2.19.21]
 
 ### Fixed
