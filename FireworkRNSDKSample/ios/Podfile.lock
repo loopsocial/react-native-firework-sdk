@@ -12,6 +12,9 @@ PODS:
   - hermes-engine (0.78.2):
     - hermes-engine/Pre-built (= 0.78.2)
   - hermes-engine/Pre-built (0.78.2)
+  - LookinServer (1.2.8):
+    - LookinServer/Core (= 1.2.8)
+  - LookinServer/Core (1.2.8)
   - RCT-Folly (2024.11.18.00):
     - boost
     - DoubleConversion
@@ -1574,7 +1577,7 @@ PODS:
     - RCT-Folly (= 2024.11.18.00)
     - React-debug
     - React-jsi (= 0.78.2)
-  - react_native_firework_sdk (2.19.21):
+  - react_native_firework_sdk (2.20.0):
     - DoubleConversion
     - FireworkVideo (= 1.44.5)
     - glog
@@ -1805,6 +1808,7 @@ DEPENDENCIES:
   - fmt (from `../node_modules/react-native/third-party-podspecs/fmt.podspec`)
   - glog (from `../node_modules/react-native/third-party-podspecs/glog.podspec`)
   - hermes-engine (from `../node_modules/react-native/sdks/hermes-engine/hermes-engine.podspec`)
+  - LookinServer
   - RCT-Folly (from `../node_modules/react-native/third-party-podspecs/RCT-Folly.podspec`)
   - RCT-Folly/Fabric (from `../node_modules/react-native/third-party-podspecs/RCT-Folly.podspec`)
   - RCTDeprecation (from `../node_modules/react-native/ReactApple/Libraries/RCTFoundation/RCTDeprecation`)
@@ -1882,6 +1886,7 @@ SPEC REPOS:
     - AmazonIVSPlayer
     - FireworkVideo
     - FireworkVideoIVSSupport
+    - LookinServer
     - SocketRocket
     - SwiftUIIntrospect
 
@@ -2051,6 +2056,7 @@ SPEC CHECKSUMS:
   fmt: a40bb5bd0294ea969aaaba240a927bd33d878cdd
   glog: eb93e2f488219332457c3c4eafd2738ddc7e80b8
   hermes-engine: 2771b98fb813fdc6f92edd7c9c0035ecabf9fee7
+  LookinServer: 1b2b61c6402ae29fa22182d48f5cd067b4e99e80
   RCT-Folly: e78785aa9ba2ed998ea4151e314036f6c49e6d82
   RCTDeprecation: be794de7dc6ed8f9f7fbf525f86e7651b8b68746
   RCTRequired: a83787b092ec554c2eb6019ff3f5b8d125472b3b
@@ -2110,7 +2116,7 @@ SPEC CHECKSUMS:
   React-runtimescheduler: 9957105c1d7f068a1c00760a9c332167634f945a
   React-timing: 96e060d0d0bf18522d363716623ed2c61f7107c7
   React-utils: 93529ff7b4baa71aea1f42a48e9d3d06db398618
-  react_native_firework_sdk: 19705affc06a2f8ed56a01e9137943e734a1302e
+  react_native_firework_sdk: b083edbf3b640a1733520e1356f6bd531376297e
   ReactAppDependencyProvider: 4893bde33952f997a323eb1a1ee87a72764018ff
   ReactCodegen: 31f8d982d351eb4dbf3af220f363c7398ae667c8
   ReactCommon: 0adf8f24a3415b6815613bad362d390726b33fc7
@@ -2123,6 +2129,6 @@ SPEC CHECKSUMS:
   SwiftUIIntrospect: fee9aa07293ee280373a591e1824e8ddc869ba5d
   Yoga: 0c521d2eddeeff54ba1126068140b6e970a77fc0
 
-PODFILE CHECKSUM: 8e5f61afc3009cc5ba7fbba5bd9463fb7750291e
+PODFILE CHECKSUM: 393c51059533438169e1ccdbc70e42843c07a070
 
 COCOAPODS: 1.16.2

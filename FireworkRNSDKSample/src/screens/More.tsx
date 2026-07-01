@@ -186,6 +186,12 @@ function More() {
       },
     },
     {
+      title: 'Open Video Player (Source)',
+      pressCallback: (_) => {
+        navigation.push('OpenVideoWithSource');
+      },
+    },
+    {
       title: 'Set Ad Badge Configuration',
       pressCallback: (_) => {
         navigation.push('SetAdBadgeConfiguration');

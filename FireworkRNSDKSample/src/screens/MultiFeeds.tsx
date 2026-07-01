@@ -1,5 +1,5 @@
 import type { StackNavigationProp } from '@react-navigation/stack';
-import { useEffect, useRef, useState } from 'react';
+import { useCallback, useEffect, useRef, useState } from 'react';
 import {
   FlatList,
   ScrollView,
@@ -15,7 +15,11 @@ import {
   VideoFeed,
 } from 'react-native-firework-sdk';
 import type { RootStackParamList } from './paramList/RootStackParamList';
-import { useIsFocused, useNavigation } from '@react-navigation/native';
+import {
+  useFocusEffect,
+  useIsFocused,
+  useNavigation,
+} from '@react-navigation/native';
 import {
   defaultHomeVideoFeedPlaylistInfoArray,
   defaultHomeStoryBlockPlaylistInfoArray,
@@ -42,6 +46,14 @@ function StoryBlockWrapper({
 }) {
   const ref = useRef<IStoryBlockMethods>(null);
   const isScreenFocused = useIsFocused();
+  useFocusEffect(
+    useCallback(() => {
+      console.log(
+        'MultiFeeds StoryBlockWrapper useFocusEffect ref.current',
+        ref.current
+      );
+    }, [])
+  );
   const enablePictureInPicture = useAppSelector(
     (state) => state.feed.enablePictureInPicture
   );

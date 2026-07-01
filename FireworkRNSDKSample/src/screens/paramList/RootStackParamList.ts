@@ -1,4 +1,5 @@
 import type {
+  PlayerDeckSource,
   PlayerHandler,
   StoryBlockSource,
   VideoFeedSource,
@@ -7,6 +8,7 @@ import type {
 export type RootStackParamList = {
   Tab: undefined;
   OpenVideo: undefined;
+  OpenVideoWithSource: undefined;
   SetShareBaseURL: undefined;
   Feed: {
     source?: VideoFeedSource | StoryBlockSource;
@@ -26,6 +28,7 @@ export type RootStackParamList = {
     url: string;
     playerHandler?: PlayerHandler;
   };
+  CircleStoryDemo: undefined;
   CircleThumbnails: undefined;
   EnablePausePlayer: undefined;
   EnableLinkInteractionClickCallback: undefined;
@@ -34,5 +37,15 @@ export type RootStackParamList = {
   VideoFeedAndStoryBlock: undefined;
   Log: undefined;
   ListViewFeeds: undefined;
+  PlayerDeckDemo: {
+    source?: PlayerDeckSource;
+    channel?: string;
+    playlist?: string;
+    playlistGroup?: string;
+    dynamicContentParameters?: { [key: string]: string[] };
+    hashtagFilterExpression?: string;
+    productIds?: string[];
+    contentId?: string;
+  };
   More: undefined;
 };

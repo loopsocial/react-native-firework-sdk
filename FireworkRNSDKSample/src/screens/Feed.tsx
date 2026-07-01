@@ -62,7 +62,6 @@ const Feed = () => {
   const feedRef = useRef<VideoFeed>(null);
   const [feedError, setFeedError] = useState<FWError | undefined>(undefined);
   const storyBlockRef = useRef<IStoryBlockMethods>(null);
-
   const defaultFeedConfiguration: VideoFeedConfiguration = {
     title: { hidden: false, fontSize: 14 },
     titlePosition: 'nested',
@@ -361,6 +360,13 @@ const Feed = () => {
     );
   };
 
+  const renderFeedComponent = () => {
+    if (feedComponentType === 'VideoFeed') {
+      return renderVideoFeed();
+    }
+    return renderStoryBlock();
+  };
+
   return (
     <View style={styles.container}>
       {source !== 'playlistGroup' && (
@@ -414,9 +420,7 @@ const Feed = () => {
           </TouchableOpacity>
         </View>
       )}
-      {feedComponentType === 'VideoFeed'
-        ? renderVideoFeed()
-        : renderStoryBlock()}
+      {renderFeedComponent()}
       <FeedConfigurationModal
         visible={showFeedConfiguration}
         feedConfiguration={feedConfiguration}
@@ -528,6 +532,7 @@ const styles = StyleSheet.create({
   },
   storyBlockWrapper: {
     width: '100%',
+    marginBottom: Platform.OS === 'android' ? 70 : 0,
     alignItems: 'center',
     flex: 1,
   },

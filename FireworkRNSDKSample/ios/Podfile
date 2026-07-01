@@ -19,6 +19,7 @@ target 'FireworkSdkExample' do
     :app_path => "#{Pod::Config.instance.installation_root}/..",
     :new_arch_enabled => true
   )
+  pod 'LookinServer', :configurations => ['Debug']
   pod 'FireworkVideoIVSSupport', '0.9.9'
 
   post_install do |installer|

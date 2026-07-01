@@ -22,11 +22,13 @@ import {
 } from './hooks/cartHooks';
 import Cart from './screens/Cart';
 import Checkout from './screens/Checkout';
+import CircleStoryDemo from './screens/CircleStoryDemo';
 import CircleThumbnails from './screens/CircleThumbnails';
 import LinkContent from './screens/LinkContent';
 import EnableCustomCTAClickCallback from './screens/EnableCustomCTAClickCallback';
 import Feed from './screens/Feed';
 import OpenVideo from './screens/OpenVideo';
+import OpenVideoWithSource from './screens/OpenVideoWithSource';
 import type { RootStackParamList } from './screens/paramList/RootStackParamList';
 import SetAdBadgeConfiguration from './screens/SetAdBadgeConfiguration';
 import Tab from './screens/Tab';
@@ -41,6 +43,7 @@ import PreventPipOnLeave from './screens/PreventPipOnLeave';
 import VideoFeedAndStoryBlock from './screens/VideoFeedAndStoryBlock';
 import Log from './screens/Log';
 import ListViewFeeds from './screens/ListViewFeeds';
+import PlayerDeckDemo from './screens/PlayerDeckDemo';
 import More from './screens/More';
 import CustomThemeProvider from './components/CustomThemeProvider';
 import { AppState, type AppStateStatus } from 'react-native';
@@ -172,6 +175,11 @@ const FWNavigationContainer = () => {
           options: { title: 'Open Video URL' },
         })}
         {renderScreen({
+          name: 'OpenVideoWithSource',
+          component: OpenVideoWithSource,
+          options: { title: 'Open Video Player (Source)' },
+        })}
+        {renderScreen({
           name: 'SetAdBadgeConfiguration',
           component: SetAdBadgeConfiguration,
           options: { title: 'Set Ad Badge Configuration' },
@@ -203,6 +211,10 @@ const FWNavigationContainer = () => {
           options: { title: 'Link Content(RN page)' },
         })}
         {renderScreen({
+          name: 'CircleStoryDemo',
+          component: CircleStoryDemo,
+        })}
+        {renderScreen({
           name: 'CircleThumbnails',
           component: CircleThumbnails,
           options: { title: 'Circle Thumbnails(iOS)' },
@@ -231,6 +243,11 @@ const FWNavigationContainer = () => {
           name: 'VideoFeedAndStoryBlock',
           component: VideoFeedAndStoryBlock,
           options: { title: 'Video Feed & Story Block' },
+        })}
+        {renderScreen({
+          name: 'PlayerDeckDemo',
+          component: PlayerDeckDemo,
+          options: { title: 'Player Deck' },
         })}
         {renderScreen({
           name: 'Log',

@@ -11,7 +11,7 @@ import { ListItem } from 'react-native-elements';
 import { useActionSheet } from '@expo/react-native-action-sheet';
 import type { BottomTabNavigationProp } from '@react-navigation/bottom-tabs';
 import type { CompositeNavigationProp } from '@react-navigation/native';
-import { useFocusEffect, useNavigation } from '@react-navigation/native';
+import { useNavigation } from '@react-navigation/native';
 import type { StackNavigationProp } from '@react-navigation/stack';
 
 import ChannelInputModal from '../components/ChannelInputModal';
@@ -58,13 +58,119 @@ export default function FeedLayouts() {
   const [skuInputModalVisible, setSkuInputModalVisible] = useState(false);
   const [singleContentInputModalVisible, setSingleContentInputModalVisible] =
     useState(false);
+  const [playerDeckHashtagModalVisible, setPlayerDeckHashtagModalVisible] =
+    useState(false);
+  const [playerDeckSkuModalVisible, setPlayerDeckSkuModalVisible] =
+    useState(false);
+  const [
+    playerDeckSingleContentModalVisible,
+    setPlayerDeckSingleContentModalVisible,
+  ] = useState(false);
+  const [
+    playerDeckChannelInputModalVisible,
+    setPlayerDeckChannelInputModalVisible,
+  ] = useState(false);
+  const [
+    playerDeckPlaylistInputModalVisible,
+    setPlayerDeckPlaylistInputModalVisible,
+  ] = useState(false);
 
-  useFocusEffect(() => {
-    console.log('FeedLayouts useFocusEffect enter');
-    return () => {
-      console.log('FeedLayouts useFocusEffect return');
-    };
-  });
+  const showPlayerDeckChannelPicker = () => {
+    const options = [...defaultChannelIdArray, 'Custom', 'Cancel'];
+    const cancelButtonIndex = defaultChannelIdArray.length + 1;
+    const customButtonIndex = defaultChannelIdArray.length;
+    showActionSheetWithOptions(
+      { title: 'Select Channel Id', options, cancelButtonIndex },
+      (buttonIndex) => {
+        if (typeof buttonIndex === 'number') {
+          if (buttonIndex < customButtonIndex) {
+            navigation.navigate('PlayerDeckDemo', {
+              source: 'channel',
+              channel: options[buttonIndex],
+            });
+          } else if (buttonIndex === customButtonIndex) {
+            setPlayerDeckChannelInputModalVisible(true);
+          }
+        }
+      }
+    );
+  };
+
+  const showPlayerDeckPlaylistPicker = () => {
+    const options = [
+      ...defaultPlaylistInfoArray.map(
+        (item) => `ChannelId: ${item.channelId} PlaylistId: ${item.playlistId}`
+      ),
+      'Custom',
+      'Cancel',
+    ];
+    const cancelButtonIndex = defaultPlaylistInfoArray.length + 1;
+    const customButtonIndex = defaultPlaylistInfoArray.length;
+    showActionSheetWithOptions(
+      { title: 'Select Playlist Info', options, cancelButtonIndex },
+      (buttonIndex) => {
+        if (typeof buttonIndex === 'number') {
+          if (buttonIndex < customButtonIndex) {
+            const playlistInfo = defaultPlaylistInfoArray[buttonIndex];
+            navigation.navigate('PlayerDeckDemo', {
+              source: 'playlist',
+              channel: playlistInfo?.channelId ?? '',
+              playlist: playlistInfo?.playlistId ?? '',
+            });
+          } else if (buttonIndex === customButtonIndex) {
+            setPlayerDeckPlaylistInputModalVisible(true);
+          }
+        }
+      }
+    );
+  };
+
+  const showPlayerDeckPlaylistGroupPicker = () => {
+    const options = [
+      ...defaultPlaylistGroupInfoArray.map((item) => item.playlistGroupId),
+      'Cancel',
+    ];
+    const cancelButtonIndex = defaultPlaylistGroupInfoArray.length;
+    showActionSheetWithOptions(
+      { title: 'Select Playlist Group Id', options, cancelButtonIndex },
+      (buttonIndex) => {
+        if (
+          typeof buttonIndex === 'number' &&
+          buttonIndex < cancelButtonIndex
+        ) {
+          const groupInfo = defaultPlaylistGroupInfoArray[buttonIndex];
+          navigation.navigate('PlayerDeckDemo', {
+            source: 'playlistGroup',
+            playlistGroup: groupInfo?.playlistGroupId ?? '',
+          });
+        }
+      }
+    );
+  };
+
+  const showPlayerDeckDynamicContentPicker = () => {
+    const options = [
+      ...defaultDynamicContentInfoArray.map((item) => item.name),
+      'Cancel',
+    ];
+    const cancelButtonIndex = defaultDynamicContentInfoArray.length;
+    showActionSheetWithOptions(
+      { title: 'Select Dynamic Content Info', options, cancelButtonIndex },
+      (buttonIndex) => {
+        if (
+          typeof buttonIndex === 'number' &&
+          buttonIndex < cancelButtonIndex
+        ) {
+          const info = defaultDynamicContentInfoArray[buttonIndex];
+          navigation.navigate('PlayerDeckDemo', {
+            source: 'dynamicContent',
+            channel: info?.channelId ?? '',
+            dynamicContentParameters: info?.parameters,
+          });
+        }
+      }
+    );
+  };
 
   let dataList: FeedListItemData[] = [
     {
@@ -222,6 +328,65 @@ export default function FeedLayouts() {
         setSingleContentInputModalVisible(true);
       },
     },
+    {
+      title: 'Circle Story',
+      pressCallback: () => {
+        navigation.navigate('CircleStoryDemo');
+      },
+    },
+    {
+      title: 'Player Deck',
+      pressCallback: () => {
+        const sourceOptions = [
+          'Discover',
+          'Channel',
+          'Playlist',
+          'Playlist Group',
+          'Dynamic Content',
+          'Hashtag Playlist',
+          'SKU',
+          'Single Content',
+          'Cancel',
+        ];
+        const cancelButtonIndex = sourceOptions.length - 1;
+        showActionSheetWithOptions(
+          {
+            title: 'Select Player Deck Source',
+            options: sourceOptions,
+            cancelButtonIndex,
+          },
+          (buttonIndex) => {
+            if (typeof buttonIndex !== 'number') return;
+            switch (buttonIndex) {
+              case 0:
+                navigation.navigate('PlayerDeckDemo', { source: 'discover' });
+                break;
+              case 1:
+                showPlayerDeckChannelPicker();
+                break;
+              case 2:
+                showPlayerDeckPlaylistPicker();
+                break;
+              case 3:
+                showPlayerDeckPlaylistGroupPicker();
+                break;
+              case 4:
+                showPlayerDeckDynamicContentPicker();
+                break;
+              case 5:
+                setPlayerDeckHashtagModalVisible(true);
+                break;
+              case 6:
+                setPlayerDeckSkuModalVisible(true);
+                break;
+              case 7:
+                setPlayerDeckSingleContentModalVisible(true);
+                break;
+            }
+          }
+        );
+      },
+    },
   ];
 
   return (
@@ -331,6 +496,74 @@ export default function FeedLayouts() {
           navigation.navigate('Feed', {
             source: 'singleContent',
             contentId: contentId,
+          });
+        }}
+      />
+      <HashtagPlaylistInputModal
+        visible={playerDeckHashtagModalVisible}
+        onRequestClose={() => {
+          setPlayerDeckHashtagModalVisible(false);
+        }}
+        onSubmit={(channelId, hashtagFilterExpression) => {
+          setPlayerDeckHashtagModalVisible(false);
+          navigation.navigate('PlayerDeckDemo', {
+            source: 'hashtagPlaylist',
+            channel: channelId,
+            hashtagFilterExpression: hashtagFilterExpression,
+          });
+        }}
+      />
+      <SkuInputModal
+        visible={playerDeckSkuModalVisible}
+        onRequestClose={() => {
+          setPlayerDeckSkuModalVisible(false);
+        }}
+        onSubmit={(channelId, productIds) => {
+          setPlayerDeckSkuModalVisible(false);
+          navigation.navigate('PlayerDeckDemo', {
+            source: 'sku',
+            channel: channelId,
+            productIds: productIds,
+          });
+        }}
+      />
+      <SingleContentInputModal
+        visible={playerDeckSingleContentModalVisible}
+        onRequestClose={() => {
+          setPlayerDeckSingleContentModalVisible(false);
+        }}
+        onSubmit={(contentId) => {
+          setPlayerDeckSingleContentModalVisible(false);
+          navigation.navigate('PlayerDeckDemo', {
+            source: 'singleContent',
+            contentId: contentId,
+          });
+        }}
+      />
+      <ChannelInputModal
+        visible={playerDeckChannelInputModalVisible}
+        onRequestClose={() => {
+          setPlayerDeckChannelInputModalVisible(false);
+        }}
+        onSubmit={(channelId) => {
+          setPlayerDeckChannelInputModalVisible(false);
+          navigation.navigate('PlayerDeckDemo', {
+            source: 'channel',
+            channel: channelId,
+          });
+        }}
+      />
+      <PlaylistInputModal
+        visible={playerDeckPlaylistInputModalVisible}
+        onRequestClose={() => {
+          setPlayerDeckPlaylistInputModalVisible(false);
+        }}
+        onSubmit={(channelId, playlistId) => {
+          setPlayerDeckPlaylistInputModalVisible(false);
+          navigation.navigate('PlayerDeckDemo', {
+            source: 'playlist',
+            channel: channelId,
+            playlist: playlistId,
           });
         }}
       />
