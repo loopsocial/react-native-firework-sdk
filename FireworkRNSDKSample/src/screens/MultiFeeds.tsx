@@ -108,6 +108,11 @@ function MultiFeeds() {
   const buttons = ['FlatList', 'ScrollView'];
   const [selectedIndex, setSelectedIndex] = useState(0);
   const [viewableKeys, setViewableKeys] = useState<string[]>([]);
+  const scrollItemLayoutsRef = useRef<
+    Record<string, { y: number; height: number }>
+  >({});
+  const scrollViewportHeightRef = useRef(0);
+  const scrollOffsetRef = useRef(0);
   const storyBlockHeight = Math.max(
     320,
     Math.min(420, Math.round(windowHeight * 0.52))
@@ -172,6 +177,33 @@ function MultiFeeds() {
     });
   }, [navigation]);
 
+  // ScrollView has no onViewableItemsChanged, so compute viewability manually
+  // from item layouts and the current scroll offset (same 50% threshold as FlatList).
+  const updateScrollViewableKeys = useCallback(() => {
+    const viewportTop = scrollOffsetRef.current;
+    const viewportBottom = viewportTop + scrollViewportHeightRef.current;
+    const nextKeys = Object.entries(scrollItemLayoutsRef.current)
+      .filter(([, layout]) => {
+        if (layout.height <= 0) {
+          return false;
+        }
+        const visibleHeight =
+          Math.min(layout.y + layout.height, viewportBottom) -
+          Math.max(layout.y, viewportTop);
+        return visibleHeight / layout.height >= 0.5;
+      })
+      .map(([key]) => key);
+    setViewableKeys((prevKeys) => {
+      if (
+        prevKeys.length === nextKeys.length &&
+        prevKeys.every((key) => nextKeys.includes(key))
+      ) {
+        return prevKeys;
+      }
+      return nextKeys;
+    });
+  }, []);
+
   const renderItem = ({ item }: { item: FeedPlaylistInfo }) => {
     if (item.type === 'storyBlock') {
       return (
@@ -211,9 +243,9 @@ function MultiFeeds() {
           selectedIndex={selectedIndex}
           onPress={(index) => {
             setSelectedIndex(index);
-            if (index === 1) {
-              setViewableKeys([]);
-            }
+            setViewableKeys([]);
+            scrollItemLayoutsRef.current = {};
+            scrollOffsetRef.current = 0;
           }}
         />
       </View>
@@ -232,9 +264,33 @@ function MultiFeeds() {
           }}
         />
       ) : (
-        <ScrollView nestedScrollEnabled removeClippedSubviews={true}>
+        <ScrollView
+          nestedScrollEnabled
+          removeClippedSubviews={true}
+          scrollEventThrottle={16}
+          onLayout={(event) => {
+            scrollViewportHeightRef.current = event.nativeEvent.layout.height;
+            updateScrollViewableKeys();
+          }}
+          onScroll={(event) => {
+            scrollOffsetRef.current = event.nativeEvent.contentOffset.y;
+            updateScrollViewableKeys();
+          }}
+          onContentSizeChange={() => {
+            updateScrollViewableKeys();
+          }}
+        >
           {data.map((item) => (
-            <View key={item.key}>{renderItem({ item })}</View>
+            <View
+              key={item.key}
+              onLayout={(event) => {
+                const { y, height } = event.nativeEvent.layout;
+                scrollItemLayoutsRef.current[item.key] = { y, height };
+                updateScrollViewableKeys();
+              }}
+            >
+              {renderItem({ item })}
+            </View>
           ))}
         </ScrollView>
       )}
