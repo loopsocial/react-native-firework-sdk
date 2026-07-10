@@ -2,9 +2,12 @@ import { createSlice, type PayloadAction } from '@reduxjs/toolkit';
 import type {
   ShoppingCTAButtonConfiguration,
   ProductCardConfiguration,
+  ProductCardV2Configuration,
   ProductHydrationConfiguration,
 } from 'react-native-firework-sdk';
 import type CartItem from '../models/CartItem';
+
+export type ProductCardConfigurationVersion = 'v1' | 'v2';
 
 export interface CartState {
   cartItems: CartItem[];
@@ -16,8 +19,12 @@ export interface CartState {
   defaultLinkButtonHidden: boolean;
   enableCustomClickLinkButton: boolean;
   defaultEnableCustomClickLinkButton: boolean;
+  productCardConfigurationVersion: ProductCardConfigurationVersion;
+  defaultProductCardConfigurationVersion: ProductCardConfigurationVersion;
   productCardConfiguration: ProductCardConfiguration;
   defaultProductCardConfiguration: ProductCardConfiguration;
+  productCardV2Configuration: ProductCardV2Configuration;
+  defaultProductCardV2Configuration: ProductCardV2Configuration;
   enableCustomTapProductCard: boolean;
   defaultEnableCustomTapProductCard: boolean;
   hydrationConfiguration: ProductHydrationConfiguration;
@@ -38,6 +45,8 @@ const initialState: CartState = {
   defaultLinkButtonHidden: false,
   enableCustomClickLinkButton: false,
   defaultEnableCustomClickLinkButton: false,
+  productCardConfigurationVersion: 'v1',
+  defaultProductCardConfigurationVersion: 'v1',
   productCardConfiguration: {
     ctaButtonText: 'shopNow',
     theme: 'dark',
@@ -54,6 +63,8 @@ const initialState: CartState = {
     },
     isCtaButtonHidden: false,
   },
+  productCardV2Configuration: {},
+  defaultProductCardV2Configuration: {},
   enableCustomTapProductCard: false,
   defaultEnableCustomTapProductCard: false,
   hydrationConfiguration: {
@@ -102,6 +113,12 @@ export const shoppingSlice = createSlice({
     ) => {
       state.productCardConfiguration = action.payload;
     },
+    setProductCardV2Configuration: (
+      state,
+      action: PayloadAction<ProductCardV2Configuration>
+    ) => {
+      state.productCardV2Configuration = action.payload;
+    },
     changeLinkButtonVisibility: (state, action: PayloadAction<boolean>) => {
       state.linkButtonHidden = action.payload;
     },
@@ -110,6 +127,12 @@ export const shoppingSlice = createSlice({
       action: PayloadAction<boolean>
     ) => {
       state.enableCustomClickLinkButton = action.payload;
+    },
+    setProductCardConfigurationVersion: (
+      state,
+      action: PayloadAction<ProductCardConfigurationVersion>
+    ) => {
+      state.productCardConfigurationVersion = action.payload;
     },
     updateEnableCustomTapProductCard: (
       state,
@@ -132,8 +155,10 @@ export const {
   changeCartIconVisibility,
   setCTAButtonConfiguration,
   setProductCardConfiguration,
+  setProductCardV2Configuration,
   changeLinkButtonVisibility,
   updateEnableCustomClickLinkButton,
+  setProductCardConfigurationVersion,
   updateEnableCustomTapProductCard,
   setHydrationConfiguration,
 } = shoppingSlice.actions;
