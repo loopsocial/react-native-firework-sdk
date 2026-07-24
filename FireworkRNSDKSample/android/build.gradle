@@ -30,3 +30,39 @@ buildscript {
 }
 
 apply plugin: "com.facebook.react.rootproject"
+
+// `./gradlew build` cascades lintDebug to every Android module, including
+// third-party RN libraries in node_modules. react-native-gesture-handler's
+// Fabric source trips a known `WrongConstant` false positive on
+// `UIManagerType.FABRIC` under this AGP/lint + RN version, aborting the build.
+// The check is a false positive (the constant is a valid @UIManagerType value),
+// so disable it for all Android sub-modules.
+subprojects { sp ->
+  ['com.android.library', 'com.android.application'].each { pluginId ->
+    sp.plugins.withId(pluginId) {
+      // Use finalizeDsl so the change lands after the module's own DSL is
+      // populated but before AGP reads it — avoids "too late to modify" /
+      // "already evaluated" errors when the plugin configures modules eagerly.
+      sp.extensions.getByName('androidComponents').finalizeDsl { dsl ->
+        dsl.lint.disable.add('WrongConstant')
+      }
+    }
+  }
+}
+
+// The React Native gradle plugin injects the deprecated OSSRH snapshots repo
+// (https://oss.sonatype.org/content/repositories/snapshots/) into every module
+// so it can fetch React Native nightlies. That host is being decommissioned and
+// intermittently returns 504s. Because firework's native image-loading artifact
+// declares glide via a dynamic version range, Gradle must list versions across
+// every repo, and a 504 from that dead host aborts the whole resolution. bogano
+// targets a stable React Native (never nightlies), so this repo is never needed
+// — drop it from all projects once they are configured (after the RN plugin has
+// added it) so it is out of the repository set before any resolution happens.
+gradle.projectsEvaluated {
+  allprojects { p ->
+    p.repositories.removeAll { repo ->
+      repo.hasProperty('url') && repo.url?.toString()?.contains('oss.sonatype.org')
+    }
+  }
+}

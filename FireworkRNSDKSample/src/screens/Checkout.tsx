@@ -27,18 +27,34 @@ const Checkout = () => {
   const dispatch = useAppDispatch();
   const onBuy = (data: CheckoutFormData) => {
     console.log('[example] onBuy', data);
+    // Shopping V2 purchase tracking: report every completed order
+    // (attributed or not) on the order confirmation step.
+    const quantity = Math.floor(Math.random() * 3 + 1);
+    const unitPrice = 10.25;
+    const shippingPrice = 1.99;
+    const totalDiscounts = 3.0;
+    const subtotal = unitPrice * quantity + 3.625;
     FireworkSDK.getInstance().trackPurchase({
       orderId: uuid.v4() as string,
-      value: Math.floor(Math.random() * 100 + 1),
+      value: subtotal - totalDiscounts + shippingPrice,
       currencyCode: 'USD',
       countryCode: 'US',
-      shippingPrice: Math.floor(Math.random() * 10 + 1),
-      subtotal: Math.floor(Math.random() * 100 + 1),
+      shippingPrice,
+      subtotal,
+      totalDiscounts,
       products: [
         {
-          extProductId: 'product1',
-          price: Math.floor(Math.random() * 100 + 1),
-          quantity: Math.floor(Math.random() * 10 + 1),
+          extProductId: 'test_product_id',
+          price: unitPrice,
+          quantity,
+          productName: 'Test product',
+          sku: 'test_sku',
+        },
+        {
+          sku: 'test_sku_2',
+          price: 3.625,
+          quantity: 1,
+          productName: 'Test product 2',
         },
       ],
       additionalInfo: {

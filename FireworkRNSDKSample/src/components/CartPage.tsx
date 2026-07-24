@@ -37,7 +37,6 @@ const CartPage = ({ onCheckout }: ICartPageProps) => {
         <Button
           titleStyle={CommonStyles.mainButtonText}
           containerStyle={CommonStyles.mainButtonContainer}
-          disabled={cartItems.length === 0}
           title="CHECKOUT"
           onPress={() => {
             if (onCheckout) {
