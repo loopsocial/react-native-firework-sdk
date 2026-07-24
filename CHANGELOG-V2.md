@@ -1,10 +1,10 @@
 # CHANGELOG
 
-## [2.20.5]
+## [2.21.0]
 
-### Fixed
+### Added
 
-- Bug fixes and improvements
+- Add Shopping V2 purchase tracking parity with Web on iOS and Android: `TrackPurchaseParameters` supports `totalDiscounts` (sent as `total_discounts`), and `PurchaseProduct` supports `sku` and `productName` for `line_items`; `sku` takes precedence over `extProductId` on the wire
 
 ## [2.20.4]
 
