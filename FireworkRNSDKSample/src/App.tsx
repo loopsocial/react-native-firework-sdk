@@ -42,6 +42,9 @@ import EnableProductDetailsHydration from './screens/EnableProductDetailsHydrati
 import PreventPipOnLeave from './screens/PreventPipOnLeave';
 import VideoFeedAndStoryBlock from './screens/VideoFeedAndStoryBlock';
 import Log from './screens/Log';
+import AutoplayTest from './screens/AutoplayTest';
+import AutoplayTestDetail from './screens/AutoplayTestDetail';
+import VideosLoadedTest from './screens/VideosLoadedTest';
 import ListViewFeeds from './screens/ListViewFeeds';
 import PlayerDeckDemo from './screens/PlayerDeckDemo';
 import More from './screens/More';
@@ -258,6 +261,21 @@ const FWNavigationContainer = () => {
           name: 'ListViewFeeds',
           component: ListViewFeeds,
           options: { title: 'ListView Feeds (Test)' },
+        })}
+        {renderScreen({
+          name: 'AutoplayTest',
+          component: AutoplayTest,
+          options: { title: 'Autoplay Test' },
+        })}
+        {renderScreen({
+          name: 'AutoplayTestDetail',
+          component: AutoplayTestDetail,
+          options: { title: 'Autoplay Test Detail' },
+        })}
+        {renderScreen({
+          name: 'VideosLoadedTest',
+          component: VideosLoadedTest,
+          options: { title: 'Videos Loaded Test' },
         })}
         {renderScreen({
           name: 'More',

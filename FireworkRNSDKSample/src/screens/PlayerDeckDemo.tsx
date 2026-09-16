@@ -9,6 +9,7 @@ import {
   type VideoPlayerConfiguration,
   PipPlacement,
   type PlayerDeckSource,
+  type VideoPlaybackDetails,
 } from 'react-native-firework-sdk';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 
@@ -163,6 +164,15 @@ const PlayerDeckDemo = () => {
         }}
         onPlayerDeckGetFeedId={(feedId: string) => {
           console.log('[example] onPlayerDeckGetFeedId feedId', feedId);
+        }}
+        onPlayerDeckVideosLoaded={(videos: VideoPlaybackDetails[]) => {
+          console.log(
+            `[example] onPlayerDeckVideosLoaded ${videos.length} videos`,
+            videos.map((video) => ({
+              videoId: video.videoId,
+              hashtags: video.hashtags,
+            }))
+          );
         }}
       />
     );

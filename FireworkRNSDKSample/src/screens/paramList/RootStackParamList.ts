@@ -37,6 +37,9 @@ export type RootStackParamList = {
   VideoFeedAndStoryBlock: undefined;
   Log: undefined;
   ListViewFeeds: undefined;
+  AutoplayTest: undefined;
+  AutoplayTestDetail: undefined;
+  VideosLoadedTest: undefined;
   PlayerDeckDemo: {
     source?: PlayerDeckSource;
     channel?: string;

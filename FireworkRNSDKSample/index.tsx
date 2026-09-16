@@ -18,9 +18,17 @@ FireworkSDK.getInstance().adBadgeConfiguration = { badgeTextType: 'ad' };
 FireworkSDK.getInstance().onSDKInit = HostAppService.getInstance().onSDKInit;
 
 // FireworkSDK.getInstance().onVideoPlayback = (event) => {
-//   const { videoId, hasCTA, ctaActionType, ctaActionURL } = event.info;
+//   const {
+//     videoId,
+//     videoType,
+//     liveStreamStatus,
+//     hashtags,
+//     hasCTA,
+//     ctaActionType,
+//     ctaActionURL,
+//   } = event.info;
 //   console.log(
-//     `[example] onVideoPlayback eventName: ${event.eventName} videoId: ${videoId} hasCTA: ${hasCTA} ctaActionType: ${ctaActionType} ctaActionURL: ${ctaActionURL}`
+//     `[example] onVideoPlayback eventName: ${event.eventName} videoId: ${videoId} videoType: ${videoType} liveStreamStatus: ${liveStreamStatus} hashtags: ${JSON.stringify(hashtags)} hasCTA: ${hasCTA} ctaActionType: ${ctaActionType} ctaActionURL: ${ctaActionURL}`
 //   );
 // };
 

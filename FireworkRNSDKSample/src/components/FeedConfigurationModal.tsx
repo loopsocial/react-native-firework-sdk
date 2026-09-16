@@ -22,6 +22,10 @@ import type {
   VideoFeedTitlePosition,
 } from 'react-native-firework-sdk';
 
+import ThumbnailPlayIconConfigurationFields, {
+  type ThumbnailPlayIconAppearance,
+} from './ThumbnailPlayIconConfigurationFields';
+
 export interface IFeedConfigurationModalProps {
   visible: boolean;
   feedConfiguration?: VideoFeedConfiguration;
@@ -51,7 +55,6 @@ type FeedConfigurationFormData = {
   titleAndroidFontName?: string;
   titlePosition?: number;
   hidePlayIcon?: boolean;
-  playIconWidth?: string;
   showAdBadge?: boolean;
   enableAutoplay?: boolean;
   requiresAds?: boolean;
@@ -95,6 +98,8 @@ const FeedConfigurationModal = ({
   } = useForm<FeedConfigurationFormData>();
 
   const [configurationIndex, setConfigurationIndex] = useState<number>(0);
+  const [playIconAppearance, setPlayIconAppearance] =
+    useState<ThumbnailPlayIconAppearance>();
   const configurationTitles = ['Config 1', 'Config 2'];
   let titleFontSizeErrorMessage: string | undefined;
   if (errors.titleFontSize) {
@@ -105,18 +110,6 @@ const FeedConfigurationModal = ({
       titleFontSizeErrorMessage = 'Please enter font size in [8, 30]';
     } else {
       titleFontSizeErrorMessage = 'Please enter correct font size';
-    }
-  }
-
-  let playIconWidthErrorMessage: string | undefined;
-  if (errors.playIconWidth) {
-    if (
-      errors.playIconWidth.type === 'max' ||
-      errors.playIconWidth.type === 'min'
-    ) {
-      playIconWidthErrorMessage = 'Please enter play icon width in [0, 100]';
-    } else {
-      playIconWidthErrorMessage = 'Please enter correct play icon width';
     }
   }
 
@@ -202,7 +195,7 @@ const FeedConfigurationModal = ({
         setValue('titlePosition', undefined);
       }
       setValue('hidePlayIcon', configuration?.playIcon?.hidden);
-      setValue('playIconWidth', configuration?.playIcon?.iconWidth?.toString());
+      setPlayIconAppearance(configuration?.playIcon);
       setValue('gridColumns', configuration?.gridColumns?.toString());
       setValue(
         'titleNumberOfLines',
@@ -301,10 +294,7 @@ const FeedConfigurationModal = ({
           : undefined;
       configuration.playIcon = {
         hidden: data.hidePlayIcon ? true : false,
-        iconWidth:
-          typeof data.playIconWidth === 'string' && data.playIconWidth
-            ? parseInt(data.playIconWidth!)
-            : undefined,
+        ...playIconAppearance,
       };
       configuration.gridColumns =
         typeof data.gridColumns === 'string' && data.gridColumns
@@ -653,55 +643,31 @@ const FeedConfigurationModal = ({
   );
 
   const playIconConfiguration = (
-    <View style={styles.formItemRow}>
-      <View style={{ ...styles.formItem, marginRight: 10 }}>
-        <Controller
-          control={control}
-          render={({ field: { onChange, value } }) => {
-            return (
-              <CheckBox
-                center
-                title="Hide play icon"
-                checked={value}
-                onPress={() => onChange(!value)}
-              />
-            );
-          }}
-          name="hidePlayIcon"
-        />
+    <>
+      <View style={styles.formItemRow}>
+        <View style={{ ...styles.formItem, marginRight: 10 }}>
+          <Controller
+            control={control}
+            render={({ field: { onChange, value } }) => {
+              return (
+                <CheckBox
+                  center
+                  title="Hide play icon"
+                  checked={value}
+                  onPress={() => onChange(!value)}
+                />
+              );
+            }}
+            name="hidePlayIcon"
+          />
+        </View>
       </View>
-      <View style={{ ...styles.formItem }}>
-        <Controller
-          control={control}
-          render={({ field: { onChange, onBlur, value } }) => (
-            <Input
-              label="Play icon width"
-              placeholder="e.g. 36"
-              onBlur={onBlur}
-              onChangeText={(newValue) => onChange(newValue)}
-              value={value}
-              errorMessage={playIconWidthErrorMessage}
-              rightIcon={
-                <TouchableOpacity
-                  onPress={() => {
-                    setValue('playIconWidth', undefined);
-                  }}
-                >
-                  <Ionicons name="close" size={24} />
-                </TouchableOpacity>
-              }
-              autoComplete={undefined}
-            />
-          )}
-          name="playIconWidth"
-          rules={{
-            pattern: Patterns.number,
-            min: 0,
-            max: 100,
-          }}
-        />
-      </View>
-    </View>
+      <ThumbnailPlayIconConfigurationFields
+        value={playIconAppearance}
+        defaultSize={Platform.select({ ios: 40, default: 36 })}
+        onChange={setPlayIconAppearance}
+      />
+    </>
   );
 
   const gridColumnsConfiguration = (

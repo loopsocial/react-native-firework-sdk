@@ -1,7 +1,7 @@
 import CommonStyles from './CommonStyles';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import Patterns from '../constants/Patterns';
-import { useCallback, useEffect } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 import { Button, CheckBox, Input } from 'react-native-elements';
 import { Controller, useForm } from 'react-hook-form';
 import {
@@ -17,6 +17,10 @@ import {
 } from 'react-native';
 import type { CircleStoryConfiguration } from 'react-native-firework-sdk';
 
+import ThumbnailPlayIconConfigurationFields, {
+  type ThumbnailPlayIconAppearance,
+} from './ThumbnailPlayIconConfigurationFields';
+
 export interface ICircleStoryConfigurationModalProps {
   visible: boolean;
   configuration?: CircleStoryConfiguration;
@@ -30,7 +34,6 @@ type CircleStoryConfigurationFormData = {
   enableAutoplay?: boolean;
   showAdBadge?: boolean;
   hidePlayIcon?: boolean;
-  playIconWidth?: string;
   itemSpacing?: string;
   contentPaddingTop?: string;
   contentPaddingRight?: string;
@@ -51,6 +54,8 @@ const CircleStoryConfigurationModal = ({
     setValue,
     formState: { errors },
   } = useForm<CircleStoryConfigurationFormData>();
+  const [playIconAppearance, setPlayIconAppearance] =
+    useState<ThumbnailPlayIconAppearance>();
 
   const syncFormValues = useCallback(
     (config?: CircleStoryConfiguration) => {
@@ -58,7 +63,7 @@ const CircleStoryConfigurationModal = ({
       setValue('enableAutoplay', config?.enableAutoplay ?? false);
       setValue('showAdBadge', config?.showAdBadge ?? true);
       setValue('hidePlayIcon', config?.playIcon?.hidden ?? false);
-      setValue('playIconWidth', config?.playIcon?.iconWidth?.toString());
+      setPlayIconAppearance(config?.playIcon);
       setValue('itemSpacing', config?.itemSpacing?.toString());
       setValue('contentPaddingTop', config?.contentPadding?.top?.toString());
       setValue(
@@ -85,10 +90,7 @@ const CircleStoryConfigurationModal = ({
     result.showAdBadge = data.showAdBadge;
     result.playIcon = {
       hidden: data.hidePlayIcon ?? false,
-      iconWidth:
-        data.playIconWidth && data.playIconWidth.length > 0
-          ? parseFloat(data.playIconWidth)
-          : undefined,
+      ...playIconAppearance,
     };
 
     const pTop =
@@ -238,34 +240,13 @@ const CircleStoryConfigurationModal = ({
                     name="hidePlayIcon"
                   />
                 </View>
-                <View style={styles.formItem}>
-                  <Controller
-                    control={control}
-                    render={({ field: { onChange, onBlur, value } }) => (
-                      <Input
-                        label="Play Icon Width"
-                        placeholder="e.g. 48"
-                        onBlur={onBlur}
-                        onChangeText={onChange}
-                        value={value}
-                        errorMessage={
-                          errors.playIconWidth ? 'Enter valid width' : undefined
-                        }
-                        rightIcon={
-                          <TouchableOpacity
-                            onPress={() => setValue('playIconWidth', undefined)}
-                          >
-                            <Ionicons name="close" size={24} />
-                          </TouchableOpacity>
-                        }
-                        autoComplete={undefined}
-                      />
-                    )}
-                    name="playIconWidth"
-                    rules={{ pattern: Patterns.number, min: 0, max: 100 }}
-                  />
-                </View>
               </View>
+
+              <ThumbnailPlayIconConfigurationFields
+                value={playIconAppearance}
+                defaultSize={Platform.select({ ios: 40, default: 36 })}
+                onChange={setPlayIconAppearance}
+              />
 
               <View style={styles.formItemRow}>
                 <View style={styles.formItem}>

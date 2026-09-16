@@ -17,6 +17,7 @@ import {
   type VideoFeedConfiguration,
   type VideoFeedMode,
   type VideoPlayerConfiguration,
+  type VideoPlaybackDetails,
   type IStoryBlockMethods,
   type StoryBlockConfiguration,
   PipPlacement,
@@ -271,6 +272,15 @@ const Feed = () => {
           }}
           onVideoFeedGetFeedId={(feedId: string) => {
             console.log('[example] onVideoFeedGetFeedId feedId', feedId);
+          }}
+          onVideoFeedVideosLoaded={(videos: VideoPlaybackDetails[]) => {
+            console.log(
+              `[example] onVideoFeedVideosLoaded ${videos.length} videos`,
+              videos.map((video) => ({
+                videoId: video.videoId,
+                hashtags: video.hashtags,
+              }))
+            );
           }}
           ref={feedRef}
         />

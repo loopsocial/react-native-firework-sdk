@@ -11,10 +11,15 @@ import {
   View,
 } from 'react-native';
 import { Button, CheckBox, Slider } from 'react-native-elements';
-import type { PlayerDeckConfiguration } from 'react-native-firework-sdk';
-import type { PlayerDeckMuteState } from 'react-native-firework-sdk';
+import type {
+  PlayerDeckConfiguration,
+  PlayerDeckMuteState,
+} from 'react-native-firework-sdk';
 
 import CommonStyles from './CommonStyles';
+import ThumbnailPlayIconConfigurationFields, {
+  type ThumbnailPlayIconAppearance,
+} from './ThumbnailPlayIconConfigurationFields';
 
 export interface IPlayerDeckConfigurationModalProps {
   visible: boolean;
@@ -36,7 +41,8 @@ const PlayerDeckConfigurationModal = ({
   const [cornerRadius, setCornerRadius] = useState(8);
   const [enableAutoplay, setEnableAutoplay] = useState(true);
   const [hidePlayIcon, setHidePlayIcon] = useState(false);
-  const [playIconWidth, setPlayIconWidth] = useState(50);
+  const [playIconAppearance, setPlayIconAppearance] =
+    useState<ThumbnailPlayIconAppearance>();
   const [showMuteButton, setShowMuteButton] = useState(true);
   const [showShareButton, setShowShareButton] = useState(true);
   const [enableFullScreen, setEnableFullScreen] = useState(true);
@@ -50,7 +56,7 @@ const PlayerDeckConfigurationModal = ({
     setCornerRadius(config?.cornerRadius ?? 8);
     setEnableAutoplay(config?.autoplay?.isEnabled ?? true);
     setHidePlayIcon(config?.playIcon?.hidden ?? false);
-    setPlayIconWidth(config?.playIcon?.iconWidth ?? 50);
+    setPlayIconAppearance(config?.playIcon);
     setShowMuteButton(!(config?.muteButton?.hidden ?? false));
     setShowShareButton(!(config?.shareButton?.hidden ?? false));
     setEnableFullScreen(config?.fullScreen?.isEnabled ?? true);
@@ -73,7 +79,10 @@ const PlayerDeckConfigurationModal = ({
     const config: PlayerDeckConfiguration = {
       cornerRadius,
       autoplay: { isEnabled: enableAutoplay },
-      playIcon: { hidden: hidePlayIcon, iconWidth: playIconWidth },
+      playIcon: {
+        hidden: hidePlayIcon,
+        ...playIconAppearance,
+      },
       muteButton: { hidden: !showMuteButton },
       shareButton: { hidden: !showShareButton },
       fullScreen: { isEnabled: enableFullScreen },
@@ -153,17 +162,11 @@ const PlayerDeckConfigurationModal = ({
                 onPress={() => setHidePlayIcon((v) => !v)}
               />
               {!hidePlayIcon && (
-                <View style={styles.sliderRow}>
-                  <Text style={styles.sliderLabel}>
-                    Play Icon Width: {playIconWidth}
-                  </Text>
-                  <Slider
-                    minimumValue={20}
-                    maximumValue={100}
-                    value={playIconWidth}
-                    onValueChange={(v) => setPlayIconWidth(Math.round(v))}
-                  />
-                </View>
+                <ThumbnailPlayIconConfigurationFields
+                  value={playIconAppearance}
+                  defaultSize={50}
+                  onChange={setPlayIconAppearance}
+                />
               )}
               <CheckBox
                 title="Show Mute Button (iOS)"
