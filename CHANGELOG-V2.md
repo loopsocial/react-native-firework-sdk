@@ -1,5 +1,21 @@
 # CHANGELOG
 
+## [2.22.0]
+
+### Added
+
+- Add `onVideoFeedVideosLoaded` and `onPlayerDeckVideosLoaded`, which deliver each newly loaded batch of videos as `VideoPlaybackDetails[]` on iOS and Android
+- Add `hashtags` to `VideoPlaybackDetails` on iOS and Android, populated on every video playback event path
+- Add `playIcon.imageName` (plus iOS-only `systemImageName`) to `VideoFeedConfiguration`, `CircleStoryConfiguration` and `PlayerDeckConfiguration`, so a bundled app asset can replace the default thumbnail play icon
+
+### Changed
+
+- The default `PlayerDeck` play icon width on Android is now 50dp instead of 36dp, matching iOS
+
+### Fixed
+
+- On iOS, autoplay visibility is now measured against the widget's own visible rect like Android, and the SDK init `videoLaunchBehavior` mute state is applied in every component even when no view or player configuration is supplied
+
 ## [2.21.5]
 
 ### Fixed
