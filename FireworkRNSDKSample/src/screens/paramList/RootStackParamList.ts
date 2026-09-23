@@ -39,6 +39,7 @@ export type RootStackParamList = {
   ListViewFeeds: undefined;
   AutoplayTest: undefined;
   AutoplayTestDetail: undefined;
+  AutosizingTest: undefined;
   VideosLoadedTest: undefined;
   PlayerDeckDemo: {
     source?: PlayerDeckSource;

@@ -11,47 +11,61 @@ import {
 import { ButtonGroup } from 'react-native-elements';
 import { useNavigation } from '@react-navigation/native';
 import type { StackNavigationProp } from '@react-navigation/stack';
-import { PlayerDeck, StoryBlock, VideoFeed } from 'react-native-firework-sdk';
+import { VideoFeed } from 'react-native-firework-sdk';
 import type { RootStackParamList } from './paramList/RootStackParamList';
 
 /**
- * A test screen for widget autoplay behavior.
+ * A test screen for the VideoFeed autosizing feature on iOS and Android.
  *
- * Lets the tester switch between component types (VideoFeed / PlayerDeck /
- * StoryBlock), content sources (playlist / singleContent), and host scroll
- * containers (none / ScrollView / FlatList) to verify that autoplay starts
- * and stops correctly as the widget scrolls in and out of the viewport.
+ * The feed is embedded in a scroll container (ScrollView / FlatList) with
+ * filler blocks above and below. The grid feed should expand to its full
+ * content height and the items actually on screen should autoplay as the page
+ * scrolls.
+ *
+ * Source (channel / playlist / single content with editable ids), maxVideos,
+ * and the host container are all switchable. Autosizing is always on, the mode
+ * is fixed to `grid`, and autoplay is enabled by default.
  *
  * It also offers an entry to a second-level page, so the tester can check that
  * autoplay stops while the screen is covered and resumes after going back.
  */
 
-const COMPONENT_TYPES = ['VideoFeed', 'PlayerDeck', 'StoryBlock'] as const;
-const SOURCE_TYPES = ['playlist', 'singleContent'] as const;
-const CONTAINER_TYPES = ['None', 'ScrollView', 'FlatList'] as const;
+const SOURCE_TYPES = ['channel', 'playlist', 'singleContent'] as const;
+const CONTAINER_TYPES = ['ScrollView', 'FlatList'] as const;
+// `24` is above the 20-video cap of an autosized grid/column feed, so it
+// doubles as a check of that clamp.
+const MAX_VIDEOS_OPTIONS: (number | undefined)[] = [undefined, 4, 8, 16, 24];
+const MAX_VIDEOS_LABELS = ['No cap', '4', '8', '16', '24'];
 
-type ComponentType = (typeof COMPONENT_TYPES)[number];
 type SourceType = (typeof SOURCE_TYPES)[number];
 type ContainerType = (typeof CONTAINER_TYPES)[number];
 
 const SOURCE_LABELS: Record<SourceType, string> = {
+  channel: 'Channel',
   playlist: 'Playlist',
   singleContent: 'Single Content',
 };
 
 interface SourceIds {
-  playlistChannelId: string;
+  channelId: string;
   playlistId: string;
   contentId: string;
 }
 
 const DEFAULT_SOURCE_IDS: SourceIds = {
-  playlistChannelId: 'm08mZk9',
+  channelId: 'm08mZk9',
   playlistId: 'oPNeKr',
-  contentId: 'gwkaR1',
+  contentId: '5nexlb',
 };
 
-const FILLER_COLORS = ['#cfd8dc', '#ffe0b2', '#c8e6c9', '#e1bee7', '#b2dfdb'];
+const FILLER_COLORS = [
+  '#cfd8dc',
+  '#ffe0b2',
+  '#c8e6c9',
+  '#e1bee7',
+  '#b2dfdb',
+  '#f0f4c3',
+];
 
 function FillerBlock({ index }: { index: number }) {
   return (
@@ -66,12 +80,12 @@ function FillerBlock({ index }: { index: number }) {
   );
 }
 
-const AutoplayTest = () => {
+const AutosizingTest = () => {
   const navigation = useNavigation<StackNavigationProp<RootStackParamList>>();
 
-  const [componentIndex, setComponentIndex] = useState(0);
-  const [sourceIndex, setSourceIndex] = useState(0);
-  const [containerIndex, setContainerIndex] = useState(1);
+  const [sourceIndex, setSourceIndex] = useState(1); // playlist
+  const [containerIndex, setContainerIndex] = useState(0);
+  const [maxVideosIndex, setMaxVideosIndex] = useState(0);
 
   // `draftIds` follows the text inputs; `appliedIds` is what the widget uses.
   // They are only synced when the tester taps Apply, so typing does not
@@ -80,12 +94,12 @@ const AutoplayTest = () => {
   const [appliedIds, setAppliedIds] = useState<SourceIds>(DEFAULT_SOURCE_IDS);
   const [applyCount, setApplyCount] = useState(0);
 
-  const componentType: ComponentType = COMPONENT_TYPES[componentIndex]!;
   const sourceType: SourceType = SOURCE_TYPES[sourceIndex]!;
   const containerType: ContainerType = CONTAINER_TYPES[containerIndex]!;
+  const maxVideos = MAX_VIDEOS_OPTIONS[maxVideosIndex];
 
   const channel =
-    sourceType === 'playlist' ? appliedIds.playlistChannelId : undefined;
+    sourceType !== 'singleContent' ? appliedIds.channelId : undefined;
   const playlist =
     sourceType === 'playlist' ? appliedIds.playlistId : undefined;
   const contentId =
@@ -103,46 +117,33 @@ const AutoplayTest = () => {
   // Recreate the native view whenever any selection changes so the new
   // source/config takes effect from a clean state. `applyCount` is part of the
   // key so tapping Apply reloads even when the ids are unchanged.
-  const componentKey = `${componentType}_${sourceType}_${containerType}_${channel ?? ''}_${playlist ?? ''}_${contentId ?? ''}_${applyCount}`;
+  const componentKey = `${sourceType}_${containerType}_${maxVideos}_${channel ?? ''}_${playlist ?? ''}_${contentId ?? ''}_${applyCount}`;
 
   const feedComponent = useMemo(() => {
-    switch (componentType) {
-      case 'VideoFeed':
-        return (
-          <VideoFeed
-            key={componentKey}
-            style={styles.videoFeed}
-            source={sourceType}
-            channel={channel}
-            playlist={playlist}
-            contentId={contentId}
-            videoFeedConfiguration={{ enableAutoplay: true }}
-          />
-        );
-      case 'PlayerDeck':
-        return (
-          <PlayerDeck
-            key={componentKey}
-            style={styles.playerDeck}
-            source={sourceType}
-            channel={channel}
-            playlist={playlist}
-            contentId={contentId}
-          />
-        );
-      case 'StoryBlock':
-        return (
-          <StoryBlock
-            key={componentKey}
-            style={styles.storyBlock}
-            source={sourceType}
-            channel={channel}
-            playlist={playlist}
-            contentId={contentId}
-          />
-        );
-    }
-  }, [componentKey, componentType, sourceType, channel, playlist, contentId]);
+    return (
+      <VideoFeed
+        key={componentKey}
+        // No height: the feed reports its own height while autosizing.
+        style={styles.autosizedVideoFeed}
+        source={sourceType}
+        channel={channel}
+        playlist={playlist}
+        contentId={contentId}
+        mode="grid"
+        autosizing
+        maxVideos={maxVideos}
+        videoFeedConfiguration={{ enableAutoplay: true }}
+      />
+    );
+  }, [componentKey, sourceType, channel, playlist, contentId, maxVideos]);
+
+  const renderApplyButton = () => {
+    return (
+      <TouchableOpacity style={styles.applyButton} onPress={applyIds}>
+        <Text style={styles.applyButtonText}>Apply</Text>
+      </TouchableOpacity>
+    );
+  };
 
   const renderSourceInputs = () => {
     if (sourceType === 'singleContent') {
@@ -164,41 +165,24 @@ const AutoplayTest = () => {
       <View style={styles.idInputRow}>
         <TextInput
           style={[styles.idInput, styles.idInputFlex]}
-          value={draftIds.playlistChannelId}
-          onChangeText={updateDraftId('playlistChannelId')}
+          value={draftIds.channelId}
+          onChangeText={updateDraftId('channelId')}
           placeholder="Channel ID"
           autoCapitalize="none"
           autoCorrect={false}
         />
-        <TextInput
-          style={[styles.idInput, styles.idInputFlex]}
-          value={draftIds.playlistId}
-          onChangeText={updateDraftId('playlistId')}
-          placeholder="Playlist ID"
-          autoCapitalize="none"
-          autoCorrect={false}
-        />
+        {sourceType === 'playlist' && (
+          <TextInput
+            style={[styles.idInput, styles.idInputFlex]}
+            value={draftIds.playlistId}
+            onChangeText={updateDraftId('playlistId')}
+            placeholder="Playlist ID"
+            autoCapitalize="none"
+            autoCorrect={false}
+          />
+        )}
         {renderApplyButton()}
       </View>
-    );
-  };
-
-  const renderDetailEntry = () => {
-    return (
-      <TouchableOpacity
-        style={styles.detailEntryButton}
-        onPress={() => navigation.push('AutoplayTestDetail')}
-      >
-        <Text style={styles.detailEntryButtonText}>Open second-level page</Text>
-      </TouchableOpacity>
-    );
-  };
-
-  const renderApplyButton = () => {
-    return (
-      <TouchableOpacity style={styles.applyButton} onPress={applyIds}>
-        <Text style={styles.applyButtonText}>Apply</Text>
-      </TouchableOpacity>
     );
   };
 
@@ -209,42 +193,26 @@ const AutoplayTest = () => {
     <View key="feed">{feedComponent}</View>,
     <FillerBlock key="filler3" index={3} />,
     <FillerBlock key="filler4" index={4} />,
+    <FillerBlock key="filler5" index={5} />,
   ];
 
   const renderBody = () => {
-    switch (containerType) {
-      case 'None':
-        return (
-          <View style={styles.body}>
-            <FillerBlock index={0} />
-            {feedComponent}
-            <FillerBlock index={1} />
-          </View>
-        );
-      case 'ScrollView':
-        return <ScrollView style={styles.body}>{scrollChildren}</ScrollView>;
-      case 'FlatList':
-        return (
-          <FlatList
-            style={styles.body}
-            data={scrollChildren}
-            keyExtractor={(_, index) => `item_${index}`}
-            renderItem={({ item }) => item}
-          />
-        );
+    if (containerType === 'FlatList') {
+      return (
+        <FlatList
+          style={styles.body}
+          data={scrollChildren}
+          keyExtractor={(_, index) => `item_${index}`}
+          renderItem={({ item }) => item}
+        />
+      );
     }
+    return <ScrollView style={styles.body}>{scrollChildren}</ScrollView>;
   };
 
   return (
     <View style={styles.container}>
       <View style={styles.controls}>
-        <ButtonGroup
-          buttons={[...COMPONENT_TYPES]}
-          selectedIndex={componentIndex}
-          onPress={setComponentIndex}
-          containerStyle={styles.buttonGroup}
-          textStyle={styles.buttonGroupText}
-        />
         <ButtonGroup
           buttons={SOURCE_TYPES.map((type) => SOURCE_LABELS[type])}
           selectedIndex={sourceIndex}
@@ -252,15 +220,35 @@ const AutoplayTest = () => {
           containerStyle={styles.buttonGroup}
           textStyle={styles.buttonGroupText}
         />
-        <ButtonGroup
-          buttons={[...CONTAINER_TYPES]}
-          selectedIndex={containerIndex}
-          onPress={setContainerIndex}
-          containerStyle={styles.buttonGroup}
-          textStyle={styles.buttonGroupText}
-        />
         {renderSourceInputs()}
-        {renderDetailEntry()}
+        <View style={styles.optionRow}>
+          <Text style={styles.optionLabel}>Max videos</Text>
+          <ButtonGroup
+            buttons={MAX_VIDEOS_LABELS}
+            selectedIndex={maxVideosIndex}
+            onPress={setMaxVideosIndex}
+            containerStyle={styles.inlineButtonGroup}
+            textStyle={styles.buttonGroupText}
+          />
+        </View>
+        <View style={styles.optionRow}>
+          <Text style={styles.optionLabel}>Container</Text>
+          <ButtonGroup
+            buttons={[...CONTAINER_TYPES]}
+            selectedIndex={containerIndex}
+            onPress={setContainerIndex}
+            containerStyle={styles.inlineButtonGroup}
+            textStyle={styles.buttonGroupText}
+          />
+        </View>
+        <TouchableOpacity
+          style={styles.detailEntryButton}
+          onPress={() => navigation.push('AutoplayTestDetail')}
+        >
+          <Text style={styles.detailEntryButtonText}>
+            Open second-level page
+          </Text>
+        </TouchableOpacity>
       </View>
       {renderBody()}
     </View>
@@ -282,8 +270,24 @@ const styles = StyleSheet.create({
     height: 32,
     marginVertical: 4,
   },
+  inlineButtonGroup: {
+    flex: 1,
+    height: 28,
+    marginVertical: 2,
+    marginLeft: 8,
+  },
   buttonGroupText: {
     fontSize: 12,
+  },
+  optionRow: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'space-between',
+    marginVertical: 2,
+  },
+  optionLabel: {
+    fontSize: 13,
+    width: 110,
   },
   idInput: {
     height: 36,
@@ -311,8 +315,13 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     backgroundColor: '#2089dc',
   },
+  applyButtonText: {
+    fontSize: 13,
+    color: '#ffffff',
+    fontWeight: '600',
+  },
   detailEntryButton: {
-    height: 36,
+    height: 32,
     borderRadius: 6,
     marginVertical: 4,
     justifyContent: 'center',
@@ -325,22 +334,11 @@ const styles = StyleSheet.create({
     color: '#2089dc',
     fontWeight: '600',
   },
-  applyButtonText: {
-    fontSize: 13,
-    color: '#ffffff',
-    fontWeight: '600',
-  },
   body: {
     flex: 1,
   },
-  videoFeed: {
-    height: 220,
-  },
-  playerDeck: {
-    height: 420,
-  },
-  storyBlock: {
-    height: 420,
+  autosizedVideoFeed: {
+    width: '100%',
   },
   fillerBlock: {
     height: 260,
@@ -353,4 +351,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default AutoplayTest;
+export default AutosizingTest;

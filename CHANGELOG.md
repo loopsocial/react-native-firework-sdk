@@ -1,5 +1,12 @@
 # CHANGELOG
 
+## [2.22.1]
+
+### Added
+
+- Add `autosizing` to `VideoFeed` on iOS and Android. With `autosizing=true` and `mode="grid"`, the feed expands to its content height inside a `ScrollView` or `FlatList`, and scrolling is handled by the parent container. Any `height` in `style` is ignored. When autoplay is enabled, items are evaluated against the surrounding viewport with a 50% visibility threshold. Changing `autosizing` or `mode` re-creates the native feed
+- Add `maxVideos` to limit the number of items displayed in an autosized grid. **On Android, a configured `maxVideos` takes effect only when `autosizing=true` and `mode="grid"`; it is ignored otherwise.** On both platforms, the autosized grid still works when `maxVideos` is omitted, with a default limit of 20. Values above 20 are reduced to 20, with a warning
+
 ## [2.22.0]
 
 ### Added

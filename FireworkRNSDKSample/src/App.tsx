@@ -44,6 +44,7 @@ import VideoFeedAndStoryBlock from './screens/VideoFeedAndStoryBlock';
 import Log from './screens/Log';
 import AutoplayTest from './screens/AutoplayTest';
 import AutoplayTestDetail from './screens/AutoplayTestDetail';
+import AutosizingTest from './screens/AutosizingTest';
 import VideosLoadedTest from './screens/VideosLoadedTest';
 import ListViewFeeds from './screens/ListViewFeeds';
 import PlayerDeckDemo from './screens/PlayerDeckDemo';
@@ -271,6 +272,11 @@ const FWNavigationContainer = () => {
           name: 'AutoplayTestDetail',
           component: AutoplayTestDetail,
           options: { title: 'Autoplay Test Detail' },
+        })}
+        {renderScreen({
+          name: 'AutosizingTest',
+          component: AutosizingTest,
+          options: { title: 'Autosizing Test' },
         })}
         {renderScreen({
           name: 'VideosLoadedTest',

@@ -24,7 +24,7 @@ import FireworkSDK, {
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import StorageKey from '../constants/StorageKey';
 
-const fwNativeVersionOfAndroid = '6.35.1';
+const fwNativeVersionOfAndroid = '6.35.3';
 
 type MoreScreenNavigationProp = CompositeNavigationProp<
   BottomTabNavigationProp<TabParamsList, 'More'>,
@@ -417,6 +417,13 @@ function More() {
     title: 'Autoplay Test',
     pressCallback: (_) => {
       navigation.push('AutoplayTest');
+    },
+  });
+
+  dataList.push({
+    title: 'Autosizing Test',
+    pressCallback: (_) => {
+      navigation.push('AutosizingTest');
     },
   });
 

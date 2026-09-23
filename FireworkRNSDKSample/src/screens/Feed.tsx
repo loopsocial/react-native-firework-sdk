@@ -1,7 +1,9 @@
 import { useEffect, useRef, useState } from 'react';
 
 import {
+  FlatList,
   Platform,
+  ScrollView,
   StyleSheet,
   Text,
   TouchableOpacity,
@@ -30,7 +32,9 @@ import type { StackNavigationProp } from '@react-navigation/stack';
 
 import FeedConfigurationModal from '../components/FeedConfigurationModal';
 import PlayerConfigurationModal from '../components/PlayerConfigurationModal';
-import VideoFeedForm from '../components/VideoFeedForm';
+import VideoFeedForm, {
+  type AutosizingContainer,
+} from '../components/VideoFeedForm';
 import type { RootStackParamList } from './paramList/RootStackParamList';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { useAppDispatch, useAppSelector } from '../hooks/reduxHooks';
@@ -45,6 +49,17 @@ type FeedScreenNavigationProp = StackNavigationProp<RootStackParamList, 'Feed'>;
 
 type FeedComponentType = 'VideoFeed' | 'StoryBlock';
 const feedComponentTypeList = ['VideoFeed', 'StoryBlock'];
+
+/**
+ * Filler content placed above and below the autosizing feed, so the feed can be
+ * scrolled in and out of the screen to check that autoplay follows the screen
+ * viewport instead of the feed's own bounds.
+ */
+const PlaceholderBlock = ({ label }: { label: string }) => (
+  <View style={styles.placeholderBlock}>
+    <Text style={styles.placeholderText}>{label}</Text>
+  </View>
+);
 
 const Feed = () => {
   const route = useRoute<FeedScreenRouteProp>();
@@ -170,6 +185,13 @@ const Feed = () => {
     StoryBlockConfiguration | undefined
   >(defaultStoryBlockConfiguration);
   const [mode, setMode] = useState<VideoFeedMode>('row');
+  // Autosizing example: the feed sizes itself to its content and is hosted in a
+  // scroll container. Use grid mode + maxVideos 6 to reproduce the customer
+  // set-up; maxVideos 50 checks the 20-video clamp of an autosized grid.
+  const [autosizing, setAutosizing] = useState<boolean>(false);
+  const [autosizingContainer, setAutosizingContainer] =
+    useState<AutosizingContainer>('ScrollView');
+  const [maxVideos, setMaxVideos] = useState<number | undefined>(undefined);
   const [showFeedConfiguration, setShowFeedConfiguration] =
     useState<boolean>(false);
   const [showPlayerConfiguration, setShowPlayerConfiguration] =
@@ -205,7 +227,145 @@ const Feed = () => {
     });
   }, [navigation, source, feedComponentType]);
 
+  // Mirrors the SDK contract: Android autosizes a grid feed only. Switching mode away from
+  // grid there falls back to the fixed-height layout instead of leaving the feed in a scroll
+  // container it cannot size itself in.
+  const autosizingActive =
+    autosizing && (Platform.OS !== 'android' || mode === 'grid');
+
+  const renderVideoFeedElement = (autosizingEnabled: boolean) => {
+    return (
+      <VideoFeed
+        style={
+          autosizingEnabled
+            ? {
+                // No height: the feed reports its own height while autosizing.
+                width: '100%',
+                backgroundColor:
+                  feedConfiguration.titlePosition === 'stacked'
+                    ? '#A9A9A9'
+                    : undefined,
+              }
+            : {
+                height: '100%',
+                width:
+                  Platform.OS === 'android' && mode === 'column' ? 150 : '100%',
+                backgroundColor:
+                  feedConfiguration.titlePosition === 'stacked'
+                    ? '#A9A9A9'
+                    : undefined,
+              }
+        }
+        source={source}
+        channel={channel}
+        playlist={playlist}
+        playlistGroup={playlistGroup}
+        dynamicContentParameters={dynamicContentParameters}
+        hashtagFilterExpression={hashtagFilterExpression}
+        productIds={productIds}
+        contentId={contentId}
+        mode={mode}
+        autosizing={autosizingEnabled}
+        maxVideos={maxVideos}
+        videoFeedConfiguration={{
+          ...feedConfiguration,
+          aspectRatio: mode === 'column' ? 1 : undefined,
+          titlePadding:
+            feedConfiguration.titlePosition === 'stacked'
+              ? { top: 8, right: 8, bottom: 0, left: 8 }
+              : undefined,
+        }}
+        videoPlayerConfiguration={playerConfiguration}
+        adConfiguration={feedAdConfiguration}
+        enablePictureInPicture={enablePictureInPicture}
+        enableSystemPictureInPicture={enableSystemPictureInPicture}
+        onVideoFeedLoadFinished={(error?: FWError) => {
+          console.log('[example] onVideoFeedLoadFinished error', error);
+          setFeedError(error);
+        }}
+        onVideoFeedEmpty={(error?: FWError) => {
+          console.log('[example] onVideoFeedEmpty error', error);
+        }}
+        onVideoFeedDidStartPictureInPicture={(error?: FWError) => {
+          console.log(
+            '[example] onVideoFeedDidStartPictureInPicture error',
+            error
+          );
+        }}
+        onVideoFeedDidStopPictureInPicture={(error?: FWError) => {
+          console.log(
+            '[example] onVideoFeedDidStopPictureInPicture error',
+            error
+          );
+        }}
+        onVideoFeedGetFeedId={(feedId: string) => {
+          console.log('[example] onVideoFeedGetFeedId feedId', feedId);
+        }}
+        onVideoFeedVideosLoaded={(videos: VideoPlaybackDetails[]) => {
+          console.log(
+            `[example] onVideoFeedVideosLoaded ${videos.length} videos`,
+            videos.map((video) => ({
+              videoId: video.videoId,
+              hashtags: video.hashtags,
+            }))
+          );
+        }}
+        ref={feedRef}
+      />
+    );
+  };
+
+  const renderFeedError = () => {
+    if (!feedError) {
+      return null;
+    }
+    return (
+      <View style={styles.errorView}>
+        <Button
+          title="Refresh"
+          onPress={() => {
+            setFeedError(undefined);
+            feedRef.current?.refresh();
+          }}
+        />
+        <Text style={styles.errorText}>
+          {feedError.reason ?? 'Fail to load video feed'}
+        </Text>
+      </View>
+    );
+  };
+
+  const renderAutosizingVideoFeed = () => {
+    const children = [
+      <PlaceholderBlock key="above-1" label="Placeholder above 1" />,
+      <PlaceholderBlock key="above-2" label="Placeholder above 2" />,
+      <View key="feed">
+        {renderVideoFeedElement(true)}
+        {renderFeedError()}
+      </View>,
+      <PlaceholderBlock key="below-1" label="Placeholder below 1" />,
+      <PlaceholderBlock key="below-2" label="Placeholder below 2" />,
+      <PlaceholderBlock key="below-3" label="Placeholder below 3" />,
+    ];
+    if (autosizingContainer === 'FlatList') {
+      return (
+        <FlatList
+          style={styles.autosizingContainer}
+          data={children}
+          keyExtractor={(_, index) => `autosizing_item_${index}`}
+          renderItem={({ item }) => item}
+        />
+      );
+    }
+    return (
+      <ScrollView style={styles.autosizingContainer}>{children}</ScrollView>
+    );
+  };
+
   const renderVideoFeed = () => {
+    if (autosizingActive) {
+      return renderAutosizingVideoFeed();
+    }
     return (
       <View
         style={
@@ -220,84 +380,8 @@ const Feed = () => {
               }
         }
       >
-        <VideoFeed
-          style={{
-            height: '100%',
-            width:
-              Platform.OS === 'android' && mode === 'column' ? 150 : '100%',
-            backgroundColor:
-              feedConfiguration.titlePosition === 'stacked'
-                ? '#A9A9A9'
-                : undefined,
-          }}
-          source={source}
-          channel={channel}
-          playlist={playlist}
-          playlistGroup={playlistGroup}
-          dynamicContentParameters={dynamicContentParameters}
-          hashtagFilterExpression={hashtagFilterExpression}
-          productIds={productIds}
-          contentId={contentId}
-          mode={mode}
-          videoFeedConfiguration={{
-            ...feedConfiguration,
-            aspectRatio: mode === 'column' ? 1 : undefined,
-            titlePadding:
-              feedConfiguration.titlePosition === 'stacked'
-                ? { top: 8, right: 8, bottom: 0, left: 8 }
-                : undefined,
-          }}
-          videoPlayerConfiguration={playerConfiguration}
-          adConfiguration={feedAdConfiguration}
-          enablePictureInPicture={enablePictureInPicture}
-          enableSystemPictureInPicture={enableSystemPictureInPicture}
-          onVideoFeedLoadFinished={(error?: FWError) => {
-            console.log('[example] onVideoFeedLoadFinished error', error);
-            setFeedError(error);
-          }}
-          onVideoFeedEmpty={(error?: FWError) => {
-            console.log('[example] onVideoFeedEmpty error', error);
-          }}
-          onVideoFeedDidStartPictureInPicture={(error?: FWError) => {
-            console.log(
-              '[example] onVideoFeedDidStartPictureInPicture error',
-              error
-            );
-          }}
-          onVideoFeedDidStopPictureInPicture={(error?: FWError) => {
-            console.log(
-              '[example] onVideoFeedDidStopPictureInPicture error',
-              error
-            );
-          }}
-          onVideoFeedGetFeedId={(feedId: string) => {
-            console.log('[example] onVideoFeedGetFeedId feedId', feedId);
-          }}
-          onVideoFeedVideosLoaded={(videos: VideoPlaybackDetails[]) => {
-            console.log(
-              `[example] onVideoFeedVideosLoaded ${videos.length} videos`,
-              videos.map((video) => ({
-                videoId: video.videoId,
-                hashtags: video.hashtags,
-              }))
-            );
-          }}
-          ref={feedRef}
-        />
-        {feedError && (
-          <View style={styles.errorView}>
-            <Button
-              title="Refresh"
-              onPress={() => {
-                setFeedError(undefined);
-                feedRef.current?.refresh();
-              }}
-            />
-            <Text style={styles.errorText}>
-              {feedError.reason ?? 'Fail to load video feed'}
-            </Text>
-          </View>
-        )}
+        {renderVideoFeedElement(false)}
+        {renderFeedError()}
       </View>
     );
   };
@@ -396,8 +480,20 @@ const Feed = () => {
         <View style={styles.videoFormWrapper}>
           <VideoFeedForm
             mode={mode}
+            autosizing={autosizing}
+            autosizingContainer={autosizingContainer}
+            maxVideos={maxVideos}
             onChangeMode={(newMode) => {
               setMode(newMode);
+            }}
+            onChangeAutosizing={(newAutosizing) => {
+              setAutosizing(newAutosizing);
+            }}
+            onChangeAutosizingContainer={(newContainer) => {
+              setAutosizingContainer(newContainer);
+            }}
+            onChangeMaxVideos={(newMaxVideos) => {
+              setMaxVideos(newMaxVideos);
             }}
             onGoToFeedConfiguration={() => {
               setShowFeedConfiguration(true);
@@ -523,6 +619,22 @@ const styles = StyleSheet.create({
   },
   videoFeed: {
     height: '100%',
+  },
+  autosizingContainer: {
+    flex: 1,
+  },
+  placeholderBlock: {
+    height: 240,
+    marginHorizontal: 10,
+    marginVertical: 8,
+    borderRadius: 8,
+    backgroundColor: '#e0e0e0',
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  placeholderText: {
+    fontSize: 16,
+    color: '#555555',
   },
   errorView: {
     position: 'absolute',
