@@ -1,5 +1,24 @@
 # CHANGELOG
 
+## [2.22.2]
+
+### Added
+
+- Add comment giveaways to the livestream player, where viewers enter by sending a keyword in chat and the result sheet opens automatically when the host ends the giveaway
+- Add image overlays to livestreams in live, replay and restream, positioned and sized from Business portal
+- Add product viewing signals (FOMO) to live broadcasts, shown once a product reaches enough concurrent viewers
+- Add playback speed and 10-second seek controls to the player
+- Support CDN re-stream, so re-stream and media-asset livestreams play in feeds, on the live page and in Player Deck autoplay
+
+### Changed
+
+- On Android, the SDK now compiles against and targets Android 16 (API 36), and the host app needs `androidx.activity` 1.6.1 or later for back handling to work
+- Replay interactions now appear only when the replay interaction setting is enabled in Business portal
+
+### Fixed
+
+- Bug fixes and improvements
+
 ## [2.22.1]
 
 ### Added
