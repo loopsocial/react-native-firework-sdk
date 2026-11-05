@@ -16,6 +16,7 @@
 		894FD2732DE33D5F0082A32E /* Staging.xcconfig in Resources */ = {isa = PBXBuildFile; fileRef = 894FD2702DE33D5F0082A32E /* Staging.xcconfig */; };
 		894FD2742DE33D5F0082A32E /* Release.xcconfig in Resources */ = {isa = PBXBuildFile; fileRef = 894FD26F2DE33D5F0082A32E /* Release.xcconfig */; };
 		89E1E1832FED1BAE003EC4BD /* UIViewController+FWLifecycleLogging.swift in Sources */ = {isa = PBXBuildFile; fileRef = 89E1E1822FED1BAE003EC4BD /* UIViewController+FWLifecycleLogging.swift */; };
+		A63D32E439BA11E6C09F778B /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 32936449B377F608559BF557 /* SceneDelegate.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -23,6 +24,7 @@
 		13B07FB51A68108700A75B9A /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; name = Images.xcassets; path = FireworkSdkExample/Images.xcassets; sourceTree = "<group>"; };
 		13B07FB61A68108700A75B9A /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = Info.plist; path = FireworkSdkExample/Info.plist; sourceTree = "<group>"; };
 		13B07FB81A68108700A75B9A /* PrivacyInfo.xcprivacy */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = PrivacyInfo.xcprivacy; path = FireworkSdkExample/PrivacyInfo.xcprivacy; sourceTree = "<group>"; };
+		32936449B377F608559BF557 /* SceneDelegate.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = SceneDelegate.swift; path = FireworkSdkExample/SceneDelegate.swift; sourceTree = "<group>"; };
 		3C73C590002FFB31E77D5693 /* Pods-FireworkSdkExample.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-FireworkSdkExample.debug.xcconfig"; path = "Target Support Files/Pods-FireworkSdkExample/Pods-FireworkSdkExample.debug.xcconfig"; sourceTree = "<group>"; };
 		761780EC2CA45674006654EE /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = AppDelegate.swift; path = FireworkSdkExample/AppDelegate.swift; sourceTree = "<group>"; };
 		89435DB32DE45606002DAA46 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
@@ -78,6 +80,7 @@
 				13B07FB61A68108700A75B9A /* Info.plist */,
 				89435DB42DE45606002DAA46 /* LaunchScreen.storyboard */,
 				13B07FB81A68108700A75B9A /* PrivacyInfo.xcprivacy */,
+				32936449B377F608559BF557 /* SceneDelegate.swift */,
 			);
 			name = FireworkSdkExample;
 			sourceTree = "<group>";
@@ -312,6 +315,7 @@
 			files = (
 				89E1E1832FED1BAE003EC4BD /* UIViewController+FWLifecycleLogging.swift in Sources */,
 				761780ED2CA45674006654EE /* AppDelegate.swift in Sources */,
+				A63D32E439BA11E6C09F778B /* SceneDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

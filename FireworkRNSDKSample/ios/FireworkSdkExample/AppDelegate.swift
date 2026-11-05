@@ -8,10 +8,16 @@ import react_native_firework_sdk
 
 @main
 class AppDelegate: RCTAppDelegate {
+    /// Kept for `SceneDelegate`, which creates the React Native root view.
+    private(set) var launchOptions: [AnyHashable: Any]?
+
     override func application(
         _ application: UIApplication,
         didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]? = nil
     ) -> Bool {
+        // The window is created by SceneDelegate, since apps built with the iOS 27 SDK must use the UIScene life cycle.
+        self.automaticallyLoadReactNativeWindow = false
+        self.launchOptions = launchOptions
         self.moduleName = "FireworkSdkExample"
         self.dependencyProvider = RCTAppDependencyProvider()
 

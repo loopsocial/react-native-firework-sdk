@@ -5,6 +5,11 @@ require Pod::Executable.execute_command('node', ['-p',
     {paths: [process.argv[1]]},
   )', __dir__]).strip
 
+# New FireworkVideo versions are published to the Firework specs repository since CocoaPods trunk became read-only.
+# Keep the CDN: React Native's pods and older FireworkVideo versions are only available there.
+source 'https://github.com/loopsocial/firework_ios_specs.git'
+source 'https://cdn.cocoapods.org/'
+
 platform :ios, min_ios_version_supported
 prepare_react_native_project!
 
@@ -35,8 +40,15 @@ target 'FireworkSdkExample' do
     end
     installer.pods_project.targets.each do |target|
       target.build_configurations.each do |config|
-        if config.build_settings['IPHONEOS_DEPLOYMENT_TARGET'].to_f < 13.0
-          config.build_settings['IPHONEOS_DEPLOYMENT_TARGET'] = '13.0'
+        # Raise pods below React Native's minimum, such as the RNCAsyncStorage resource bundle at 13.4, which Xcode 27
+        # no longer builds.
+        if config.build_settings['IPHONEOS_DEPLOYMENT_TARGET'].to_f < min_ios_version_supported.to_f
+          config.build_settings['IPHONEOS_DEPLOYMENT_TARGET'] = min_ios_version_supported
+        end
+        # fmt 11.0.2, bundled with React Native 0.78, fails consteval checks in its own format-inl.h with the clang
+        # of Xcode 27. C++17 turns those checks off for this target.
+        if target.name == 'fmt'
+          config.build_settings['CLANG_CXX_LANGUAGE_STANDARD'] = 'c++17'
         end
       end
     end
