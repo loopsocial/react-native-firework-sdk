@@ -1,5 +1,12 @@
 # CHANGELOG
 
+## [2.22.3]
+
+### Fixed
+
+- On iOS, `FWNavigator.pushRNContainer` no longer crashes the app on React Native 0.87 and later, and now renders the pushed page on the New Architecture, including on top of the full-screen player. When React Native cannot create the page, the promise resolves to `false` instead
+- On iOS, when `videoCompleteAction` is `'advanceToNext'` and `feedCompleteAction` is `'loop'`, the first video now plays automatically after the feed loops back from the last video. Previously it stayed paused
+
 ## [2.22.2]
 
 ### Added
