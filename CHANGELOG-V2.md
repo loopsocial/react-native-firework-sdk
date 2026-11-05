@@ -1,5 +1,11 @@
 # CHANGELOG
 
+## [2.22.4]
+
+### Added
+
+- On iOS, add product viewing signals (FOMO) to live broadcasts, showing how many viewers are currently viewing a product
+
 ## [2.22.3]
 
 ### Fixed
