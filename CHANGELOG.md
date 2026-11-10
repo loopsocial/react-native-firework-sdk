@@ -1,5 +1,11 @@
 # CHANGELOG
 
+## [2.22.5]
+
+### Fixed
+
+- On iOS, when `videoCompleteAction` is `.advanceToNext`, `feedCompleteAction` is `.loop`, and the player is muted, the first video now stays muted after the feed loops back from the last video. Previously it played with sound.
+
 ## [2.22.4]
 
 ### Added
